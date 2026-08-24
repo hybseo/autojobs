@@ -20,16 +20,40 @@ OUT = Path(__file__).resolve().parent.parent / "src" / "data" / "jobs.json"
 
 # 기업 추가는 여기에 한 줄씩. prefix 는 채용사이트 도메인의 맨 앞부분입니다.
 COMPANIES = [
+    # ── 완성차 부품 계열 ──────────────────────────────
     ("현대모비스", "hyundai-mobis", "mobis"),
-    ("HL그룹", "hl-group", "hlcompany"),
+    ("HL그룹", "hl-group", "hlcompany"),          # 만도·클레무브·로보틱스·디앤아이한라·만도브로제
     ("현대케피코", "hyundai-kefico", "hyundai-kefico"),
     ("현대트랜시스", "hyundai-transys", "hyundai-transys"),
     ("현대위아", "hyundai-wia", "hyundai-wia"),
+    ("현대글로비스", "hyundai-glovis", "glovis"),
+    # ── 전장·공조·전원 ───────────────────────────────
     ("한온시스템", "hanon-systems", "hanonsystems"),
-    ("에스엘", "sl", "slworld"),
-    ("유라코퍼레이션", "yura", "yura"),
+    ("에스엘", "sl", "slworld"),                   # 에스엘미러텍·SHB 포함
+    ("유라코퍼레이션", "yura", "yura"),             # 유라테크 포함
     ("LS오토모티브", "ls-automotive", "lsat"),
+    ("LS일렉트릭", "ls-electric", "lselectric"),
+    ("LS엠트론", "ls-mtron", "lsmtron"),
+    ("티에이치엔", "thn", "thn"),
+    ("경신", "kyungshin", "kyungshin"),
+    ("세방전지", "sebang", "sebang"),              # 세방리튬배터리 포함
+    # ── 차체·소재·타이어 ─────────────────────────────
+    ("성우하이텍", "sungwoo-hitech", "swhitech"),
+    ("삼보모터스", "sambo-motors", "sambomotors"),
+    ("NVH코리아", "nvh-korea", "nvhkorea"),
+    ("화승", "hwaseung", "hwaseung"),
+    ("한국타이어", "hankook-tire", "hankooktire"),
+    ("넥센타이어", "nexen-tire", "nexentire"),
+    ("금호타이어", "kumho-tire", "kumhotire"),
+    # ── 인접 산업 (로보틱스·장비) ─────────────────────
+    ("원익", "wonik", "wonik"),                    # 원익로보틱스 포함
 ]
+
+# ── 2026-08-24 브라우저 확인 기준 접수중 건수 ──────────────
+# 한국타이어 16 · HL그룹 13 · 한온시스템 7 · 유라 5 · 현대트랜시스 4
+# 현대모비스 1 · 현대케피코 1 · 현대위아 1 · 에스엘 1 · 티에이치엔 2
+# 넥센타이어 2 · 세방전지 1 · 삼보모터스 1 · LS일렉트릭 1 · 그 외 소수
+# 합계 75건 안팎. 실행 결과가 이와 크게 다르면 API 사양 변경을 의심할 것.
 
 CAREER = {"CAREER": "경력", "NEW": "신입", "NEW_CAREER": "신입/경력",
           "ANY": "무관", "FIELD_DIFFERENCE": "분야별상이"}
