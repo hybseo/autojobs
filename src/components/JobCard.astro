@@ -1,0 +1,40 @@
+---
+import { daysLeft, progress } from '../lib.js';
+const { job, href } = Astro.props;
+const d = daysLeft(job);
+const p = progress(job);
+const cls = d <= 3 ? 'd-urgent' : d <= 7 ? 'd-warn' : 'd-far';
+const label = p === null ? '상시' : d <= 0 ? '오늘 마감' : `D-${d}`;
+const urgent = d <= 3 && p !== null;
+const md = (s) => s.slice(5).replace('-', '.');
+// 본문이 있는 포지션 단위 공고만 자체 상세 페이지를 가집니다.
+const link = href ?? (job.description ? `/job/${job.id}/` : job.sourceUrl);
+const external = link === job.sourceUrl;
+---
+<a class="card" href={link} data-co={job.company} data-career={job.career}
+   data-dday={d} data-text={`${job.title} ${job.company} ${job.location} ${job.sourceTitle}`.toLowerCase()}
+   {...external ? { target: '_blank', rel: 'noopener' } : {}}>
+  <div class="chead">
+    <span class="co">{job.company}</span>
+    <span class:list={['dday', cls]}>{label}</span>
+  </div>
+  <div class="ttl">{job.title}</div>
+  <div class="facts">
+    {job.location && <span class="f">{job.location}</span>}
+    <span class="f">{job.career}</span>
+    {job.multiRole && <span class="f multi">여러 직무 포함 가능</span>}
+  </div>
+  {job.sourceTitle && <div class="src">{job.sourceTitle}</div>}
+  {p === null ? (
+    <div class="gauge"><span class="g-open">상시 접수 · 마감일 미정</span></div>
+  ) : (
+    <div class="gauge">
+      <span class="g-date">{md(job.postedAt)}</span>
+      <span class="g-track">
+        <span class:list={['g-fill', urgent && 'urgent']} style={`--p:${p.toFixed(3)}`}></span>
+        <span class:list={['g-dot', urgent && 'urgent']} style={`left:${(p * 100).toFixed(1)}%`}></span>
+      </span>
+      <span class="g-date">{md(job.closesAt)} 마감</span>
+    </div>
+  )}
+</a>

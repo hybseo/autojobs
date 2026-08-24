@@ -1,0 +1,38 @@
+---
+import '../styles/global.css';
+const { title, description, canonical, schema } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const url = canonical ?? (site + Astro.url.pathname);
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:locale" content="ko_KR" />
+
+  <!-- 검색엔진 소유확인. 발급받은 값으로 교체하세요. -->
+  <meta name="naver-site-verification" content="" />
+  <meta name="google-site-verification" content="" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+</head>
+<body>
+  <slot />
+  <footer class="wrap">
+    <p>각 기업 공식 채용페이지에 공개된 공고만 모았습니다. 채용 플랫폼 전용 공고나 비공개 채용은 포함되지 않습니다.</p>
+    <p style="margin-top:8px"><b>여러 직무 포함 가능</b> 표시는 공고 본문이 이미지로 게시되어 세부 직무를 원문에서 확인해야 하는 경우입니다.</p>
+  </footer>
+</body>
+</html>

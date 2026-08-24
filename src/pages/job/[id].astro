@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import { JOBS, jobPostingSchema, daysLeft, byCompany } from '../../lib.js';
+
+// 본문이 확보된 공고만 자체 상세 페이지를 만듭니다.
+// 이미지로만 게시된 공고는 페이지를 만들지 않고 목록에서 원문으로 바로 링크합니다.
+export function getStaticPaths() {
+  return JOBS.filter((j) => j.description && j.description.trim().length >= 50)
+    .map((j) => ({ params: { id: j.id }, props: { job: j } }));
+}
+
+const { job } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const pageUrl = `${site}/job/${job.id}/`;
+const schema = jobPostingSchema(job, pageUrl);
+const d = daysLeft(job);
+const co = byCompany(job.companySlug);
+const title = `${job.company} ${job.title} 채용`;
+const desc = `${job.company} ${job.title}. ${job.career}${job.location ? ' · ' + job.location : ''}. ${job.closesAt} 마감.`;
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href={`/company/${job.companySlug}/`}>{job.company}</a></div>
+      <h1>{job.title}</h1>
+      <div class="meta">
+        {job.location && <>{job.location} · </>}{job.career} · <b>{d > 0 ? `D-${d}` : '마감'}</b> · {job.closesAt} 마감
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="section-h">직무 상세</div>
+    <div class="prose" set:html={job.description} />
+
+    <div class="section-h">헤드헌터 코멘트</div>
+    <div class="prose">
+      <p>
+        이 자리가 열린 배경, 실제로 요구되는 역량, 지원 시 유의점을 여기에 씁니다.
+        공고 원문에 없는 이 설명이 검색 노출과 지원 전환을 만듭니다.
+      </p>
+      <a class="cta" href={job.sourceUrl} target="_blank" rel="noopener nofollow">원문 공고에서 지원하기</a>
+    </div>
+
+    <p style="margin:28px 0 56px">
+      <a class="back" href={`/company/${job.companySlug}/`}>← {co.name} 채용 전체 보기</a>
+    </p>
+  </main>
+</Base>

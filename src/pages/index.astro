@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import JobCard from '../components/JobCard.astro';
+import { openJobs, daysLeft, COLLECTED_AT, companies } from '../lib.js';
+
+const jobs = openJobs().sort((a, b) => daysLeft(a) - daysLeft(b));
+const cos = companies().length;
+const tally = (f) => {
+  const m = new Map();
+  jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
+};
+const title = '자동차부품·전장 채용 · 지금 지원 가능한 자리';
+const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
+---
+<Base title={title} description={desc}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow">자동차부품 · 전장</div>
+      <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
+      <div class="meta"><b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준</div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="wrap ctrl-in">
+      <div class="searchrow">
+        <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
+        <button class="sortbtn" id="sort" type="button">마감 임박순</button>
+      </div>
+      <div class="chips" id="fCo">
+        {tally((j) => j.company).map(([v, n]) => (
+          <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+      </div>
+      <div class="chips" id="fCa">
+        {tally((j) => j.career).map(([v, n]) => (
+          <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="count" id="count"><b>{jobs.length}</b>건 표시 중</div>
+    <div class="list" id="list">
+      {jobs.map((j) => <JobCard job={j} />)}
+      <div class="empty" id="empty" hidden>
+        <b>조건에 맞는 자리가 없습니다</b>
+        검색어를 줄이거나 필터를 해제해 보세요.
+      </div>
+    </div>
+
+    <div class="section-h">기업별로 보기</div>
+    <ul class="archive">
+      {companies().map((c) => (
+        <li><a href={`/company/${c.slug}/`}>{c.name} 채용</a><time>{c.jobs.length}건</time></li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<script>
+  // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
+  const cards = [...document.querySelectorAll('#list .card')];
+  const state = { q: '', co: new Set(), ca: new Set(), sort: 'dday' };
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const count = document.getElementById('count');
+  const total = cards.length;
+
+  function apply() {
+    const q = state.q.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const ok =
+        (!state.co.size || state.co.has(c.dataset.co)) &&
+        (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!q || c.dataset.text.includes(q));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    empty.hidden = shown > 0;
+    count.innerHTML = shown
+      ? `<b>${shown}</b>건 표시 중${shown < total ? ` · 전체 ${total}건` : ''}`
+      : '조건에 맞는 자리 없음';
+  }
+
+  function sortCards() {
+    const arr = [...cards].sort((a, b) =>
+      state.sort === 'dday'
+        ? a.dataset.dday - b.dataset.dday
+        : a.dataset.co === b.dataset.co
+          ? a.dataset.dday - b.dataset.dday
+          : a.dataset.co.localeCompare(b.dataset.co, 'ko'));
+    arr.forEach((c) => list.insertBefore(c, empty));
+  }
+
+  document.querySelectorAll('.chip').forEach((b) => {
+    b.addEventListener('click', () => {
+      const s = state[b.dataset.k];
+      s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v);
+      b.setAttribute('aria-pressed', s.has(b.dataset.v));
+      apply();
+    });
+  });
+  document.getElementById('q').addEventListener('input', (e) => {
+    state.q = e.target.value; apply();
+  });
+  document.getElementById('sort').addEventListener('click', (e) => {
+    state.sort = state.sort === 'dday' ? 'co' : 'dday';
+    e.target.textContent = state.sort === 'dday' ? '마감 임박순' : '기업별';
+    sortCards();
+  });
+</script>

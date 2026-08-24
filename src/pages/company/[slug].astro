@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import JobCard from '../../components/JobCard.astro';
+import { companies, byCompany, openJobs, closedJobs, daysLeft, parseDate } from '../../lib.js';
+
+export function getStaticPaths() {
+  return companies().map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const co = byCompany(slug);
+const open = openJobs().filter((j) => j.companySlug === slug).sort((a, b) => daysLeft(a) - daysLeft(b));
+const closed = closedJobs().filter((j) => j.companySlug === slug)
+  .sort((a, b) => parseDate(b.closesAt) - parseDate(a.closesAt));
+
+const title = `${co.name} 채용 · 진행중 공고 ${open.length}건`;
+const desc = `${co.name}의 공식 채용페이지에 올라온 진행중 공고 ${open.length}건과 지난 채용 이력 ${closed.length}건을 정리했습니다.`;
+
+// 기업 페이지는 ItemList 로 표시합니다. JobPosting 은 본문이 있는 상세 페이지에만 넣습니다.
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  about: { '@type': 'Organization', name: co.name },
+  url: `${site}/company/${slug}/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">자동차부품 · 전장</a></div>
+      <h1>{co.name} 채용 <em>{open.length}</em></h1>
+      <div class="meta">진행중 <b>{open.length}</b>건 · 지난 채용 <b>{closed.length}</b>건</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="section-h">진행중인 채용</div>
+    {open.length ? open.map((j) => <JobCard job={j} />) : (
+      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
+        지난 채용 이력을 보시면 이 회사가 어떤 직무를 주로 뽑는지 알 수 있습니다.</div>
+    )}
+
+    <div class="section-h">이 회사는 어떤 사람을 뽑나</div>
+    <div class="prose">
+      <h2>채용 경향</h2>
+      <p>
+        이 영역은 직접 작성하세요. 자동 생성된 공고 목록만으로는 검색 노출이 어렵고,
+        여기 쓰이는 현업 관점의 설명이 이 페이지를 다른 채용 사이트와 구분해 줍니다.
+      </p>
+      <p>
+        쓸 만한 내용: 주력 제품군과 조직 구조, 최근 채용이 늘거나 준 직무,
+        해당 직무의 통상 경력 요건, 면접에서 자주 확인하는 부분, 경쟁사 대비 처우 수준.
+      </p>
+      <a class="cta" href="#">비공개 채용 문의하기</a>
+    </div>
+
+    {closed.length > 0 && (
+      <>
+        <div class="section-h">지난 채용 이력</div>
+        <ul class="archive">
+          {closed.map((j) => (
+            <li>
+              <a href={j.sourceUrl} target="_blank" rel="noopener nofollow">{j.title}</a>
+              <time>{j.closesAt.replace(/-/g, '.')} 마감</time>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
+  </main>
+</Base>
