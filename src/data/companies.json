@@ -1,0 +1,47 @@
+{
+ "_readme": [
+  "수집 대상 기업 목록입니다. 기업 추가는 코드가 아니라 이 파일에서 합니다.",
+  "",
+  "ats      어느 채용 시스템을 쓰는지. scripts/adapters/ 의 파일 이름과 같아야 합니다.",
+  "code     그 시스템 안에서의 기업 식별자. 무슨 값인지는 어댑터마다 다릅니다.",
+  "         recruiter → 채용사이트 도메인 맨 앞부분 (mobis.recruiter.co.kr 이면 mobis)",
+  "slug     사이트 주소에 쓰입니다. /company/<slug>/ 가 되므로 한번 정하면 바꾸지 마세요.",
+  "         바꾸면 이미 색인된 주소가 깨집니다.",
+  "industry 산업 분류. 나중에 자동차부품 외 산업을 추가할 때 필터로 씁니다.",
+  "enabled  false 로 두면 수집에서 제외됩니다. 목록에서 지우지 않고 잠시 끌 때 씁니다."
+ ],
+
+ "companies": [
+  {"name": "현대모비스",     "slug": "hyundai-mobis",   "ats": "recruiter", "code": "mobis",            "industry": ["자동차부품"], "enabled": true},
+  {"name": "HL그룹",        "slug": "hl-group",        "ats": "recruiter", "code": "hlcompany",        "industry": ["자동차부품"], "enabled": true,
+   "note": "만도·클레무브·로보틱스·디앤아이한라·만도브로제 포함"},
+  {"name": "현대케피코",     "slug": "hyundai-kefico",  "ats": "recruiter", "code": "hyundai-kefico",   "industry": ["자동차부품"], "enabled": true},
+  {"name": "현대트랜시스",   "slug": "hyundai-transys", "ats": "recruiter", "code": "hyundai-transys",  "industry": ["자동차부품"], "enabled": true},
+  {"name": "현대위아",       "slug": "hyundai-wia",     "ats": "recruiter", "code": "hyundai-wia",      "industry": ["자동차부품"], "enabled": true},
+  {"name": "현대글로비스",   "slug": "hyundai-glovis",  "ats": "recruiter", "code": "glovis",           "industry": ["자동차부품", "물류"], "enabled": true},
+
+  {"name": "한온시스템",     "slug": "hanon-systems",   "ats": "recruiter", "code": "hanonsystems",     "industry": ["자동차부품"], "enabled": true},
+  {"name": "에스엘",         "slug": "sl",              "ats": "recruiter", "code": "slworld",          "industry": ["자동차부품"], "enabled": true,
+   "note": "에스엘미러텍·SHB 포함"},
+  {"name": "유라코퍼레이션", "slug": "yura",            "ats": "recruiter", "code": "yura",             "industry": ["자동차부품"], "enabled": true,
+   "note": "유라테크 포함"},
+  {"name": "LS오토모티브",   "slug": "ls-automotive",   "ats": "recruiter", "code": "lsat",             "industry": ["자동차부품"], "enabled": true},
+  {"name": "LS일렉트릭",     "slug": "ls-electric",     "ats": "recruiter", "code": "lselectric",       "industry": ["자동차부품", "전기전자"], "enabled": true},
+  {"name": "LS엠트론",       "slug": "ls-mtron",        "ats": "recruiter", "code": "lsmtron",          "industry": ["자동차부품", "기계"], "enabled": true},
+  {"name": "티에이치엔",     "slug": "thn",             "ats": "recruiter", "code": "thn",              "industry": ["자동차부품"], "enabled": true},
+  {"name": "경신",           "slug": "kyungshin",       "ats": "recruiter", "code": "kyungshin",        "industry": ["자동차부품"], "enabled": true},
+  {"name": "세방전지",       "slug": "sebang",          "ats": "recruiter", "code": "sebang",           "industry": ["자동차부품"], "enabled": true,
+   "note": "세방리튬배터리 포함"},
+
+  {"name": "성우하이텍",     "slug": "sungwoo-hitech",  "ats": "recruiter", "code": "swhitech",         "industry": ["자동차부품"], "enabled": true},
+  {"name": "삼보모터스",     "slug": "sambo-motors",    "ats": "recruiter", "code": "sambomotors",      "industry": ["자동차부품"], "enabled": true},
+  {"name": "NVH코리아",      "slug": "nvh-korea",       "ats": "recruiter", "code": "nvhkorea",         "industry": ["자동차부품"], "enabled": true},
+  {"name": "화승",           "slug": "hwaseung",        "ats": "recruiter", "code": "hwaseung",         "industry": ["자동차부품"], "enabled": true},
+  {"name": "한국타이어",     "slug": "hankook-tire",    "ats": "recruiter", "code": "hankooktire",      "industry": ["자동차부품"], "enabled": true},
+  {"name": "넥센타이어",     "slug": "nexen-tire",      "ats": "recruiter", "code": "nexentire",        "industry": ["자동차부품"], "enabled": true},
+  {"name": "금호타이어",     "slug": "kumho-tire",      "ats": "recruiter", "code": "kumhotire",        "industry": ["자동차부품"], "enabled": true},
+
+  {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
+   "note": "원익로보틱스 포함"}
+ ]
+}
