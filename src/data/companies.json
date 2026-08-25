@@ -41,6 +41,9 @@
   {"name": "넥센타이어",     "slug": "nexen-tire",      "ats": "recruiter", "code": "nexentire",        "industry": ["자동차부품"], "enabled": true},
   {"name": "금호타이어",     "slug": "kumho-tire",      "ats": "recruiter", "code": "kumhotire",        "industry": ["자동차부품"], "enabled": true},
 
+  {"name": "경창산업",     "slug": "kyungchang",      "ats": "greeting",  "code": "kci",              "industry": ["자동차부품"], "enabled": true,
+   "note": "그리팅 ATS. 전동화·모터선행연구·전자제어설계 포함"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
