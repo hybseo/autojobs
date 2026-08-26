@@ -10,6 +10,10 @@
 제각각입니다. 그런데 루트 /ko 로 들어가면 어느 페이지로 넘어가든 공고 목록이
 함께 실려 옵니다. 그래서 경로를 추측하지 않고 루트만 씁니다.
 
+자체 도메인을 붙인 회사도 있습니다. 현대오토에버가 career.hyundai-autoever.com
+을 쓰는데 속은 그리팅입니다. 이런 곳은 companies.json 에 "domain" 을 적어주면
+그 주소를 씁니다. 자체 도메인은 robots.txt 도 따로 있으니 추가 전에 확인하세요.
+
 공개 API 가 따로 없어서 페이지 HTML 을 받아옵니다. 다만 HTML 태그를 파싱하는
 것이 아니라, Next.js 가 심어두는 <script id="__NEXT_DATA__"> 안의 JSON 을
 꺼내 씁니다. 화면 디자인이 바뀌어도 이 JSON 구조는 잘 안 바뀝니다.
@@ -109,12 +113,20 @@ def _location(positions):
     return places[0] if len(places) == 1 else f"{places[0]} 외 {len(places) - 1}곳"
 
 
-def list_open(code, path=""):
+def base_url(company):
+    """회사의 채용 사이트 주소. 자체 도메인이 있으면 그것을 씁니다."""
+    dom = (company.get("domain") or "").strip()
+    if dom:
+        return "https://" + dom.split("://")[-1].rstrip("/")
+    return f"https://{company['code']}.career.greetinghr.com"
+
+
+def list_open(company, path=""):
     """접수중 공고 요약 목록. probe 용으로 밖에서도 씁니다.
 
     path 를 넘기면 그 페이지를 읽습니다. 보통은 비워두고 루트를 씁니다.
     """
-    url = f"https://{code}.career.greetinghr.com/ko"
+    url = base_url(company) + "/ko"
     if path:
         url += "/" + path.lstrip("/")
     data = _next_data(url)
@@ -131,9 +143,9 @@ def fetch(company):
     name = company["name"]
     slug = company["slug"]
     code = company["code"]
-    base = f"https://{code}.career.greetinghr.com"
+    base = base_url(company)
 
-    rows = list_open(code, company.get("path", ""))
+    rows = list_open(company, company.get("path", ""))
 
     jobs = []
     for r in rows:
