@@ -3,8 +3,12 @@
 두들린 '그리팅(greetinghr.com)' ATS 수집기.
 리크루터를 안 쓰는 중견기업이 많이 씁니다.
 
-  목록  GET https://{code}.career.greetinghr.com/ko/guide
+  목록  GET https://{code}.career.greetinghr.com/ko
   상세  GET https://{code}.career.greetinghr.com/ko/o/{openingId}
+
+공고 목록 페이지의 이름은 회사마다 다릅니다. guide, apply, intro, home 등
+제각각입니다. 그런데 루트 /ko 로 들어가면 어느 페이지로 넘어가든 공고 목록이
+함께 실려 옵니다. 그래서 경로를 추측하지 않고 루트만 씁니다.
 
 공개 API 가 따로 없어서 페이지 HTML 을 받아옵니다. 다만 HTML 태그를 파싱하는
 것이 아니라, Next.js 가 심어두는 <script id="__NEXT_DATA__"> 안의 JSON 을
@@ -105,9 +109,15 @@ def _location(positions):
     return places[0] if len(places) == 1 else f"{places[0]} 외 {len(places) - 1}곳"
 
 
-def list_open(code):
-    """접수중 공고 요약 목록. probe 용으로 밖에서도 씁니다."""
-    data = _next_data(f"https://{code}.career.greetinghr.com/ko/guide")
+def list_open(code, path=""):
+    """접수중 공고 요약 목록. probe 용으로 밖에서도 씁니다.
+
+    path 를 넘기면 그 페이지를 읽습니다. 보통은 비워두고 루트를 씁니다.
+    """
+    url = f"https://{code}.career.greetinghr.com/ko"
+    if path:
+        url += "/" + path.lstrip("/")
+    data = _next_data(url)
     raw = _pick(_queries(data), first_key="openings")
     if raw is None:
         return []
@@ -123,7 +133,7 @@ def fetch(company):
     code = company["code"]
     base = f"https://{code}.career.greetinghr.com"
 
-    rows = list_open(code)
+    rows = list_open(code, company.get("path", ""))
 
     jobs = []
     for r in rows:
