@@ -33,7 +33,7 @@ jobs:
           if [ -n "${{ inputs.limit }}" ]; then ARGS="$ARGS --limit ${{ inputs.limit }}"; fi
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
           echo "실행: python scripts/probe_ats.py $ARGS"
-          python scripts/probe_ats.py $ARGS
+          python scripts/probe_ats1.py $ARGS
 
       # 결과를 저장소에 남깁니다. Actions 로그는 시간이 지나면 지워지지만
       # 파일로 남겨두면 언제든 열어볼 수 있고, 지난 결과와 비교도 됩니다.
