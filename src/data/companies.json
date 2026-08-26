@@ -49,6 +49,13 @@
   {"name": "포스코모빌리티솔루션", "slug": "posco-mobility", "ats": "greeting", "code": "poscomobility",     "industry": ["자동차부품"], "enabled": true,
    "note": "구동모터코아·금속분리판. 확인 시점 공고 0건"},
 
+  {"name": "한국단자공업",   "slug": "ket",             "ats": "greeting",  "code": "ket",              "industry": ["자동차부품"], "enabled": true,
+   "note": "커넥터·전장부품. 인천 송도·논현, 화성, 평택"},
+  {"name": "삼기",         "slug": "samkee",          "ats": "greeting",  "code": "samkee",           "industry": ["자동차부품"], "enabled": true,
+   "note": "알루미늄 다이캐스팅. 대구·평택·서산·판교"},
+  {"name": "현대오토에버",   "slug": "hyundai-autoever", "ats": "greeting", "code": "hyundai-autoever", "domain": "career.hyundai-autoever.com",
+   "industry": ["자동차부품", "IT"], "enabled": true, "note": "그리팅 자체 도메인. 차량SW·IT"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
