@@ -1,9 +1,23 @@
 ﻿name,status,ats,code,home,found_at,how,note
 니프코코리아,발견,recruiter,nifco,http://www.nifco.co.kr,http://www.nifco.co.kr,링크,
+동원금속,발견,greeting,dwmic,http://www.dwmic.com,http://www.dwmic.com,링크,
+디와이오토,발견,recruiter,dy,http://auto.dy.co.kr,http://auto.dy.co.kr,링크,
+발레오전장시스템스코리아,발견,workday,wd3,http://www.valeo.com,http://www.valeo.com,링크,
+에스에이치비,발견,recruiter,slworld,http://www.slworld.com,http://www.slworld.com,링크,
+에스엘미러텍,발견,recruiter,slworld,http://www.slworld.com,http://www.slworld.com,링크,
+에스엠알오토모티브모듈코리아,발견,greeting,careers.motherson.com,http://www.smr-automotive.com,https://careers.motherson.com/,자체도메인,채용링크 3개
+엘링크링거코리아,발견,workday,wd3,http://www.elringklinger.kr,https://elringklinger.de/en/career/job-openings,링크,채용링크 2개
+엘에스이모빌리티솔루션,발견,recruiter,lsems,http://www.lsems.com,http://www.lsems.com,링크,
+케이디에스,발견,recruiter,slworld,http://www.samlip.co.kr,http://www.samlip.co.kr,링크,
+케이씨씨글라스,발견,greeting,kccglass,http://www.kccglass.co.kr,https://kccglass.career.greetinghr.com/ko,주소추정,채용링크 0개
+피에이치에이,발견,greeting,phcgroup,http://www.phakr.com,http://www.phakr.com,링크,
+한국석유공업,발견,recruiter,kpgroup,http://www.koreapetroleum.com,http://www.koreapetroleum.com,링크,
+효성,발견,recruiter,hyosung,http://www.hyosung.com,http://www.hyosung.com,링크,
+희성촉매,발견,greeting,hscatalysts,http://www.hscatalysts.com,http://www.hscatalysts.com,링크,
 가레트모션코리아,ATS없음,,,http://www.garrettmotion.com,,,채용링크 6개
 게스템프카테크,채용링크없음,,,http://kartek.co.kr,,,채용링크 0개
 고아정공,채용링크없음,,,http://www.koh-a.com,,,채용링크 0개
-광성기업,ATS없음,,,http://www.belite.co.kr,,,채용링크 6개
+광성기업,접속실패,,,http://www.belite.co.kr,,,URLError
 광진기계,채용링크없음,,,http://www.kwangjin.co.kr,,,채용링크 0개
 광진상공,ATS없음,,,http://www.kwangjin-kr.com,,,채용링크 1개
 금호에이치티,채용링크없음,,,http://www.kumhoht.co.kr,,,채용링크 0개
@@ -28,4 +42,247 @@
 대원정밀공업,ATS없음,,,http://www.dwjm.co.kr,,,채용링크 5개
 대유글로벌,접속실패,,,http://www.globaldayou.co.kr,,,URLError
 대유에이텍,ATS없음,,,http://www.dayouat.co.kr,,,채용링크 1개
+대유플러스,접속실패,,,http://www.dayouplus.co.kr,,,URLError
+대주정공,ATS없음,,,http://www.daejoopi.com,,,채용링크 4개
+대주코레스,접속실패,,,http://www.kores21.co.kr,,,URLError
+대창단조,채용링크없음,,,http://www.dcf.co.kr,,,채용링크 0개
+대풍공업,채용링크없음,,,http://www.dae-poong.co.kr,,,채용링크 0개
+대한소결금속,ATS없음,,,http://www.iksm.co.kr,,,채용링크 4개
+대한솔루션,ATS없음,,,http://www.dhsol.com,,,채용링크 6개
+대한칼소닉,ATS없음,,,http://www.dhc.co.kr,,,채용링크 2개
+대호기계공업,접속실패,,,http://www.van.daeho403.ck.kr,,,URLError
+대흥알앤티,ATS없음,,,http://www.dhrnt.com,,,채용링크 5개
+덕양산업,채용링크없음,,,http://www.duckyang.co.kr,,,채용링크 0개
+덕일산업,ATS없음,,,http://www.duck-il.com,,,채용링크 2개
+덴소코리아,접속실패,,,http://www.denso.com/kr/ko,,,HTTPError
+동남정밀,홈페이지없음,,,,,,
+동보,ATS없음,,,http://www.dongbo.com,,,채용링크 2개
+동서기공,채용링크없음,,,http://www.dsmt.co.kr,,,채용링크 0개
+동서페더럴모굴,홈페이지없음,,,,,,
+동성티씨에스,홈페이지없음,,,,,,
+동아공업,채용링크없음,,,http://www.edmc.co.kr,,,채용링크 0개
+동아화성,ATS없음,,,http://www.dacm.com,,,채용링크 3개
+동양피스톤,ATS없음,,,http://www.dypiston.co.kr,,,채용링크 5개
+동희,접속실패,,,http://www.donghee.co.kr,,,URLError
+동희산업,접속실패,,,http://www.donghee.co.kr,,,URLError
+동희정공,접속실패,,,http://www.donghee.co.kr,,,URLError
+두올,ATS없음,,,http://www.idual.co.kr,,,채용링크 1개
+두원공조,채용링크없음,,,http://www.dwdcc.com,,,채용링크 0개
+디아이씨,채용링크없음,,,http://www.dicorp.co.kr,,,채용링크 0개
+디알비오토모티브,ATS없음,,,http://www.drb-automotive.com/automotive,,,채용링크 2개
+디알액시온,채용링크없음,,,http://www.draxion.co.kr,,,채용링크 0개
+디에스시,ATS없음,,,http://www.godsc.co.kr,,,채용링크 6개
 디에이치오토리드,ATS없음,,,http://dhautolead.co.kr,,,채용링크 2개
+디에이치오토웨어,채용링크없음,,,http://www.dhautoware.co.kr,,,채용링크 0개
+디엔오토모티브,접속실패,,,http://www.dtrautomotive.com,,,URLError
+디엘모터스,채용링크없음,,,http://www.dmc.co.kr,,,채용링크 0개
+디엠씨,채용링크없음,,,http://www.dmcmotors.co.kr,,,채용링크 0개
+디젠,홈페이지없음,,,,,,
+로버트보쉬코리아,ATS없음,,,http://www.bosch.co.kr,,,채용링크 1개
+리어코리아,ATS없음,,,http://www.lear.com,,,채용링크 4개
+리한,ATS없음,,,http://www.leehan.com,,,채용링크 2개
+만앤휴멜코리아,ATS없음,,,http://www.mann-hummel.com,,,채용링크 6개
+말레동현필터시스템,접속실패,,,http://www.kr.mahle.com,,,URLError
+명신,홈페이지없음,,,,,,
+명화공업,접속실패,,,http://www.myunghwa.com,,,URLError
+모베이스전자,ATS없음,,,http://www.mobaseelec.com,,,채용링크 5개
+모토닉,채용링크없음,,,http://www.motonic.com,,,채용링크 0개
+모트렉스,ATS없음,,,http://www.motrex.co.kr,,,채용링크 6개
+무등기업,채용링크없음,,,http://moodng.com,,,채용링크 0개
+반도코리아,ATS없음,,,http://www.bandokorea.co.kr,,,채용링크 2개
+베바스토코리아홀딩스,ATS없음,,,http://www.webasto-comfort.com/ko-kr,,,채용링크 1개
+베어링아트,ATS없음,,,http://www.iljin.com,,,채용링크 1개
+보고에이피,채용링크없음,,,http://www.bogoap.com,,,채용링크 0개
+보그워너창녕,ATS없음,,,http://www.borgwarner.com,,,채용링크 1개
+보쉬전장,ATS없음,,,http://www.bosch.co.kr,,,채용링크 1개
+부라다워너,홈페이지없음,,,,,,
+부산주공,채용링크없음,,,http://www.pci21c.com,,,채용링크 0개
+브로제코리아,ATS없음,,,http://www.brose.com,,,채용링크 2개
+비욘드아이,ATS없음,,,http://www.beyondi.co.kr,,,채용링크 2개
+비테스코테크놀로지스코리아,접속실패,,,http://www.vitesco-technologies.com,,,HTTPError
+삼보에이앤티,ATS없음,,,http://www.samboant.com,,,채용링크 2개
+삼보오토,ATS없음,,,http://www.samboauto.com,,,채용링크 1개
+삼성공조,채용링크없음,,,http://www.samsungcc.co.kr,,,채용링크 0개
+삼성발레오써멀시스템스,접속실패,,,http://www.samsungvaleo.com,,,URLError
+삼성전기,접속실패,,,http://www.sem.samsung.co.kr,,,URLError
+삼송,접속실패,,,http://www.samsong.co.kr,,,URLError
+삼신화학공업,채용링크없음,,,http://esamshin.com,,,채용링크 0개
+삼우,채용링크없음,,,http://www.samwoogroup.co.kr,,,채용링크 0개
+삼진정공,채용링크없음,,,http://www.samjinnut.co.kr,,,채용링크 0개
+상신브레이크,ATS없음,,,http://www.sangsin.com,,,채용링크 6개
+새한산업,ATS없음,,,http://www.saehani.com,,,채용링크 3개
+서연이화,ATS없음,,,http://www.seoyoneh.com,,,채용링크 6개
+서연인테크,채용링크없음,,,http://www.seoyonintech.com,,,채용링크 0개
+서진산업,ATS없음,,,http://www.seojin.com,,,채용링크 6개
+서진오토모티브,ATS없음,,,http://www.secoautomotive.com,,,채용링크 6개
+서진캠,ATS없음,,,http://www.seojincam.com,,,채용링크 6개
+서한이노빌리티,ATS없음,,,http://www.seohan.com,,,채용링크 2개
+선일다이파스,ATS없음,,,http://www.sunildyfas.com,,,채용링크 3개
+세동,ATS없음,,,http://www.saedong.co.kr,,,채용링크 4개
+세움,홈페이지없음,,,,,,
+세원물산,ATS없음,,,http://www.se-won.co.kr,,,채용링크 6개
+세원이앤씨,채용링크없음,,,http://www.sewonenc.com,,,채용링크 0개
+세원이엔아이,ATS없음,,,http://www.se-won.co.kr,,,채용링크 6개
+세원테크,홈페이지없음,,,,,,
+세정,홈페이지없음,,,,,,
+세종공업,채용링크없음,,,http://www.sjku.co.kr,,,채용링크 0개
+세진,ATS없음,,,http://www.sejin-c.co.kr,,,채용링크 1개
+센싸타테크놀러지스코리아,접속실패,,,http://www.sensata.com,,,HTTPError
+셰플러안산,ATS없음,,,http://www.schaeffler.kr,,,채용링크 6개
+셰플러코리아,ATS없음,,,http://www.schaeffler.kr,,,채용링크 6개
+스타빌루스,접속실패,,,http://www.stabilus.com,,,URLError
+신영,ATS없음,,,http://www.shym.co.kr,,,채용링크 3개
+신원,접속실패,,,http://shinwon.shym.co.kr,,,URLError
+씨티알,채용링크없음,,,http://www.ctr.co.kr,,,채용링크 0개
+씨티알모빌리티,접속실패,,,http://www.ctrmotek.co.kr,,,URLError
+아산성우하이텍,접속실패,,,http://asan.swhitech.com,,,URLError
+아센텍,ATS없음,,,http://asentec.co.kr,,,채용링크 4개
+아이아,ATS없음,,,http://www.aia21.co.kr,,,채용링크 6개
+아이티더블유오토모티브코리아,채용링크없음,,,http://www.itwautokorea.com,,,채용링크 0개
+아진산업,ATS없음,,,http://www.wamc.co.kr,,,채용링크 2개
+애디언트동성,홈페이지없음,,,,,,
+애디언트코리아,접속실패,,,http://www.adientkorea.co.kr,,,URLError
+에스SNT다이내믹스,채용링크없음,,,http://www.hisntd.com,,,채용링크 0개
+에스SNT모티브,채용링크없음,,,http://www.sntmotiv.com,,,채용링크 0개
+에스SNT에이엠티,채용링크없음,,,http://www.sntamt.com,,,채용링크 0개
+에스엠벡셀,채용링크없음,,,http://www.smbexel.com,,,채용링크 0개
+에스케이온,홈페이지없음,,,,,,
+에스텍,채용링크없음,,,http://www.estec.co.kr,,,채용링크 0개
+에스트라오토모티브시스템,접속실패,,,http://www.estra-automotive.com,,,URLError
+에이치디현대인프라코어,접속실패,,,http://www.hyundai-di.com,,,HTTPError
+에이치에스테크놀로지,채용링크없음,,,http://www.hstkorea.co.kr,,,채용링크 0개
+에이치엘만도,채용링크없음,,,http://hlmando.com,,,채용링크 0개
+에이치엘클레무브,채용링크없음,,,http://www.hlklemove.com,,,채용링크 0개
+에코플라스틱,ATS없음,,,http://www.eco-plastic.com,,,채용링크 6개
+엔브이에이치코리아,채용링크없음,,,http://www.nvhkorea.co.kr,,,채용링크 0개
+엔브이에이치플로어시스템,채용링크없음,,,http://www.nvhparts.co.kr,,,채용링크 0개
+엘에스오토모티브테크놀로지스,채용링크없음,,,http://www.lsautomotive.com,,,채용링크 0개
+엘엑스하우시스,ATS없음,,,http://www.lxhausys.co.kr,,,채용링크 6개
+엘지에너지솔루션,ATS없음,,,http://www.lgensol.com,,,채용링크 6개
+엘지전자,채용링크없음,,,http://www.lge.co.kr,,,채용링크 0개
+엠씨넥스,접속실패,,,http://www.mcnex.com,,,URLError
+엠에스오토텍,채용링크없음,,,http://www.ms-global.com,,,채용링크 0개
+영신정공,ATS없음,,,http://www.ys-kr.com,,,채용링크 5개
+영풍기계,ATS없음,,,http://www.y-poong.co.kr,,,채용링크 5개
+영화금속,접속실패,,,http://www.yeonghwa.co.kr,,,URLError
+영흥,채용링크없음,,,http://www.youngwire.com,,,채용링크 0개
+오스템,채용링크없음,,,http://www.austem.co.kr,,,채용링크 0개
+오토리브,ATS없음,,,http://www.autoliv.com,,,채용링크 6개
+오토인더스트리,ATS없음,,,http://www.oto.kr,,,채용링크 4개
+와이엠,홈페이지없음,,,,,,
+용산,접속실패,,,http://www.yong-san.co.kr,,,URLError
+우리산업,접속실패,,,http://www.woory.com,,,URLError
+우수에이AMS,접속실패,,,http://www.woosu.co.kr,,,URLError
+우수정기,접속실패,,,http://www.woosu.co.kr,,,URLError
+우신공업,채용링크없음,,,http://www.wooshin.net,,,채용링크 0개
+우신세이프티시스템,채용링크없음,,,http://www.wooshinss.com,,,채용링크 0개
+우영산업,채용링크없음,,,http://www.wooyoung-ind.co.kr,,,채용링크 0개
+우진공업,ATS없음,,,http://www.ngkntk.co.kr,,,채용링크 2개
+우진정공,채용링크없음,,,http://www.wjtechno.co.kr,,,채용링크 0개
+우창정기,접속실패,,,http://www.woo-chang.com,,,URLError
+위너콤,채용링크없음,,,http://www.winant.co.kr,,,채용링크 0개
+유니크,접속실패,,,http://www.unick.co.kr,,,HTTPError
+유라테크,채용링크없음,,,http://www.yuratech.co.kr,,,채용링크 0개
+유라하네스,채용링크없음,,,http://www.yuraharness.co.kr,,,채용링크 0개
+유성기업,접속실패,,,http://www.ypr.co.kr,,,HTTPError
+유신정밀공업,채용링크없음,,,http://www.ysptech.com,,,채용링크 0개
+유진에스엠알시오토모티브테크노,ATS없음,,,http://www.ysat.kr,,,채용링크 4개
+이래씨CS,홈페이지없음,,,,,,
+이래에이엠에스,ATS없음,,,http://www.eraeams.com,,,채용링크 1개
+이원정공,ATS없음,,,http://www.lwp.co.kr,,,채용링크 1개
+이튼인더스트리즈,접속실패,,,http://www.eaton.com,,,TimeoutError
+인알파코리아,홈페이지없음,,,,,,
+인지디스플레이,채용링크없음,,,http://www.inzidisplay.co.kr,,,채용링크 0개
+인지컨트롤스,채용링크없음,,,http://www.inzi.co.kr,,,채용링크 0개
+인팩,채용링크없음,,,http://www.infac.com,,,채용링크 0개
+인팩일렉스,채용링크없음,,,http://www.infac.com,,,채용링크 0개
+일지테크,ATS없음,,,http://www.iljitech.co.kr,,,채용링크 5개
+일진,ATS없음,,,http://www.iljin.com,,,채용링크 1개
+일진글로벌,ATS없음,,,http://www.iljin.com,,,채용링크 1개
+일진베어링,ATS없음,,,http://www.iljin.com,,,채용링크 1개
+일진하이솔루스,접속실패,,,http://www.hysolus.co.kr,,,URLError
+일흥,채용링크없음,,,http://www.il-heung.co.kr,,,채용링크 0개
+제트에프삭스코리아,접속실패,,,http://www.sachs.co.kr,,,URLError
+제트에프오토모티브코리아,ATS없음,,,http://www.zf.com,,,채용링크 1개
+조이슨세이프티시스템스코리아,접속실패,,,http://www.takata.com,,,URLError
+존슨일렉트릭오퍼레이션스,채용링크없음,,,http://www.hallastackpole.co.kr,,,채용링크 0개
+지엠비코리아,ATS없음,,,http://www.gmb.co.kr,,,채용링크 5개
+진영산업,ATS없음,,,http://www.jinyoungind.com,,,채용링크 1개
+진합,접속실패,,,http://www.jinhap.com,,,HTTPError
+카이스,ATS없음,,,http://www.kaisinc.com,,,채용링크 4개
+카이엠,접속실패,,,http://www.dayouep.co.kr,,,URLError
+카펙발레오,접속실패,,,http://www.kapec.com,,,URLError
+캄텍,ATS없음,,,http://www.kamtec.co.kr,,,채용링크 2개
+케이비아이동국실업,ATS없음,,,http://www.dongkook.net,,,채용링크 2개
+케이비아이메탈,채용링크없음,,,http://www.kbimetal.co.kr,,,채용링크 0개
+케이비오토텍,채용링크없음,,,http://www.kbautotech.com,,,채용링크 0개
+케이비와이퍼시스템,접속실패,,,http://www.kbws.co.kr,,,URLError
+케이엠앤아이,ATS없음,,,http://www.kmni.co.kr,,,채용링크 5개
+코렌스,접속실패,,,http://www.korens.co.kr,,,URLError
+코리아에프티,채용링크없음,,,http://www.kftec.com,,,채용링크 0개
+코모스,ATS없음,,,http://www.secokomos.com,,,채용링크 6개
+코비코,ATS없음,,,http://www.kovico.com,,,채용링크 3개
+코스파,채용링크없음,,,http://www.kospa.co.kr,,,채용링크 0개
+코아비스,ATS없음,,,http://www.coavis.com,,,채용링크 4개
+코오롱글로텍,ATS없음,,,http://www.kolonglotech.co.kr,,,채용링크 1개
+콘티넨탈오토모티브일렉트로닉스,ATS없음,,,http://www.continental-corporation.com,,,채용링크 6개
+쿠퍼스탠다드오토모티브앤인더스트리얼,접속실패,,,http://www.cooperstandard.com,,,HTTPError
+크레아,접속실패,,,http://www. groupcrea.com,,,InvalidURL
+크레아아이엔,접속실패,,,http://www. groupcrea.com,,,InvalidURL
+클라리오스델코,채용링크없음,,,http://www.delkor.com,,,채용링크 0개
+타이코에이엠피,ATS없음,,,http://www.tycoelectronics.com,,,채용링크 1개
+태성전장,채용링크없음,,,http://www.tecstar.co.kr,,,채용링크 0개
+태양금속공업,채용링크없음,,,http://www.taeyangmetal.com,,,채용링크 0개
+트래닛,ATS없음,,,http://www.tranit.co.kr,,,채용링크 5개
+티아이오토모티브,채용링크없음,,,http://www.tiautomotive.com,,,채용링크 0개
+파이오락스,채용링크없음,,,http://www.piolax.co.kr,,,채용링크 0개
+파카코리아,접속실패,,,http://www.parker.com,,,HTTPError
+파카하니핀커넥터,접속실패,,,http://http://www.hsparker.co.kr,,,URLError
+패커드코리아,채용링크없음,,,http://www.packardkorea.co.kr,,,채용링크 0개
+페더럴모굴세종,채용링크없음,,,http://www.fm-korea.co.kr,,,채용링크 0개
+평화기공,접속실패,,,http://www.phk.co.kr,,,HTTPError
+평화발레오,접속실패,,,http://www.vph.co.kr,,,URLError
+평화산업,채용링크없음,,,http://www.ph.co.kr,,,채용링크 0개
+평화오일씰공업,접속실패,,,http://www.pos.co.kr,,,HTTPError
+포레시아코리아,ATS없음,,,http://www.faurecia.com,,,채용링크 3개
+풍기산업,접속실패,,,http://www.poongki.co.kr,,,URLError
+프라코,ATS없음,,,http://www.plakor.co.kr,,,채용링크 3개
+플라스틱옴니엄,접속실패,,,http://www.plasticomnium.com,,,URLError
+피엔디티,접속실패,,,http://www.phhc.co.kr,,,HTTPError
+한국댓와일러,접속실패,,,http://www.sealtech.co.kr,,,URLError
+한국무브넥스,접속실패,,,http://www.koreamoveenx.com,,,URLError
+한국보그워너티에스,접속실패,,,http://www. Borgwarner.com,,,InvalidURL
+한국세큐리트,채용링크없음,,,http://www.hanglas.co.kr,,,채용링크 0개
+한국쓰리엠,접속실패,,,http://www.3m.com,,,TimeoutError
+한국아이티더블유,접속실패,,,http://www.itwkorea.com,,,URLError
+한국알프스,접속실패,,,http://www.alpsalpine.com/ko,,,HTTPError
+한국앤컴퍼니,ATS없음,,,http://www.hankooktire.com,,,채용링크 1개
+한국에스케이에프씰,채용링크없음,,,http://www.skfkorea.co.kr,,,채용링크 0개
+한국엔에스케이,ATS없음,,,http://www.kr.nsk.com,,,채용링크 1개
+한국유미코아촉매,ATS없음,,,http://www.umicore.kr,,,채용링크 6개
+한국쯔바키모토오토모티브,홈페이지없음,,,,,,
+한국타이어앤테크놀로지,ATS없음,,,http://www.hankooktire.com,,,채용링크 1개
+한국후꼬꾸,채용링크없음,,,http://fukokukorea.com,,,채용링크 0개
+한서실업,채용링크없음,,,http://www.hanskorea.co.kr,,,채용링크 0개
+한온시스템이에프피코리아,채용링크없음,,,http://sqnet.efp.hanonsystems.com,,,채용링크 0개
+한일정공,채용링크없음,,,http://www.hanilpre.co.kr,,,채용링크 0개
+한일튜브,채용링크없음,,,http://www.haniltube.co.kr,,,채용링크 0개
+한주라이트메탈,채용링크없음,,,http://www.hanjoolightmetal.com,,,채용링크 0개
+한화솔루션,접속실패,,,http://www.hanwhasolutions.com,,,URLError
+한화첨단소재,접속실패,,,http://www.hwam.co.kr,,,URLError
+핸즈코퍼레이션,ATS없음,,,http://www.handscorp.co.kr,,,채용링크 6개
+헨켈코리아오토모티브,ATS없음,,,http://www.henkel.co.kr,,,채용링크 6개
+현담산업,채용링크없음,,,http://www.hyundam.com,,,채용링크 0개
+현대공업,채용링크없음,,,http://www.hdi21.co.kr,,,채용링크 0개
+현대성우쏠라이트,접속실패,,,http://http://www.solite.co.kr,,,URLError
+현대성우캐스팅,채용링크없음,,,http://www.hdswcasting.co.kr,,,채용링크 0개
+현대합성공업,채용링크없음,,,http://www.hdhs.co.kr,,,채용링크 0개
+호원,ATS없음,,,http://www.howon.com,,,채용링크 3개
+호원오토,접속실패,,,http://http://howon.com,,,URLError
+화승소재,접속실패,,,http://www.hscmb.co.kr,,,URLError
+화승알앤에이,접속실패,,,http://www.hsrna.com,,,URLError
+화신,접속실패,,,http://http://hwashin.co.kr,,,URLError
+화천기계,접속실패,,,http://www.hwacheon.co.kr,,,URLError
+효림산업,접속실패,,,http://www.hyolimindustrial.com,,,URLError
+효성전기,채용링크없음,,,http://www.hyoseong.co.kr,,,채용링크 0개
+흥아포밍,ATS없음,,,http://www.hungaforming.com,,,채용링크 1개
