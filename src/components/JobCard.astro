@@ -1,18 +1,23 @@
 ---
-import { daysLeft, progress } from '../lib.js';
+import { daysLeft, progress, isAlways, sortValue } from '../lib.js';
 const { job, href } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
-const cls = d <= 3 ? 'd-urgent' : d <= 7 ? 'd-warn' : 'd-far';
+const always = isAlways(job);
+// 마감일이 없으면 daysLeft 가 Infinity 입니다.
+// data 속성에 Infinity 를 넣으면 클라이언트 정렬에서 NaN 이 되므로 유한한 값을 씁니다.
+const sv = sortValue(job);
+const cls = always ? 'd-far' : d <= 3 ? 'd-urgent' : d <= 7 ? 'd-warn' : 'd-far';
 const label = p === null ? '상시' : d <= 0 ? '오늘 마감' : `D-${d}`;
-const urgent = d <= 3 && p !== null;
+const urgent = !always && d <= 3;
 const md = (s) => s.slice(5).replace('-', '.');
 // 본문이 있는 포지션 단위 공고만 자체 상세 페이지를 가집니다.
 const link = href ?? (job.description ? `/job/${job.id}/` : job.sourceUrl);
 const external = link === job.sourceUrl;
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
-   data-dday={d} data-text={`${job.title} ${job.company} ${job.location} ${job.sourceTitle}`.toLowerCase()}
+   data-op={always ? '상시채용' : '마감 있음'}
+   data-dday={sv} data-text={`${job.title} ${job.company} ${job.location} ${job.sourceTitle}`.toLowerCase()}
    {...external ? { target: '_blank', rel: 'noopener' } : {}}>
   <div class="chead">
     <span class="co">{job.company}</span>
