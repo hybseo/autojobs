@@ -1,17 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { openJobs, daysLeft, COLLECTED_AT, companies } from '../lib.js';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, companies } from '../lib.js';
 
-const jobs = openJobs().sort((a, b) => daysLeft(a) - daysLeft(b));
+// 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
+const jobs = openJobs().sort(byDeadline);
 const cos = companies().length;
+const always = jobs.filter(isAlways).length;
 const tally = (f) => {
   const m = new Map();
   jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
   return [...m.entries()].sort((a, b) => b[1] - a[1]);
 };
 const title = '자동차부품·전장 채용 · 지금 지원 가능한 자리';
-const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
+const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 임박순 정렬, 기업·경력·접수방식별 필터 제공.`;
 ---
 <Base title={title} description={desc}>
   <header class="mast">
@@ -38,6 +40,13 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
           <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
       </div>
+      {always > 0 && (
+        <div class="chips" id="fOp">
+          {tally((j) => (isAlways(j) ? '상시채용' : '마감 있음')).map(([v, n]) => (
+            <button class="chip" type="button" data-k="op" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+          ))}
+        </div>
+      )}
     </div>
   </div>
 
@@ -63,7 +72,7 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
 <script>
   // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
   const cards = [...document.querySelectorAll('#list .card')];
-  const state = { q: '', co: new Set(), ca: new Set(), sort: 'dday' };
+  const state = { q: '', co: new Set(), ca: new Set(), op: new Set(), sort: 'dday' };
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
@@ -76,6 +85,7 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
       const ok =
         (!state.co.size || state.co.has(c.dataset.co)) &&
         (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!state.op.size || state.op.has(c.dataset.op)) &&
         (!q || c.dataset.text.includes(q));
       c.hidden = !ok;
       if (ok) shown++;
@@ -87,6 +97,7 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
   }
 
   function sortCards() {
+    // 상시채용은 data-dday 가 모두 같은 값이라 원래 순서(최근 게시순)가 유지됩니다.
     const arr = [...cards].sort((a, b) =>
       state.sort === 'dday'
         ? a.dataset.dday - b.dataset.dday
