@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import JobCard from '../components/JobCard.astro';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, companies } from '../lib.js';
+
+// 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
+const jobs = openJobs().sort(byDeadline);
+const cos = companies().length;
+const alwaysN = jobs.filter(isAlways).length;
+const deadlineN = jobs.length - alwaysN;
+// 상시 구간이 시작되는 위치. 여기 앞에 구획선을 넣습니다.
+const cut = jobs.findIndex(isAlways);
+const tally = (f) => {
+  const m = new Map();
+  jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
+};
+const title = '자동차부품·전장 채용 · 지금 지원 가능한 자리';
+const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 있는 공고 ${deadlineN}건, 상시채용 ${alwaysN}건. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
+---
+<Base title={title} description={desc}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow">자동차부품 · 전장</div>
+      <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
+      <div class="meta"><b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준</div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="wrap ctrl-in">
+      <div class="searchrow">
+        <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
+        <button class="sortbtn" id="sort" type="button">마감 임박순</button>
+      </div>
+      <div class="chips" id="fCo">
+        {tally((j) => j.company).map(([v, n]) => (
+          <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+      </div>
+      <div class="chips" id="fCa">
+        {tally((j) => j.career).map(([v, n]) => (
+          <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+      </div>
+      {alwaysN > 0 && deadlineN > 0 && (
+        <div class="chips" id="fOp">
+          {tally((j) => (isAlways(j) ? '상시채용' : '마감 있음')).map(([v, n]) => (
+            <button class="chip" type="button" data-k="op" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="count" id="count"><b>{jobs.length}</b>건 표시 중</div>
+    <div class="list" id="list">
+      {jobs.map((j, i) => (
+        <>
+          {cut > 0 && i === cut && (
+            <div class="section-h grp" id="divider">
+              상시채용 <b class="gn">{alwaysN}</b>건 · 마감일 없이 언제든 지원
+            </div>
+          )}
+          <JobCard job={j} />
+        </>
+      ))}
+      <div class="empty" id="empty" hidden>
+        <b>조건에 맞는 자리가 없습니다</b>
+        검색어를 줄이거나 필터를 해제해 보세요.
+      </div>
+    </div>
+
+    <div class="section-h">기업별로 보기</div>
+    <ul class="archive">
+      {companies().map((c) => (
+        <li><a href={`/company/${c.slug}/`}>{c.name} 채용</a><time>{c.jobs.length}건</time></li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style is:global>
+  /*
+   * 카드 숨김.
+   * hidden 속성만으로는 안 됩니다. global.css 의 .card 규칙이 클래스 선택자라
+   * 브라우저 기본값인 [hidden]{display:none} 을 우선순위에서 이깁니다.
+   * 그래서 필터를 걸어도 카드가 그대로 보였습니다. !important 로 못박습니다.
+   */
+  .list .card[hidden] { display: none !important; }
+
+  /* 목록 중간 구획선. 기존 .section-h 를 쓰되 여백만 조정합니다. */
+  .grp { margin-top: 2rem; }
+  .grp .gn { font-variant-numeric: tabular-nums; }
+
+  /*
+   * 접수 방식 필터는 성격이 다릅니다.
+   * 기업·경력은 "무엇을" 고르는 것이고, 이건 "언제까지"를 고르는 것이라
+   * 시그니처 색인 스틸블루로 구분합니다.
+   */
+  #fOp .chip {
+    border-color: var(--steel);
+    color: var(--steel);
+    font-weight: 500;
+  }
+  #fOp .chip .n { color: var(--steel); opacity: .7; }
+  #fOp .chip[aria-pressed='true'] {
+    background: var(--steel);
+    border-color: var(--steel);
+    color: #fff;
+  }
+  #fOp .chip[aria-pressed='true'] .n { color: #fff; opacity: .8; }
+</style>
+
+<script>
+  // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
+  const cards = [...document.querySelectorAll('#list .card')];
+  const state = { q: '', co: new Set(), ca: new Set(), op: new Set(), sort: 'dday' };
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const count = document.getElementById('count');
+  const divider = document.getElementById('divider');
+  const total = cards.length;
+
+  /**
+   * 상시채용 구획선을 첫 상시 카드 바로 앞으로 옮깁니다.
+   * 아래 경우에는 숨깁니다. 구획선만 덩그러니 남으면 오히려 헷갈립니다.
+   *  - 기업별 정렬일 때. 마감과 상시가 섞이므로 구획이 뜻을 잃습니다.
+   *  - 필터 결과에 상시가 없거나, 반대로 상시만 남았을 때.
+   */
+  function placeDivider() {
+    if (!divider) return;
+    const vis = cards.filter((c) => !c.hidden);
+    const firstAlways = vis.find((c) => c.dataset.op === '상시채용');
+    const hasDeadline = vis.some((c) => c.dataset.op === '마감 있음');
+    if (state.sort !== 'dday' || !firstAlways || !hasDeadline) {
+      divider.hidden = true;
+      return;
+    }
+    divider.querySelector('.gn').textContent =
+      vis.filter((c) => c.dataset.op === '상시채용').length;
+    divider.hidden = false;
+    list.insertBefore(divider, firstAlways);
+  }
+
+  function apply() {
+    const q = state.q.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const ok =
+        (!state.co.size || state.co.has(c.dataset.co)) &&
+        (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!state.op.size || state.op.has(c.dataset.op)) &&
+        (!q || c.dataset.text.includes(q));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    empty.hidden = shown > 0;
+    count.innerHTML = shown
+      ? `<b>${shown}</b>건 표시 중${shown < total ? ` · 전체 ${total}건` : ''}`
+      : '조건에 맞는 자리 없음';
+    placeDivider();
+  }
+
+  function sortCards() {
+    // 상시채용은 data-dday 가 모두 같은 값이라 원래 순서(최근 게시순)가 유지됩니다.
+    const arr = [...cards].sort((a, b) =>
+      state.sort === 'dday'
+        ? a.dataset.dday - b.dataset.dday
+        : a.dataset.co === b.dataset.co
+          ? a.dataset.dday - b.dataset.dday
+          : a.dataset.co.localeCompare(b.dataset.co, 'ko'));
+    arr.forEach((c) => list.insertBefore(c, empty));
+    placeDivider();
+  }
+
+  document.querySelectorAll('.chip').forEach((b) => {
+    b.addEventListener('click', () => {
+      const s = state[b.dataset.k];
+      s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v);
+      b.setAttribute('aria-pressed', s.has(b.dataset.v));
+      apply();
+    });
+  });
+  document.getElementById('q').addEventListener('input', (e) => {
+    state.q = e.target.value; apply();
+  });
+  document.getElementById('sort').addEventListener('click', (e) => {
+    state.sort = state.sort === 'dday' ? 'co' : 'dday';
+    e.target.textContent = state.sort === 'dday' ? '마감 임박순' : '기업별';
+    sortCards();
+  });
+</script>
