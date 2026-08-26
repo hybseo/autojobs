@@ -81,10 +81,36 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
   </main>
 </Base>
 
-<style>
-  /* 목록 중간 구획선. 기존 .section-h 를 그대로 쓰고 여백만 조정합니다. */
+<style is:global>
+  /*
+   * 카드 숨김.
+   * hidden 속성만으로는 안 됩니다. global.css 의 .card 규칙이 클래스 선택자라
+   * 브라우저 기본값인 [hidden]{display:none} 을 우선순위에서 이깁니다.
+   * 그래서 필터를 걸어도 카드가 그대로 보였습니다. !important 로 못박습니다.
+   */
+  .list .card[hidden] { display: none !important; }
+
+  /* 목록 중간 구획선. 기존 .section-h 를 쓰되 여백만 조정합니다. */
   .grp { margin-top: 2rem; }
   .grp .gn { font-variant-numeric: tabular-nums; }
+
+  /*
+   * 접수 방식 필터는 성격이 다릅니다.
+   * 기업·경력은 "무엇을" 고르는 것이고, 이건 "언제까지"를 고르는 것이라
+   * 시그니처 색인 스틸블루로 구분합니다.
+   */
+  #fOp .chip {
+    border-color: var(--steel);
+    color: var(--steel);
+    font-weight: 500;
+  }
+  #fOp .chip .n { color: var(--steel); opacity: .7; }
+  #fOp .chip[aria-pressed='true'] {
+    background: var(--steel);
+    border-color: var(--steel);
+    color: #fff;
+  }
+  #fOp .chip[aria-pressed='true'] .n { color: #fff; opacity: .8; }
 </style>
 
 <script>
