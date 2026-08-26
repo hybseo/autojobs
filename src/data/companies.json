@@ -56,6 +56,19 @@
   {"name": "현대오토에버",   "slug": "hyundai-autoever", "ats": "greeting", "code": "hyundai-autoever", "domain": "career.hyundai-autoever.com",
    "industry": ["자동차부품", "IT"], "enabled": true, "note": "그리팅 자체 도메인. 차량SW·IT"},
 
+  {"name": "KCC글라스",    "slug": "kcc-glass",       "ats": "greeting",  "code": "kccglass",         "industry": ["자동차부품", "소재"], "enabled": true,
+   "note": "자동차 안전유리. 여주·아산·전의공장, 서울 본사"},
+  {"name": "PHC그룹",      "slug": "phc-group",       "ats": "greeting",  "code": "phcgroup",         "industry": ["자동차부품"], "enabled": true,
+   "note": "카펙발레오·피에이치씨발레오써멀시스템스·브이피에이치씨 포함"},
+  {"name": "희성촉매",      "slug": "heesung-catalysts", "ats": "greeting", "code": "hscatalysts",     "industry": ["자동차부품"], "enabled": true,
+   "note": "배기 촉매. 확인 시점 공고 0건"},
+  {"name": "KP그룹",       "slug": "kp-group",        "ats": "recruiter", "code": "kpgroup",          "industry": ["자동차부품", "화학"], "enabled": true,
+   "note": "한국석유공업·KP한석화학. 공고가 자동차부품과 무관할 수 있음"},
+  {"name": "디와이오토",     "slug": "dy-auto",         "ats": "recruiter", "code": "dy",               "industry": ["자동차부품"], "enabled": true,
+   "note": "와이퍼·모터. 확인 시점 공고 0건"},
+  {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": true,
+   "note": "타이어보강재. 확인 시점 공고 0건"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
