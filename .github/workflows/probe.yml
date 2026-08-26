@@ -5,10 +5,15 @@ name: ATS 탐지
 on:
   workflow_dispatch:
     inputs:
-      limit:
-        description: '검사할 기업 수 (비우면 전체 약 305개사, 30분 이상 걸림)'
-        required: false
-        default: '30'
+      scope:
+        description: '검사 범위'
+        type: choice
+        required: true
+        default: '30개사 (시험용, 약 10분)'
+        options:
+          - '30개사 (시험용, 약 10분)'
+          - '100개사 (약 30분)'
+          - '전체 (약 305개사, 1시간 이상)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -21,7 +26,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,10 +34,16 @@ jobs:
 
       - name: 탐지 실행
         run: |
-          ARGS=""
-          if [ -n "${{ inputs.limit }}" ]; then ARGS="$ARGS --limit ${{ inputs.limit }}"; fi
+          # 입력칸을 비워도 깃허브가 기본값을 넣어버립니다.
+          # 그래서 "비우면 전체" 방식은 쓸 수 없고, 목록에서 고르게 합니다.
+          case "${{ inputs.scope }}" in
+            30개사*)  ARGS="--limit 30" ;;
+            100개사*) ARGS="--limit 100" ;;
+            *)        ARGS="" ;;
+          esac
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
-          echo "실행: python scripts/probe_ats.py $ARGS"
+          echo "범위: ${{ inputs.scope }}"
+          echo "실행: python scripts/probe_ats1.py $ARGS"
           python scripts/probe_ats1.py $ARGS
 
       # 결과를 저장소에 남깁니다. Actions 로그는 시간이 지나면 지워지지만
