@@ -44,6 +44,11 @@
   {"name": "경창산업",     "slug": "kyungchang",      "ats": "greeting",  "code": "kci",              "industry": ["자동차부품"], "enabled": true,
    "note": "그리팅 ATS. 전동화·모터선행연구·전자제어설계 포함"},
 
+  {"name": "유니투스",     "slug": "unitus",          "ats": "greeting",  "code": "unitushr",         "industry": ["자동차부품"], "enabled": true,
+   "note": "전자제동 부품. 천안·충주·김천 공장"},
+  {"name": "포스코모빌리티솔루션", "slug": "posco-mobility", "ats": "greeting", "code": "poscomobility",     "industry": ["자동차부품"], "enabled": true,
+   "note": "구동모터코아·금속분리판. 확인 시점 공고 0건"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
