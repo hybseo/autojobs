@@ -212,6 +212,27 @@ def probe_company(name, home):
     return rec
 
 
+# KAICA 상세 페이지에서 기업 홈페이지 주소만 골라냅니다.
+#
+# 주의: href= 를 통째로 찾으면 안 됩니다. HTML 맨 위 <link> 태그의
+# fonts.googleapis.com 같은 주소가 먼저 걸립니다. 실제로 그래서 30개사가
+# 전부 구글 폰트 주소로 잡힌 적이 있습니다. <a> 태그만, 그리고 아래
+# 잡음 도메인을 뺀 것만 씁니다.
+ANCHOR = re.compile(r"""<a[^>]+href=["'](https?://[^"']+)["']""", re.I)
+NOISE = ("kaica", "google", "gstatic", "facebook", "youtube", "instagram",
+         "twitter", "naver.com", "daum.net", "kakao", "linkedin", "adobe",
+         "microsoft", "w3.org", "jquery", "bootstrapcdn", "cloudflare")
+
+
+def pick_homepage(html):
+    for m in ANCHOR.finditer(html or ""):
+        u = m.group(1)
+        if any(n in u.lower() for n in NOISE):
+            continue
+        return u
+    return ""
+
+
 # ── 대상 목록 만들기 ─────────────────────────────────────────
 KAICA_LIST = "https://kaica.or.kr/business/company.php?page={}"
 
@@ -264,9 +285,7 @@ def from_kaica(pages=38):
                 try:
                     d = http_get(urllib.parse.urljoin(
                         "https://kaica.or.kr/business/", href))
-                    m = re.search(
-                        r'href="(https?://(?!\S*kaica)[^"]+)"', d)
-                    home = m.group(1) if m else ""
+                    home = pick_homepage(d)
                 except Exception:
                     pass
                 time.sleep(PAUSE)
