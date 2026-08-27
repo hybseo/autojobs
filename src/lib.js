@@ -3,8 +3,16 @@ import raw from './data/jobs.json';
 export const COLLECTED_AT = raw.collectedAt;
 export const JOBS = raw.jobs;
 
-/** 오늘 기준. 빌드 시점 날짜를 쓰되, 샘플 데이터 검증용으로 고정값을 허용합니다. */
-export const TODAY = new Date(process.env.TODAY ?? COLLECTED_AT);
+/*
+ * 오늘 기준 시각. 빌드 시점 날짜를 쓰되, 검증용으로 고정값을 허용합니다.
+ *
+ * 반드시 parseDate 와 같은 기준(한국시간 자정)이어야 합니다.
+ * new Date('2026-08-27') 는 UTC 자정 = 한국시간 오전 9시로 해석됩니다.
+ * 그러면 closesAt(한국시간 자정)이 TODAY 보다 9시간 이르게 되어,
+ * 마감일이 오늘인 공고가 하루 일찍 목록에서 사라집니다.
+ * 실제로 현대오토에버 40건이 마감 당일에 통째로 빠진 적이 있습니다.
+ */
+export const TODAY = new Date((process.env.TODAY ?? COLLECTED_AT) + 'T00:00:00+09:00');
 
 const day = 86400000;
 export const parseDate = (s) => new Date(s + 'T00:00:00+09:00');
