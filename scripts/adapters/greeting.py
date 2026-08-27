@@ -93,11 +93,13 @@ def _career_label(positions):
         if c.get("careerType"):
             types.add(c["careerType"])
     if not types:
-        return ""
+        # 직무에 경력 조건이 안 붙은 공고가 있습니다. 빈 값으로 두면
+        # 화면에 이름 없는 필터 칩이 생깁니다. "무관" 으로 봅니다.
+        return "무관"
     if types == {"EXPERIENCED", "NEW_COMER"}:
         return "신입/경력"
     if len(types) == 1:
-        return CAREER.get(next(iter(types)), "")
+        return CAREER.get(next(iter(types)), "무관")
     return "분야별상이"
 
 

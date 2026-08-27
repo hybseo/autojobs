@@ -25,8 +25,17 @@ import urllib.request
 
 API = "https://api-recruiter.recruiter.co.kr"
 
+# API 가 주는 careerType → 화면 표기.
+# 표에 없는 값이 그대로 새어 나가면 구직자 화면에 "NONE" 같은 영문이 필터로 뜹니다.
+# 실제로 그런 일이 있었습니다. 모르는 값은 아래 _career() 에서 "무관" 으로 접습니다.
 CAREER = {"CAREER": "경력", "NEW": "신입", "NEW_CAREER": "신입/경력",
-          "ANY": "무관", "FIELD_DIFFERENCE": "분야별상이"}
+          "ANY": "무관", "FIELD_DIFFERENCE": "분야별상이",
+          "NONE": "무관"}
+
+
+def _career(v):
+    """모르는 값이나 빈 값은 '무관' 으로 봅니다. 조건을 안 정한 공고입니다."""
+    return CAREER.get(v, "무관")
 
 
 def _post(path, prefix, body):
@@ -103,7 +112,7 @@ def fetch(company):
             "company": name, "companySlug": slug,
             "title": x["title"],
             "location": "",
-            "career": CAREER.get(x.get("careerType"), x.get("careerType") or ""),
+            "career": _career(x.get("careerType")),
             "postedAt": (x.get("startDateTime") or "")[:10],
             "closesAt": (x.get("endDateTime") or "")[:10],
             "dday": x.get("dday"),
