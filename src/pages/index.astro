@@ -44,6 +44,7 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         {tally((j) => j.career).map(([v, n]) => (
           <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
+        <button class="chip morebtn" id="moreCa" type="button" hidden></button>
       </div>
       {alwaysN > 0 && deadlineN > 0 && (
         <div class="chips" id="fOp">
@@ -194,19 +195,20 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
    * 모바일은 2~3개, 데스크톱은 8개가 넘습니다. 그래서 실제로 그려진 위치를 재서
    * 첫 줄에 남는 것만 두고 나머지를 접습니다.
    */
-  const coBox = document.getElementById('fCo');
-  const moreBtn = document.getElementById('moreCo');
+  const foldables = [
+    [document.getElementById('fCo'), document.getElementById('moreCo')],
+    [document.getElementById('fCa'), document.getElementById('moreCa')],
+  ].filter(([box, btn]) => box && btn);
 
-  function layoutChips() {
-    if (!coBox || !moreBtn) return;
-    const chips = [...coBox.querySelectorAll('.chip:not(.morebtn)')];
+  function foldOne(box, btn) {
+    const chips = [...box.querySelectorAll('.chip:not(.morebtn)')];
     if (!chips.length) return;
     chips.forEach((c) => { c.hidden = false; });
-    moreBtn.hidden = true;
+    btn.hidden = true;
 
-    if (coBox.dataset.expanded === '1') {
-      moreBtn.hidden = false;
-      moreBtn.textContent = '접기';
+    if (box.dataset.expanded === '1') {
+      btn.hidden = false;
+      btn.textContent = '접기';
       return;
     }
 
@@ -219,25 +221,28 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
     }
     if (!folded) return;
 
-    moreBtn.hidden = false;
-    moreBtn.textContent = `+${folded}개 더`;
+    btn.hidden = false;
+    btn.textContent = `+${folded}개 더`;
     // 버튼이 붙으면서 줄이 넘칠 수 있습니다. 넘치면 뒤에서부터 하나씩 더 접습니다.
     const visible = () => foldable.filter((c) => !c.hidden);
     let guard = 0;
-    while (moreBtn.offsetTop > top && visible().length && guard++ < 50) {
-      const last = visible().pop();
-      last.hidden = true;
+    while (btn.offsetTop > top && visible().length && guard++ < 50) {
+      visible().pop().hidden = true;
       folded++;
-      moreBtn.textContent = `+${folded}개 더`;
+      btn.textContent = `+${folded}개 더`;
     }
   }
 
-  if (moreBtn) {
-    moreBtn.addEventListener('click', () => {
-      coBox.dataset.expanded = coBox.dataset.expanded === '1' ? '0' : '1';
+  function layoutChips() {
+    foldables.forEach(([box, btn]) => foldOne(box, btn));
+  }
+
+  foldables.forEach(([box, btn]) => {
+    btn.addEventListener('click', () => {
+      box.dataset.expanded = box.dataset.expanded === '1' ? '0' : '1';
       layoutChips();
     });
-  }
+  });
   let rt;
   window.addEventListener('resize', () => {
     clearTimeout(rt);
