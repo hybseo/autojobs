@@ -15,13 +15,14 @@ const tally = (f) => {
   jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
   return [...m.entries()].sort((a, b) => b[1] - a[1]);
 };
-const title = '자동차부품·전장 채용 · 지금 지원 가능한 자리';
-const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 있는 공고 ${deadlineN}건, 상시채용 ${alwaysN}건. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
+// 검색 노출은 키워드가 좌우합니다. 브랜드만 남기면 신규 도메인은 잡힐 근거가 없습니다.
+// 두 번째 산업이 실제로 들어오면 그때 넓히세요.
+const title = '자동차부품 채용 통합 검색 | SEARCHJOB';
+const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 있는 공고 ${deadlineN}건, 상시채용 ${alwaysN}건. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
 ---
 <Base title={title} description={desc}>
   <header class="mast">
     <div class="wrap">
-      <div class="eyebrow">자동차부품 · 전장</div>
       <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
       <div class="meta"><b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준</div>
     </div>
@@ -37,6 +38,7 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
         {tally((j) => j.company).map(([v, n]) => (
           <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
+        <button class="chip morebtn" id="moreCo" type="button" hidden></button>
       </div>
       <div class="chips" id="fCa">
         {tally((j) => j.career).map(([v, n]) => (
@@ -111,6 +113,17 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
     color: #fff;
   }
   #fOp .chip[aria-pressed='true'] .n { color: #fff; opacity: .8; }
+
+  /* 접힌 칩. 카드와 마찬가지로 .chip 규칙이 [hidden] 을 이기므로 못박습니다. */
+  .chips .chip[hidden] { display: none !important; }
+
+  /* 더보기 버튼은 필터가 아니라 조작 버튼이라 점선으로 구분합니다. */
+  .chips .morebtn {
+    border-style: dashed;
+    color: #858B92;
+    font-variant-numeric: tabular-nums;
+  }
+  .chips .morebtn:hover { color: var(--ink, #16181C); }
 </style>
 
 <script>
@@ -175,12 +188,70 @@ const desc = `자동차부품·전장 기업 ${cos}곳의 공식 채용페이지
     placeDivider();
   }
 
-  document.querySelectorAll('.chip').forEach((b) => {
+  /**
+   * 기업 칩이 한없이 길어지는 것을 막습니다.
+   * 고정 개수로 자르면 안 됩니다. 한 줄에 들어가는 개수가 화면 폭마다 다릅니다.
+   * 모바일은 2~3개, 데스크톱은 8개가 넘습니다. 그래서 실제로 그려진 위치를 재서
+   * 첫 줄에 남는 것만 두고 나머지를 접습니다.
+   */
+  const coBox = document.getElementById('fCo');
+  const moreBtn = document.getElementById('moreCo');
+
+  function layoutChips() {
+    if (!coBox || !moreBtn) return;
+    const chips = [...coBox.querySelectorAll('.chip:not(.morebtn)')];
+    if (!chips.length) return;
+    chips.forEach((c) => { c.hidden = false; });
+    moreBtn.hidden = true;
+
+    if (coBox.dataset.expanded === '1') {
+      moreBtn.hidden = false;
+      moreBtn.textContent = '접기';
+      return;
+    }
+
+    const top = chips[0].offsetTop;
+    // 선택된 칩은 접지 않습니다. 접히면 해제할 방법이 없어집니다.
+    const foldable = chips.filter((c) => c.getAttribute('aria-pressed') !== 'true');
+    let folded = 0;
+    for (const c of foldable) {
+      if (c.offsetTop > top) { c.hidden = true; folded++; }
+    }
+    if (!folded) return;
+
+    moreBtn.hidden = false;
+    moreBtn.textContent = `+${folded}개 더`;
+    // 버튼이 붙으면서 줄이 넘칠 수 있습니다. 넘치면 뒤에서부터 하나씩 더 접습니다.
+    const visible = () => foldable.filter((c) => !c.hidden);
+    let guard = 0;
+    while (moreBtn.offsetTop > top && visible().length && guard++ < 50) {
+      const last = visible().pop();
+      last.hidden = true;
+      folded++;
+      moreBtn.textContent = `+${folded}개 더`;
+    }
+  }
+
+  if (moreBtn) {
+    moreBtn.addEventListener('click', () => {
+      coBox.dataset.expanded = coBox.dataset.expanded === '1' ? '0' : '1';
+      layoutChips();
+    });
+  }
+  let rt;
+  window.addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(layoutChips, 150);
+  });
+  layoutChips();
+
+  document.querySelectorAll('.chip:not(.morebtn)').forEach((b) => {
     b.addEventListener('click', () => {
       const s = state[b.dataset.k];
       s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v);
       b.setAttribute('aria-pressed', s.has(b.dataset.v));
       apply();
+      layoutChips();
     });
   });
   document.getElementById('q').addEventListener('input', (e) => {
