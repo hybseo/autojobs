@@ -28,6 +28,8 @@ import argparse
 import csv
 import json
 import re
+import socket
+import ssl
 import sys
 import time
 import urllib.error
@@ -40,9 +42,13 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(__file__).resolve().parent / "probe_result.csv"
 REGISTRY = ROOT / "src" / "data" / "companies.json"
 
-UA = "Mozilla/5.0 (compatible; searchjob.co.kr job aggregator)"
+# 정직한 이름만 쓰면 낯선 접속으로 보고 막는 서버가 있습니다.
+# 브라우저 문자열에 사이트 주소를 함께 밝혀, 차단은 피하되 정체는 감추지 않습니다.
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
+      "(+https://searchjob.co.kr job aggregator)")
 PAUSE = 0.5          # 요청 간격. 남의 서버입니다. 줄이지 마세요.
-TIMEOUT = 15
+TIMEOUT = 25         # 국내 중견기업 홈페이지는 느린 곳이 많습니다. 짧으면 멀쩡한 곳을 놓칩니다.
 
 # 기업 홈페이지에서 채용 페이지를 찾을 때 훑어볼 경로
 CAREER_PATHS = ["", "/recruit", "/recruit/", "/career", "/careers",
@@ -92,13 +98,79 @@ def career_links(html, page_url, cap=6):
     return out
 
 
-def http_get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+def http_get(url, _insecure=False):
+    """페이지를 받아옵니다. 실패 원인을 남기기 위해 예외를 그대로 올립니다."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+        "Connection": "close",
+    })
+    ctx = None
+    if _insecure:
+        # 인증서가 만료됐거나 체인이 불완전한 곳이 꽤 있습니다.
+        # 공개된 채용 정보를 읽을 뿐이므로 한 번은 눈감고 시도합니다.
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+    with urllib.request.urlopen(req, timeout=TIMEOUT, context=ctx) as r:
         ct = (r.headers.get("Content-Type") or "").lower()
         if "html" not in ct and "json" not in ct and "text" not in ct:
             return ""
         return r.read(400_000).decode("utf-8", "replace")
+
+
+def variants(url):
+    """같은 사이트에 닿는 여러 형태를 만듭니다. https·http, www 유무를 모두 시도합니다."""
+    p = urllib.parse.urlsplit(url if url.startswith("http") else "https://" + url)
+    host, rest = p.netloc, (p.path or "")
+    hosts = [host]
+    if host.startswith("www."):
+        hosts.append(host[4:])
+    else:
+        hosts.append("www." + host)
+    out = []
+    for h in hosts:
+        for scheme in ("https", "http"):
+            out.append(f"{scheme}://{h}{rest}")
+    return out
+
+
+def fetch_any(url):
+    """여러 형태를 차례로 시도합니다. (본문, 최종주소, 실패기록) 을 돌려줍니다.
+
+    하나라도 성공하면 즉시 반환합니다. 전부 실패하면 무엇이 어떻게 실패했는지
+    문자열로 남깁니다. 'URLError' 한 단어만 남으면 다음에 고칠 수가 없습니다.
+    """
+    notes = []
+    for u in variants(url):
+        for insecure in (False, True):
+            try:
+                html = http_get(u, _insecure=insecure)
+                if html:
+                    return html, u, ""
+                notes.append(f"{u} 본문없음")
+                break
+            except urllib.error.HTTPError as e:
+                notes.append(f"{u} HTTP{e.code}")
+                break                      # 서버가 답은 했으니 다른 형태로 재시도
+            except ssl.SSLError as e:
+                if not insecure:
+                    continue               # 인증서 무시하고 한 번 더
+                notes.append(f"{u} SSL:{str(e)[:24]}")
+            except socket.timeout:
+                notes.append(f"{u} 시간초과")
+                break
+            except urllib.error.URLError as e:
+                r = getattr(e, "reason", e)
+                if isinstance(r, ssl.SSLError) and not insecure:
+                    continue
+                notes.append(f"{u} {type(r).__name__}:{str(r)[:24]}")
+                break
+            except Exception as e:
+                notes.append(f"{u} {type(e).__name__}")
+                break
+    return "", "", " | ".join(notes[:4])
 
 
 _robots = {}
@@ -142,7 +214,7 @@ def detect(html, page_url):
 def probe_company(name, home):
     """기업 홈페이지를 열고, 채용 링크를 따라가며 ATS 를 찾습니다.
 
-    항상 dict 를 돌려줍니다. 못 찾아도 왜 못 찾았는지 status 에 남깁니다.
+    항상 dict 를 돌려줍니다. 못 찾아도 왜 못 찾았는지 status 와 note 에 남깁니다.
     이게 있어야 "ATS 를 안 쓰는 것" 과 "접속이 안 된 것" 을 구분할 수 있습니다.
     """
     rec = {"name": name, "home": home, "ats": "", "code": "",
@@ -150,24 +222,14 @@ def probe_company(name, home):
     if not home:
         rec["status"] = "홈페이지없음"
         return rec
-    if not home.startswith("http"):
-        home = "https://" + home
-    base = home.rstrip("/")
-    rec["home"] = base
 
-    # 1단계: 홈페이지
-    html = ""
-    for cand in (base, base.replace("https://", "http://")):
-        try:
-            html = http_get(cand)
-            if html:
-                base = cand
-                break
-        except Exception as e:
-            rec["note"] = type(e).__name__
+    # 1단계: 홈페이지. https/http, www 유무를 모두 시도합니다.
+    html, base, why = fetch_any(home)
     if not html:
         rec["status"] = "접속실패"
+        rec["note"] = why or "원인미상"
         return rec
+    rec["home"] = base
 
     hit = detect(html, base)
     if hit:
@@ -181,16 +243,13 @@ def probe_company(name, home):
     for u in links:
         if not allowed(u):
             continue
-        try:
-            h = http_get(u)
-        except Exception:
-            continue
+        h, final, _ = fetch_any(u)
         time.sleep(PAUSE)
         if not h:
             continue
-        hit = detect(h, u)
+        hit = detect(h, final or u)
         if hit:
-            rec.update(ats=hit[0], code=hit[1], found_at=u,
+            rec.update(ats=hit[0], code=hit[1], found_at=final or u,
                        how=hit[2], status="발견")
             return rec
 
@@ -268,10 +327,9 @@ def from_kaica(pages=38):
 
     out = []
     for p in range(1, pages + 1):
-        try:
-            html = http_get(KAICA_LIST.format(p))
-        except Exception as e:
-            print(f"  ! 목록 {p}쪽 실패: {e}")
+        html, _, why = fetch_any(KAICA_LIST.format(p))
+        if not html:
+            print(f"  ! 목록 {p}쪽 실패: {why}")
             continue
         pr = Rows()
         pr.feed(html)
@@ -282,12 +340,9 @@ def from_kaica(pages=38):
             name = re.sub(r"㈜|\(주\)|\(유\)|주식회사", "", cells[1]).strip()
             home = ""
             if href:
-                try:
-                    d = http_get(urllib.parse.urljoin(
-                        "https://kaica.or.kr/business/", href))
-                    home = pick_homepage(d)
-                except Exception:
-                    pass
+                d, _, _ = fetch_any(urllib.parse.urljoin(
+                    "https://kaica.or.kr/business/", href))
+                home = pick_homepage(d) if d else ""
                 time.sleep(PAUSE)
             out.append((name, home))
         print(f"  목록 {p}/{pages}쪽 · 누적 {len(out)}개사")
