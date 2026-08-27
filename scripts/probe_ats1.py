@@ -123,7 +123,14 @@ def http_get(url, _insecure=False):
 def variants(url):
     """같은 사이트에 닿는 여러 형태를 만듭니다. https·http, www 유무를 모두 시도합니다."""
     p = urllib.parse.urlsplit(url if url.startswith("http") else "https://" + url)
-    host, rest = p.netloc, (p.path or "")
+    host = p.netloc
+    # 경로만 챙기고 쿼리를 빠뜨리면 ?idx=742 같은 식별자가 날아갑니다.
+    # 실제로 그래서 KAICA 상세 페이지를 전부 같은 주소로 요청한 적이 있습니다.
+    rest = (p.path or "")
+    if p.query:
+        rest += "?" + p.query
+    if p.fragment:
+        rest += "#" + p.fragment
     hosts = [host]
     if host.startswith("www."):
         hosts.append(host[4:])
