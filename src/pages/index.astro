@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { openJobs, byDeadline, isAlways, COLLECTED_AT, companies } from '../lib.js';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies } from '../lib.js';
 
 // 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
 const jobs = openJobs().sort(byDeadline);
@@ -24,7 +24,12 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
   <header class="mast">
     <div class="wrap">
       <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
-      <div class="meta"><b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준</div>
+      <div class="meta">
+        <b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+        {STALE_DAYS >= 1 && (
+          <span class="stale">{STALE_DAYS}일 전 정보 · 마감된 공고가 있을 수 있습니다</span>
+        )}
+      </div>
     </div>
   </header>
 
@@ -125,6 +130,25 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
     font-variant-numeric: tabular-nums;
   }
   .chips .morebtn:hover { color: var(--ink, #16181C); }
+
+  /*
+   * 갱신이 밀렸을 때만 나타납니다.
+   * 숨기는 것보다 알리는 편이 낫습니다. 구직자가 마감된 공고를
+   * 오늘 것으로 알고 지원하는 쪽이 훨씬 나쁩니다.
+   */
+  .stale {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #FBE9E7;
+    color: #A03A2B;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  @media (max-width: 520px) {
+    .stale { display: block; margin: 6px 0 0; }
+  }
 </style>
 
 <script>
