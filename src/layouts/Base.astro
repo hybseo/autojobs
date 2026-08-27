@@ -27,8 +27,44 @@ const url = canonical ?? (site + Astro.url.pathname);
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+<style is:global>
+  /* 사이트 공통 헤더. 사양서 감각에 맞춰 Plex Mono 로 자간을 넓힌 워드마크입니다. */
+  header.site {
+    border-bottom: 1px solid var(--line, #DDE1DE);
+    background: var(--paper, #fff);
+  }
+  header.site .wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .wordmark {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: .14em;
+    color: var(--ink, #16181C);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .wordmark:hover { color: var(--steel, #2D5F7C); }
+  .wm-tag { font-size: 12px; color: #858B92; letter-spacing: -.01em; }
+  @media (max-width: 520px) {
+    header.site .wrap { flex-direction: column; gap: 2px; align-items: flex-start; }
+    .wm-tag { font-size: 11px; }
+  }
+</style>
 </head>
 <body>
+  <header class="site">
+    <div class="wrap">
+      <a class="wordmark" href="/" aria-label="SEARCHJOB 홈">SEARCHJOB</a>
+      <span class="wm-tag">기업 공식 채용페이지 통합 검색</span>
+    </div>
+  </header>
   <slot />
   <footer class="wrap">
     <p>각 기업 공식 채용페이지에 공개된 공고만 모았습니다. 채용 플랫폼 전용 공고나 비공개 채용은 포함되지 않습니다.</p>
