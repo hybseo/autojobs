@@ -14,6 +14,7 @@ on:
           - '30개사 (시험용, 약 10분)'
           - '100개사 (약 30분)'
           - '전체 (약 305개사, 1시간 이상)'
+          - 'PCB Maker 26개사 (약 10분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -39,6 +40,7 @@ jobs:
           case "${{ inputs.scope }}" in
             30개사*)  ARGS="--limit 30" ;;
             100개사*) ARGS="--limit 100" ;;
+            PCB*)     ARGS="--urls scripts/targets_pcb.txt" ;;
             *)        ARGS="" ;;
           esac
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
