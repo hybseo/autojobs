@@ -15,6 +15,22 @@ export const JOBS = raw.jobs;
 export const TODAY = new Date((process.env.TODAY ?? COLLECTED_AT) + 'T00:00:00+09:00');
 
 const day = 86400000;
+
+/**
+ * 수집 데이터가 며칠 지났는지.
+ *
+ * 빌드 시점에 계산합니다. 갱신이 밀리면 사이트도 다시 빌드되지 않으므로,
+ * 이 값이 그대로 굳어 화면에 남습니다. 그게 목적입니다.
+ * 갱신이 멈춰도 화면은 멀쩡해 보이는 것이 가장 위험합니다.
+ * 구직자가 마감된 공고를 오늘 것으로 착각하게 됩니다.
+ */
+export const STALE_DAYS = (() => {
+  const c = new Date(COLLECTED_AT + 'T00:00:00+09:00');
+  const now = new Date();
+  const kstToday = new Date(
+    new Date(now.getTime() + 9 * 3600000).toISOString().slice(0, 10) + 'T00:00:00+09:00');
+  return Math.max(0, Math.round((kstToday - c) / day));
+})();
 export const parseDate = (s) => new Date(s + 'T00:00:00+09:00');
 
 /**
