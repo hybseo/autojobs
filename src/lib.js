@@ -82,6 +82,60 @@ export const progress = (j) => {
   return Math.max(0.02, Math.min(1, (TODAY - s) / (e - s)));
 };
 
+/*
+ * 근무지 문자열에서 시도(addressRegion)를 뽑습니다.
+ *
+ * 구글 JobPosting 은 jobLocation.address.addressRegion 을 권장합니다.
+ * 없다고 검색에서 빠지지는 않지만, 채울 수 있는 것은 채워둡니다.
+ *
+ * 원본 값이 제각각입니다. 실제로 관찰된 형태:
+ *   "서울"            시도명 그대로
+ *   "평택" "서산"      시군구명만
+ *   "한국단자공업(인천 송도)"  회사명에 지역이 섞임
+ *   "성서공장(본사)"    공장 이름만. 지역을 알 수 없음
+ *   "미국" "독일"      해외
+ *
+ * 알 수 없으면 undefined 를 돌려줍니다. 억지로 추측하지 않습니다.
+ * 잘못된 지역을 넣는 것이 비워두는 것보다 나쁩니다.
+ */
+// 순서가 중요합니다. 이름이 겹치는 경우 앞에 있는 것이 먼저 잡힙니다.
+// "경기 광주시" 가 광주광역시로 잡히지 않도록 도 단위를 앞에 둡니다.
+const SIDO = ['경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주',
+              '서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종'];
+
+// 시군구 → 시도. 실제 데이터에 나온 것만 담았습니다.
+// 추측으로 늘리지 말고, 새 값이 관찰될 때 확인 후 추가하세요.
+const CITY_TO_SIDO = {
+  평택: '경기', 수원: '경기', 판교: '경기', 성남: '경기', 화성: '경기',
+  동탄: '경기', 여주: '경기', 안산: '경기', 용인: '경기', 시흥: '경기',
+  서산: '충남', 천안: '충남', 아산: '충남', 당진: '충남',
+  충주: '충북', 청주: '충북', 전의: '세종',
+  포항: '경북', 구미: '경북', 경주: '경북', 김천: '경북',
+  창원: '경남', 김해: '경남', 양산: '경남',
+  익산: '전북', 전주: '전북', 광양: '전남', 여수: '전남',
+};
+
+export const addressRegion = (location) => {
+  const s = (location || '').trim();
+  if (!s) return undefined;
+
+  // 여러 지역이 적힌 경우("서울/경기") 문자열에서 먼저 나오는 쪽을 씁니다.
+  // 목록 순서로 고르면 "서울/경기" 가 경기로 잡혀 어색해집니다.
+  // 같은 위치에서 겹치면 더 긴 이름이 우선입니다("경기 광주시" → 경기).
+  let best;
+  for (const v of SIDO) {
+    const i = s.indexOf(v);
+    if (i < 0) continue;
+    if (!best || i < best.i) best = { i, v };
+  }
+  if (best) return best.v;
+
+  for (const [city, sido] of Object.entries(CITY_TO_SIDO)) {
+    if (s.includes(city)) return sido;
+  }
+  return undefined;   // 공장 이름만 있거나 해외인 경우
+};
+
 export const companies = () => {
   const m = new Map();
   for (const j of JOBS) {
@@ -124,6 +178,8 @@ export const jobPostingSchema = (j, pageUrl) => {
       address: {
         '@type': 'PostalAddress',
         addressLocality: j.location || undefined,
+        // 알아낼 수 있을 때만 넣습니다. 원본에 없는 주소를 지어내지 않습니다.
+        addressRegion: addressRegion(j.location),
         addressCountry: 'KR',
       },
     },
