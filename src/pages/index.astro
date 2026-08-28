@@ -51,32 +51,28 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         ))}
         <button class="chip morebtn" id="moreCa" type="button" hidden></button>
       </div>
-      {alwaysN > 0 && deadlineN > 0 && (
-        <div class="chips" id="fOp">
-          {tally((j) => (isAlways(j) ? '상시채용' : '마감 있음')).map(([v, n]) => (
-            <button class="chip" type="button" data-k="op" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
-          ))}
-        </div>
-      )}
+
     </div>
   </div>
 
   <main class="wrap">
-    <div class="count" id="count"><b>{jobs.length}</b>건 표시 중</div>
+    {alwaysN > 0 && deadlineN > 0 && (
+      <div class="tabs" role="tablist" aria-label="접수 방식">
+        <button class="tab" role="tab" data-tab="마감 있음" aria-selected="true">
+          마감 있는 공고 <span class="tn">{deadlineN}</span>
+        </button>
+        <button class="tab" role="tab" data-tab="상시채용" aria-selected="false">
+          상시채용 <span class="tn">{alwaysN}</span>
+        </button>
+      </div>
+    )}
+    <div class="count" id="count"><b>{deadlineN}</b>건 표시 중</div>
     <div class="list" id="list">
-      {jobs.map((j, i) => (
-        <>
-          {cut > 0 && i === cut && (
-            <div class="section-h grp" id="divider">
-              상시채용 <b class="gn">{alwaysN}</b>건 · 마감일 없이 언제든 지원
-            </div>
-          )}
-          <JobCard job={j} />
-        </>
-      ))}
+      {jobs.map((j) => <JobCard job={j} />)}
       <div class="empty" id="empty" hidden>
         <b>조건에 맞는 자리가 없습니다</b>
         검색어를 줄이거나 필터를 해제해 보세요.
+        <button class="othertab" id="otherTab" type="button" hidden></button>
       </div>
     </div>
 
@@ -107,18 +103,60 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
    * 기업·경력은 "무엇을" 고르는 것이고, 이건 "언제까지"를 고르는 것이라
    * 시그니처 색인 스틸블루로 구분합니다.
    */
-  #fOp .chip {
-    border-color: var(--steel);
-    color: var(--steel);
-    font-weight: 500;
+  /*
+   * 접수 방식 탭.
+   * 상시채용이 목록의 3분의 2를 차지하면서 한 목록에 담을 수 없게 됐습니다.
+   * 아래에 쌓아두면 사실상 안 보이므로 탭으로 나눕니다.
+   * 시그니처 색인 스틸블루로 선택 상태를 표시합니다.
+   */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line, #DDE1DE);
+    margin-bottom: 4px;
   }
-  #fOp .chip .n { color: var(--steel); opacity: .7; }
-  #fOp .chip[aria-pressed='true'] {
-    background: var(--steel);
-    border-color: var(--steel);
-    color: #fff;
+  .tabs .tab {
+    appearance: none;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 14px;
+    color: #858B92;
+    cursor: pointer;
+    white-space: nowrap;
   }
-  #fOp .chip[aria-pressed='true'] .n { color: #fff; opacity: .8; }
+  .tabs .tab:hover { color: var(--ink, #16181C); }
+  .tabs .tab[aria-selected='true'] {
+    color: var(--steel, #2D5F7C);
+    border-bottom-color: var(--steel, #2D5F7C);
+    font-weight: 600;
+  }
+  .tabs .tn {
+    margin-left: 5px;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    opacity: .75;
+  }
+  @media (max-width: 400px) {
+    .tabs .tab { padding: 10px 8px; font-size: 13px; }
+  }
+
+  .othertab {
+    display: block;
+    margin: 10px auto 0;
+    padding: 7px 14px;
+    border: 1px solid var(--steel, #2D5F7C);
+    border-radius: 999px;
+    background: none;
+    color: var(--steel, #2D5F7C);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .othertab:hover { background: var(--steel, #2D5F7C); color: #fff; }
 
   /* 접힌 칩. 카드와 마찬가지로 .chip 규칙이 [hidden] 을 이기므로 못박습니다. */
   .chips .chip[hidden] { display: none !important; }
@@ -154,33 +192,11 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
 <script>
   // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
   const cards = [...document.querySelectorAll('#list .card')];
-  const state = { q: '', co: new Set(), ca: new Set(), op: new Set(), sort: 'dday' };
+  const state = { q: '', co: new Set(), ca: new Set(), tab: '마감 있음', sort: 'dday' };
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
-  const divider = document.getElementById('divider');
   const total = cards.length;
-
-  /**
-   * 상시채용 구획선을 첫 상시 카드 바로 앞으로 옮깁니다.
-   * 아래 경우에는 숨깁니다. 구획선만 덩그러니 남으면 오히려 헷갈립니다.
-   *  - 기업별 정렬일 때. 마감과 상시가 섞이므로 구획이 뜻을 잃습니다.
-   *  - 필터 결과에 상시가 없거나, 반대로 상시만 남았을 때.
-   */
-  function placeDivider() {
-    if (!divider) return;
-    const vis = cards.filter((c) => !c.hidden);
-    const firstAlways = vis.find((c) => c.dataset.op === '상시채용');
-    const hasDeadline = vis.some((c) => c.dataset.op === '마감 있음');
-    if (state.sort !== 'dday' || !firstAlways || !hasDeadline) {
-      divider.hidden = true;
-      return;
-    }
-    divider.querySelector('.gn').textContent =
-      vis.filter((c) => c.dataset.op === '상시채용').length;
-    divider.hidden = false;
-    list.insertBefore(divider, firstAlways);
-  }
 
   function apply() {
     const q = state.q.trim().toLowerCase();
@@ -189,16 +205,38 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
       const ok =
         (!state.co.size || state.co.has(c.dataset.co)) &&
         (!state.ca.size || state.ca.has(c.dataset.career)) &&
-        (!state.op.size || state.op.has(c.dataset.op)) &&
+        c.dataset.op === state.tab &&
         (!q || c.dataset.text.includes(q));
       c.hidden = !ok;
       if (ok) shown++;
     }
     empty.hidden = shown > 0;
+    // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
+    const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
     count.innerHTML = shown
-      ? `<b>${shown}</b>건 표시 중${shown < total ? ` · 전체 ${total}건` : ''}`
+      ? `<b>${shown}</b>건 표시 중${shown < inTab ? ` · ${state.tab} 전체 ${inTab}건` : ''}`
       : '조건에 맞는 자리 없음';
-    placeDivider();
+
+    // 이 탭에서 0건이어도 반대 탭에는 있을 수 있습니다.
+    // 42dot 처럼 상시채용만 하는 회사를 "마감 있는 공고" 탭에서 고르면 빈 화면이 됩니다.
+    // 그대로 두면 공고가 없는 줄 알고 떠납니다.
+    const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+    const inOther = cards.filter((c) => {
+      const q2 = state.q.trim().toLowerCase();
+      return c.dataset.op === other &&
+        (!state.co.size || state.co.has(c.dataset.co)) &&
+        (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!q2 || c.dataset.text.includes(q2));
+    }).length;
+    const hint = document.getElementById('otherTab');
+    if (hint) {
+      if (!shown && inOther) {
+        hint.innerHTML = `이 조건에 맞는 자리가 <b>${other}</b>에 ${inOther}건 있습니다.`;
+        hint.hidden = false;
+      } else {
+        hint.hidden = true;
+      }
+    }
   }
 
   function sortCards() {
@@ -210,7 +248,6 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
           ? a.dataset.dday - b.dataset.dday
           : a.dataset.co.localeCompare(b.dataset.co, 'ko'));
     arr.forEach((c) => list.insertBefore(c, empty));
-    placeDivider();
   }
 
   /**
@@ -273,6 +310,27 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
     rt = setTimeout(layoutChips, 150);
   });
   layoutChips();
+
+  // 탭 전환. 필터·검색어는 그대로 두고 대상만 바꿉니다.
+  document.querySelectorAll('.tabs .tab').forEach((t) => {
+    t.addEventListener('click', () => {
+      state.tab = t.dataset.tab;
+      document.querySelectorAll('.tabs .tab').forEach((o) => {
+        o.setAttribute('aria-selected', String(o === t));
+      });
+      // 상시채용은 마감일이 없어 "마감 임박순" 이 뜻을 잃습니다. 최근 게시순으로 둡니다.
+      apply();
+      layoutChips();
+    });
+  });
+
+  const hintBtn = document.getElementById('otherTab');
+  if (hintBtn) {
+    hintBtn.addEventListener('click', () => {
+      const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+      document.querySelector(`.tabs .tab[data-tab="${other}"]`).click();
+    });
+  }
 
   document.querySelectorAll('.chip:not(.morebtn)').forEach((b) => {
     b.addEventListener('click', () => {
