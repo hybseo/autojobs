@@ -1,0 +1,25 @@
+# 자율주행·모빌리티 소프트웨어 기업 후보
+#
+# 자동차부품(KAICA)·PCB(KPCA)와 달리 이 분야는 공식 회원사 명단이 없습니다.
+# 그래서 이 목록은 협회 자료가 아니라 사람이 고른 것입니다. 빠진 곳이 있을 수
+# 있고, 회사가 없어지거나 이름이 바뀔 수 있습니다. 주기적으로 손봐야 합니다.
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_startup.txt
+#
+# 확인 완료 (2026-08-28)
+#   스트라드비전  → 그리팅 사용. code=stradvision, 26건. 바로 등록 가능
+#   42dot        → 자체 구축 채용페이지. robots.txt 는 Allow(/api/ 만 차단).
+#                  전용 파서가 필요해 지금 어댑터로는 수집 불가
+#
+# 나머지는 탐지기로 확인해야 합니다.
+
+스트라드비전,https://stradvision.com
+포티투닷,https://42dot.ai
+모라이,https://morai.ai
+서울로보틱스,https://seoulrobotics.org
+뷰런테크놀로지,https://vueron.com
+라이드플럭스,https://rideflux.com
+오토노머스에이투지,https://autoa2z.com
+텔레칩스,https://telechips.com
+넥스트칩,https://nextchip.com
