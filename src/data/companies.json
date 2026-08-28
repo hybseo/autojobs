@@ -77,6 +77,10 @@
    "industry": ["자동차부품", "IT"], "enabled": true,
    "note": "자율주행 인지 SW. 서울·포항. 확인 시점 26건"},
 
+  {"name": "라이드플럭스",     "slug": "rideflux",        "ats": "greeting",  "code": "rideflux",
+   "industry": ["자동차부품", "IT"], "enabled": true,
+   "note": "자율주행 SW. 서울·제주·화성. 확인 시점 14건"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
