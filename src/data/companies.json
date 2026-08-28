@@ -69,6 +69,10 @@
   {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": true,
    "note": "타이어보강재. 확인 시점 공고 0건"},
 
+  {"name": "LG그룹",       "slug": "lg-careers",      "ats": "lg",        "code": "LGE,LGIT,MAGNA,LGES",
+   "industry": ["자동차부품", "전기전자"], "enabled": true,
+   "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션만. 코드를 늘리면 계열사가 추가됨"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
