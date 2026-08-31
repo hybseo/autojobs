@@ -47,8 +47,22 @@ MAX_PAGES = 25     # 안전장치. 500건이면 충분합니다
 # en-EN, ko-KR, de-DE 같은 언어 코드. 사이트 이름이 아닙니다.
 LANG = re.compile(r"[a-z]{2}-[A-Za-z]{2}")
 
-KOREA = re.compile(r"korea|한국|서울|seoul|경기|인천|부산|대구|울산|대전|광주"
-                   r"|pangyo|판교|수원|화성|천안|아산|창원", re.I)
+# 한국 근무지 판별.
+#
+# Workday 는 근무지를 자유 문자열로 줍니다. 회사마다 표기가 제각각이라
+# 목록에 없는 지명이 나오면 해외로 잘못 걸러집니다.
+# 그래서 아래 목록을 넉넉히 두고, 그래도 전부 걸러지면 실제로 어떤 문자열이
+# 왔는지 로그에 남깁니다. 추측으로 늘리지 말고 그 로그를 보고 추가하세요.
+KOREA = re.compile(
+    r"korea|대한민국|한국"
+    r"|서울|seoul|부산|busan|대구|daegu|인천|incheon|광주|gwangju"
+    r"|대전|daejeon|울산|ulsan|세종|sejong"
+    r"|경기|gyeonggi|강원|충북|충남|전북|전남|경북|경남|제주|jeju"
+    r"|수원|suwon|성남|판교|pangyo|용인|안양|부천|안산|시흥|화성|평택|김포|파주|이천|광명"
+    r"|천안|cheonan|아산|asan|당진|서산|충주|청주|cheongju"
+    r"|전주|jeonju|완주|익산|군산|여수|순천|목포"
+    r"|포항|pohang|구미|gumi|경주|안동|김천|창원|changwon|김해|양산|거제|진주"
+    r"|원주|춘천|강릉", re.I)
 
 
 def _parts(code):
@@ -121,8 +135,15 @@ def list_open(code, overseas=False):
         time.sleep(0.4)
 
     if not overseas:
+        before = out
         out = [x for x in out if KOREA.search(
             f"{x.get('locationsText','')} {x.get('title','')}")]
+        # 받아온 건 있는데 전부 걸러졌다면 지명 목록이 부족한 것입니다.
+        # 무엇이 왔는지 남겨야 다음에 고칠 수 있습니다.
+        if before and not out:
+            seen = sorted({(x.get("locationsText") or "?") for x in before})[:6]
+            print(f"      ! 한국 근무지로 인식된 공고가 없습니다. "
+                  f"받은 근무지 표기: {seen}")
     return out
 
 
