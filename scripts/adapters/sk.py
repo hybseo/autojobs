@@ -65,13 +65,20 @@ PARAMS = {
 
 # 응답 필드 이름을 몰라 후보를 여러 개 둡니다.
 # 첫 실행 로그에 실제 이름이 찍히면 맨 앞으로 옮기고 나머지는 지우세요.
+# 2026-08-31 실제 응답에서 확인한 이름입니다. 추측이 아닙니다.
+# 실제 항목 필드:
+#   corpName, title, noticeID, jobNoticeNo, jobRole, recruitType,
+#   start, end, remainDay, workingArea, workingType, scrapIdx
 FIELD = {
-    "id":      ("recruitNo", "recruitSeq", "recruitId", "seq", "id"),
-    "title":   ("recruitTitle", "title", "subject", "recruitNm"),
-    "company": ("corpName", "companyName", "corpNm", "company"),
-    "close":   ("endDate", "recruitEndDate", "closeDate", "endDt"),
-    "open":    ("startDate", "recruitStartDate", "openDate", "startDt"),
-    "type":    ("recruitType", "recruitTypeName", "employmentType"),
+    "id":       ("noticeID", "jobNoticeNo"),
+    "title":    ("title",),
+    "company":  ("corpName",),
+    "open":     ("start",),
+    "close":    ("end",),
+    "remain":   ("remainDay",),
+    "location": ("workingArea",),
+    "type":     ("recruitType",),
+    "role":     ("jobRole",),
 }
 
 
@@ -200,6 +207,19 @@ def strip_html(s):
     return re.sub(r"\n{2,}", "\n", html.unescape(s)).strip()
 
 
+def _dday(v):
+    """남은 일수. 'D-7' 이나 숫자로 옵니다.
+
+    'D-7' 은 7일 남았다는 뜻이지 -7 이 아닙니다. 부호를 그대로 읽으면
+    음수가 되어 이미 마감된 공고로 취급됩니다. 숫자만 뽑습니다.
+    """
+    t = str(v or "")
+    if re.search(r"오늘|today|D-?DAY", t, re.I):
+        return 0
+    m = re.search(r"\d+", t)
+    return int(m.group(0)) if m else None
+
+
 def _date(v):
     m = re.search(r"(\d{4})[-./](\d{1,2})[-./](\d{1,2})", str(v or ""))
     if not m:
@@ -227,12 +247,12 @@ def fetch(company):
             "company": name,
             "companySlug": slug,
             "title": title,
-            "location": "",
+            "location": str(_pick(x, "location") or ""),
             # SK 는 신입/경력 구분을 목록에서 확실히 주지 않습니다. 지어내지 않습니다.
             "career": "무관",
             "postedAt": _date(_pick(x, "open")),
             "closesAt": _date(_pick(x, "close")),
-            "dday": None,
+            "dday": _dday(_pick(x, "remain")),
             "multiRole": False,
             "sourceTitle": "",
             "sourceUrl": DETAIL.format(rid),
