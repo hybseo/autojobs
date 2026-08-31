@@ -67,7 +67,10 @@ SIGNATURES = [
     ("ashby",     r"jobs\.ashbyhq\.com/([a-z0-9\-\_]+)"),
     # Workday 는 {회사}.{서버}.myworkdayjobs.com/{사이트} 구조입니다.
     # 셋 다 있어야 API 주소를 만들 수 있어 통째로 잡습니다.
-    ("workday",   r"([a-z0-9\-]+\.wd\d+\.myworkdayjobs\.com/[a-zA-Z0-9\-\_]+)"),
+    # 주소에 언어 코드가 끼는 경우가 있습니다.
+    #   valeo.wd3.myworkdayjobs.com/en-EN/Valeo_Careers
+    # 언어 코드까지 포함해 두 조각을 잡아둡니다. 어댑터가 걸러 씁니다.
+    ("workday",   r"([a-z0-9\-]+\.wd\d+\.myworkdayjobs\.com(?:/[a-zA-Z0-9\-\_]+){1,2})"),
     ("greenhouse", r"boards\.greenhouse\.io/([a-z0-9\-]+)"),
     ("lever",     r"jobs\.lever\.co/([a-z0-9\-]+)"),
 ]
