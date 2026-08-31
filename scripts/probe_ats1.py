@@ -55,11 +55,19 @@ CAREER_PATHS = ["", "/recruit", "/recruit/", "/career", "/careers",
                 "/jobs", "/ko/recruit", "/company/recruit", "/recruit.html"]
 
 # ATS 지문. 페이지 HTML 안에 이 흔적이 있으면 그 ATS 를 씁니다.
+# 괄호로 잡히는 부분이 그대로 companies.json 의 code 가 됩니다.
+# 어느 조각을 잡는지가 중요합니다. 실제로 Workday 에서 회사명이 아니라
+# 서버 번호(wd3)를 잡아, 탐지 결과만 보고는 어느 회사인지 알 수 없었습니다.
 SIGNATURES = [
     ("greeting",  r"([a-z0-9\-]+)\.career\.greetinghr\.com"),
     ("recruiter", r"([a-z0-9\-]+)\.recruiter\.co\.kr"),
     ("jobda",     r"([a-z0-9\-]+)\.jobda\.im"),
-    ("workday",   r"([a-z0-9\-]+)\.myworkdayjobs\.com"),
+    # Ashby. 42dot 이 이걸 씁니다. 목록에 없어서 "ATS없음" 으로 잘못
+    # 분류됐고, 나중에 직접 열어보고서야 알았습니다.
+    ("ashby",     r"jobs\.ashbyhq\.com/([a-z0-9\-\_]+)"),
+    # Workday 는 {회사}.{서버}.myworkdayjobs.com/{사이트} 구조입니다.
+    # 셋 다 있어야 API 주소를 만들 수 있어 통째로 잡습니다.
+    ("workday",   r"([a-z0-9\-]+\.wd\d+\.myworkdayjobs\.com/[a-zA-Z0-9\-\_]+)"),
     ("greenhouse", r"boards\.greenhouse\.io/([a-z0-9\-]+)"),
     ("lever",     r"jobs\.lever\.co/([a-z0-9\-]+)"),
 ]
