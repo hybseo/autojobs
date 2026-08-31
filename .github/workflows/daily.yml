@@ -37,7 +37,9 @@ jobs:
           git config user.email "actions@github.com"
           git add src/data/jobs.json
           git diff --staged --quiet && echo "변경 없음" && exit 0
-          git commit -m "공고 갱신 $(date +%F)"
+          # Actions 서버는 UTC 입니다. 커밋 메시지도 한국 날짜로 적어야
+          # 나중에 이력을 볼 때 데이터의 collectedAt 과 어긋나지 않습니다.
+          git commit -m "공고 갱신 $(TZ=Asia/Seoul date +%F)"
 
           # 수집하는 동안 누가 파일을 올렸으면 push 가 거부됩니다.
           # 그냥 실패시키면 수집한 결과가 통째로 날아갑니다. 실제로 그런 적이 있습니다.
