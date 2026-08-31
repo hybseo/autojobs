@@ -1,0 +1,359 @@
+---
+import Base from '../layouts/Base.astro';
+import JobCard from '../components/JobCard.astro';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies } from '../lib.js';
+
+// 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
+const jobs = openJobs().sort(byDeadline);
+const cos = companies().length;
+const alwaysN = jobs.filter(isAlways).length;
+const deadlineN = jobs.length - alwaysN;
+const tally = (f) => {
+  const m = new Map();
+  jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
+};
+// 검색 노출은 키워드가 좌우합니다. 브랜드만 남기면 신규 도메인은 잡힐 근거가 없습니다.
+// 두 번째 산업이 실제로 들어오면 그때 넓히세요.
+const title = '자동차부품 채용 통합 검색 | SEARCHJOB';
+// 검색 결과에 뜨는 설명문입니다.
+//
+// 기업 수·공고 수 같은 숫자는 넣지 않습니다. 매일 바뀌는데 검색엔진은
+// 크롤링 시점 값을 캐시해서, 며칠 지난 숫자가 그대로 노출됩니다.
+// 실제로 구글 검색 결과에 "15곳 58건" 이 한참 남아 있었습니다.
+//
+// 산업도 넣지 않습니다. 자동차부품 외 산업을 추가할 예정이라,
+// 여기서 한정하면 나중에 사실과 어긋납니다.
+// 다만 <title> 에는 키워드를 남겨둡니다. 검색 노출의 근거가 거기 있습니다.
+const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모았습니다. 흩어진 채용정보를 한눈에 검색하고 원문으로 바로 이동하세요.';
+---
+<Base title={title} description={desc}>
+  <header class="mast">
+    <div class="wrap">
+      <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
+      <div class="meta">
+        <b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+        {STALE_DAYS >= 1 && (
+          <span class="stale">{STALE_DAYS}일 전 정보 · 마감된 공고가 있을 수 있습니다</span>
+        )}
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="wrap ctrl-in">
+      <div class="searchrow">
+        <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
+        <button class="sortbtn" id="sort" type="button">마감 임박순</button>
+      </div>
+      <div class="chips" id="fCo">
+        {tally((j) => j.company).map(([v, n]) => (
+          <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+        <button class="chip morebtn" id="moreCo" type="button" hidden></button>
+      </div>
+      <div class="chips" id="fCa">
+        {tally((j) => j.career).map(([v, n]) => (
+          <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
+        ))}
+        <button class="chip morebtn" id="moreCa" type="button" hidden></button>
+      </div>
+
+    </div>
+  </div>
+
+  <main class="wrap">
+    {alwaysN > 0 && deadlineN > 0 && (
+      <div class="tabs" role="tablist" aria-label="접수 방식">
+        <button class="tab" role="tab" data-tab="마감 있음" aria-selected="true">
+          마감 있는 공고 <span class="tn">{deadlineN}</span>
+        </button>
+        <button class="tab" role="tab" data-tab="상시채용" aria-selected="false">
+          상시채용 <span class="tn">{alwaysN}</span>
+        </button>
+      </div>
+    )}
+    <div class="count" id="count"><b>{deadlineN}</b>건 표시 중</div>
+    <div class="list" id="list">
+      {jobs.map((j) => <JobCard job={j} />)}
+      <div class="empty" id="empty" hidden>
+        <b>조건에 맞는 자리가 없습니다</b>
+        검색어를 줄이거나 필터를 해제해 보세요.
+        <button class="othertab" id="otherTab" type="button" hidden></button>
+      </div>
+    </div>
+
+    <div class="section-h">기업별로 보기</div>
+    <ul class="archive">
+      {companies().map((c) => (
+        <li><a href={`/company/${c.slug}/`}>{c.name} 채용</a><time>{c.jobs.length}건</time></li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style is:global>
+  /*
+   * 카드 숨김.
+   * hidden 속성만으로는 안 됩니다. global.css 의 .card 규칙이 클래스 선택자라
+   * 브라우저 기본값인 [hidden]{display:none} 을 우선순위에서 이깁니다.
+   * 그래서 필터를 걸어도 카드가 그대로 보였습니다. !important 로 못박습니다.
+   */
+  .list .card[hidden] { display: none !important; }
+
+  /* 목록 중간 구획선. 기존 .section-h 를 쓰되 여백만 조정합니다. */
+  .grp { margin-top: 2rem; }
+  .grp .gn { font-variant-numeric: tabular-nums; }
+
+  /*
+   * 접수 방식 필터는 성격이 다릅니다.
+   * 기업·경력은 "무엇을" 고르는 것이고, 이건 "언제까지"를 고르는 것이라
+   * 시그니처 색인 스틸블루로 구분합니다.
+   */
+  /*
+   * 접수 방식 탭.
+   * 상시채용이 목록의 3분의 2를 차지하면서 한 목록에 담을 수 없게 됐습니다.
+   * 아래에 쌓아두면 사실상 안 보이므로 탭으로 나눕니다.
+   * 시그니처 색인 스틸블루로 선택 상태를 표시합니다.
+   */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line, #DDE1DE);
+    margin-bottom: 4px;
+  }
+  .tabs .tab {
+    appearance: none;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 14px;
+    color: #858B92;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tabs .tab:hover { color: var(--ink, #16181C); }
+  .tabs .tab[aria-selected='true'] {
+    color: var(--steel, #2D5F7C);
+    border-bottom-color: var(--steel, #2D5F7C);
+    font-weight: 600;
+  }
+  .tabs .tn {
+    margin-left: 5px;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    opacity: .75;
+  }
+  @media (max-width: 400px) {
+    .tabs .tab { padding: 10px 8px; font-size: 13px; }
+  }
+
+  .othertab {
+    display: block;
+    margin: 10px auto 0;
+    padding: 7px 14px;
+    border: 1px solid var(--steel, #2D5F7C);
+    border-radius: 999px;
+    background: none;
+    color: var(--steel, #2D5F7C);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .othertab:hover { background: var(--steel, #2D5F7C); color: #fff; }
+
+  /* 접힌 칩. 카드와 마찬가지로 .chip 규칙이 [hidden] 을 이기므로 못박습니다. */
+  .chips .chip[hidden] { display: none !important; }
+
+  /* 더보기 버튼은 필터가 아니라 조작 버튼이라 점선으로 구분합니다. */
+  .chips .morebtn {
+    border-style: dashed;
+    color: #858B92;
+    font-variant-numeric: tabular-nums;
+  }
+  .chips .morebtn:hover { color: var(--ink, #16181C); }
+
+  /*
+   * 갱신이 밀렸을 때만 나타납니다.
+   * 숨기는 것보다 알리는 편이 낫습니다. 구직자가 마감된 공고를
+   * 오늘 것으로 알고 지원하는 쪽이 훨씬 나쁩니다.
+   */
+  .stale {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #FBE9E7;
+    color: #A03A2B;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  @media (max-width: 520px) {
+    .stale { display: block; margin: 6px 0 0; }
+  }
+</style>
+
+<script>
+  // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
+  const cards = [...document.querySelectorAll('#list .card')];
+  const state = { q: '', co: new Set(), ca: new Set(), tab: '마감 있음', sort: 'dday' };
+  const list = document.getElementById('list');
+  const empty = document.getElementById('empty');
+  const count = document.getElementById('count');
+  const total = cards.length;
+
+  function apply() {
+    const q = state.q.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const ok =
+        (!state.co.size || state.co.has(c.dataset.co)) &&
+        (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        c.dataset.op === state.tab &&
+        (!q || c.dataset.text.includes(q));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    empty.hidden = shown > 0;
+    // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
+    const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
+    count.innerHTML = shown
+      ? `<b>${shown}</b>건 표시 중${shown < inTab ? ` · ${state.tab} 전체 ${inTab}건` : ''}`
+      : '조건에 맞는 자리 없음';
+
+    // 이 탭에서 0건이어도 반대 탭에는 있을 수 있습니다.
+    // 42dot 처럼 상시채용만 하는 회사를 "마감 있는 공고" 탭에서 고르면 빈 화면이 됩니다.
+    // 그대로 두면 공고가 없는 줄 알고 떠납니다.
+    const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+    const inOther = cards.filter((c) => {
+      const q2 = state.q.trim().toLowerCase();
+      return c.dataset.op === other &&
+        (!state.co.size || state.co.has(c.dataset.co)) &&
+        (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!q2 || c.dataset.text.includes(q2));
+    }).length;
+    const hint = document.getElementById('otherTab');
+    if (hint) {
+      if (!shown && inOther) {
+        hint.innerHTML = `이 조건에 맞는 자리가 <b>${other}</b>에 ${inOther}건 있습니다.`;
+        hint.hidden = false;
+      } else {
+        hint.hidden = true;
+      }
+    }
+  }
+
+  function sortCards() {
+    // 상시채용은 data-dday 가 모두 같은 값이라 원래 순서(최근 게시순)가 유지됩니다.
+    const arr = [...cards].sort((a, b) =>
+      state.sort === 'dday'
+        ? a.dataset.dday - b.dataset.dday
+        : a.dataset.co === b.dataset.co
+          ? a.dataset.dday - b.dataset.dday
+          : a.dataset.co.localeCompare(b.dataset.co, 'ko'));
+    arr.forEach((c) => list.insertBefore(c, empty));
+  }
+
+  /**
+   * 기업 칩이 한없이 길어지는 것을 막습니다.
+   * 고정 개수로 자르면 안 됩니다. 한 줄에 들어가는 개수가 화면 폭마다 다릅니다.
+   * 모바일은 2~3개, 데스크톱은 8개가 넘습니다. 그래서 실제로 그려진 위치를 재서
+   * 첫 줄에 남는 것만 두고 나머지를 접습니다.
+   */
+  const foldables = [
+    [document.getElementById('fCo'), document.getElementById('moreCo')],
+    [document.getElementById('fCa'), document.getElementById('moreCa')],
+  ].filter(([box, btn]) => box && btn);
+
+  function foldOne(box, btn) {
+    const chips = [...box.querySelectorAll('.chip:not(.morebtn)')];
+    if (!chips.length) return;
+    chips.forEach((c) => { c.hidden = false; });
+    btn.hidden = true;
+
+    if (box.dataset.expanded === '1') {
+      btn.hidden = false;
+      btn.textContent = '접기';
+      return;
+    }
+
+    const top = chips[0].offsetTop;
+    // 선택된 칩은 접지 않습니다. 접히면 해제할 방법이 없어집니다.
+    const foldable = chips.filter((c) => c.getAttribute('aria-pressed') !== 'true');
+    let folded = 0;
+    for (const c of foldable) {
+      if (c.offsetTop > top) { c.hidden = true; folded++; }
+    }
+    if (!folded) return;
+
+    btn.hidden = false;
+    btn.textContent = `+${folded}개 더`;
+    // 버튼이 붙으면서 줄이 넘칠 수 있습니다. 넘치면 뒤에서부터 하나씩 더 접습니다.
+    const visible = () => foldable.filter((c) => !c.hidden);
+    let guard = 0;
+    while (btn.offsetTop > top && visible().length && guard++ < 50) {
+      visible().pop().hidden = true;
+      folded++;
+      btn.textContent = `+${folded}개 더`;
+    }
+  }
+
+  function layoutChips() {
+    foldables.forEach(([box, btn]) => foldOne(box, btn));
+  }
+
+  foldables.forEach(([box, btn]) => {
+    btn.addEventListener('click', () => {
+      box.dataset.expanded = box.dataset.expanded === '1' ? '0' : '1';
+      layoutChips();
+    });
+  });
+  let rt;
+  window.addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(layoutChips, 150);
+  });
+  layoutChips();
+
+  // 탭 전환. 필터·검색어는 그대로 두고 대상만 바꿉니다.
+  document.querySelectorAll('.tabs .tab').forEach((t) => {
+    t.addEventListener('click', () => {
+      state.tab = t.dataset.tab;
+      document.querySelectorAll('.tabs .tab').forEach((o) => {
+        o.setAttribute('aria-selected', String(o === t));
+      });
+      // 상시채용은 마감일이 없어 "마감 임박순" 이 뜻을 잃습니다. 최근 게시순으로 둡니다.
+      apply();
+      layoutChips();
+    });
+  });
+
+  const hintBtn = document.getElementById('otherTab');
+  if (hintBtn) {
+    hintBtn.addEventListener('click', () => {
+      const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+      document.querySelector(`.tabs .tab[data-tab="${other}"]`).click();
+    });
+  }
+
+  document.querySelectorAll('.chip:not(.morebtn)').forEach((b) => {
+    b.addEventListener('click', () => {
+      const s = state[b.dataset.k];
+      s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v);
+      b.setAttribute('aria-pressed', s.has(b.dataset.v));
+      apply();
+      layoutChips();
+    });
+  });
+  document.getElementById('q').addEventListener('input', (e) => {
+    state.q = e.target.value; apply();
+  });
+  document.getElementById('sort').addEventListener('click', (e) => {
+    state.sort = state.sort === 'dday' ? 'co' : 'dday';
+    e.target.textContent = state.sort === 'dday' ? '마감 임박순' : '기업별';
+    sortCards();
+  });
+</script>
