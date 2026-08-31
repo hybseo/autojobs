@@ -1,9 +1,285 @@
 ﻿name,status,ats,code,home,found_at,how,note
-라이드플럭스,발견,greeting,rideflux,https://rideflux.com,https://rideflux.com,링크,
-넥스트칩,ATS없음,,,https://nextchip.com,,,채용링크 2개
-모라이,채용링크없음,,,https://morai.ai,,,채용링크 0개
-뷰런테크놀로지,ATS없음,,,https://vueron.com,,,채용링크 1개
-서울로보틱스,채용링크없음,,,https://seoulrobotics.org,,,채용링크 0개
-오토노머스에이투지,채용링크없음,,,https://autoa2z.com,,,채용링크 0개
-텔레칩스,채용링크없음,,,https://telechips.com,,,채용링크 0개
-포티투닷,ATS없음,,,https://42dot.ai,,,채용링크 6개
+니프코코리아,발견,recruiter,nifco,https://www.nifco.co.kr,https://www.nifco.co.kr,링크,
+동원금속,발견,greeting,dwmic,https://www.dwmic.com,https://www.dwmic.com,링크,
+발레오전장시스템스코리아,발견,workday,valeo.wd3.myworkdayjobs.com/en-EN,https://www.valeo.com,https://www.valeo.com,링크,
+에스에이치비,발견,recruiter,slworld,https://www.slworld.com,https://www.slworld.com,링크,
+에스엘미러텍,발견,recruiter,slworld,https://www.slworld.com,https://www.slworld.com,링크,
+에스엠알오토모티브모듈코리아,발견,greeting,careers.motherson.com,https://www.smr-automotive.com,https://careers.motherson.com/,자체도메인,채용링크 3개
+엘링크링거코리아,발견,workday,elringklinger.wd3.myworkdayjobs.com/de-DE,https://www.elringklinger.kr,https://elringklinger.de/en/career/job-openings,링크,채용링크 2개
+엘에스이모빌리티솔루션,발견,recruiter,lsems,https://www.lsems.com,https://www.lsems.com,링크,
+일진하이솔루스,발견,workday,iljini.wd102.myworkdayjobs.com/ko-KR,https://www.hysolus.co.kr,https://www.hysolus.co.kr,링크,
+케이디에스,발견,recruiter,slworld,https://www.samlip.co.kr,https://www.samlip.co.kr,링크,
+케이씨씨글라스,발견,greeting,kccglass,https://www.kccglass.co.kr,https://kccglass.career.greetinghr.com/ko,주소추정,채용링크 0개
+한국석유공업,발견,recruiter,kpgroup,https://www.koreapetroleum.com,https://www.koreapetroleum.com,링크,
+가레트모션코리아,ATS없음,,,https://www.garrettmotion.com,,,채용링크 6개
+게스템프카테크,채용링크없음,,,https://kartek.co.kr,,,채용링크 0개
+고아정공,채용링크없음,,,http://www.koh-a.com,,,채용링크 0개
+광성기업,ATS없음,,,https://www.belite.co.kr,,,채용링크 6개
+광진기계,채용링크없음,,,http://www.kwangjin.co.kr,,,채용링크 0개
+광진상공,ATS없음,,,https://www.kwangjin-kr.com,,,채용링크 1개
+금호에이치티,채용링크없음,,,https://www.kumhoht.co.kr,,,채용링크 0개
+나전,채용링크없음,,,http://www.najeon.co.kr,,,채용링크 0개
+남선알미늄,채용링크없음,,,https://www.namsun.co.kr,,,채용링크 0개
+남양금속,채용링크없음,,,https://www.namyangmetals.co.kr,,,채용링크 0개
+남양넥스모,채용링크없음,,,https://www.nynexmo.com,,,채용링크 0개
+네오오토,ATS없음,,,https://www.neooto.kr,,,채용링크 3개
+네오텍,채용링크없음,,,http://www.neotecauto.com,,,채용링크 0개
+니덱모빌리티코리아,접속실패,,,http://gw.nmok.nidec.com,,,https://gw.nmok.nidec.com TimeoutError:timed out | http://gw.nmok.nidec.com TimeoutError:timed out | https://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi | http://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi
+다스,채용링크없음,,,https://www.i-das.com,,,채용링크 0개
+대동금속,ATS없음,,,https://www.daedongmetals.co.kr,,,채용링크 1개
+대동기어,ATS없음,,,https://www.daedonggear.com,,,채용링크 2개
+대동도어,ATS없음,,,http://www.hi-lex.co.kr,,,채용링크 1개
+대동시스템,ATS없음,,,https://www.dds.co.kr,,,채용링크 3개
+대동하이렉스,ATS없음,,,http://www.hi-lex.co.kr,,,채용링크 1개
+대승,ATS없음,,,http://www.dae-seung.co.kr,,,채용링크 5개
+대승정밀,ATS없음,,,http://www.dae-seung.co.kr,,,채용링크 5개
+대우공업,접속실패,,,http://www.daewooindustry.com,,,https://www.daewooindustry.com TimeoutError:timed out | http://www.daewooindustry.com TimeoutError:timed out | https://daewooindustry.com TimeoutError:timed out | http://daewooindustry.com TimeoutError:timed out
+대원강업,채용링크없음,,,http://www.dwku.com,,,채용링크 0개
+대원산업,ATS없음,,,https://www.dwsu.co.kr,,,채용링크 3개
+대원정밀공업,ATS없음,,,https://www.dwjm.co.kr,,,채용링크 5개
+대유글로벌,접속실패,,,http://www.globaldayou.co.kr,,,https://www.globaldayou.co.kr gaierror:[Errno -2] Name or servi | http://www.globaldayou.co.kr gaierror:[Errno -2] Name or servi | https://globaldayou.co.kr gaierror:[Errno -2] Name or servi | http://globaldayou.co.kr gaierror:[Errno -2] Name or servi
+대유에이텍,ATS없음,,,https://www.dayouat.co.kr,,,채용링크 1개
+대유플러스,접속실패,,,http://www.dayouplus.co.kr,,,https://www.dayouplus.co.kr TimeoutError:timed out | http://www.dayouplus.co.kr TimeoutError:timed out | https://dayouplus.co.kr TimeoutError:timed out | http://dayouplus.co.kr TimeoutError:timed out
+대주정공,ATS없음,,,http://www.daejoopi.com,,,채용링크 4개
+대주코레스,접속실패,,,http://www.kores21.co.kr,,,https://www.kores21.co.kr gaierror:[Errno -2] Name or servi | http://www.kores21.co.kr gaierror:[Errno -2] Name or servi | https://kores21.co.kr gaierror:[Errno -2] Name or servi | http://kores21.co.kr gaierror:[Errno -2] Name or servi
+대창단조,채용링크없음,,,https://www.dcf.co.kr,,,채용링크 0개
+대풍공업,채용링크없음,,,https://www.dae-poong.co.kr,,,채용링크 0개
+대한소결금속,ATS없음,,,https://www.iksm.co.kr,,,채용링크 4개
+대한솔루션,ATS없음,,,http://www.dhsol.com,,,채용링크 6개
+대한칼소닉,채용링크없음,,,https://www.dhc.co.kr,,,채용링크 0개
+대호기계공업,접속실패,,,http://www.van.daeho403.ck.kr,,,https://www.van.daeho403.ck.kr gaierror:[Errno -2] Name or servi | http://www.van.daeho403.ck.kr gaierror:[Errno -2] Name or servi | https://van.daeho403.ck.kr gaierror:[Errno -2] Name or servi | http://van.daeho403.ck.kr gaierror:[Errno -2] Name or servi
+대흥알앤티,ATS없음,,,https://www.dhrnt.com,,,채용링크 5개
+덕양산업,채용링크없음,,,https://www.duckyang.co.kr,,,채용링크 0개
+덕일산업,ATS없음,,,https://www.duck-il.com,,,채용링크 2개
+덴소코리아,접속실패,,,http://www.denso.com/kr/ko,,,https://www.denso.com/kr/ko HTTP403 | http://www.denso.com/kr/ko HTTP403 | https://denso.com/kr/ko gaierror:[Errno -5] No address as | http://denso.com/kr/ko gaierror:[Errno -5] No address as
+동남정밀,홈페이지없음,,,,,,
+동보,ATS없음,,,https://www.dongbo.com,,,채용링크 2개
+동서기공,채용링크없음,,,https://www.dsmt.co.kr,,,채용링크 0개
+동서페더럴모굴,홈페이지없음,,,,,,
+동성티씨에스,홈페이지없음,,,,,,
+동아공업,채용링크없음,,,http://www.edmc.co.kr,,,채용링크 0개
+동아화성,ATS없음,,,https://www.dacm.com,,,채용링크 3개
+동양피스톤,ATS없음,,,https://www.dypiston.co.kr,,,채용링크 5개
+동희,ATS없음,,,https://www.donghee.co.kr,,,채용링크 1개
+동희산업,ATS없음,,,https://www.donghee.co.kr,,,채용링크 1개
+동희정공,ATS없음,,,https://www.donghee.co.kr,,,채용링크 1개
+두올,ATS없음,,,https://www.idual.co.kr,,,채용링크 1개
+두원공조,채용링크없음,,,https://www.dwdcc.com,,,채용링크 0개
+디아이씨,채용링크없음,,,https://www.dicorp.co.kr,,,채용링크 0개
+디알비오토모티브,ATS없음,,,https://www.drb-automotive.com/automotive,,,채용링크 2개
+디알액시온,채용링크없음,,,http://www.draxion.co.kr,,,채용링크 0개
+디에스시,ATS없음,,,https://www.godsc.co.kr,,,채용링크 6개
+디에이치오토리드,ATS없음,,,https://dhautolead.co.kr,,,채용링크 2개
+디에이치오토웨어,채용링크없음,,,https://www.dhautoware.co.kr,,,채용링크 0개
+디엔오토모티브,채용링크없음,,,https://www.dtrautomotive.com,,,채용링크 0개
+디엘모터스,채용링크없음,,,https://www.dmc.co.kr,,,채용링크 0개
+디엠씨,채용링크없음,,,http://www.dmcmotors.co.kr,,,채용링크 0개
+디젠,홈페이지없음,,,,,,
+로버트보쉬코리아,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
+리어코리아,ATS없음,,,https://www.lear.com,,,채용링크 4개
+리한,ATS없음,,,https://www.leehan.com,,,채용링크 2개
+만앤휴멜코리아,ATS없음,,,https://www.mann-hummel.com,,,채용링크 6개
+말레동현필터시스템,접속실패,,,http://www.kr.mahle.com,,,https://www.kr.mahle.com gaierror:[Errno -2] Name or servi | http://www.kr.mahle.com gaierror:[Errno -2] Name or servi | https://kr.mahle.com gaierror:[Errno -2] Name or servi | http://kr.mahle.com gaierror:[Errno -2] Name or servi
+명신,홈페이지없음,,,,,,
+명화공업,접속실패,,,http://www.myunghwa.com,,,https://www.myunghwa.com TimeoutError:timed out | http://www.myunghwa.com TimeoutError:timed out | https://myunghwa.com TimeoutError:timed out | http://myunghwa.com TimeoutError:timed out
+모베이스전자,ATS없음,,,http://www.mobaseelec.com,,,채용링크 5개
+모토닉,채용링크없음,,,https://www.motonic.com,,,채용링크 0개
+모트렉스,ATS없음,,,https://www.motrex.co.kr,,,채용링크 6개
+무등기업,채용링크없음,,,https://moodng.com,,,채용링크 0개
+반도코리아,ATS없음,,,https://www.bandokorea.co.kr,,,채용링크 2개
+베바스토코리아홀딩스,ATS없음,,,https://www.webasto-comfort.com/ko-kr,,,채용링크 1개
+베어링아트,ATS없음,,,https://www.iljin.com,,,채용링크 1개
+보고에이피,채용링크없음,,,http://www.bogoap.com,,,채용링크 0개
+보그워너창녕,ATS없음,,,https://www.borgwarner.com,,,채용링크 1개
+보쉬전장,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
+부라다워너,홈페이지없음,,,,,,
+부산주공,채용링크없음,,,http://www.pci21c.com,,,채용링크 0개
+브로제코리아,ATS없음,,,https://www.brose.com,,,채용링크 2개
+비욘드아이,ATS없음,,,https://www.beyondi.co.kr,,,채용링크 2개
+비테스코테크놀로지스코리아,ATS없음,,,https://www.vitesco-technologies.com,,,채용링크 6개
+삼보에이앤티,ATS없음,,,https://www.samboant.com,,,채용링크 2개
+삼보오토,ATS없음,,,http://www.samboauto.com,,,채용링크 1개
+삼성공조,채용링크없음,,,https://www.samsungcc.co.kr,,,채용링크 0개
+삼성발레오써멀시스템스,접속실패,,,http://www.samsungvaleo.com,,,https://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | http://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | https://samsungvaleo.com gaierror:[Errno -5] No address as | http://samsungvaleo.com gaierror:[Errno -5] No address as
+삼성전기,ATS없음,,,https://www.sem.samsung.co.kr,,,채용링크 6개
+삼송,접속실패,,,http://www.samsong.co.kr,,,https://www.samsong.co.kr gaierror:[Errno -2] Name or servi | http://www.samsong.co.kr gaierror:[Errno -2] Name or servi | https://samsong.co.kr gaierror:[Errno -5] No address as | http://samsong.co.kr gaierror:[Errno -5] No address as
+삼신화학공업,채용링크없음,,,https://esamshin.com,,,채용링크 0개
+삼우,채용링크없음,,,https://www.samwoogroup.co.kr,,,채용링크 0개
+삼진정공,채용링크없음,,,http://www.samjinnut.co.kr,,,채용링크 0개
+상신브레이크,ATS없음,,,https://www.sangsin.com,,,채용링크 6개
+새한산업,ATS없음,,,http://www.saehani.com,,,채용링크 3개
+서연이화,ATS없음,,,https://www.seoyoneh.com,,,채용링크 6개
+서연인테크,채용링크없음,,,https://www.seoyonintech.com,,,채용링크 0개
+서진산업,ATS없음,,,https://www.seojin.com,,,채용링크 6개
+서진오토모티브,ATS없음,,,https://www.secoautomotive.com,,,채용링크 6개
+서진캠,ATS없음,,,https://www.seojincam.com,,,채용링크 6개
+서한이노빌리티,ATS없음,,,https://www.seohan.com,,,채용링크 2개
+선일다이파스,ATS없음,,,https://www.sunildyfas.com,,,채용링크 3개
+세동,ATS없음,,,http://www.saedong.co.kr,,,채용링크 4개
+세움,홈페이지없음,,,,,,
+세원물산,ATS없음,,,https://www.se-won.co.kr,,,채용링크 6개
+세원이앤씨,채용링크없음,,,https://www.sewonenc.com,,,채용링크 0개
+세원이엔아이,ATS없음,,,https://www.se-won.co.kr,,,채용링크 6개
+세원테크,홈페이지없음,,,,,,
+세정,홈페이지없음,,,,,,
+세종공업,채용링크없음,,,http://www.sjku.co.kr,,,채용링크 0개
+세진,ATS없음,,,https://www.sejin-c.co.kr,,,채용링크 1개
+센싸타테크놀러지스코리아,접속실패,,,http://www.sensata.com,,,https://www.sensata.com HTTP403 | http://www.sensata.com HTTP403 | https://sensata.com HTTP403 | http://sensata.com HTTP403
+셰플러안산,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
+셰플러코리아,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
+스타빌루스,채용링크없음,,,https://www.stabilus.com,,,채용링크 0개
+신영,ATS없음,,,https://www.shym.co.kr,,,채용링크 3개
+신원,접속실패,,,http://shinwon.shym.co.kr,,,https://shinwon.shym.co.kr TimeoutError:timed out | http://shinwon.shym.co.kr TimeoutError:timed out | https://www.shinwon.shym.co.kr gaierror:[Errno -2] Name or servi | http://www.shinwon.shym.co.kr gaierror:[Errno -2] Name or servi
+씨티알,채용링크없음,,,https://www.ctr.co.kr,,,채용링크 0개
+씨티알모빌리티,접속실패,,,http://www.ctrmotek.co.kr,,,https://www.ctrmotek.co.kr gaierror:[Errno -3] Temporary fai | http://www.ctrmotek.co.kr gaierror:[Errno -3] Temporary fai | https://ctrmotek.co.kr gaierror:[Errno -3] Temporary fai | http://ctrmotek.co.kr gaierror:[Errno -3] Temporary fai
+아산성우하이텍,접속실패,,,http://asan.swhitech.com,,,https://asan.swhitech.com gaierror:[Errno -2] Name or servi | http://asan.swhitech.com gaierror:[Errno -2] Name or servi | https://www.asan.swhitech.com gaierror:[Errno -2] Name or servi | http://www.asan.swhitech.com gaierror:[Errno -2] Name or servi
+아센텍,ATS없음,,,http://asentec.co.kr,,,채용링크 4개
+아이아,ATS없음,,,https://www.aia21.co.kr,,,채용링크 6개
+아이티더블유오토모티브코리아,채용링크없음,,,http://www.itwautokorea.com,,,채용링크 0개
+아진산업,ATS없음,,,https://www.wamc.co.kr,,,채용링크 2개
+애디언트동성,홈페이지없음,,,,,,
+애디언트코리아,접속실패,,,http://www.adientkorea.co.kr,,,https://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | https://adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://adientkorea.co.kr gaierror:[Errno -3] Temporary fai
+에스SNT다이내믹스,채용링크없음,,,https://www.hisntd.com,,,채용링크 0개
+에스SNT모티브,채용링크없음,,,https://www.sntmotiv.com,,,채용링크 0개
+에스SNT에이엠티,채용링크없음,,,http://www.sntamt.com,,,채용링크 0개
+에스엠벡셀,채용링크없음,,,https://www.smbexel.com,,,채용링크 0개
+에스케이온,홈페이지없음,,,,,,
+에스텍,채용링크없음,,,https://www.estec.co.kr,,,채용링크 0개
+에스트라오토모티브시스템,ATS없음,,,https://www.estra-automotive.com,,,채용링크 2개
+에이치디현대인프라코어,ATS없음,,,https://www.hyundai-di.com,,,채용링크 2개
+에이치에스테크놀로지,채용링크없음,,,https://www.hstkorea.co.kr,,,채용링크 0개
+에이치엘만도,채용링크없음,,,https://hlmando.com,,,채용링크 0개
+에이치엘클레무브,채용링크없음,,,https://www.hlklemove.com,,,채용링크 0개
+에코플라스틱,ATS없음,,,https://www.eco-plastic.com,,,채용링크 6개
+엔브이에이치코리아,채용링크없음,,,https://www.nvhkorea.co.kr,,,채용링크 0개
+엔브이에이치플로어시스템,채용링크없음,,,https://www.nvhparts.co.kr,,,채용링크 0개
+엘에스오토모티브테크놀로지스,채용링크없음,,,https://www.lsautomotive.com,,,채용링크 0개
+엘엑스하우시스,ATS없음,,,https://www.lxhausys.co.kr,,,채용링크 6개
+엘지에너지솔루션,ATS없음,,,https://www.lgensol.com,,,채용링크 6개
+엘지전자,채용링크없음,,,https://www.lge.co.kr,,,채용링크 0개
+엠씨넥스,ATS없음,,,https://www.mcnex.com,,,채용링크 1개
+엠에스오토텍,채용링크없음,,,https://www.ms-global.com,,,채용링크 0개
+영신정공,ATS없음,,,http://www.ys-kr.com,,,채용링크 5개
+영풍기계,ATS없음,,,https://www.y-poong.co.kr,,,채용링크 5개
+영화금속,채용링크없음,,,https://www.yeonghwa.co.kr,,,채용링크 0개
+영흥,채용링크없음,,,http://www.youngwire.com,,,채용링크 0개
+오스템,채용링크없음,,,https://www.austem.co.kr,,,채용링크 0개
+오토리브,ATS없음,,,https://www.autoliv.com,,,채용링크 6개
+오토인더스트리,채용링크없음,,,https://www.oto.kr,,,채용링크 0개
+와이엠,홈페이지없음,,,,,,
+용산,ATS없음,,,http://www.yong-san.co.kr,,,채용링크 2개
+우리산업,접속실패,,,http://www.woory.com,,,https://www.woory.com TimeoutError:timed out | http://www.woory.com TimeoutError:timed out | https://woory.com TimeoutError:timed out | http://woory.com TimeoutError:timed out
+우수에이AMS,ATS없음,,,https://www.woosu.co.kr,,,채용링크 4개
+우수정기,ATS없음,,,https://www.woosu.co.kr,,,채용링크 4개
+우신공업,채용링크없음,,,https://www.wooshin.net,,,채용링크 0개
+우신세이프티시스템,채용링크없음,,,http://www.wooshinss.com,,,채용링크 0개
+우영산업,채용링크없음,,,http://www.wooyoung-ind.co.kr,,,채용링크 0개
+우진공업,ATS없음,,,http://www.ngkntk.co.kr,,,채용링크 2개
+우진정공,채용링크없음,,,http://www.wjtechno.co.kr,,,채용링크 0개
+우창정기,접속실패,,,http://www.woo-chang.com,,,https://www.woo-chang.com TimeoutError:timed out | http://www.woo-chang.com TimeoutError:timed out | https://woo-chang.com TimeoutError:timed out | http://woo-chang.com TimeoutError:timed out
+위너콤,채용링크없음,,,https://www.winant.co.kr,,,채용링크 0개
+유니크,접속실패,,,http://www.unick.co.kr,,,https://www.unick.co.kr HTTP403 | http://www.unick.co.kr HTTP403 | https://unick.co.kr gaierror:[Errno -5] No address as | http://unick.co.kr gaierror:[Errno -5] No address as
+유라테크,채용링크없음,,,https://www.yuratech.co.kr,,,채용링크 0개
+유라하네스,채용링크없음,,,https://www.yuraharness.co.kr,,,채용링크 0개
+유성기업,접속실패,,,http://www.ypr.co.kr,,,https://www.ypr.co.kr HTTP403 | http://www.ypr.co.kr HTTP403 | https://ypr.co.kr gaierror:[Errno -5] No address as | http://ypr.co.kr gaierror:[Errno -5] No address as
+유신정밀공업,채용링크없음,,,http://www.ysptech.com,,,채용링크 0개
+유진에스엠알시오토모티브테크노,ATS없음,,,https://www.ysat.kr,,,채용링크 4개
+이래씨CS,홈페이지없음,,,,,,
+이래에이엠에스,ATS없음,,,https://www.eraeams.com,,,채용링크 1개
+이원정공,ATS없음,,,http://www.lwp.co.kr,,,채용링크 1개
+이튼인더스트리즈,접속실패,,,http://www.eaton.com,,,https://www.eaton.com 시간초과 | http://www.eaton.com 시간초과 | https://eaton.com 시간초과 | http://eaton.com 시간초과
+인알파코리아,홈페이지없음,,,,,,
+인지디스플레이,채용링크없음,,,https://www.inzidisplay.co.kr,,,채용링크 0개
+인지컨트롤스,채용링크없음,,,https://www.inzi.co.kr,,,채용링크 0개
+인팩,채용링크없음,,,http://www.infac.com,,,채용링크 0개
+인팩일렉스,채용링크없음,,,http://www.infac.com,,,채용링크 0개
+일지테크,ATS없음,,,https://www.iljitech.co.kr,,,채용링크 5개
+일진,ATS없음,,,https://www.iljin.com,,,채용링크 1개
+일진글로벌,ATS없음,,,https://www.iljin.com,,,채용링크 1개
+일진베어링,ATS없음,,,https://www.iljin.com,,,채용링크 1개
+일흥,채용링크없음,,,https://www.il-heung.co.kr,,,채용링크 0개
+제트에프삭스코리아,접속실패,,,http://www.sachs.co.kr,,,https://www.sachs.co.kr gaierror:[Errno -2] Name or servi | http://www.sachs.co.kr gaierror:[Errno -2] Name or servi | https://sachs.co.kr gaierror:[Errno -2] Name or servi | http://sachs.co.kr gaierror:[Errno -2] Name or servi
+제트에프오토모티브코리아,ATS없음,,,https://www.zf.com,,,채용링크 1개
+조이슨세이프티시스템스코리아,접속실패,,,http://www.takata.com,,,https://www.takata.com gaierror:[Errno -2] Name or servi | http://www.takata.com gaierror:[Errno -2] Name or servi | https://takata.com TimeoutError:timed out | http://takata.com TimeoutError:timed out
+존슨일렉트릭오퍼레이션스,채용링크없음,,,https://www.hallastackpole.co.kr,,,채용링크 0개
+지엠비코리아,ATS없음,,,https://www.gmb.co.kr,,,채용링크 5개
+진영산업,ATS없음,,,https://www.jinyoungind.com,,,채용링크 1개
+진합,ATS없음,,,https://www.jinhap.com,,,채용링크 2개
+카이스,ATS없음,,,https://www.kaisinc.com/,,,채용링크 4개
+카이엠,접속실패,,,http://www.dayouep.co.kr,,,https://www.dayouep.co.kr gaierror:[Errno -2] Name or servi | http://www.dayouep.co.kr gaierror:[Errno -2] Name or servi | https://dayouep.co.kr gaierror:[Errno -2] Name or servi | http://dayouep.co.kr gaierror:[Errno -2] Name or servi
+카펙발레오,접속실패,,,http://www.kapec.com,,,https://www.kapec.com gaierror:[Errno -3] Temporary fai | http://www.kapec.com gaierror:[Errno -3] Temporary fai | https://kapec.com gaierror:[Errno -3] Temporary fai | http://kapec.com gaierror:[Errno -3] Temporary fai
+캄텍,ATS없음,,,https://www.kamtec.co.kr,,,채용링크 2개
+케이비아이동국실업,ATS없음,,,http://www.dongkook.net,,,채용링크 2개
+케이비아이메탈,채용링크없음,,,https://www.kbimetal.co.kr,,,채용링크 0개
+케이비오토텍,채용링크없음,,,https://www.kbautotech.com,,,채용링크 0개
+케이비와이퍼시스템,채용링크없음,,,https://www.kbws.co.kr,,,채용링크 0개
+케이엠앤아이,ATS없음,,,https://www.kmni.co.kr,,,채용링크 5개
+코렌스,접속실패,,,http://www.korens.co.kr,,,https://www.korens.co.kr HTTP406 | http://www.korens.co.kr HTTP406 | https://korens.co.kr HTTP406 | http://korens.co.kr HTTP406
+코리아에프티,채용링크없음,,,http://www.kftec.com,,,채용링크 0개
+코모스,ATS없음,,,https://www.secokomos.com,,,채용링크 6개
+코비코,ATS없음,,,https://www.kovico.com,,,채용링크 3개
+코스파,채용링크없음,,,https://www.kospa.co.kr,,,채용링크 0개
+코아비스,ATS없음,,,https://www.coavis.com,,,채용링크 3개
+코오롱글로텍,ATS없음,,,https://www.kolonglotech.co.kr,,,채용링크 1개
+콘티넨탈오토모티브일렉트로닉스,ATS없음,,,https://www.continental-corporation.com,,,채용링크 6개
+쿠퍼스탠다드오토모티브앤인더스트리얼,접속실패,,,http://www.cooperstandard.com,,,https://www.cooperstandard.com HTTP307 | http://www.cooperstandard.com HTTP307 | https://cooperstandard.com HTTP307 | http://cooperstandard.com HTTP307
+크레아,접속실패,,,http://www. groupcrea.com,,,https://www. groupcrea.com InvalidURL | http://www. groupcrea.com InvalidURL | https:// groupcrea.com InvalidURL | http:// groupcrea.com InvalidURL
+크레아아이엔,접속실패,,,http://www. groupcrea.com,,,https://www. groupcrea.com InvalidURL | http://www. groupcrea.com InvalidURL | https:// groupcrea.com InvalidURL | http:// groupcrea.com InvalidURL
+클라리오스델코,채용링크없음,,,https://www.delkor.com,,,채용링크 0개
+타이코에이엠피,ATS없음,,,http://www.tycoelectronics.com,,,채용링크 1개
+태성전장,채용링크없음,,,https://www.tecstar.co.kr,,,채용링크 0개
+태양금속공업,채용링크없음,,,https://www.taeyangmetal.com,,,채용링크 0개
+트래닛,ATS없음,,,https://www.tranit.co.kr,,,채용링크 5개
+티아이오토모티브,채용링크없음,,,https://www.tiautomotive.com,,,채용링크 0개
+파이오락스,채용링크없음,,,https://www.piolax.co.kr,,,채용링크 0개
+파카코리아,접속실패,,,http://www.parker.com,,,https://www.parker.com HTTP403 | http://www.parker.com HTTP403 | https://parker.com HTTP403 | http://parker.com HTTP403
+파카하니핀커넥터,접속실패,,,http://http://www.hsparker.co.kr,,,https://http://www.hsparker.co.kr gaierror:[Errno -3] Temporary fai | http://http://www.hsparker.co.kr gaierror:[Errno -3] Temporary fai | https://www.http://www.hsparker.co.kr gaierror:[Errno -2] Name or servi | http://www.http://www.hsparker.co.kr gaierror:[Errno -2] Name or servi
+패커드코리아,채용링크없음,,,https://www.packardkorea.co.kr,,,채용링크 0개
+페더럴모굴세종,채용링크없음,,,http://www.fm-korea.co.kr,,,채용링크 0개
+평화기공,접속실패,,,http://www.phk.co.kr,,,https://www.phk.co.kr ConnectionResetError:[Errno 104] Connection r | http://www.phk.co.kr HTTP503 | https://phk.co.kr ConnectionResetError:[Errno 104] Connection r | http://phk.co.kr HTTP503
+평화발레오,채용링크없음,,,https://www.vph.co.kr,,,채용링크 0개
+평화산업,채용링크없음,,,https://www.ph.co.kr,,,채용링크 0개
+평화오일씰공업,접속실패,,,http://www.pos.co.kr,,,https://www.pos.co.kr ConnectionResetError:[Errno 104] Connection r | http://www.pos.co.kr HTTP503 | https://pos.co.kr ConnectionResetError:[Errno 104] Connection r | http://pos.co.kr HTTP503
+포레시아코리아,ATS없음,,,https://www.faurecia.com,,,채용링크 3개
+풍기산업,접속실패,,,http://www.poongki.co.kr,,,https://www.poongki.co.kr gaierror:[Errno -2] Name or servi | http://www.poongki.co.kr gaierror:[Errno -2] Name or servi | https://poongki.co.kr gaierror:[Errno -2] Name or servi | http://poongki.co.kr gaierror:[Errno -2] Name or servi
+프라코,ATS없음,,,https://www.plakor.co.kr,,,채용링크 3개
+플라스틱옴니엄,접속실패,,,http://www.plasticomnium.com,,,https://www.plasticomnium.com gaierror:[Errno -5] No address as | http://www.plasticomnium.com gaierror:[Errno -5] No address as | https://plasticomnium.com gaierror:[Errno -5] No address as | http://plasticomnium.com gaierror:[Errno -5] No address as
+피에이치에이,채용링크없음,,,https://www.phakr.com,,,채용링크 0개
+피엔디티,접속실패,,,http://www.phhc.co.kr,,,https://www.phhc.co.kr ConnectionResetError:[Errno 104] Connection r | http://www.phhc.co.kr HTTP503 | https://phhc.co.kr ConnectionResetError:[Errno 104] Connection r | http://phhc.co.kr HTTP503
+한국댓와일러,접속실패,,,http://www.sealtech.co.kr,,,https://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | http://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | https://sealtech.co.kr gaierror:[Errno -5] No address as | http://sealtech.co.kr gaierror:[Errno -5] No address as
+한국무브넥스,접속실패,,,http://www.koreamoveenx.com,,,https://www.koreamoveenx.com gaierror:[Errno -2] Name or servi | http://www.koreamoveenx.com gaierror:[Errno -2] Name or servi | https://koreamoveenx.com gaierror:[Errno -2] Name or servi | http://koreamoveenx.com gaierror:[Errno -2] Name or servi
+한국보그워너티에스,접속실패,,,http://www. Borgwarner.com,,,https://www. Borgwarner.com InvalidURL | http://www. Borgwarner.com InvalidURL | https:// Borgwarner.com InvalidURL | http:// Borgwarner.com InvalidURL
+한국세큐리트,채용링크없음,,,http://www.hanglas.co.kr,,,채용링크 0개
+한국쓰리엠,접속실패,,,http://www.3m.com,,,https://www.3m.com 시간초과 | http://www.3m.com 시간초과 | https://3m.com 시간초과 | http://3m.com 시간초과
+한국아이티더블유,접속실패,,,http://www.itwkorea.com,,,https://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | https://itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://itwkorea.com ConnectionResetError:[Errno 104] Connection r
+한국알프스,접속실패,,,http://www.alpsalpine.com/ko,,,https://www.alpsalpine.com/ko HTTP403 | http://www.alpsalpine.com/ko HTTP403 | https://alpsalpine.com/ko gaierror:[Errno -5] No address as | http://alpsalpine.com/ko gaierror:[Errno -5] No address as
+한국앤컴퍼니,ATS없음,,,https://www.hankooktire.com,,,채용링크 1개
+한국에스케이에프씰,채용링크없음,,,https://www.skfkorea.co.kr,,,채용링크 0개
+한국엔에스케이,ATS없음,,,https://www.kr.nsk.com,,,채용링크 1개
+한국유미코아촉매,ATS없음,,,https://www.umicore.kr,,,채용링크 6개
+한국쯔바키모토오토모티브,홈페이지없음,,,,,,
+한국타이어앤테크놀로지,ATS없음,,,https://www.hankooktire.com,,,채용링크 1개
+한국후꼬꾸,채용링크없음,,,https://fukokukorea.com,,,채용링크 0개
+한서실업,채용링크없음,,,https://www.hanskorea.co.kr,,,채용링크 0개
+한온시스템이에프피코리아,채용링크없음,,,http://sqnet.efp.hanonsystems.com,,,채용링크 0개
+한일정공,채용링크없음,,,https://www.hanilpre.co.kr,,,채용링크 0개
+한일튜브,채용링크없음,,,http://www.haniltube.co.kr,,,채용링크 0개
+한주라이트메탈,채용링크없음,,,https://www.hanjoolightmetal.com,,,채용링크 0개
+한화솔루션,채용링크없음,,,https://www.hanwhasolutions.com,,,채용링크 0개
+한화첨단소재,ATS없음,,,https://www.hwam.co.kr,,,채용링크 5개
+핸즈코퍼레이션,ATS없음,,,https://www.handscorp.co.kr,,,채용링크 6개
+헨켈코리아오토모티브,ATS없음,,,https://www.henkel.co.kr,,,채용링크 6개
+현담산업,채용링크없음,,,http://www.hyundam.com,,,채용링크 0개
+현대공업,채용링크없음,,,https://www.hdi21.co.kr,,,채용링크 0개
+현대성우쏠라이트,접속실패,,,http://http://www.solite.co.kr,,,https://http://www.solite.co.kr gaierror:[Errno -3] Temporary fai | http://http://www.solite.co.kr gaierror:[Errno -3] Temporary fai | https://www.http://www.solite.co.kr gaierror:[Errno -2] Name or servi | http://www.http://www.solite.co.kr gaierror:[Errno -2] Name or servi
+현대성우캐스팅,채용링크없음,,,https://www.hdswcasting.co.kr,,,채용링크 0개
+현대합성공업,채용링크없음,,,https://www.hdhs.co.kr,,,채용링크 0개
+호원,접속실패,,,http://www.howon.com,,,https://www.howon.com TimeoutError:timed out | http://www.howon.com TimeoutError:timed out | https://howon.com TimeoutError:timed out | http://howon.com TimeoutError:timed out
+호원오토,접속실패,,,http://http://howon.com/,,,https://http://howon.com/ gaierror:[Errno -3] Temporary fai | http://http://howon.com/ gaierror:[Errno -3] Temporary fai | https://www.http://howon.com/ gaierror:[Errno -2] Name or servi | http://www.http://howon.com/ gaierror:[Errno -2] Name or servi
+화승소재,접속실패,,,http://www.hscmb.co.kr,,,https://www.hscmb.co.kr gaierror:[Errno -2] Name or servi | http://www.hscmb.co.kr gaierror:[Errno -2] Name or servi | https://hscmb.co.kr gaierror:[Errno -2] Name or servi | http://hscmb.co.kr gaierror:[Errno -2] Name or servi
+화승알앤에이,채용링크없음,,,https://www.hsrna.com,,,채용링크 0개
+화신,접속실패,,,http://http://hwashin.co.kr,,,https://http://hwashin.co.kr gaierror:[Errno -3] Temporary fai | http://http://hwashin.co.kr gaierror:[Errno -3] Temporary fai | https://www.http://hwashin.co.kr gaierror:[Errno -2] Name or servi | http://www.http://hwashin.co.kr gaierror:[Errno -2] Name or servi
+화천기계,접속실패,,,http://www.hwacheon.co.kr,,,https://www.hwacheon.co.kr gaierror:[Errno -3] Temporary fai | http://www.hwacheon.co.kr gaierror:[Errno -3] Temporary fai | https://hwacheon.co.kr gaierror:[Errno -3] Temporary fai | http://hwacheon.co.kr gaierror:[Errno -3] Temporary fai
+효림산업,접속실패,,,http://www.hyolimindustrial.com,,,https://www.hyolimindustrial.com TimeoutError:timed out | http://www.hyolimindustrial.com TimeoutError:timed out | https://hyolimindustrial.com TimeoutError:timed out | http://hyolimindustrial.com TimeoutError:timed out
+효성전기,채용링크없음,,,https://www.hyoseong.co.kr,,,채용링크 0개
+흥아포밍,ATS없음,,,http://www.hungaforming.com,,,채용링크 1개
