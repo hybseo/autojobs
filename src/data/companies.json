@@ -91,7 +91,7 @@
    "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"},
 
   {"name": "SK온",         "slug": "sk-on",           "ats": "sk",        "code": "skcareers",
-   "affiliates": ["SK온", "SK 온", "SK아이이테크놀로지"],
+   "affiliates": ["SK on", "SK온", "SK IE Technology", "SKIET", "SK아이이테크놀로지"],
    "industry": ["자동차부품", "전기전자"], "enabled": true,
    "note": "SK그룹 통합 채용. 배터리 계열사만 담음. affiliates 에 회사명을 추가하면 계열사가 늘어남"},
 
