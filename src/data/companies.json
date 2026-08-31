@@ -85,6 +85,11 @@
    "industry": ["자동차부품", "IT"], "enabled": true,
    "note": "현대차그룹 SDV. 판교. 해외·인재풀 제외하고 국내 공고만"},
 
+  {"name": "일진하이솔루스",   "slug": "iljin-hysolus",   "ats": "workday",
+   "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Hysolus",
+   "industry": ["자동차부품"], "enabled": true,
+   "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
