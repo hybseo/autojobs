@@ -1,13 +1,13 @@
 ﻿name,status,ats,code,home,found_at,how,note
 니프코코리아,발견,recruiter,nifco,https://www.nifco.co.kr,https://www.nifco.co.kr,링크,
 동원금속,발견,greeting,dwmic,https://www.dwmic.com,https://www.dwmic.com,링크,
-발레오전장시스템스코리아,발견,workday,valeo.wd3.myworkdayjobs.com/en-EN,https://www.valeo.com,https://www.valeo.com,링크,
+발레오전장시스템스코리아,발견,workday,valeo.wd3.myworkdayjobs.com/en-EN/valeo_jobs,https://www.valeo.com,https://www.valeo.com,링크,
 에스에이치비,발견,recruiter,slworld,https://www.slworld.com,https://www.slworld.com,링크,
 에스엘미러텍,발견,recruiter,slworld,https://www.slworld.com,https://www.slworld.com,링크,
 에스엠알오토모티브모듈코리아,발견,greeting,careers.motherson.com,https://www.smr-automotive.com,https://careers.motherson.com/,자체도메인,채용링크 3개
-엘링크링거코리아,발견,workday,elringklinger.wd3.myworkdayjobs.com/de-DE,https://www.elringklinger.kr,https://elringklinger.de/en/career/job-openings,링크,채용링크 2개
+엘링크링거코리아,발견,workday,elringklinger.wd3.myworkdayjobs.com/de-DE/External,https://www.elringklinger.kr,https://elringklinger.de/en/career/job-openings,링크,채용링크 2개
 엘에스이모빌리티솔루션,발견,recruiter,lsems,https://www.lsems.com,https://www.lsems.com,링크,
-일진하이솔루스,발견,workday,iljini.wd102.myworkdayjobs.com/ko-KR,https://www.hysolus.co.kr,https://www.hysolus.co.kr,링크,
+일진하이솔루스,발견,workday,iljini.wd102.myworkdayjobs.com/ko-KR/Hysolus,https://www.hysolus.co.kr,https://www.hysolus.co.kr,링크,
 케이디에스,발견,recruiter,slworld,https://www.samlip.co.kr,https://www.samlip.co.kr,링크,
 케이씨씨글라스,발견,greeting,kccglass,https://www.kccglass.co.kr,https://kccglass.career.greetinghr.com/ko,주소추정,채용링크 0개
 한국석유공업,발견,recruiter,kpgroup,https://www.koreapetroleum.com,https://www.koreapetroleum.com,링크,
@@ -68,7 +68,7 @@
 디아이씨,채용링크없음,,,https://www.dicorp.co.kr,,,채용링크 0개
 디알비오토모티브,ATS없음,,,https://www.drb-automotive.com/automotive,,,채용링크 2개
 디알액시온,채용링크없음,,,http://www.draxion.co.kr,,,채용링크 0개
-디에스시,ATS없음,,,https://www.godsc.co.kr,,,채용링크 6개
+디에스시,접속실패,,,http://www.godsc.co.kr,,,https://www.godsc.co.kr TimeoutError:timed out | http://www.godsc.co.kr TimeoutError:timed out | https://godsc.co.kr TimeoutError:timed out | http://godsc.co.kr TimeoutError:timed out
 디에이치오토리드,ATS없음,,,https://dhautolead.co.kr,,,채용링크 2개
 디에이치오토웨어,채용링크없음,,,https://www.dhautoware.co.kr,,,채용링크 0개
 디엔오토모티브,채용링크없음,,,https://www.dtrautomotive.com,,,채용링크 0개
@@ -161,7 +161,7 @@
 엠에스오토텍,채용링크없음,,,https://www.ms-global.com,,,채용링크 0개
 영신정공,ATS없음,,,http://www.ys-kr.com,,,채용링크 5개
 영풍기계,ATS없음,,,https://www.y-poong.co.kr,,,채용링크 5개
-영화금속,채용링크없음,,,https://www.yeonghwa.co.kr,,,채용링크 0개
+영화금속,접속실패,,,http://www.yeonghwa.co.kr,,,https://www.yeonghwa.co.kr TimeoutError:timed out | http://www.yeonghwa.co.kr TimeoutError:timed out | https://yeonghwa.co.kr TimeoutError:timed out | http://yeonghwa.co.kr TimeoutError:timed out
 영흥,채용링크없음,,,http://www.youngwire.com,,,채용링크 0개
 오스템,채용링크없음,,,https://www.austem.co.kr,,,채용링크 0개
 오토리브,ATS없음,,,https://www.autoliv.com,,,채용링크 6개
