@@ -44,6 +44,9 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 PAGE = 20          # Workday 는 한 번에 20건씩 줍니다
 MAX_PAGES = 25     # 안전장치. 500건이면 충분합니다
 
+# en-EN, ko-KR, de-DE 같은 언어 코드. 사이트 이름이 아닙니다.
+LANG = re.compile(r"[a-z]{2}-[A-Za-z]{2}")
+
 KOREA = re.compile(r"korea|한국|서울|seoul|경기|인천|부산|대구|울산|대전|광주"
                    r"|pangyo|판교|수원|화성|천안|아산|창원", re.I)
 
@@ -55,9 +58,18 @@ def _parts(code):
         raise ValueError(
             f"code 형식이 잘못됐습니다: {code!r}\n"
             "  '회사.wd3.myworkdayjobs.com/사이트이름' 형태여야 합니다.")
-    host, site = c.split("/", 1)
+    host, rest = c.split("/", 1)
     tenant = host.split(".")[0]
-    return host, tenant, site.split("/")[0]
+    parts = [x for x in rest.split("/") if x]
+    # 주소에 언어 코드가 끼는 경우가 있습니다. en-EN, ko-KR, de-DE 같은 것들입니다.
+    # 이걸 사이트 이름으로 쓰면 API 주소가 틀립니다.
+    parts = [x for x in parts if not LANG.fullmatch(x)]
+    if not parts:
+        raise ValueError(
+            f"code 에 사이트 이름이 없습니다: {code!r}\n"
+            "  언어 코드만 있습니다. 채용 사이트 주소에서 언어 코드 뒤에 오는\n"
+            "  이름까지 넣어주세요. 예: valeo.wd3.myworkdayjobs.com/en-EN/Valeo_Careers")
+    return host, tenant, parts[0]
 
 
 def _post(url, body):
