@@ -14,7 +14,19 @@
 import json
 import sys
 from pathlib import Path
-from datetime import date
+from datetime import datetime, timedelta, timezone
+
+# 수집 날짜는 반드시 한국 시간 기준이어야 합니다.
+#
+# 깃허브 Actions 서버는 UTC 로 돕니다. date.today() 를 그냥 쓰면
+# KST 오전 9시 이전 실행에서 하루 전 날짜가 찍힙니다.
+# 실제로 KST 06:00 예약 실행이 UTC 로는 전날 21:00 이라, 공고는 새로
+# 모였는데 collectedAt 만 어제로 남아 화면에 "1일 전 정보" 경고가 떴습니다.
+KST = timezone(timedelta(hours=9))
+
+
+def today_kst():
+    return datetime.now(KST).date().isoformat()
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import adapters  # noqa: E402
@@ -94,7 +106,7 @@ def main():
         raise SystemExit("수집 결과가 0건입니다. 기존 파일을 보존하고 중단합니다.")
 
     OUT.write_text(json.dumps(
-        {"collectedAt": date.today().isoformat(), "jobs": jobs},
+        {"collectedAt": today_kst(), "jobs": jobs},
         ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"→ {OUT}")
 
