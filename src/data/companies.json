@@ -66,8 +66,8 @@
    "note": "한국석유공업·KP한석화학. 공고가 자동차부품과 무관할 수 있음"},
   {"name": "디와이오토",     "slug": "dy-auto",         "ats": "recruiter", "code": "dy",               "industry": ["자동차부품"], "enabled": true,
    "note": "와이퍼·모터. 확인 시점 공고 0건"},
-  {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": true,
-   "note": "타이어보강재. 확인 시점 공고 0건"},
+  {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": false,
+   "note": "타이어보강재. 2026-08-31 리크루터 API 가 HTTP 400 으로 거부. 코드가 더 이상 유효하지 않은 것으로 보임. 올바른 코드를 찾으면 enabled 를 true 로 되돌리세요"},
 
   {"name": "LG그룹",       "slug": "lg-careers",      "ats": "lg",        "code": "LGE,LGIT,MAGNA,LGES",
    "industry": ["자동차부품", "전기전자"], "enabled": true,
@@ -89,6 +89,11 @@
    "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Hysolus",
    "industry": ["자동차부품"], "enabled": true,
    "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"},
+
+  {"name": "SK온",         "slug": "sk-on",           "ats": "sk",        "code": "skcareers",
+   "affiliates": ["SK온", "SK 온", "SK아이이테크놀로지"],
+   "industry": ["자동차부품", "전기전자"], "enabled": true,
+   "note": "SK그룹 통합 채용. 배터리 계열사만 담음. affiliates 에 회사명을 추가하면 계열사가 늘어남"},
 
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
