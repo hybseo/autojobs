@@ -84,12 +84,32 @@ def _pick(row, key):
     return ""
 
 
+# 공고 항목이라면 이런 이름의 필드가 하나쯤은 있습니다.
+# 그냥 "첫 번째 배열" 을 집으면 필터 목록이나 배너 같은 것을 집습니다.
+# 실제로 그래서 공고가 0건인데 경고도 안 나오는 상태를 만났습니다.
+JOBLIKE = tuple(n.lower() for group in (
+    ("recruitNo", "recruitSeq", "recruitId"),
+    ("recruitTitle", "title", "subject", "recruitNm"),
+    ("corpName", "companyName", "corpNm"),
+    ("endDate", "recruitEndDate", "closeDate", "endDt"),
+) for n in group)
+
+
+def _looks_like_jobs(rows):
+    keys = {k.lower() for k in rows[0].keys()}
+    return any(n in keys for n in JOBLIKE)
+
+
 def _first_list(o, depth=0):
-    """응답 어딘가에 있는 공고 배열을 찾습니다. 키 이름이 달라도 견딥니다."""
-    if depth > 4:
+    """응답 어딘가에 있는 공고 배열을 찾습니다.
+
+    공고처럼 생긴 배열만 고릅니다. 아무 배열이나 집으면 필터 목록을
+    공고로 착각해 전부 걸러집니다.
+    """
+    if depth > 5:
         return None
     if isinstance(o, list):
-        if o and isinstance(o[0], dict):
+        if o and isinstance(o[0], dict) and _looks_like_jobs(o):
             return o
         return None
     if isinstance(o, dict):
@@ -145,8 +165,14 @@ def list_open(affiliates=()):
     if not rows:
         # 여기서 조용히 빈 목록을 돌려주면 원인을 알 수 없습니다.
         print("      ! SK: 공고 목록을 찾지 못했습니다. 응답 앞부분:")
-        print("        " + str(last_raw)[:300].replace("\n", " "))
+        print("        " + str(last_raw)[:400].replace("\n", " "))
         return []
+
+    # 목록은 찾았습니다. 무엇을 찾았는지 남깁니다.
+    # 엉뚱한 배열(필터 목록 등)을 집으면 공고가 0건인데 경고도 안 나옵니다.
+    # 실제로 그런 상태를 만나 원인을 좁히지 못한 적이 있습니다.
+    print(f"      · SK: 목록 {len(rows)}건 확보. "
+          f"첫 항목 필드: {sorted(rows[0].keys())[:12]}")
 
     if affiliates:
         # 회사명이 영문으로 옵니다. 'SK on', 'SK ON', 'SK온' 이 모두 같은 회사입니다.
