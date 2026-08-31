@@ -149,15 +149,21 @@ def list_open(affiliates=()):
         return []
 
     if affiliates:
-        keep = []
-        for x in rows:
-            name = str(_pick(x, "company"))
-            if any(a in name for a in affiliates):
-                keep.append(x)
+        # 회사명이 영문으로 옵니다. 'SK on', 'SK ON', 'SK온' 이 모두 같은 회사입니다.
+        # 대소문자와 공백을 지우고 견줍니다.
+        def norm(v):
+            return re.sub(r"[\s\.,()]", "", str(v or "")).lower()
+
+        wanted = [norm(a) for a in affiliates]
+        keep = [x for x in rows
+                if any(w and w in norm(_pick(x, "company")) for w in wanted)]
         if not keep:
-            seen = sorted({str(_pick(x, "company")) for x in rows})[:12]
+            # 목록을 자르면 찾는 회사가 잘린 뒤에 있을 때 알 수 없습니다.
+            # 실제로 알파벳 순으로 12개만 보여 'SK on' 이 안 보인 적이 있습니다.
+            seen = sorted({str(_pick(x, "company")) for x in rows})
             print(f"      ! SK: 지정한 계열사 공고가 없습니다. "
-                  f"받은 회사명: {seen}")
+                  f"받은 회사 {len(seen)}개:")
+            print("        " + ", ".join(seen))
         rows = keep
     return rows
 
