@@ -95,6 +95,18 @@
    "industry": ["자동차부품", "전기전자"], "enabled": true,
    "note": "SK그룹 통합 채용. 배터리 계열사만 담음. affiliates 에 회사명을 추가하면 계열사가 늘어남"},
 
+  {"name": "트위니",        "slug": "twinny",          "ats": "greeting",  "code": "twinny",
+   "industry": ["로봇", "IT"], "enabled": true,
+   "note": "자율주행 물류로봇 '나르고'. 대전 유성구. 로봇 분야 첫 등록"},
+
+  {"name": "서울로보틱스",     "slug": "seoul-robotics",  "ats": "greenhouse", "code": "seoulrobotics",
+   "industry": ["로봇", "IT"], "enabled": true,
+   "note": "3D 라이다 인지 SW. 국내 공고만 담음. 해외까지 원하면 overseas: true"},
+
+  {"name": "베어로보틱스",     "slug": "bear-robotics",   "ats": "breezy",     "code": "bear-robotics",
+   "industry": ["로봇", "IT"], "enabled": true,
+   "note": "서빙로봇. 미국 본사 공고가 섞여 있어 국내 근무지만 담음"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
