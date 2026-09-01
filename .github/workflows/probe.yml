@@ -16,6 +16,7 @@ on:
           - '전체 (약 305개사, 1시간 이상)'
           - 'PCB Maker 26개사 (약 10분)'
           - '모빌리티 스타트업 9개사 (약 5분)'
+          - '로봇 30개사 (약 15분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -43,6 +44,7 @@ jobs:
             100개사*) ARGS="--limit 100" ;;
             PCB*)     ARGS="--urls scripts/targets_pcb.txt" ;;
             모빌리티*) ARGS="--urls scripts/targets_startup.txt" ;;
+            로봇*)     ARGS="--urls scripts/targets_robot.txt" ;;
             *)        ARGS="" ;;
           esac
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
