@@ -119,6 +119,12 @@ def list_open(affiliates=()):
     wanted = [norm(a) for a in affiliates]
     keep = [x for x in rows
             if any(w and w in norm(x.get("sdNm")) for w in wanted)]
+    # 잡히긴 했는데 적을 때도 무엇이 있었는지 알면 계열사를 넓힐지 판단됩니다.
+    if keep and len(keep) < 5:
+        seen = sorted({str(x.get("sdNm") or "?") for x in rows})
+        print(f"      · 한화: {len(keep)}건 수집. 전체 {len(rows)}건 중 "
+              f"회사 {len(seen)}개가 있었습니다:")
+        print("        " + ", ".join(seen))
     if not keep:
         # 목록을 자르면 찾는 회사가 뒤에 있을 때 알 수 없습니다.
         seen = sorted({str(x.get("sdNm") or "?") for x in rows})
