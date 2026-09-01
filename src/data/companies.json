@@ -107,6 +107,11 @@
    "industry": ["로봇", "IT"], "enabled": true,
    "note": "서빙로봇. 미국 본사 공고가 섞여 있어 국내 근무지만 담음"},
 
+  {"name": "HD현대",       "slug": "hd-hyundai",      "ats": "hd",         "code": "recruit.hd.com",
+   "affiliates": ["HD현대로보틱스", "HD현대인프라코어", "HD현대사이트솔루션", "HD현대일렉트릭"],
+   "industry": ["로봇", "기계장비", "전기전자"], "enabled": true,
+   "note": "HD현대 그룹 통합 채용. 로봇·건설기계·전기 계열만. affiliates 에 계열사명을 끝까지 적을 것"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
