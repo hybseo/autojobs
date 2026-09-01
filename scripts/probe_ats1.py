@@ -71,8 +71,15 @@ SIGNATURES = [
     #   valeo.wd3.myworkdayjobs.com/en-EN/Valeo_Careers
     # 언어 코드까지 포함해 두 조각을 잡아둡니다. 어댑터가 걸러 씁니다.
     ("workday",   r"([a-z0-9\-]+\.wd\d+\.myworkdayjobs\.com(?:/[a-zA-Z0-9\-\_]+){1,2})"),
-    ("greenhouse", r"boards\.greenhouse\.io/([a-z0-9\-]+)"),
+    # Greenhouse 는 주소 체계를 바꿨습니다. 옛 boards. 만 보고 있어서
+    # job-boards.greenhouse.io 를 쓰는 서울로보틱스를 놓쳤습니다.
+    # boards-api 는 API 주소라 회사 토큰이 아니므로 제외합니다.
+    ("greenhouse", r"(?:job-)?boards\.greenhouse\.io/([a-z0-9\-\_]+)"),
     ("lever",     r"jobs\.lever\.co/([a-z0-9\-]+)"),
+    # 아래 셋은 실제로 국내 기업이 쓰는 것을 확인하고 추가했습니다.
+    # 목록에 없으면 "ATS없음" 으로 잘못 분류됩니다. Ashby 를 그렇게 놓쳤습니다.
+    ("breezy",    r"([a-z0-9\-\_]+)\.breezy\.hr"),           # 베어로보틱스
+    ("ninehire",  r"([a-z0-9\-\_]+)\.ninehire\.site"),       # 로보티즈
 ]
 
 # 자체 도메인이라 주소로는 알 수 없는 경우, 페이지 내용으로 판별합니다.
