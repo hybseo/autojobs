@@ -8,6 +8,10 @@
 # 빠진 회사가 있을 수 있고, 홈페이지 주소가 바뀌었을 수 있습니다.
 # 주소가 틀리면 탐지 결과에 "접속실패" 로 잡히니 그때 고치면 됩니다.
 #
+# 주소는 확인된 것만 넣습니다. 추측으로 적으면 탐지가 "접속실패" 로만 나와
+# 회사가 없는 것인지 주소가 틀린 것인지 구분이 안 됩니다.
+# 실제로 첫 실행에서 6곳이 존재하지 않는 주소였습니다.
+#
 # 형식: 회사명,홈페이지
 # 사용법: python scripts/probe_ats1.py --urls scripts/targets_robot.txt
 
@@ -23,12 +27,13 @@ HD현대로보틱스,https://www.hyundai-robotics.com
 알에스오토메이션,https://www.rsautomation.co.kr
 
 # ── 휴머노이드·보행 로봇 ────────────────────────
-에이로봇,https://www.airobot.kr
+# 에이로봇 — SSL 오류로 접속 불가. 주소 재확인 필요
+# 에이로봇,
 엔젤로보틱스,https://www.angel-robotics.com
 
 # ── 로봇 부품: 모터·감속기·구동 ─────────────────
 로보티즈,https://www.robotis.com
-에스비비테크,https://www.sbbtech.com
+에스비비테크,https://www.sbb.co.kr
 에스피지,https://www.spg.co.kr
 삼현,https://www.samhyun.net
 하이젠알앤엠,https://www.higenmotor.com
@@ -36,11 +41,14 @@ HD현대로보틱스,https://www.hyundai-robotics.com
 # ── 서비스·배송·물류 로봇 ──────────────────────
 베어로보틱스,https://www.bearrobotics.ai
 씨메스,https://www.cmes.co.kr
-티라로보틱스,https://www.tirarobotics.com
-로보프리,https://www.robopree.com
-클로봇,https://www.klbot.co.kr
+# 티라로보틱스 — 주소 미확인
+# 티라로보틱스,
+# 로보프리 — 주소 미확인
+# 로보프리,
+클로봇,https://www.clobot.co.kr
 빅웨이브로보틱스,https://www.bigwaverobotics.com
-도구공간,https://www.dogu.space
+# 도구공간 — 주소 미확인. 정확한 주소를 알면 아래 줄을 살리세요
+# 도구공간,
 
 # ── 자율주행·모바일 로봇 ───────────────────────
 트위니,https://www.twinny.ai
@@ -49,7 +57,7 @@ HD현대로보틱스,https://www.hyundai-robotics.com
 
 # ── 의료·재활 로봇 ────────────────────────────
 큐렉소,https://www.curexo.com
-고영테크놀러지,https://www.koh-young.com
+고영테크놀러지,https://www.kohyoung.com
 
 # ── 로봇 SI·자동화 ────────────────────────────
 # 현대위아는 이미 리크루터로 수집 중이라 뺐습니다.
