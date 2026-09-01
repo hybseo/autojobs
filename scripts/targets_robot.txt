@@ -1,0 +1,57 @@
+# 로봇 기업 후보 (C 범위: 완성품 + 구동부품 + 서비스·물류 로봇)
+#
+# 자동차부품(KAICA)·PCB(KPCA)와 달리 이 분야는 공개 회원사 명단이 없습니다.
+#   한국AI·로봇산업협회  회원 명단이 로그인 뒤에 있음
+#   한국로봇산업진흥원    대구 본원 입주기업 27곳만 공개, 홈페이지 주소 없음
+#
+# 그래서 이 목록은 협회 자료가 아니라 사람이 고른 것입니다.
+# 빠진 회사가 있을 수 있고, 홈페이지 주소가 바뀌었을 수 있습니다.
+# 주소가 틀리면 탐지 결과에 "접속실패" 로 잡히니 그때 고치면 됩니다.
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_robot.txt
+
+# ── 협동로봇·산업용 로봇 완성품 ──────────────────
+두산로보틱스,https://www.doosanrobotics.com
+레인보우로보틱스,https://www.rainbow-robotics.com
+HD현대로보틱스,https://www.hyundai-robotics.com
+뉴로메카,https://www.neuromeka.com
+로보스타,https://www.robostar.co.kr
+한화로보틱스,https://www.hanwharobotics.com
+티로보틱스,https://www.trobotics.co.kr
+유일로보틱스,https://www.yuilrobotics.com
+알에스오토메이션,https://www.rsautomation.co.kr
+
+# ── 휴머노이드·보행 로봇 ────────────────────────
+에이로봇,https://www.airobot.kr
+엔젤로보틱스,https://www.angel-robotics.com
+
+# ── 로봇 부품: 모터·감속기·구동 ─────────────────
+로보티즈,https://www.robotis.com
+에스비비테크,https://www.sbbtech.com
+에스피지,https://www.spg.co.kr
+삼현,https://www.samhyun.net
+하이젠알앤엠,https://www.higenmotor.com
+
+# ── 서비스·배송·물류 로봇 ──────────────────────
+베어로보틱스,https://www.bearrobotics.ai
+씨메스,https://www.cmes.co.kr
+티라로보틱스,https://www.tirarobotics.com
+로보프리,https://www.robopree.com
+클로봇,https://www.klbot.co.kr
+빅웨이브로보틱스,https://www.bigwaverobotics.com
+도구공간,https://www.dogu.space
+
+# ── 자율주행·모바일 로봇 ───────────────────────
+트위니,https://www.twinny.ai
+로보큐브테크,https://www.robocubetech.com
+서울로보틱스,https://www.seoulrobotics.org
+
+# ── 의료·재활 로봇 ────────────────────────────
+큐렉소,https://www.curexo.com
+고영테크놀러지,https://www.koh-young.com
+
+# ── 로봇 SI·자동화 ────────────────────────────
+# 현대위아는 이미 리크루터로 수집 중이라 뺐습니다.
+에스에프에이,https://www.sfa.co.kr
+라온테크,https://www.raontech.net
