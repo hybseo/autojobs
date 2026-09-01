@@ -108,10 +108,20 @@ def list_open(affiliates=()):
         })
 
     if not rows:
-        # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다. 그러면 원인을
-        # 알 수 없으므로 반드시 알립니다.
-        print(f"      ! 두산: 공고를 하나도 찾지 못했습니다. "
-              f"화면 구조가 바뀌었을 수 있습니다. {LIST_URL} 를 확인하세요.")
+        # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다.
+        # "구조가 바뀌었다" 는 말만으로는 무엇을 고칠지 알 수 없습니다.
+        # 실제로 받은 내용을 남겨야 다음에 정확히 손볼 수 있습니다.
+        print(f"      ! 두산: 공고를 하나도 찾지 못했습니다. ({LIST_URL})")
+        print(f"        받은 HTML {len(text)}자 · 날짜패턴 "
+              f"{len(re.findall(r'\d{4}-\d{2}-\d{2}', text))}개 · "
+              f"'경력' {text.count('경력')}회 · 'D-' {text.count('D-')}회")
+        # 날짜가 보이면 그 주변을 보여줍니다. 어긋난 지점이 드러납니다.
+        m = re.search(r"\d{4}-\d{2}-\d{2}", text)
+        if m:
+            print("        날짜 주변: "
+                  + text[max(0, m.start() - 120):m.start() + 60].replace("\n", "⏎"))
+        else:
+            print("        앞부분: " + text[:200].replace("\n", "⏎"))
         return []
 
     if not affiliates:
