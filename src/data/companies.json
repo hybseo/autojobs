@@ -112,6 +112,16 @@
    "industry": ["로봇", "기계장비", "전기전자"], "enabled": true,
    "note": "HD현대 그룹 통합 채용. 로봇·건설기계·전기 계열만. affiliates 에 계열사명을 끝까지 적을 것"},
 
+  {"name": "한화",         "slug": "hanwha",          "ats": "hanwha",     "code": "hanwhain",
+   "affiliates": ["한화로보틱스", "한화첨단소재", "한화모멘텀", "한화비전", "한화정밀기계", "한화솔루션/첨단소재"],
+   "industry": ["자동차부품", "로봇", "기계장비"], "enabled": true,
+   "note": "한화인 통합 채용. 로봇·소재·기계 계열만. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공"},
+
+  {"name": "두산",         "slug": "doosan",          "ats": "doosan",     "code": "career.doosan.com",
+   "affiliates": ["두산로보틱스", "두산밥캣", "두산모빌리티이노베이션", "두산로지스틱스솔루션"],
+   "industry": ["로봇", "기계장비"], "enabled": true,
+   "note": "두산 통합 채용. 로봇·기계 계열만. 서버 렌더링 HTML 파싱이라 화면 개편 시 깨질 수 있음"},
+
   {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
    "note": "원익로보틱스 포함"}
  ]
