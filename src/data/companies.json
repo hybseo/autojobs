@@ -69,9 +69,9 @@
   {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": false,
    "note": "타이어보강재. 2026-08-31 리크루터 API 가 HTTP 400 으로 거부. 코드가 더 이상 유효하지 않은 것으로 보임. 올바른 코드를 찾으면 enabled 를 true 로 되돌리세요"},
 
-  {"name": "LG그룹",       "slug": "lg-careers",      "ats": "lg",        "code": "LGE,LGIT,MAGNA,LGES",
-   "industry": ["자동차부품", "전기전자"], "enabled": true,
-   "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션만. 코드를 늘리면 계열사가 추가됨"},
+  {"name": "LG그룹",       "slug": "lg-careers",      "ats": "lg",        "code": "LGE,LGIT,MAGNA,LGES,RBO",
+   "industry": ["자동차부품", "전기전자", "로봇"], "enabled": true,
+   "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션·로보스타. 코드를 늘리면 계열사가 추가됨"},
 
   {"name": "스트라드비전",    "slug": "stradvision",     "ats": "greeting",  "code": "stradvision",
    "industry": ["자동차부품", "IT"], "enabled": true,
