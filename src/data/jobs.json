@@ -658,6 +658,22 @@
    "description": ""
   },
   {
+   "id": "hlcompany-127037",
+   "unit": "공고",
+   "company": "HL그룹",
+   "companySlug": "hl-group",
+   "title": "[HL로보틱스] [자율주행로봇 SW/HW 개발] 2026년 하반기 HL그룹 신입사원 채용",
+   "location": "",
+   "career": "신입",
+   "postedAt": "2026-09-01",
+   "closesAt": "2026-09-27",
+   "dday": 26,
+   "multiRole": true,
+   "sourceTitle": "",
+   "sourceUrl": "https://hlcompany.recruiter.co.kr/career/jobs/127037",
+   "description": ""
+  },
+  {
    "id": "hlcompany-46525",
    "unit": "공고",
    "company": "HL그룹",
