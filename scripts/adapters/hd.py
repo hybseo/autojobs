@@ -52,6 +52,7 @@ HD현대인프라코어까지 전부 걸립니다. 계열사명을 끝까지 적
 import json
 import re
 import html
+import urllib.error
 import urllib.request
 
 LIST_URL = ("https://recruit.hd.com/api/v1/jobda/getRecruitNoticeList"
@@ -68,11 +69,28 @@ CAREER = {"경력": "경력", "신입": "신입", "신입/경력": "신입/경�
 
 
 def _get(url):
+    # 헤더가 부족하면 500 을 돌려줍니다. 브라우저가 보내는 것에 맞춥니다.
+    # 실제로 Accept/Referer 만으로는 Internal Server Error 가 났습니다.
     req = urllib.request.Request(url, headers={
-        "Accept": "application/json", "User-Agent": UA,
-        "Referer": "https://recruit.hd.com/"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.load(r)
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+        "User-Agent": UA,
+        "Referer": "https://recruit.hd.com/kr/mainLayout/apply",
+        "Origin": "https://recruit.hd.com",
+        "X-Requested-With": "XMLHttpRequest",
+        "Connection": "close",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        # 어느 단계에서 막혔는지 알 수 있게 응답 앞부분을 남깁니다.
+        body = ""
+        try:
+            body = e.read(200).decode("utf-8", "replace").replace("\n", " ")
+        except Exception:
+            pass
+        raise RuntimeError(f"HTTP {e.code} · 응답: {body}") from None
 
 
 def strip_html(s):
