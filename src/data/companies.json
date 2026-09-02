@@ -10,218 +10,989 @@
   "industry 산업 분류. 나중에 자동차부품 외 산업을 추가할 때 필터로 씁니다.",
   "enabled  false 로 두면 수집에서 제외됩니다. 목록에서 지우지 않고 잠시 끌 때 씁니다."
  ],
-
  "companies": [
-  {"name": "현대모비스",     "slug": "hyundai-mobis",   "ats": "recruiter", "code": "mobis",            "industry": ["자동차부품"], "enabled": true},
-  {"name": "HL그룹",        "slug": "hl-group",        "ats": "recruiter", "code": "hlcompany",        "industry": ["자동차부품"], "enabled": true,
-   "note": "만도·클레무브·로보틱스·디앤아이한라·만도브로제 포함"},
-  {"name": "현대케피코",     "slug": "hyundai-kefico",  "ats": "recruiter", "code": "hyundai-kefico",   "industry": ["자동차부품"], "enabled": true},
-  {"name": "현대트랜시스",   "slug": "hyundai-transys", "ats": "recruiter", "code": "hyundai-transys",  "industry": ["자동차부품"], "enabled": true},
-  {"name": "현대위아",       "slug": "hyundai-wia",     "ats": "recruiter", "code": "hyundai-wia",      "industry": ["자동차부품"], "enabled": true},
-  {"name": "현대글로비스",   "slug": "hyundai-glovis",  "ats": "recruiter", "code": "glovis",           "industry": ["자동차부품", "물류"], "enabled": true},
-
-  {"name": "한온시스템",     "slug": "hanon-systems",   "ats": "recruiter", "code": "hanonsystems",     "industry": ["자동차부품"], "enabled": true},
-  {"name": "에스엘",         "slug": "sl",              "ats": "recruiter", "code": "slworld",          "industry": ["자동차부품"], "enabled": true,
-   "note": "에스엘미러텍·SHB 포함"},
-  {"name": "유라코퍼레이션", "slug": "yura",            "ats": "recruiter", "code": "yura",             "industry": ["자동차부품"], "enabled": true,
-   "note": "유라테크 포함"},
-  {"name": "LS오토모티브",   "slug": "ls-automotive",   "ats": "recruiter", "code": "lsat",             "industry": ["자동차부품"], "enabled": true},
-  {"name": "LS일렉트릭",     "slug": "ls-electric",     "ats": "recruiter", "code": "lselectric",       "industry": ["자동차부품", "전기전자"], "enabled": true},
-  {"name": "LS엠트론",       "slug": "ls-mtron",        "ats": "recruiter", "code": "lsmtron",          "industry": ["자동차부품", "기계장비"], "enabled": true},
-  {"name": "티에이치엔",     "slug": "thn",             "ats": "recruiter", "code": "thn",              "industry": ["자동차부품"], "enabled": true},
-  {"name": "경신",           "slug": "kyungshin",       "ats": "recruiter", "code": "kyungshin",        "industry": ["자동차부품"], "enabled": true},
-  {"name": "세방전지",       "slug": "sebang",          "ats": "recruiter", "code": "sebang",           "industry": ["자동차부품"], "enabled": true,
-   "note": "세방리튬배터리 포함"},
-
-  {"name": "성우하이텍",     "slug": "sungwoo-hitech",  "ats": "recruiter", "code": "swhitech",         "industry": ["자동차부품"], "enabled": true},
-  {"name": "삼보모터스",     "slug": "sambo-motors",    "ats": "recruiter", "code": "sambomotors",      "industry": ["자동차부품"], "enabled": true},
-  {"name": "NVH코리아",      "slug": "nvh-korea",       "ats": "recruiter", "code": "nvhkorea",         "industry": ["자동차부품"], "enabled": true},
-  {"name": "화승",           "slug": "hwaseung",        "ats": "recruiter", "code": "hwaseung",         "industry": ["자동차부품"], "enabled": true},
-  {"name": "한국타이어",     "slug": "hankook-tire",    "ats": "recruiter", "code": "hankooktire",      "industry": ["자동차부품"], "enabled": true},
-  {"name": "넥센타이어",     "slug": "nexen-tire",      "ats": "recruiter", "code": "nexentire",        "industry": ["자동차부품"], "enabled": true},
-  {"name": "금호타이어",     "slug": "kumho-tire",      "ats": "recruiter", "code": "kumhotire",        "industry": ["자동차부품"], "enabled": true},
-
-  {"name": "경창산업",     "slug": "kyungchang",      "ats": "greeting",  "code": "kci",              "industry": ["자동차부품"], "enabled": true,
-   "note": "그리팅 ATS. 전동화·모터선행연구·전자제어설계 포함"},
-
-  {"name": "유니투스",     "slug": "unitus",          "ats": "greeting",  "code": "unitushr",         "industry": ["자동차부품"], "enabled": true,
-   "note": "전자제동 부품. 천안·충주·김천 공장"},
-  {"name": "포스코모빌리티솔루션", "slug": "posco-mobility", "ats": "greeting", "code": "poscomobility",     "industry": ["자동차부품"], "enabled": true,
-   "note": "구동모터코아·금속분리판. 확인 시점 공고 0건"},
-
-  {"name": "한국단자공업",   "slug": "ket",             "ats": "greeting",  "code": "ket",              "industry": ["자동차부품"], "enabled": true,
-   "note": "커넥터·전장부품. 인천 송도·논현, 화성, 평택"},
-  {"name": "삼기",         "slug": "samkee",          "ats": "greeting",  "code": "samkee",           "industry": ["자동차부품"], "enabled": true,
-   "note": "알루미늄 다이캐스팅. 대구·평택·서산·판교"},
-  {"name": "현대오토에버",   "slug": "hyundai-autoever", "ats": "greeting", "code": "hyundai-autoever", "domain": "career.hyundai-autoever.com",
-   "industry": ["자동차부품"], "enabled": true, "note": "그리팅 자체 도메인. 차량SW·IT"},
-
-  {"name": "KCC글라스",    "slug": "kcc-glass",       "ats": "greeting",  "code": "kccglass",         "industry": ["자동차부품", "소재"], "enabled": true,
-   "note": "자동차 안전유리. 여주·아산·전의공장, 서울 본사"},
-  {"name": "PHC그룹",      "slug": "phc-group",       "ats": "greeting",  "code": "phcgroup",         "industry": ["자동차부품"], "enabled": true,
-   "note": "카펙발레오·피에이치씨발레오써멀시스템스·브이피에이치씨 포함"},
-  {"name": "희성촉매",      "slug": "heesung-catalysts", "ats": "greeting", "code": "hscatalysts",     "industry": ["자동차부품"], "enabled": true,
-   "note": "배기 촉매. 확인 시점 공고 0건"},
-  {"name": "KP그룹",       "slug": "kp-group",        "ats": "recruiter", "code": "kpgroup",          "industry": ["자동차부품", "화학"], "enabled": true,
-   "note": "한국석유공업·KP한석화학. 공고가 자동차부품과 무관할 수 있음"},
-  {"name": "디와이오토",     "slug": "dy-auto",         "ats": "recruiter", "code": "dy",               "industry": ["자동차부품"], "enabled": true,
-   "note": "와이퍼·모터. 확인 시점 공고 0건"},
-  {"name": "효성",         "slug": "hyosung",         "ats": "recruiter", "code": "hyosung",          "industry": ["자동차부품", "소재"], "enabled": false,
-   "note": "타이어보강재. 2026-08-31 리크루터 API 가 HTTP 400 으로 거부. 코드가 더 이상 유효하지 않은 것으로 보임. 올바른 코드를 찾으면 enabled 를 true 로 되돌리세요"},
-
-  {"name": "LG그룹",       "slug": "lg-careers",      "ats": "lg",        "code": "LGE,LGIT,MAGNA,LGES,RBO",
+  {
+   "name": "현대모비스",
+   "slug": "hyundai-mobis",
+   "ats": "recruiter",
+   "code": "mobis",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "HL그룹",
+   "slug": "hl-group",
+   "ats": "recruiter",
+   "code": "hlcompany",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "만도·클레무브·로보틱스·디앤아이한라·만도브로제 포함"
+  },
+  {
+   "name": "현대케피코",
+   "slug": "hyundai-kefico",
+   "ats": "recruiter",
+   "code": "hyundai-kefico",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "현대트랜시스",
+   "slug": "hyundai-transys",
+   "ats": "recruiter",
+   "code": "hyundai-transys",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "현대위아",
+   "slug": "hyundai-wia",
+   "ats": "recruiter",
+   "code": "hyundai-wia",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "현대글로비스",
+   "slug": "hyundai-glovis",
+   "ats": "recruiter",
+   "code": "glovis",
+   "industry": [
+    "자동차부품",
+    "물류"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "한온시스템",
+   "slug": "hanon-systems",
+   "ats": "recruiter",
+   "code": "hanonsystems",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "에스엘",
+   "slug": "sl",
+   "ats": "recruiter",
+   "code": "slworld",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "에스엘미러텍·SHB 포함"
+  },
+  {
+   "name": "유라코퍼레이션",
+   "slug": "yura",
+   "ats": "recruiter",
+   "code": "yura",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "유라테크 포함"
+  },
+  {
+   "name": "LS오토모티브",
+   "slug": "ls-automotive",
+   "ats": "recruiter",
+   "code": "lsat",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "LS일렉트릭",
+   "slug": "ls-electric",
+   "ats": "recruiter",
+   "code": "lselectric",
+   "industry": [
+    "자동차부품",
+    "전기전자"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "LS엠트론",
+   "slug": "ls-mtron",
+   "ats": "recruiter",
+   "code": "lsmtron",
+   "industry": [
+    "자동차부품",
+    "기계장비"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "티에이치엔",
+   "slug": "thn",
+   "ats": "recruiter",
+   "code": "thn",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "경신",
+   "slug": "kyungshin",
+   "ats": "recruiter",
+   "code": "kyungshin",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "세방전지",
+   "slug": "sebang",
+   "ats": "recruiter",
+   "code": "sebang",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "세방리튬배터리 포함"
+  },
+  {
+   "name": "성우하이텍",
+   "slug": "sungwoo-hitech",
+   "ats": "recruiter",
+   "code": "swhitech",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "삼보모터스",
+   "slug": "sambo-motors",
+   "ats": "recruiter",
+   "code": "sambomotors",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "NVH코리아",
+   "slug": "nvh-korea",
+   "ats": "recruiter",
+   "code": "nvhkorea",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "화승",
+   "slug": "hwaseung",
+   "ats": "recruiter",
+   "code": "hwaseung",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "한국타이어",
+   "slug": "hankook-tire",
+   "ats": "recruiter",
+   "code": "hankooktire",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "넥센타이어",
+   "slug": "nexen-tire",
+   "ats": "recruiter",
+   "code": "nexentire",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "금호타이어",
+   "slug": "kumho-tire",
+   "ats": "recruiter",
+   "code": "kumhotire",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "경창산업",
+   "slug": "kyungchang",
+   "ats": "greeting",
+   "code": "kci",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "그리팅 ATS. 전동화·모터선행연구·전자제어설계 포함"
+  },
+  {
+   "name": "유니투스",
+   "slug": "unitus",
+   "ats": "greeting",
+   "code": "unitushr",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "전자제동 부품. 천안·충주·김천 공장"
+  },
+  {
+   "name": "포스코모빌리티솔루션",
+   "slug": "posco-mobility",
+   "ats": "greeting",
+   "code": "poscomobility",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "구동모터코아·금속분리판. 확인 시점 공고 0건"
+  },
+  {
+   "name": "한국단자공업",
+   "slug": "ket",
+   "ats": "greeting",
+   "code": "ket",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "커넥터·전장부품. 인천 송도·논현, 화성, 평택"
+  },
+  {
+   "name": "삼기",
+   "slug": "samkee",
+   "ats": "greeting",
+   "code": "samkee",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "알루미늄 다이캐스팅. 대구·평택·서산·판교"
+  },
+  {
+   "name": "현대오토에버",
+   "slug": "hyundai-autoever",
+   "ats": "greeting",
+   "code": "hyundai-autoever",
+   "domain": "career.hyundai-autoever.com",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "그리팅 자체 도메인. 차량SW·IT"
+  },
+  {
+   "name": "KCC글라스",
+   "slug": "kcc-glass",
+   "ats": "greeting",
+   "code": "kccglass",
+   "industry": [
+    "자동차부품",
+    "소재"
+   ],
+   "enabled": true,
+   "note": "자동차 안전유리. 여주·아산·전의공장, 서울 본사"
+  },
+  {
+   "name": "PHC그룹",
+   "slug": "phc-group",
+   "ats": "greeting",
+   "code": "phcgroup",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "카펙발레오·피에이치씨발레오써멀시스템스·브이피에이치씨 포함"
+  },
+  {
+   "name": "희성촉매",
+   "slug": "heesung-catalysts",
+   "ats": "greeting",
+   "code": "hscatalysts",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "배기 촉매. 확인 시점 공고 0건"
+  },
+  {
+   "name": "KP그룹",
+   "slug": "kp-group",
+   "ats": "recruiter",
+   "code": "kpgroup",
+   "industry": [
+    "자동차부품",
+    "화학"
+   ],
+   "enabled": true,
+   "note": "한국석유공업·KP한석화학. 공고가 자동차부품과 무관할 수 있음"
+  },
+  {
+   "name": "디와이오토",
+   "slug": "dy-auto",
+   "ats": "recruiter",
+   "code": "dy",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "와이퍼·모터. 확인 시점 공고 0건"
+  },
+  {
+   "name": "효성",
+   "slug": "hyosung",
+   "ats": "recruiter",
+   "code": "hyosung",
+   "industry": [
+    "자동차부품",
+    "소재"
+   ],
+   "enabled": false,
+   "note": "타이어보강재. 2026-08-31 리크루터 API 가 HTTP 400 으로 거부. 코드가 더 이상 유효하지 않은 것으로 보임. 올바른 코드를 찾으면 enabled 를 true 로 되돌리세요"
+  },
+  {
+   "name": "LG그룹",
+   "slug": "lg-careers",
+   "ats": "lg",
+   "code": "LGE,LGIT,MAGNA,LGES,RBO",
    "affiliateIndustry": {
-     "LG전자": ["자동차부품", "전기전자"],
-     "LG이노텍": ["자동차부품", "전기전자"],
-     "LG Magna": ["자동차부품", "전기전자"],
-     "LG에너지솔루션": ["자동차부품", "전기전자"],
-     "로보스타": ["로봇", "기계장비"]
+    "LG전자": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "LG이노텍": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "LG Magna": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "LG에너지솔루션": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "로보스타": [
+     "로봇",
+     "기계장비"
+    ]
    },
-   "industry": ["자동차부품", "전기전자", "로봇"], "enabled": true,
-   "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션·로보스타. 코드를 늘리면 계열사가 추가됨"},
-
-  {"name": "스트라드비전",    "slug": "stradvision",     "ats": "greeting",  "code": "stradvision",
-   "industry": ["자동차부품"], "enabled": true,
-   "note": "자율주행 인지 SW. 서울·포항. 확인 시점 26건"},
-
-  {"name": "라이드플럭스",     "slug": "rideflux",        "ats": "greeting",  "code": "rideflux",
-   "industry": ["자동차부품"], "enabled": true,
-   "note": "자율주행 SW. 서울·제주·화성. 확인 시점 14건"},
-
-  {"name": "42dot",        "slug": "42dot",           "ats": "ashby",     "code": "42dot",
-   "industry": ["자동차부품"], "enabled": true,
-   "note": "현대차그룹 SDV. 판교. 해외·인재풀 제외하고 국내 공고만"},
-
-  {"name": "일진하이솔루스",   "slug": "iljin-hysolus",   "ats": "workday",
+   "industry": [
+    "자동차부품",
+    "전기전자",
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션·로보스타. 코드를 늘리면 계열사가 추가됨"
+  },
+  {
+   "name": "스트라드비전",
+   "slug": "stradvision",
+   "ats": "greeting",
+   "code": "stradvision",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자율주행 인지 SW. 서울·포항. 확인 시점 26건"
+  },
+  {
+   "name": "라이드플럭스",
+   "slug": "rideflux",
+   "ats": "greeting",
+   "code": "rideflux",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자율주행 SW. 서울·제주·화성. 확인 시점 14건"
+  },
+  {
+   "name": "42dot",
+   "slug": "42dot",
+   "ats": "ashby",
+   "code": "42dot",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "현대차그룹 SDV. 판교. 해외·인재풀 제외하고 국내 공고만"
+  },
+  {
+   "name": "일진하이솔루스",
+   "slug": "iljin-hysolus",
+   "ats": "workday",
    "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Hysolus",
-   "industry": ["자동차부품"], "enabled": true,
-   "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"},
-
-  {"name": "SK온",         "slug": "sk-on",           "ats": "sk",        "code": "skcareers",
-   "affiliates": ["SK on", "SK온", "SK IE Technology", "SKIET", "SK아이이테크놀로지",
-                  "SK materials", "SK머티리얼즈", "SK실트론", "SK siltron", "SK스페셜티", "SK specialty"],
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"
+  },
+  {
+   "name": "SK온",
+   "slug": "sk-on",
+   "ats": "sk",
+   "code": "skcareers",
+   "affiliates": [
+    "SK on",
+    "SK온",
+    "SK IE Technology",
+    "SKIET",
+    "SK아이이테크놀로지",
+    "SK materials",
+    "SK머티리얼즈",
+    "SK실트론",
+    "SK siltron",
+    "SK스페셜티",
+    "SK specialty"
+   ],
    "affiliateIndustry": {
-     "SK on": ["자동차부품", "전기전자"],
-     "SK ons": ["자동차부품", "전기전자"],
-     "SK IE Technology": ["자동차부품", "소재"],
-     "SK머티리얼즈": ["반도체", "소재"],
-     "SK실트론": ["반도체", "소재"],
-     "SK스페셜티": ["반도체", "소재"]
+    "SK on": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "SK ons": [
+     "자동차부품",
+     "전기전자"
+    ],
+    "SK IE Technology": [
+     "자동차부품",
+     "소재"
+    ],
+    "SK머티리얼즈": [
+     "반도체",
+     "소재"
+    ],
+    "SK실트론": [
+     "반도체",
+     "소재"
+    ],
+    "SK스페셜티": [
+     "반도체",
+     "소재"
+    ]
    },
-   "industry": ["자동차부품", "전기전자", "반도체"], "enabled": true,
-   "note": "SK그룹 통합 채용. 배터리 계열사만 담음. affiliates 에 회사명을 추가하면 계열사가 늘어남"},
-
-  {"name": "트위니",        "slug": "twinny",          "ats": "greeting",  "code": "twinny",
-   "industry": ["로봇"], "enabled": true,
-   "note": "자율주행 물류로봇 '나르고'. 대전 유성구. 로봇 분야 첫 등록"},
-
-  {"name": "서울로보틱스",     "slug": "seoul-robotics",  "ats": "greenhouse", "code": "seoulrobotics",
-   "industry": ["로봇"], "enabled": true,
-   "note": "3D 라이다 인지 SW. 국내 공고만 담음. 해외까지 원하면 overseas: true"},
-
-  {"name": "베어로보틱스",     "slug": "bear-robotics",   "ats": "breezy",     "code": "bear-robotics",
-   "industry": ["로봇"], "enabled": true,
-   "note": "서빙로봇. 미국 본사 공고가 섞여 있어 국내 근무지만 담음"},
-
-  {"name": "HD현대",       "slug": "hd-hyundai",      "ats": "hd",         "code": "recruit.hd.com",
-   "affiliates": ["HD현대로보틱스", "HD현대인프라코어", "HD현대사이트솔루션", "HD현대일렉트릭"],
+   "industry": [
+    "자동차부품",
+    "전기전자",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "SK그룹 통합 채용. 배터리 계열사만 담음. affiliates 에 회사명을 추가하면 계열사가 늘어남"
+  },
+  {
+   "name": "트위니",
+   "slug": "twinny",
+   "ats": "greeting",
+   "code": "twinny",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "자율주행 물류로봇 '나르고'. 대전 유성구. 로봇 분야 첫 등록"
+  },
+  {
+   "name": "서울로보틱스",
+   "slug": "seoul-robotics",
+   "ats": "greenhouse",
+   "code": "seoulrobotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "3D 라이다 인지 SW. 국내 공고만 담음. 해외까지 원하면 overseas: true"
+  },
+  {
+   "name": "베어로보틱스",
+   "slug": "bear-robotics",
+   "ats": "breezy",
+   "code": "bear-robotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "서빙로봇. 미국 본사 공고가 섞여 있어 국내 근무지만 담음"
+  },
+  {
+   "name": "HD현대",
+   "slug": "hd-hyundai",
+   "ats": "hd",
+   "code": "recruit.hd.com",
+   "affiliates": [
+    "HD현대로보틱스",
+    "HD현대인프라코어",
+    "HD현대사이트솔루션",
+    "HD현대일렉트릭"
+   ],
    "affiliateIndustry": {
-     "HD현대로보틱스": ["로봇"],
-     "HD현대인프라코어": ["기계장비"],
-     "HD현대사이트솔루션": ["기계장비"],
-     "HD현대일렉트릭": ["전기전자"]
+    "HD현대로보틱스": [
+     "로봇"
+    ],
+    "HD현대인프라코어": [
+     "기계장비"
+    ],
+    "HD현대사이트솔루션": [
+     "기계장비"
+    ],
+    "HD현대일렉트릭": [
+     "전기전자"
+    ]
    },
-   "industry": ["로봇", "기계장비", "전기전자"], "enabled": false,
-   "note": "2026-09-01 API 가 '관리자 권한이 존재하지 않습니다' 로 거부. 로그인한 브라우저에서만 열리는 관리자 경로이며 공개 데이터가 아님. 공개 경로를 찾으면 되살릴 것"},
-
-  {"name": "한화",         "slug": "hanwha",          "ats": "hanwha",     "code": "hanwhain",
-   "affiliates": ["한화로보틱스", "한화첨단소재", "한화모멘텀", "한화비전", "한화정밀기계", "한화세미텍"],
+   "industry": [
+    "로봇",
+    "기계장비",
+    "전기전자"
+   ],
+   "enabled": false,
+   "note": "2026-09-01 API 가 '관리자 권한이 존재하지 않습니다' 로 거부. 로그인한 브라우저에서만 열리는 관리자 경로이며 공개 데이터가 아님. 공개 경로를 찾으면 되살릴 것"
+  },
+  {
+   "name": "한화",
+   "slug": "hanwha",
+   "ats": "hanwha",
+   "code": "hanwhain",
+   "affiliates": [
+    "한화로보틱스",
+    "한화첨단소재",
+    "한화모멘텀",
+    "한화비전",
+    "한화정밀기계",
+    "한화세미텍"
+   ],
    "affiliateIndustry": {
-     "한화로보틱스": ["로봇"],
-     "한화첨단소재": ["자동차부품", "소재"],
-     "한화모멘텀": ["기계장비", "반도체"],
-     "한화세미텍": ["반도체", "기계장비"],
-     "한화비전": ["전기전자"],
-     "한화정밀기계": ["기계장비", "반도체"],
-     "한화에어로스페이스": ["기계장비"],
-     "한화솔루션": ["소재"],
-     "한화엔진": ["기계장비"]
+    "한화로보틱스": [
+     "로봇"
+    ],
+    "한화첨단소재": [
+     "자동차부품",
+     "소재"
+    ],
+    "한화모멘텀": [
+     "기계장비",
+     "반도체"
+    ],
+    "한화세미텍": [
+     "반도체",
+     "기계장비"
+    ],
+    "한화비전": [
+     "전기전자"
+    ],
+    "한화정밀기계": [
+     "기계장비",
+     "반도체"
+    ],
+    "한화에어로스페이스": [
+     "기계장비"
+    ],
+    "한화솔루션": [
+     "소재"
+    ],
+    "한화엔진": [
+     "기계장비"
+    ]
    },
-   "industry": ["자동차부품", "로봇", "기계장비", "반도체"], "enabled": true,
-   "note": "한화인 통합 채용. 로봇·소재·기계 계열만. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공"},
-
-  {"name": "두산",         "slug": "doosan",          "ats": "doosan",     "code": "career.doosan.com",
-   "affiliates": ["두산로보틱스", "두산모빌리티이노베이션", "두산테스나"],
+   "industry": [
+    "자동차부품",
+    "로봇",
+    "기계장비",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "한화인 통합 채용. 로봇·소재·기계 계열만. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공"
+  },
+  {
+   "name": "두산",
+   "slug": "doosan",
+   "ats": "doosan",
+   "code": "career.doosan.com",
+   "affiliates": [
+    "두산로보틱스",
+    "두산모빌리티이노베이션",
+    "두산테스나"
+   ],
    "affiliateIndustry": {
-     "두산로보틱스": ["로봇"],
-     "두산밥캣": ["기계장비"],
-     "두산테스나": ["반도체"],
-     "두산모빌리티이노베이션": ["자동차부품"],
-     "두산로지스틱스솔루션": ["기계장비", "물류"]
+    "두산로보틱스": [
+     "로봇"
+    ],
+    "두산밥캣": [
+     "기계장비"
+    ],
+    "두산테스나": [
+     "반도체"
+    ],
+    "두산모빌리티이노베이션": [
+     "자동차부품"
+    ],
+    "두산로지스틱스솔루션": [
+     "기계장비",
+     "물류"
+    ]
    },
-   "industry": ["로봇", "기계장비", "반도체"], "enabled": true,
-   "note": "두산 통합 채용. 로봇·기계 계열만. 서버 렌더링 HTML 파싱이라 화면 개편 시 깨질 수 있음"},
-
-  {"name": "AP시스템", "slug": "apsystems", "ats": "recruiter", "code": "apsystems",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "OCI", "slug": "oci", "ats": "greeting", "code": "oci",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "DB하이텍", "slug": "dbgroup", "ats": "recruiter", "code": "dbgroup",
-   "industry": ["반도체"], "enabled": true, "note": "파운드리"},
-  {"name": "가온칩스", "slug": "gaonchips", "ats": "greeting", "code": "gaonchips",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "로봇앤드디자인", "slug": "rnd", "ats": "greeting", "code": "rnd",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "미래컴퍼니", "slug": "meerecompany", "ats": "recruiter", "code": "meerecompany", "domain": "meerecompany.com",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "사피엔반도체", "slug": "sapien-semicon", "ats": "greeting", "code": "sapien-semicon",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "서플러스글로벌", "slug": "surplusglobal", "ats": "greeting", "code": "surplusglobal",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "에스앤에스텍", "slug": "snstech", "ats": "greeting", "code": "snstech",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "이엔에프테크놀로지", "slug": "enf-recruit", "ats": "greeting", "code": "enf-recruit",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "케이씨텍", "slug": "kc-group", "ats": "recruiter", "code": "kc-group",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "탑엔지니어링", "slug": "topeng", "ats": "recruiter", "code": "topeng", "domain": "topengnet.com",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "테스", "slug": "hites", "ats": "greeting", "code": "hites",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "파두", "slug": "fadu", "ats": "recruiter", "code": "fadu", "domain": "careers.fadu.io",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "고려아연", "slug": "koreazinc", "ats": "recruiter", "code": "koreazinc", "domain": "careers.koreazinc.co.kr",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "딥엑스", "slug": "deepx", "ats": "greeting", "code": "deepx",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "리벨리온", "slug": "rebellions", "ats": "greeting", "code": "rebellions",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "망고부스트코리아", "slug": "mangoboost", "ats": "greeting", "code": "mangoboost",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "블루닷", "slug": "blue-dot", "ats": "greeting", "code": "blue-dot",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "삼익티에이치케이", "slug": "samickthk", "ats": "recruiter", "code": "samickthk",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "에스피삼화", "slug": "samhwapaint", "ats": "greeting", "code": "samhwapaint",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "에이치엘비이노베이션", "slug": "hlb-group", "ats": "greeting", "code": "hlb-group",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "엑시나", "slug": "xcena", "ats": "greeting", "code": "xcena",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "이솔", "slug": "euvsol", "ats": "greeting", "code": "euvsol",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "주성엔지니어링", "slug": "jusung", "ats": "greeting", "code": "jusung",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-  {"name": "디노티시아", "slug": "dno", "ats": "greeting", "code": "dno",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "하이퍼엑셀", "slug": "hyperaccel", "ats": "greeting", "code": "hyperaccel",
-   "industry": ["반도체"], "enabled": true, "note": "팹리스·설계"},
-  {"name": "태광산업", "slug": "taekwang", "ats": "recruiter", "code": "taekwang",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 소재"},
-  {"name": "피에스케이홀딩스", "slug": "psk", "ats": "recruiter", "code": "psk",
-   "industry": ["반도체"], "enabled": true, "note": "반도체 장비"},
-
-  {"name": "원익",           "slug": "wonik",           "ats": "recruiter", "code": "wonik",            "industry": ["기계장비", "반도체"], "enabled": true,
-   "note": "원익로보틱스 포함"}
+   "industry": [
+    "로봇",
+    "기계장비",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "두산 통합 채용. 로봇·기계 계열만. 서버 렌더링 HTML 파싱이라 화면 개편 시 깨질 수 있음"
+  },
+  {
+   "name": "AP시스템",
+   "slug": "apsystems",
+   "ats": "recruiter",
+   "code": "apsystems",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "OCI",
+   "slug": "oci",
+   "ats": "greeting",
+   "code": "oci",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "DB하이텍",
+   "slug": "dbgroup",
+   "ats": "recruiter",
+   "code": "dbgroup",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "파운드리"
+  },
+  {
+   "name": "가온칩스",
+   "slug": "gaonchips",
+   "ats": "greeting",
+   "code": "gaonchips",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "로봇앤드디자인",
+   "slug": "rnd",
+   "ats": "greeting",
+   "code": "rnd",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "미래컴퍼니",
+   "slug": "meerecompany",
+   "ats": "recruiter",
+   "code": "meerecompany",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": false,
+   "note": "리크루터 API가 HTTP 400. 자체 화면을 쓰는 것으로 보임"
+  },
+  {
+   "name": "사피엔반도체",
+   "slug": "sapien-semicon",
+   "ats": "greeting",
+   "code": "sapien-semicon",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "서플러스글로벌",
+   "slug": "surplusglobal",
+   "ats": "greeting",
+   "code": "surplusglobal",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "에스앤에스텍",
+   "slug": "snstech",
+   "ats": "greeting",
+   "code": "snstech",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "이엔에프테크놀로지",
+   "slug": "enf-recruit",
+   "ats": "greeting",
+   "code": "enf-recruit",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "케이씨텍",
+   "slug": "kc-group",
+   "ats": "recruiter",
+   "code": "kc-group",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "탑엔지니어링",
+   "slug": "topeng",
+   "ats": "recruiter",
+   "code": "topeng",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": false,
+   "note": "리크루터 API가 HTTP 400. 자체 화면을 쓰는 것으로 보임"
+  },
+  {
+   "name": "테스",
+   "slug": "hites",
+   "ats": "greeting",
+   "code": "hites",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "파두",
+   "slug": "fadu",
+   "ats": "greeting",
+   "code": "fadu",
+   "domain": "careers.fadu.io",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계. 탐지기가 리크루터로 잘못 판정했으나 실제로는 그리팅 자체도메인"
+  },
+  {
+   "name": "고려아연",
+   "slug": "koreazinc",
+   "ats": "recruiter",
+   "code": "koreazinc",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": false,
+   "note": "리크루터를 쓰지만 자체 화면을 붙여 \"게시된 디자인\"이 없음. API로 수집 불가. 확인 시점 공고 0건"
+  },
+  {
+   "name": "딥엑스",
+   "slug": "deepx",
+   "ats": "greeting",
+   "code": "deepx",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "리벨리온",
+   "slug": "rebellions",
+   "ats": "greeting",
+   "code": "rebellions",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "망고부스트코리아",
+   "slug": "mangoboost",
+   "ats": "greeting",
+   "code": "mangoboost",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "블루닷",
+   "slug": "blue-dot",
+   "ats": "greeting",
+   "code": "blue-dot",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "삼익티에이치케이",
+   "slug": "samickthk",
+   "ats": "recruiter",
+   "code": "samickthk",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "에스피삼화",
+   "slug": "samhwapaint",
+   "ats": "greeting",
+   "code": "samhwapaint",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "에이치엘비이노베이션",
+   "slug": "hlb-group",
+   "ats": "greeting",
+   "code": "hlb-group",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "엑시나",
+   "slug": "xcena",
+   "ats": "greeting",
+   "code": "xcena",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "이솔",
+   "slug": "euvsol",
+   "ats": "greeting",
+   "code": "euvsol",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "주성엔지니어링",
+   "slug": "jusung",
+   "ats": "greeting",
+   "code": "jusung",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "디노티시아",
+   "slug": "dno",
+   "ats": "greeting",
+   "code": "dno",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "하이퍼엑셀",
+   "slug": "hyperaccel",
+   "ats": "greeting",
+   "code": "hyperaccel",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "팹리스·설계"
+  },
+  {
+   "name": "태광산업",
+   "slug": "taekwang",
+   "ats": "recruiter",
+   "code": "taekwang",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소재"
+  },
+  {
+   "name": "피에스케이홀딩스",
+   "slug": "psk",
+   "ats": "recruiter",
+   "code": "psk",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비"
+  },
+  {
+   "name": "원익",
+   "slug": "wonik",
+   "ats": "recruiter",
+   "code": "wonik",
+   "industry": [
+    "기계장비",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "원익로보틱스 포함"
+  }
  ]
 }
