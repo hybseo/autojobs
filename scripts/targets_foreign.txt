@@ -1,0 +1,70 @@
+# 외국계 자동차부품 기업 (KAICA 명단에서 추출)
+#
+# 목적: 외국계가 어떤 채용 시스템을 쓰는지 파악하는 것입니다.
+# 한 회사를 뚫는 것보다, 여러 곳이 같은 시스템을 쓰는지 보는 게 먼저입니다.
+# 어댑터 하나로 여러 곳이 열리면 그쪽에 힘을 쓰는 게 맞습니다.
+#
+# 지난 전수 탐지에서 이 층은 대부분 놓쳤습니다.
+# 본사 글로벌 채용으로 통합돼 한국 홈페이지에 채용 링크가 없거나,
+# 탐지기가 모르는 시스템으로 넘어가기 때문으로 보입니다.
+#
+# 이미 잡힌 4곳은 뺐습니다.
+#   니프코코리아(recruiter) · 발레오전장(workday)
+#   엘링크링거(workday) · 에스엠알오토모티브(greeting)
+#
+# KAICA 원문에 깨진 주소가 있어 바로잡았습니다.
+#   한국보그워너티에스: 'http://http://www. Borgwarner.com' → borgwarner.com
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_foreign.txt
+
+가레트모션코리아,https://www.garrettmotion.com
+게스템프카테크,https://kartek.co.kr
+니덱모빌리티코리아,http://gw.nmok.nidec.com
+덴소코리아,http://www.denso.com/kr/ko
+로버트보쉬코리아,https://www.bosch.co.kr
+만앤휴멜코리아,https://www.mann-hummel.com
+말레동현필터시스템,http://www.kr.mahle.com
+보그워너창녕,https://www.borgwarner.com
+보쉬전장,https://www.bosch.co.kr
+브로제코리아,https://www.brose.com
+비테스코테크놀로지스코리아,https://www.vitesco-technologies.com
+삼성발레오써멀시스템스,http://www.samsungvaleo.com
+센싸타테크놀러지스코리아,http://www.sensata.com
+셰플러안산,https://www.schaeffler.kr
+셰플러코리아,https://www.schaeffler.kr
+스타빌루스,https://www.stabilus.com
+아이티더블유오토모티브코리아,http://www.itwautokorea.com
+애디언트코리아,http://www.adientkorea.co.kr
+오토리브,https://www.autoliv.com
+유진에스엠알시오토모티브테크노,https://www.ysat.kr
+이튼인더스트리즈,http://www.eaton.com
+제트에프삭스코리아,http://www.sachs.co.kr
+제트에프오토모티브코리아,https://www.zf.com
+조이슨세이프티시스템스코리아,http://www.takata.com
+존슨일렉트릭오퍼레이션스,https://www.hallastackpole.co.kr
+카펙발레오,http://www.kapec.com
+콘티넨탈오토모티브일렉트로닉스,https://www.continental-corporation.com
+쿠퍼스탠다드오토모티브앤인더스트리얼,http://www.cooperstandard.com
+클라리오스델코,https://www.delkor.com
+타이코에이엠피,http://www.tycoelectronics.com
+티아이오토모티브,https://www.tiautomotive.com
+파이오락스,https://www.piolax.co.kr
+파카코리아,http://www.parker.com
+파카하니핀커넥터,http://www.hsparker.co.kr
+패커드코리아,https://www.packardkorea.co.kr
+페더럴모굴세종,http://www.fm-korea.co.kr
+평화발레오,https://www.vph.co.kr
+포레시아코리아,https://www.faurecia.com
+플라스틱옴니엄,http://www.plasticomnium.com
+한국댓와일러,http://www.sealtech.co.kr
+한국보그워너티에스,http://www.Borgwarner.com
+한국세큐리트,http://www.hanglas.co.kr
+한국쓰리엠,http://www.3m.com
+한국아이티더블유,http://www.itwkorea.com
+한국알프스,http://www.alpsalpine.com/ko
+한국에스케이에프씰,https://www.skfkorea.co.kr
+한국엔에스케이,https://www.kr.nsk.com
+한국유미코아촉매,https://www.umicore.kr
+한국후꼬꾸,https://fukokukorea.com
+헨켈코리아오토모티브,https://www.henkel.co.kr
