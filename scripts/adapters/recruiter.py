@@ -33,6 +33,29 @@ CAREER = {"CAREER": "경력", "NEW": "신입", "NEW_CAREER": "신입/경력",
           "NONE": "무관"}
 
 
+def _affiliate(title, fallback):
+    """공고 제목 앞 대괄호에서 계열사명을 꺼냅니다.
+
+    그룹 통합 채용을 리크루터로 하는 곳이 있습니다. HL그룹이 그런데,
+    항목 하나에 HL만도·HL클레무브·HL로보틱스가 함께 들어옵니다.
+    그대로 두면 화면에 전부 "HL그룹" 으로 나와 어느 회사인지 알 수 없습니다.
+
+      [HL로보틱스] 자율주행로봇 SW/HW 개발 …  →  HL로보틱스
+
+    companies.json 에 "splitByTitle": true 를 넣은 항목에만 적용합니다.
+    일반 기업은 제목에 대괄호로 사업부를 적기도 해서, 그것까지 회사명으로
+    바꾸면 엉뚱해집니다.
+    """
+    m = re.match(r"\s*\[([^\]]{2,20})\]", title or "")
+    if not m:
+        return fallback
+    v = m.group(1).strip()
+    # 직무·전형 표기는 계열사가 아닙니다.
+    if re.search(r"채용|모집|공고|신입|경력|인턴|R&D|영업|생산|구매|품질", v):
+        return fallback
+    return v
+
+
 def _career(v):
     """모르는 값이나 빈 값은 '무관' 으로 봅니다. 조건을 안 정한 공고입니다."""
     return CAREER.get(v, "무관")
@@ -127,7 +150,9 @@ def fetch(company):
         jobs.append({
             "id": jid,
             "unit": "공고",
-            "company": name, "companySlug": slug,
+            "company": (_affiliate(x.get("title") or "", name)
+                        if company.get("splitByTitle") else name),
+            "companySlug": slug,
             "title": x["title"],
             "location": "",
             "career": _career(x.get("careerType")),
