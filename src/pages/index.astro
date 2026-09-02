@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies } from '../lib.js';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies, industries, industriesOf } from '../lib.js';
 
 // 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
 const jobs = openJobs().sort(byDeadline);
@@ -17,7 +17,10 @@ const tally = (f) => {
 };
 // 검색 노출은 키워드가 좌우합니다. 브랜드만 남기면 신규 도메인은 잡힐 근거가 없습니다.
 // 두 번째 산업이 실제로 들어오면 그때 넓히세요.
-const title = '자동차부품 채용 통합 검색 | SEARCHJOB';
+// 산업을 넣지 않습니다. 자동차부품 외에 로봇·반도체가 들어왔고 앞으로 더 늘어납니다.
+// 늘 때마다 제목을 고치면 그때마다 다시 크롤링돼야 반영됩니다.
+// 산업 키워드는 /industry/{slug}/ 페이지가 각각 받아냅니다.
+const title = '기업 공식 채용공고 통합 검색 | SEARCHJOB';
 const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 있는 공고 ${deadlineN}건, 상시채용 ${alwaysN}건. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
 ---
 <Base title={title} description={desc}>
@@ -51,6 +54,14 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         ))}
         <button class="chip morebtn" id="moreCa" type="button" hidden></button>
       </div>
+      {industries().length > 1 && (
+        <div class="chips" id="fIn">
+          {industries().map((i) => (
+            <button class="chip" type="button" data-k="in" data-v={i.name} aria-pressed="false">{i.name}<span class="n">{i.jobs.length}</span></button>
+          ))}
+          <button class="chip morebtn" id="moreIn" type="button" hidden></button>
+        </div>
+      )}
 
     </div>
   </div>
@@ -75,6 +86,17 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         <button class="othertab" id="otherTab" type="button" hidden></button>
       </div>
     </div>
+
+    {industries().length > 1 && (
+      <>
+        <div class="section-h">산업별로 보기</div>
+        <ul class="archive">
+          {industries().map((i) => (
+            <li><a href={`/industry/${i.slug}/`}>{i.name} 채용</a><time>{i.jobs.length}건</time></li>
+          ))}
+        </ul>
+      </>
+    )}
 
     <div class="section-h">기업별로 보기</div>
     <ul class="archive">
@@ -192,7 +214,7 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
 <script>
   // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
   const cards = [...document.querySelectorAll('#list .card')];
-  const state = { q: '', co: new Set(), ca: new Set(), tab: '마감 있음', sort: 'dday' };
+  const state = { q: '', co: new Set(), ca: new Set(), in: new Set(), tab: '마감 있음', sort: 'dday' };
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
@@ -205,6 +227,9 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
       const ok =
         (!state.co.size || state.co.has(c.dataset.co)) &&
         (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        // 한 공고가 여러 산업에 걸칩니다. 하나라도 고른 산업에 들면 보여줍니다.
+        (!state.in.size ||
+          (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
         c.dataset.op === state.tab &&
         (!q || c.dataset.text.includes(q));
       c.hidden = !ok;
@@ -226,6 +251,8 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
       return c.dataset.op === other &&
         (!state.co.size || state.co.has(c.dataset.co)) &&
         (!state.ca.size || state.ca.has(c.dataset.career)) &&
+        (!state.in.size ||
+          (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
         (!q2 || c.dataset.text.includes(q2));
     }).length;
     const hint = document.getElementById('otherTab');
@@ -259,6 +286,7 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
   const foldables = [
     [document.getElementById('fCo'), document.getElementById('moreCo')],
     [document.getElementById('fCa'), document.getElementById('moreCa')],
+    [document.getElementById('fIn'), document.getElementById('moreIn')],
   ].filter(([box, btn]) => box && btn);
 
   function foldOne(box, btn) {
