@@ -1,35 +1,43 @@
-# 한국PCB반도체패키징산업협회(KPCA) 회원사 — PCB및반도체패키징Maker 업종
-# 출처: https://www.kpca.or.kr/member/cont3  (2026-08-27 확인)
+# PCB 기업 (한국PCB반도체패키징산업협회 KPCA 회원사)
+#
+# 출처: kpca.or.kr/member/cont3  2026-09-02 확인.
+# 'PCB및반도체패키징Maker' 업종만 담았습니다. 기판 제조사입니다.
+# 설비·약품·소재·지원 업체는 뺐습니다. 사이트 방문자층과 거리가 있습니다.
+#
+# 홈페이지 주소는 협회 목록에 함께 있어 그대로 옮겼습니다.
+#
+# 산업 분류에 대하여
+#   PCB 는 별도 산업으로 두지 않고 '반도체' 로 분류합니다.
+#   협회 이름부터 '한국PCB반도체패키징산업협회' 이고, 하나마이크론·해성디에스·
+#   앰코 같은 후공정 회사는 KSIA 반도체 명단에도 들어 있습니다.
+#   나중에 PCB 회사가 20~30곳 모이고 성격이 확연히 다르면 그때 분리하세요.
+#
+# 2026-08-27 이 목록으로 한 번 돌렸을 때 수확이 0곳이었습니다.
+# 이번에도 0곳일 수 있습니다.
+#
 # 형식: 회사명,홈페이지
-#
 # 사용법: python scripts/probe_ats1.py --urls scripts/targets_pcb.txt
-#
-# 설비·약품·소재·지원 업체는 뺐습니다. 기판 제조사만 담았습니다.
-# 협회 원문에 제이앤디써키트 주소에 공백이 섞여 있어 바로잡았습니다.
 
-심텍,http://www.simmtech.co.kr
-엘지이노텍,https://www.lginnotek.com
-대덕전자,http://www.daeduck.com
-비에이치,http://www.bhflex.co.kr
-삼성전기,https://www.samsungsem.com
-아비코테크,http://www.abcotech.co.kr
-이수페타시스,http://www.petasys.com
-이오에스,http://www.eos.co.kr
-코리아써키트,https://www.kcg.co.kr
-티엘비,http://www.tlbpcb.com
-블루탑,http://www.e-tkc.com
-타이거일렉,http://www.tigerelec.com
-해성디에스,http://www.haesungds.co.kr
-뉴프렉스,http://www.newflex.co.kr
-스템코,http://www.stemco.co.kr
-아름일렉트로닉스,http://www.yeskoreatech.com
+대덕전자,https://daeduck.com
+비에이치,https://bhflex.co.kr
+아비코테크,https://abcotech.co.kr
+이수페타시스,https://petasys.com
+이오에스,https://eos.co.kr
+코리아써키트,https://kcg.co.kr
+티엘비,https://tlbpcb.com
+블루탑,https://e-tkc.com
+타이거일렉,https://tigerelec.com
+해성디에스,https://haesungds.co.kr
+뉴프렉스,https://newflex.co.kr
+스템코,https://stemco.co.kr
+아름일렉트로닉스,https://yeskoreatech.com
 앰코테크놀로지코리아,https://amkor.com
-에이티씨,http://www.atc-kr.com
-인터플렉스,http://www.interflex.co.kr
-제이셋스태츠칩팩코리아,http://www.jcetglobal.com
-하나마이크론,http://www.hanamicron.com
-에스디에이,http://www.sda-t.co.kr
-아이엠에이치,http://www.imhpe.com
-에이팩트,http://www.apact.co.kr
-엠케이전자,http://mke.co.kr
-제이앤디써키트,http://www.jndcircuit.co.kr
+에이티씨,https://atc-kr.com
+인터플렉스,https://interflex.co.kr
+제이셋스태츠칩팩코리아,https://jcetglobal.com
+하나마이크론,https://hanamicron.com
+에스디에이,https://sda-t.co.kr
+아이엠에이치,https://imhpe.com
+에이팩트,https://apact.co.kr
+엠케이전자,https://mke.co.kr
+제이앤디써키트,https://jndcircuit.co.kr
