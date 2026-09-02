@@ -1,5 +1,5 @@
 ---
-import { daysLeft, progress, isAlways, sortValue } from '../lib.js';
+import { daysLeft, progress, isAlways, sortValue, industriesOf } from '../lib.js';
 const { job, href } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
@@ -11,12 +11,14 @@ const cls = always ? 'd-far' : d <= 3 ? 'd-urgent' : d <= 7 ? 'd-warn' : 'd-far'
 const label = p === null ? '상시' : d <= 0 ? '오늘 마감' : `D-${d}`;
 const urgent = !always && d <= 3;
 const md = (s) => s.slice(5).replace('-', '.');
+// 한 회사가 여러 산업에 걸칩니다. 그 공고는 양쪽 필터에 모두 걸려야 합니다.
+const inds = industriesOf(job).join('|');
 // 본문이 있는 포지션 단위 공고만 자체 상세 페이지를 가집니다.
 const link = href ?? (job.description ? `/job/${job.id}/` : job.sourceUrl);
 const external = link === job.sourceUrl;
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
-   data-op={always ? '상시채용' : '마감 있음'}
+   data-op={always ? '상시채용' : '마감 있음'} data-in={inds}
    data-dday={sv} data-text={`${job.title} ${job.company} ${job.location} ${job.sourceTitle}`.toLowerCase()}
    {...external ? { target: '_blank', rel: 'noopener' } : {}}>
   <div class="chead">
