@@ -1,4 +1,5 @@
 import raw from './data/jobs.json';
+import registry from './data/companies.json';
 
 export const COLLECTED_AT = raw.collectedAt;
 export const JOBS = raw.jobs;
@@ -135,6 +136,103 @@ export const addressRegion = (location) => {
   }
   return undefined;   // 공장 이름만 있거나 해외인 경우
 };
+
+/*
+ * 산업 분류.
+ *
+ * companies.json 의 industry 태그를 그대로 씁니다. 코드에 산업 목록을
+ * 박아두지 않으므로, 태그만 붙이면 산업 페이지가 저절로 생깁니다.
+ *
+ * 한 회사가 여러 산업에 걸칩니다. 42dot 은 자동차부품이면서 IT 이고,
+ * 원익은 기계장비이면서 반도체입니다. 그런 회사의 공고는 양쪽 산업에
+ * 모두 나옵니다. 중복이지만 그게 실제에 맞습니다. 42dot 엔지니어를
+ * 찾는 사람은 자동차에서도, IT 에서도 찾을 수 있어야 합니다.
+ *
+ * 주소에 한글을 쓸 수 없어 영문 슬러그를 둡니다.
+ * 한번 정한 슬러그는 바꾸지 마세요. 색인된 주소가 깨집니다.
+ */
+const INDUSTRY_SLUG = {
+  '자동차부품': 'auto-parts',
+  '로봇': 'robotics',
+  '반도체': 'semiconductor',
+  '기계장비': 'machinery',
+  '전기전자': 'electronics',
+  '소재': 'materials',
+  'IT': 'it',
+  '물류': 'logistics',
+  '화학': 'chemical',
+  '기계': 'machinery',
+};
+
+// slug → 회사 산업 목록
+const CO_INDUSTRY = Object.fromEntries(
+  (registry.companies || []).map((c) => [c.slug, c.industry || []]));
+
+/*
+ * 그룹 어댑터는 항목 하나가 여러 계열사를 담습니다.
+ * LG그룹 하나에 LG전자·LG이노텍·로보스타가 함께 들어옵니다.
+ * 그런데 계열사마다 산업이 다릅니다. 로보스타는 로봇이지 자동차부품이
+ * 아닌데, 항목 태그를 그대로 쓰면 자동차부품까지 붙습니다.
+ *
+ * 그래서 companies.json 의 affiliateIndustry 로 계열사별 산업을 둡니다.
+ * 계열사명이 표에 없으면 항목의 기본 industry 를 씁니다.
+ */
+const CO_AFFILIATE = Object.fromEntries(
+  (registry.companies || [])
+    .filter((c) => c.affiliateIndustry)
+    .map((c) => [c.slug, c.affiliateIndustry]));
+
+const normCo = (v) => String(v || '').replace(/[\s\.,()㈜/]|주식회사/g, '').toLowerCase();
+
+export const industriesOf = (job) => {
+  const table = CO_AFFILIATE[job.companySlug];
+  if (table) {
+    const target = normCo(job.company);
+    for (const [name, inds] of Object.entries(table)) {
+      const key = normCo(name);
+      if (key && target.includes(key)) return inds;
+    }
+  }
+  return CO_INDUSTRY[job.companySlug] || [];
+};
+
+export const industrySlug = (name) =>
+  INDUSTRY_SLUG[name] || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+/*
+ * 페이지와 필터로 내보낼 산업.
+ *
+ * 원칙: 그 산업을 겨냥해 회사를 모았을 때만 페이지를 만듭니다.
+ *
+ *   자동차부품  KAICA 742개사를 훑어 40곳 등록      → 페이지 있음
+ *   로봇       목록 30곳을 만들어 훑음             → 페이지 있음
+ *   반도체     KSIA 218곳 목록을 만들어 훑음        → 페이지 있음
+ *
+ * 소재·전기전자·기계장비·물류·화학 태그도 붙어 있지만 페이지는 만들지
+ * 않습니다. 그 산업을 겨냥해 회사를 모은 적이 없고, 그룹 계열사를
+ * 분류하다 파생된 것이기 때문입니다. 물류 1건짜리 페이지를 만들면
+ * "왜 이 회사만 있지" 싶은 화면이 됩니다.
+ *
+ * 태그는 그대로 둡니다. 회사 정보로서 의미가 있고, 나중에 그 산업을
+ * 제대로 파고들어 회사를 모으면 아래 목록에 한 줄 추가하는 것으로
+ * 페이지가 열립니다.
+ */
+const PAGE_INDUSTRIES = ['자동차부품', '반도체', '로봇'];
+
+/** 페이지를 만들 산업만. 각 산업의 접수중 공고 수와 함께 돌려줍니다. */
+export const industries = () => {
+  const m = new Map();
+  for (const j of openJobs()) {
+    for (const name of industriesOf(j)) {
+      if (!PAGE_INDUSTRIES.includes(name)) continue;
+      if (!m.has(name)) m.set(name, { name, slug: industrySlug(name), jobs: [] });
+      m.get(name).jobs.push(j);
+    }
+  }
+  return [...m.values()].sort((a, b) => b.jobs.length - a.jobs.length);
+};
+
+export const byIndustry = (slug) => industries().find((i) => i.slug === slug);
 
 export const companies = () => {
   const m = new Map();
