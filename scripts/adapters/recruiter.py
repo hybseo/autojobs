@@ -38,18 +38,35 @@ def _career(v):
     return CAREER.get(v, "무관")
 
 
+def _host(prefix):
+    """prefix 헤더에 넣을 호스트.
+
+    리크루터는 자체 도메인을 붙일 수 있습니다. 그 경우 헤더에도 그 도메인을
+    그대로 넣어야 합니다. 회사 코드만 넣으면 HTTP 400 이 옵니다.
+    실제로 파두(careers.fadu.io)·고려아연(careers.koreazinc.co.kr) 등
+    네 곳이 그래서 실패했습니다.
+
+    companies.json 에 "domain" 을 적으면 그 값을 씁니다.
+      "code": "fadu", "domain": "careers.fadu.io"
+    """
+    p = (prefix or "").strip()
+    if "." in p:                      # 이미 도메인 형태면 그대로
+        return p.replace("https://", "").replace("http://", "").rstrip("/")
+    return f"{p}.recruiter.co.kr"
+
+
 def _post(path, prefix, body):
     req = urllib.request.Request(
         API + path, method="POST",
         data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json", "prefix": f"{prefix}.recruiter.co.kr"})
+        headers={"Content-Type": "application/json", "prefix": _host(prefix)})
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.load(r)
 
 
 def _get(path, prefix):
     req = urllib.request.Request(
-        API + path, headers={"prefix": f"{prefix}.recruiter.co.kr"})
+        API + path, headers={"prefix": _host(prefix)})
     with urllib.request.urlopen(req, timeout=20) as r:
         return json.load(r)
 
@@ -84,7 +101,8 @@ def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
     slug = company["slug"]
-    prefix = company["code"]
+    # 자체 도메인이 있으면 그것을 씁니다. 없으면 code 로 조립합니다.
+    prefix = (company.get("domain") or "").strip() or company["code"]
 
     rows = list_open(prefix)
 
