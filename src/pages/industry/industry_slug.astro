@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import JobCard from '../../components/JobCard.astro';
+import { industries, byIndustry, byDeadline, isAlways, COLLECTED_AT } from '../../lib.js';
+
+/*
+ * 산업별 채용공고 페이지.
+ *
+ * companies.json 의 industry 태그에서 자동으로 만들어집니다.
+ * 산업을 늘리려면 태그만 붙이면 되고, 이 파일은 고치지 않아도 됩니다.
+ *
+ * 메인 <title> 에서 산업명을 뺀 대신 이 페이지들이 산업 키워드를 받습니다.
+ * "반도체 채용", "로봇 채용" 같은 검색이 여기로 옵니다.
+ *
+ * 한 회사가 여러 산업에 걸치면 그 공고는 양쪽에 모두 나옵니다.
+ * 42dot 은 자동차부품이면서 IT 이고, 그 엔지니어를 찾는 사람은
+ * 양쪽 어디서든 찾을 수 있어야 합니다.
+ */
+export function getStaticPaths() {
+  return industries().map((i) => ({ params: { slug: i.slug } }));
+}
+
+const { slug } = Astro.params;
+const ind = byIndustry(slug);
+const jobs = [...ind.jobs].sort(byDeadline);
+const cos = [...new Set(jobs.map((j) => j.company))];
+const alwaysN = jobs.filter(isAlways).length;
+const deadlineN = jobs.length - alwaysN;
+
+const title = `${ind.name} 채용공고 | SEARCHJOB`;
+const desc = `${ind.name} 분야 기업 ${cos.length}곳의 공식 채용페이지에 올라온 공고를 모았습니다. `
+  + `흩어진 채용정보를 한눈에 검색하고 원문으로 바로 이동하세요.`;
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: `${site}/industry/${slug}/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">전체 채용공고</a></div>
+      <h1>{ind.name} 채용 <em>{jobs.length}</em></h1>
+      <div class="meta">
+        <b>{cos.length}</b>개사 공식 채용페이지 ·
+        마감 있는 공고 <b>{deadlineN}</b>건 · 상시채용 <b>{alwaysN}</b>건 ·
+        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="section-h">이 분야 기업</div>
+    <div class="chips cos">
+      {cos.map((n) => <span class="chip">{n}</span>)}
+    </div>
+
+    <div class="section-h">진행중인 채용</div>
+    {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
+      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
+        다른 분야를 살펴보시거나 전체 목록에서 검색해 보세요.</div>
+    )}
+
+    <div class="section-h">다른 분야</div>
+    <ul class="archive">
+      {industries().filter((i) => i.slug !== slug).map((i) => (
+        <li><a href={`/industry/${i.slug}/`}>{i.name} 채용</a><time>{i.jobs.length}건</time></li>
+      ))}
+    </ul>
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
+  </main>
+</Base>
+
+<style>
+  /* 이 분야 기업 목록. 누르는 필터가 아니라 보여주기용이라 커서를 바꾸지 않습니다. */
+  .chips.cos { margin-bottom: 8px; }
+  .chips.cos .chip { cursor: default; }
+</style>
