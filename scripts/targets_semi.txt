@@ -1,0 +1,247 @@
+# 반도체 기업 (한국반도체산업협회 KSIA 회원사)
+#
+# 출처: ksia.or.kr 회원사 정보 > 업종별 목록. 2026-09-01 확인.
+# 다섯 업종만 담았습니다: 소자/파운드리·테스트/패키징·설계·재료·장비.
+#
+# 홈페이지 주소는 협회 팝업에서 사람이 직접 확인해 채운 것입니다.
+# 추측으로 만든 주소가 아니라, 로봇 목록 때처럼 없는 도메인이 섞일 걱정이 적습니다.
+#
+# 뺀 곳:
+#   삼성전자·SK하이닉스·LG전자·삼성SDI  대기업
+#   원익머트리얼즈·원익아이피에스        원익으로 이미 수집 중
+#   두산테스나·한화세미텍·SK머티리얼즈    그룹 어댑터 affiliates 에 추가함
+#   대덕전자·하나마이크론·해성디에스      PCB 명단에 있음
+#   에스에프에이·라온테크              로봇 명단에 있음
+#   아이디어스투실리콘·에스제이세미텍·제너셈  홈페이지 없음
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_semi.txt
+
+
+# ── 소자/파운드리 ──
+SK키파운드리,https://www.skkeyfoundry.com
+㈜DB하이텍,http://www.dbhitek.com/kr
+매그나칩반도체 유한회사,https://www.magnachip.com
+세미로드,http://www.semiroad.co.kr
+에이프로세미콘,http://www.aprosemicon.com
+온세미컨덕터코리아㈜,https://www.onsemi.com
+주식회사 케이이씨,https://www.kec.co.kr
+주식회사 티에프이,https://www.tfe.co.kr
+
+# ── 테스트/패키징 ──
+(주)네패스,https://www.nepes.co.kr
+(주)쿨마이크로,https://www.koolmicro.com
+(주)파트론,http://www.partron.co.kr
+㈜ 피엔에스,https://www.pnscerti.com
+㈜루켄테크놀러지스,http://www.luken.co.kr
+주식회사 에이아이웍스,https://www.testworks.co.kr
+주식회사 에이티세미콘,https://www.atsemi.com
+큐알티 주식회사,https://www.qrtkr.com
+
+# ── 설계 ──
+(주)4링크스,https://4lynx.kr
+(주)가산기술,http://kasantech.com
+(주)비트리,https://www.btree.co.kr
+(주)싱스웰,http://www.thingswell.co.kr
+(주)쎄미하우,https://www.semihow.com
+(주)에임퓨처,https://aimfuture.ai
+㈜LX세미콘,https://www.lxsemicon.com
+㈜가온칩스,https://www.gaonchips.com
+㈜글로벌브릿지,https://globalbridge.co.kr
+㈜넥스트칩,http://www.nextchip.com
+㈜노블디자인,http://www.noveldesign.co.kr
+㈜동운아나텍,http://www.dwanatech.com
+㈜라닉스,http://www.ranix.co.kr
+㈜라온텍,https://www.RAON.io
+㈜레오엘에스아이,http://www.leolsi.com
+㈜메타씨앤아이,https://www.metacni.com
+㈜사피엔반도체,http://www.sapien-semicon.com
+㈜실리콘마이터스,http://www.siliconmitus.com
+㈜실리콘아츠,http://www.siliconarts.com
+㈜아이씨티케이,http://www.ictk.com
+㈜아이언디바이스,http://www.irondevice.com
+㈜알파칩스,http://www.alphachips.co.kr
+㈜에스앤에스티코리아,http://www.snstfinger.com
+㈜에이디칩스,http://www.adc.co.kr
+㈜에이디테크놀로지,http://www.adtek.co.kr
+㈜에이직랜드,http://www.asicland.com
+㈜옵토레인,http://www.optolane.com
+㈜우노실리콘,http://www.unosilicon.com
+㈜웰랑,http://www.wellang.com
+㈜인포웍스,http://www.info-works.co.kr
+㈜자람테크놀로지,http://www.zaram.com
+㈜제주반도체,http://www.jeju-semi.com/kr
+㈜칩스앤미디어,http://www.chipsnmedia.com
+㈜코아리버,http://www.coreriver.com
+㈜텔레칩스,http://www.telechips.com
+㈜파두,http://www.fadu.io
+㈜파인스,http://www.pines.co.kr
+㈜평창반도체,https://pcsemicon.com
+㈜픽셀플러스,http://www.pixelplus.com
+넷솔 주식회사,http://www.netsol.co.kr
+뉴라텍,http://newratek.com
+다믈멀티미디어,http://www.tamulm.com
+딥엑스,http://deepx.ai
+레이저세미콘㈜,http://www.lasersemicon.com
+리벨리온,http://rebellions.ai
+망고부스트코리아 주식회사,http://www.mangoboost.io
+바이탈아이씨 주식회사,http://vitalic.tech
+보스반도체,http://www.bos-semi.com
+블루닷(주),http://www.blue-dot.io/ko
+빌리브마이크론㈜,http://www.vlv.co.kr
+세미솔루션,http://www.semisolution.com
+세미파이브,http://www.semifive.com
+수퍼게이트 주식회사,http://supergate.cc
+쓰리에이로직스㈜,http://www.3alogics.com
+어보브반도체 ㈜,http://www.abov.co.kr
+에스엔칩스 주식회사,http://www.snchips.com
+엑사리온 주식회사,http://exarion.ai
+엑시나 주식회사,http://www.xcena.com
+엠텍비젼주식회사,http://www.mtekvision.com
+오픈엣지테크놀로지(주),http://www.openedges.com
+이미지스테크놀로지,http://www.imagis.co.kr
+잇다반도체,http://www.itdasemi.com
+주식회사 디노티시아,http://dnotitia.com
+주식회사 라텔세미컨덕터,http://www.ratelsemicon.com
+주식회사 모빌린트,http://www.mobilint.com
+주식회사 세오,http://www.seoitv.com
+주식회사 아크칩스,http://arkchips.com
+주식회사 에티포스,http://www.ettifos.com/ko
+주식회사 퓨리오사에이아이,http://furiosa.ai
+주식회사 하이퍼엑셀,http://hyperaccel.ai
+지니틱스,http://www.zinitix.com
+코아시아세미코리아,http://coasiasemi.com
+테크위드유 주식회사,http://www.techwidu.com
+
+# ── 재료 ──
+(주)아인크리스탈,http://www.eincrystal.co.kr
+(주)켐트로닉스,http://chemtronics.co.kr
+KPX일렉트로켐 주식회사,http://www.kpxelectrochem.com
+OCI㈜,http://www.oci.co.kr
+㈜경인양행,http://www.kisco.co
+㈜동진쎄미켐,http://www.dongjin.com
+㈜솔머티리얼즈,http://www.solematerials.com/sub/index.php
+㈜시노펙스,http://www.synopex.com
+㈜에스앤에스텍,http://www.snstech.co.kr
+㈜에어퍼스트,http://www.airfst.com
+㈜에프알디,http://www.frdbiz.com
+㈜에프에스티,http://www.fstc.co.kr
+㈜엠에스머트리얼즈,http://www.msmaterials.co.kr
+㈜이엔에프테크놀로지,http://www.enftech.com
+㈜이큐테크플러스,http://www.eqtechplus.com
+㈜클랩,http://www.clap.co.kr
+㈜한국비철,http://www.hanbee.com
+㈜후성,http://www.foosungchem.com
+고려아연,http://www.koreazinc.co.kr
+동우화인켐㈜,http://www.dwchem.co.kr
+로움하이텍 주식회사,http://www.loum.co.kr
+메타일렉트로(주),http://www.metaelectro.co.kr
+솔브레인㈜,http://www.soulbrain.co.kr
+심텍,http://www.simmtech.com
+아데카코리아㈜,http://www.adekakorea.co.kr
+아토텍코리아㈜,http://www.atotech.co.kr
+에스피삼화(주),http://samhwa.com
+에어프로덕츠코리아㈜,http://www.airproducts.com
+에이치엘비이노베이션 주식회사,http://www.hlbinno.com
+엠이엠씨코리아㈜,http://www.memc.co.kr
+와이씨켐,http://www.ycchem.co.kr
+유비머트리얼즈㈜,http://ubmaterials.com
+제이케이머트리얼즈,http://www.cgpmaterials.com
+주식회사 쎄닉,http://senic.co.kr
+주식회사 이포트,http://www.e-port.co.kr
+태광산업,http://www.taekwang.co.kr
+테크센드포토마스크㈜,http://www.photomask.com
+티이엠씨 주식회사,http://www.temc.co.kr
+한덕화학(주),http://hantok.com
+
+# ── 장비 ──
+(주)넥센서,http://www.nexensor.com
+(주)아이에스피,http://www.ispxrf.com
+(주)에스에스피,http://ssp.inc
+(주)에이치피에스피,http://thehpsp.com
+(주)필옵틱스,http://www.philoptics.com
+AP시스템㈜,http://www.apsystems.co.kr
+㈜글로벌스탠다드테크놀로지,http://www.gst-in.com
+㈜나인벨,http://www.ninebell.co.kr
+㈜넥스틴,http://www.nextinsol.com
+㈜디아이,http://www.di.co.kr
+㈜러셀,http://www.erussell.co.kr
+㈜로봇앤드디자인,http://rnd.re.kr
+㈜뮤텍코리아,http://www.mutechkorea.co.kr
+㈜미래컴퍼니,http://www.meerecompany.com
+㈜서플러스글로벌,http://www.surplusglobal.com
+㈜세츠,http://www.sets.co.kr
+㈜싸이맥스,http://www.cymechs.com
+㈜쎄믹스,http://www.semics.com
+㈜아바코,http://www.avaco.com
+㈜아이씨디,http://www.icd.co.kr/main/main.html?
+㈜에스티아이,http://sti.co.kr
+㈜에이앤아이,http://www.anieng.com
+㈜에이치앤이루자,http://hniruja.com
+㈜에이텍솔루션,http://www.aets.co.kr
+㈜엑시콘,http://www.exicon.co.kr
+㈜오로스테크놀로지,http://www.aurostech.com
+㈜유니테스트,http://www.uni-test.com
+㈜유진테크,http://www.eugenetech.co.kr
+㈜이오테크닉스,http://www.eotechnics.com
+㈜자비스,http://www.xavis.co.kr
+㈜제우스,http://www.globalzeus.com
+㈜제이티,http://www.jtcorp.co.kr
+㈜케이씨,http://www.kct.co.kr
+㈜케이씨텍,http://www.kctech.com
+㈜큐빅셀,http://www.cubixel.co.kr
+㈜탑엔지니어링,http://www.topengnet.com
+㈜테스,http://www.hites.co.kr
+㈜테크윙,http://www.techwing.co.kr
+㈜티에스이,http://www.tse21.com
+㈜피티씨,http://ptcsemi.com
+㈜한국에바라정밀기계,http://www.ebara.co.kr
+㈜한영,http://www.hyqaurtz.co.kr
+국제엘렉트릭코리아㈜,http://www.kekorea.co.kr
+나노엑스,http://nano-x.co.kr
+다이헨한국㈜,http://www.daihen.co.kr/index.html
+디아이티 주식회사,http://www.okdit.co.kr
+레이저쎌 주식회사,http://www.laserssel.com
+로체시스템즈㈜,http://www.rorze.co.kr
+멜콘㈜,http://www.melcon.co.kr
+버슘머트리얼즈 한양기공㈜,https://www.merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html
+부쉬코리아,http://www.buschvacuum.com
+브이에이디인스트루먼트,http://www.vadi.co.kr/main.php
+브이엠(주),http://www.vmsemi.com
+삼익티에이치케이,http://www.samickthk.co.kr
+세메스㈜,http://www.semes.com
+싸이머코리아,http://www.cymer.com
+씨에스케이㈜,http://www.csk.kr
+아드반테스트코리아㈜,http://www.advantest.com
+에이씨엠리서치코리아,http://www.acmrech.com
+에이에스엠케이㈜,http://www.asm.com
+에이치비솔루션 주식회사,http://www.hb-solution.co.kr
+엔비스아나㈜,http://www.nvisana.com
+엔에스엔텍,http://nsntek.com
+엘에스이 주식회사,http://lse-r.com
+엠에이티플러스㈜,http://www.mat.co.kr
+유니셈㈜,http://www.unisem.co.kr
+이솔,http://www.euvsol.com
+주성엔지니어링㈜,http://www.jusung.com
+주식회사 마인즈아이,http://www.mindseyes.co.kr
+주식회사 베셀,http://www.vessel21.com
+주식회사 비엔에스알,http://www.bnsr.co.kr
+주식회사 아이에스티이,http://www.iste.co.kr
+주식회사 아이엠티,http://www.imt-c.co.kr
+주식회사 이큐셀,http://www.eqcell.co.kr
+주식회사 저스템,http://www.justem.co.kr
+주식회사 젠,http://www.gencell.co.kr
+주식회사 지아이에스,http://www.neontech.co.kr
+주식회사 크레셈,http://www.cressem.com
+주식회사 티에스케이코퍼레이션,http://tskcorp.kr
+주식회사 펨트론,http://www.pemtron.com
+주식회사 프로텍,http://www.protec21.co.kr
+청진테크㈜,http://www.chungjintech.com
+코닉오토메이션,http://kornic.co.kr/kr
+코리아테크노㈜,http://www.ktsemi.co.kr
+파인솔루션,http://pinesolution.co.kr
+파크시스템스㈜,http://www.parksystems.com
+피에스케이㈜,http://www.psk-inc.com
+피에스케이홀딩스㈜,http://www.pskholding.com
+한국알박㈜,http://www.ulvackorea.co.kr
+한미반도체,http://www.hanmisemi.com
