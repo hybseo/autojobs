@@ -81,7 +81,16 @@ SIGNATURES = [
     ("breezy",    r"([a-z0-9\-\_]+)\.breezy\.hr"),           # 베어로보틱스
     ("ninehire",  r"([a-z0-9\-\_]+)\.ninehire\.site"),
     # 외국계가 많이 씁니다. 주소 형태가 몇 가지라 넉넉히 잡습니다.
-    ("successfactors", r"([a-z0-9\-]+)\.(?:jobs\.)?(?:successfactors|sapsf)\.(?:com|eu)"),
+    # SuccessFactors 는 서버 이름과 회사 코드가 따로입니다.
+    #   https://career5.successfactors.eu/career?company=mannhummel
+    #            ↑ 서버                              ↑ 회사
+    # 서버만 잡으면 career5 같은 값이 남아 어느 회사인지 알 수 없습니다.
+    # Workday 에서 wd3 만 잡았던 것과 같은 실수라, 둘 다 잡습니다.
+    ("successfactors",
+     r"((?:[a-z0-9\-]+)\.(?:jobs\.)?(?:successfactors|sapsf)\.(?:com|eu)"
+     r"[^\"'\s<>]*?company=[A-Za-z0-9\-\_]+)"),
+    ("successfactors",
+     r"([a-z0-9\-]+\.(?:jobs\.)?(?:successfactors|sapsf)\.(?:com|eu))"),
     ("smartrecruiters", r"jobs\.smartrecruiters\.com/([a-zA-Z0-9\-\_]+)"),
     ("icims",     r"([a-z0-9\-]+)\.icims\.com"),
     ("taleo",     r"([a-z0-9\-]+)\.taleo\.net"),       # 로보티즈
