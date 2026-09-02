@@ -18,6 +18,7 @@ on:
           - '모빌리티 스타트업 9개사 (약 5분)'
           - '로봇 30개사 (약 15분)'
           - '외국계 부품사 50개사 (약 25분)'
+          - '반도체 218개사 (약 1시간)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -47,6 +48,7 @@ jobs:
             모빌리티*) ARGS="--urls scripts/targets_startup.txt" ;;
             로봇*)     ARGS="--urls scripts/targets_robot.txt" ;;
             외국계*)   ARGS="--urls scripts/targets_foreign.txt" ;;
+            반도체*)   ARGS="--urls scripts/targets_semi.txt" ;;
             *)        ARGS="" ;;
           esac
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
