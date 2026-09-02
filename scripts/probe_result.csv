@@ -1,51 +1,219 @@
 ﻿name,status,ats,code,home,found_at,how,note
-만앤휴멜코리아,발견,successfactors,career5,https://www.mann-hummel.com,https://www.mann-hummel.com,링크,
-브로제코리아,발견,successfactors,career2,https://www.brose.com,https://www.brose.com,링크,
-타이코에이엠피,발견,successfactors,performancemanager8,http://www.tycoelectronics.com,https://careers.te.com,링크,채용링크 1개
-헨켈코리아오토모티브,발견,taleo,henkel,https://www.henkel.co.kr,https://www.henkel.co.kr/careers/jobs-and-application/faq,링크,채용링크 6개
-가레트모션코리아,ATS없음,,,https://www.garrettmotion.com,,,채용링크 6개
-게스템프카테크,채용링크없음,,,https://kartek.co.kr,,,채용링크 0개
-니덱모빌리티코리아,접속실패,,,http://gw.nmok.nidec.com,,,https://gw.nmok.nidec.com TimeoutError:timed out | http://gw.nmok.nidec.com TimeoutError:timed out | https://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi | http://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi
-덴소코리아,접속실패,,,http://www.denso.com/kr/ko,,,https://www.denso.com/kr/ko HTTP403 | http://www.denso.com/kr/ko HTTP403 | https://denso.com/kr/ko gaierror:[Errno -5] No address as | http://denso.com/kr/ko gaierror:[Errno -5] No address as
-로버트보쉬코리아,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
-말레동현필터시스템,접속실패,,,http://www.kr.mahle.com,,,https://www.kr.mahle.com gaierror:[Errno -2] Name or servi | http://www.kr.mahle.com gaierror:[Errno -2] Name or servi | https://kr.mahle.com gaierror:[Errno -2] Name or servi | http://kr.mahle.com gaierror:[Errno -2] Name or servi
-보그워너창녕,ATS없음,,,https://www.borgwarner.com,,,채용링크 1개
-보쉬전장,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
-비테스코테크놀로지스코리아,ATS없음,,,https://www.vitesco-technologies.com,,,채용링크 6개
-삼성발레오써멀시스템스,접속실패,,,http://www.samsungvaleo.com,,,https://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | http://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | https://samsungvaleo.com gaierror:[Errno -5] No address as | http://samsungvaleo.com gaierror:[Errno -5] No address as
-센싸타테크놀러지스코리아,접속실패,,,http://www.sensata.com,,,https://www.sensata.com HTTP403 | http://www.sensata.com HTTP403 | https://sensata.com HTTP403 | http://sensata.com HTTP403
-셰플러안산,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
-셰플러코리아,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
-스타빌루스,채용링크없음,,,https://www.stabilus.com,,,채용링크 0개
-아이티더블유오토모티브코리아,채용링크없음,,,http://www.itwautokorea.com,,,채용링크 0개
-애디언트코리아,접속실패,,,http://www.adientkorea.co.kr,,,https://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | https://adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://adientkorea.co.kr gaierror:[Errno -3] Temporary fai
-오토리브,ATS없음,,,https://www.autoliv.com,,,채용링크 6개
-유진에스엠알시오토모티브테크노,ATS없음,,,https://www.ysat.kr,,,채용링크 4개
-이튼인더스트리즈,접속실패,,,http://www.eaton.com,,,https://www.eaton.com 시간초과 | http://www.eaton.com 시간초과 | https://eaton.com 시간초과 | http://eaton.com 시간초과
-제트에프삭스코리아,접속실패,,,http://www.sachs.co.kr,,,https://www.sachs.co.kr gaierror:[Errno -2] Name or servi | http://www.sachs.co.kr gaierror:[Errno -2] Name or servi | https://sachs.co.kr gaierror:[Errno -2] Name or servi | http://sachs.co.kr gaierror:[Errno -2] Name or servi
-제트에프오토모티브코리아,ATS없음,,,https://www.zf.com,,,채용링크 1개
-조이슨세이프티시스템스코리아,접속실패,,,http://www.takata.com,,,https://www.takata.com gaierror:[Errno -2] Name or servi | http://www.takata.com gaierror:[Errno -2] Name or servi | https://takata.com TimeoutError:timed out | http://takata.com TimeoutError:timed out
-존슨일렉트릭오퍼레이션스,채용링크없음,,,https://www.hallastackpole.co.kr,,,채용링크 0개
-카펙발레오,접속실패,,,http://www.kapec.com,,,https://www.kapec.com gaierror:[Errno -3] Temporary fai | http://www.kapec.com gaierror:[Errno -3] Temporary fai | https://kapec.com gaierror:[Errno -3] Temporary fai | http://kapec.com gaierror:[Errno -3] Temporary fai
-콘티넨탈오토모티브일렉트로닉스,ATS없음,,,https://www.continental-corporation.com,,,채용링크 6개
-쿠퍼스탠다드오토모티브앤인더스트리얼,접속실패,,,http://www.cooperstandard.com,,,https://www.cooperstandard.com HTTP307 | http://www.cooperstandard.com HTTP307 | https://cooperstandard.com HTTP307 | http://cooperstandard.com HTTP307
-클라리오스델코,채용링크없음,,,https://www.delkor.com,,,채용링크 0개
-티아이오토모티브,채용링크없음,,,https://www.tiautomotive.com,,,채용링크 0개
-파이오락스,채용링크없음,,,https://www.piolax.co.kr,,,채용링크 0개
-파카코리아,접속실패,,,http://www.parker.com,,,https://www.parker.com HTTP403 | http://www.parker.com HTTP403 | https://parker.com HTTP403 | http://parker.com HTTP403
-파카하니핀커넥터,접속실패,,,http://www.hsparker.co.kr,,,https://www.hsparker.co.kr gaierror:[Errno -2] Name or servi | http://www.hsparker.co.kr gaierror:[Errno -2] Name or servi | https://hsparker.co.kr gaierror:[Errno -2] Name or servi | http://hsparker.co.kr gaierror:[Errno -2] Name or servi
-패커드코리아,채용링크없음,,,https://www.packardkorea.co.kr,,,채용링크 0개
-페더럴모굴세종,채용링크없음,,,http://www.fm-korea.co.kr,,,채용링크 0개
-평화발레오,채용링크없음,,,https://www.vph.co.kr,,,채용링크 0개
-포레시아코리아,ATS없음,,,https://www.faurecia.com,,,채용링크 3개
-플라스틱옴니엄,접속실패,,,http://www.plasticomnium.com,,,https://www.plasticomnium.com gaierror:[Errno -5] No address as | http://www.plasticomnium.com gaierror:[Errno -5] No address as | https://plasticomnium.com gaierror:[Errno -5] No address as | http://plasticomnium.com gaierror:[Errno -5] No address as
-한국댓와일러,접속실패,,,http://www.sealtech.co.kr,,,https://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | http://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | https://sealtech.co.kr gaierror:[Errno -5] No address as | http://sealtech.co.kr gaierror:[Errno -5] No address as
-한국보그워너티에스,ATS없음,,,https://www.Borgwarner.com,,,채용링크 1개
-한국세큐리트,채용링크없음,,,http://www.hanglas.co.kr,,,채용링크 0개
-한국쓰리엠,접속실패,,,http://www.3m.com,,,https://www.3m.com 시간초과 | http://www.3m.com 시간초과 | https://3m.com 시간초과 | http://3m.com 시간초과
-한국아이티더블유,접속실패,,,http://www.itwkorea.com,,,https://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | https://itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://itwkorea.com ConnectionResetError:[Errno 104] Connection r
-한국알프스,접속실패,,,http://www.alpsalpine.com/ko,,,https://www.alpsalpine.com/ko HTTP403 | http://www.alpsalpine.com/ko HTTP403 | https://alpsalpine.com/ko gaierror:[Errno -5] No address as | http://alpsalpine.com/ko gaierror:[Errno -5] No address as
-한국에스케이에프씰,채용링크없음,,,https://www.skfkorea.co.kr,,,채용링크 0개
-한국엔에스케이,ATS없음,,,https://www.kr.nsk.com,,,채용링크 1개
-한국유미코아촉매,ATS없음,,,https://www.umicore.kr,,,채용링크 6개
-한국후꼬꾸,채용링크없음,,,https://fukokukorea.com,,,채용링크 0개
+AP시스템㈜,발견,recruiter,apsystems,https://www.apsystems.co.kr,https://www.apsystems.co.kr/etc/employ.asp,링크,채용링크 1개
+OCI㈜,발견,greeting,oci,https://www.oci.co.kr,https://www.oci.co.kr,링크,
+㈜DB하이텍,발견,recruiter,dbgroup,https://www.dbhitek.com/kr,https://www.dbhitek.com/kr,링크,
+㈜가온칩스,발견,greeting,gaonchips,https://www.gaonchips.com,https://gaonchips.career.greetinghr.com/ko,주소추정,채용링크 0개
+㈜로봇앤드디자인,발견,greeting,rnd,https://rnd.re.kr,https://rnd.career.greetinghr.com/ko,주소추정,채용링크 1개
+㈜미래컴퍼니,발견,recruiter,meerecompany,https://www.meerecompany.com,https://www.meerecompany.com/ko/pages/careers/,링크,채용링크 2개
+㈜사피엔반도체,발견,greeting,sapien-semicon,https://www.sapien-semicon.com,https://www.sapien-semicon.com,링크,
+㈜서플러스글로벌,발견,greeting,surplusglobal,https://www.surplusglobal.com,https://www.surplusglobal.com/about-surplus-global/recruiting/job-opportunity/,링크,채용링크 3개
+㈜에스앤에스텍,발견,greeting,snstech,https://www.snstech.co.kr,https://www.snstech.co.kr,링크,
+㈜에프에스티,발견,ninehire,fstcareers,https://www.fstc.co.kr,https://www.fstc.co.kr,링크,
+㈜이엔에프테크놀로지,발견,greeting,enf-recruit,https://www.enftech.com,https://www.enftech.com/%ec%9d%b8%ec%9e%ac%ec%b1%84%ec%9a%a9/%ec%b1%84%ec%9a%a9%ea%b3%b5%ea%b3%a0/,링크,채용링크 3개
+㈜케이씨텍,발견,recruiter,kc-group,https://www.kctech.com,https://www.kctech.com,링크,
+㈜탑엔지니어링,발견,recruiter,topeng,https://www.topengnet.com,https://www.topengnet.com,링크,
+㈜테스,발견,greeting,hites,https://www.hites.co.kr,https://www.hites.co.kr,링크,
+㈜파두,발견,recruiter,fadu,https://www.fadu.io,https://careers.fadu.io/,링크,채용링크 1개
+고려아연,발견,recruiter,koreazinc,https://www.koreazinc.co.kr,https://careers.koreazinc.co.kr/,링크,채용링크 1개
+딥엑스,발견,greeting,deepx,https://deepx.ai,https://deepx.ai,링크,
+리벨리온,발견,greeting,rebellions,https://rebellions.ai,https://rebellions.ai/careers/,링크,채용링크 1개
+망고부스트코리아 주식회사,발견,greeting,mangoboost,https://www.mangoboost.io,https://www.mangoboost.io,링크,
+블루닷(주),발견,greeting,blue-dot,https://www.blue-dot.io/ko,https://www.blue-dot.io/ko,링크,
+삼익티에이치케이,발견,recruiter,samickthk,https://www.samickthk.co.kr,https://www.samickthk.co.kr,링크,
+에스피삼화(주),발견,greeting,samhwapaint,https://samhwa.com,https://samhwa.com,링크,
+에이치비솔루션 주식회사,발견,ninehire,hbsolution,https://www.hb-solution.co.kr,https://www.hb-solution.co.kr,링크,
+에이치엘비이노베이션 주식회사,발견,greeting,hlb-group,https://www.hlbinno.com,https://www.hlbinno.com/hlb/ROOT/careers,링크,채용링크 2개
+엑시나 주식회사,발견,greeting,xcena,https://www.xcena.com,https://xcena.career.greetinghr.com/ko,주소추정,채용링크 1개
+이솔,발견,greeting,euvsol,https://www.euvsol.com,https://euvsol.career.greetinghr.com/ko,주소추정,채용링크 2개
+주성엔지니어링㈜,발견,greeting,jusung,https://www.jusung.com,https://www.jusung.com/document/apply_guide,링크,채용링크 4개
+주식회사 디노티시아,발견,greeting,dno,https://dnotitia.com,https://dnotitia.com,링크,
+주식회사 하이퍼엑셀,발견,greeting,hyperaccel,https://hyperaccel.ai,https://hyperaccel.ai,링크,
+태광산업,발견,recruiter,taekwang,http://www.taekwang.co.kr,http://www.taekwang.co.kr,링크,
+피에스케이홀딩스㈜,발견,recruiter,psk,https://www.pskholding.com,https://www.pskholding.com/career/career.php,링크,채용링크 1개
+(주)4링크스,ATS없음,,,https://4lynx.kr,,,채용링크 1개
+(주)가산기술,ATS없음,,,https://kasantech.com,,,채용링크 3개
+(주)네패스,ATS없음,,,https://www.nepes.co.kr,,,채용링크 6개
+(주)넥센서,채용링크없음,,,https://www.nexensor.com,,,채용링크 0개
+(주)비트리,채용링크없음,,,https://www.btree.co.kr,,,채용링크 0개
+(주)싱스웰,채용링크없음,,,https://www.thingswell.co.kr,,,채용링크 0개
+(주)쎄미하우,채용링크없음,,,https://www.semihow.com,,,채용링크 0개
+(주)아이에스피,ATS없음,,,http://www.ispxrf.com,,,채용링크 1개
+(주)아인크리스탈,접속실패,,,http://www.eincrystal.co.kr,,,https://www.eincrystal.co.kr SSLError:[SSL: TLSV1_ALERT_INTERN | http://www.eincrystal.co.kr RemoteDisconnected | https://eincrystal.co.kr SSLError:[SSL: TLSV1_ALERT_INTERN | http://eincrystal.co.kr RemoteDisconnected
+(주)에스에스피,ATS없음,,,https://ssp.inc,,,채용링크 3개
+(주)에이치피에스피,ATS없음,,,https://thehpsp.com,,,채용링크 2개
+(주)에임퓨처,ATS없음,,,https://aimfuture.ai,,,채용링크 1개
+(주)켐트로닉스,채용링크없음,,,https://chemtronics.co.kr,,,채용링크 0개
+(주)쿨마이크로,채용링크없음,,,https://www.koolmicro.com,,,채용링크 0개
+(주)파트론,ATS없음,,,https://www.partron.co.kr,,,채용링크 1개
+(주)필옵틱스,ATS없음,,,https://www.philoptics.com,,,채용링크 6개
+KPX일렉트로켐 주식회사,ATS없음,,,https://www.kpxelectrochem.com,,,채용링크 3개
+SK키파운드리,ATS없음,,,https://www.skkeyfoundry.com,,,채용링크 6개
+㈜ 피엔에스,채용링크없음,,,https://www.pnscerti.com,,,채용링크 0개
+㈜LX세미콘,채용링크없음,,,https://www.lxsemicon.com,,,채용링크 0개
+㈜경인양행,채용링크없음,,,https://www.kisco.co,,,채용링크 0개
+㈜글로벌브릿지,접속실패,,,https://globalbridge.co.kr,,,https://globalbridge.co.kr gaierror:[Errno -5] No address as | http://globalbridge.co.kr gaierror:[Errno -5] No address as | https://www.globalbridge.co.kr gaierror:[Errno -2] Name or servi | http://www.globalbridge.co.kr gaierror:[Errno -2] Name or servi
+㈜글로벌스탠다드테크놀로지,ATS없음,,,https://www.gst-in.com,,,채용링크 1개
+㈜나인벨,채용링크없음,,,https://www.ninebell.co.kr,,,채용링크 0개
+㈜넥스트칩,ATS없음,,,https://www.nextchip.com,,,채용링크 2개
+㈜넥스틴,채용링크없음,,,https://www.nextinsol.com,,,채용링크 0개
+㈜노블디자인,채용링크없음,,,https://www.noveldesign.co.kr,,,채용링크 0개
+㈜동운아나텍,ATS없음,,,https://www.dwanatech.com,,,채용링크 1개
+㈜동진쎄미켐,채용링크없음,,,https://www.dongjin.com,,,채용링크 0개
+㈜디아이,채용링크없음,,,http://www.di.co.kr,,,채용링크 0개
+㈜라닉스,채용링크없음,,,https://www.ranix.co.kr,,,채용링크 0개
+㈜라온텍,ATS없음,,,https://www.RAON.io,,,채용링크 1개
+㈜러셀,채용링크없음,,,https://www.erussell.co.kr,,,채용링크 0개
+㈜레오엘에스아이,채용링크없음,,,https://www.leolsi.com,,,채용링크 0개
+㈜루켄테크놀러지스,ATS없음,,,http://www.luken.co.kr,,,채용링크 1개
+㈜메타씨앤아이,채용링크없음,,,https://www.metacni.com,,,채용링크 0개
+㈜뮤텍코리아,접속실패,,,http://www.mutechkorea.co.kr,,,https://www.mutechkorea.co.kr TimeoutError:timed out | http://www.mutechkorea.co.kr TimeoutError:timed out | https://mutechkorea.co.kr gaierror:[Errno -5] No address as | http://mutechkorea.co.kr gaierror:[Errno -5] No address as
+㈜세츠,채용링크없음,,,https://www.sets.co.kr,,,채용링크 0개
+㈜솔머티리얼즈,접속실패,,,http://www.solematerials.com/sub/index.php,,,https://www.solematerials.com/sub/index.php TimeoutError:timed out | http://www.solematerials.com/sub/index.php TimeoutError:timed out | https://solematerials.com/sub/index.php TimeoutError:timed out | http://solematerials.com/sub/index.php TimeoutError:timed out
+㈜시노펙스,접속실패,,,http://www.synopex.com,,,https://www.synopex.com SSLError:[SSL: SSLV3_ALERT_HANDSH | http://www.synopex.com SSLError:[SSL: SSLV3_ALERT_HANDSH | https://synopex.com SSLError:[SSL: SSLV3_ALERT_HANDSH | http://synopex.com SSLError:[SSL: SSLV3_ALERT_HANDSH
+㈜실리콘마이터스,ATS없음,,,https://www.siliconmitus.com,,,채용링크 1개
+㈜실리콘아츠,ATS없음,,,https://www.siliconarts.com,,,채용링크 1개
+㈜싸이맥스,ATS없음,,,https://www.cymechs.com,,,채용링크 2개
+㈜쎄믹스,채용링크없음,,,https://www.semics.com,,,채용링크 0개
+㈜아바코,ATS없음,,,http://www.avaco.com,,,채용링크 2개
+㈜아이씨디,ATS없음,,,https://www.icd.co.kr/main/main.html,,,채용링크 6개
+㈜아이씨티케이,채용링크없음,,,https://www.ictk.com,,,채용링크 0개
+㈜아이언디바이스,채용링크없음,,,https://www.irondevice.com,,,채용링크 0개
+㈜알파칩스,ATS없음,,,https://www.alphachips.co.kr,,,채용링크 2개
+㈜에스앤에스티코리아,접속실패,,,http://www.snstfinger.com,,,https://www.snstfinger.com gaierror:[Errno -2] Name or servi | http://www.snstfinger.com gaierror:[Errno -2] Name or servi | https://snstfinger.com gaierror:[Errno -5] No address as | http://snstfinger.com gaierror:[Errno -5] No address as
+㈜에스티아이,채용링크없음,,,https://sti.co.kr,,,채용링크 0개
+㈜에어퍼스트,채용링크없음,,,https://www.airfst.com,,,채용링크 0개
+㈜에이디칩스,접속실패,,,http://www.adc.co.kr,,,https://www.adc.co.kr SSLError:[SSL: DH_KEY_TOO_SMALL]  | http://www.adc.co.kr 본문없음 | https://adc.co.kr SSLError:[SSL: DH_KEY_TOO_SMALL]  | http://adc.co.kr 본문없음
+㈜에이디테크놀로지,ATS없음,,,https://www.adtek.co.kr,,,채용링크 3개
+㈜에이앤아이,채용링크없음,,,https://www.anieng.com,,,채용링크 0개
+㈜에이직랜드,채용링크없음,,,https://www.asicland.com,,,채용링크 0개
+㈜에이치앤이루자,ATS없음,,,https://hniruja.com,,,채용링크 2개
+㈜에이텍솔루션,채용링크없음,,,https://www.aets.co.kr,,,채용링크 0개
+㈜에프알디,채용링크없음,,,https://www.frdbiz.com,,,채용링크 0개
+㈜엑시콘,채용링크없음,,,https://www.exicon.co.kr,,,채용링크 0개
+㈜엠에스머트리얼즈,채용링크없음,,,http://www.msmaterials.co.kr,,,채용링크 0개
+㈜오로스테크놀로지,ATS없음,,,https://www.aurostech.com,,,채용링크 5개
+㈜옵토레인,채용링크없음,,,https://www.optolane.com,,,채용링크 0개
+㈜우노실리콘,채용링크없음,,,https://www.unosilicon.com,,,채용링크 0개
+㈜웰랑,채용링크없음,,,https://www.wellang.com,,,채용링크 0개
+㈜유니테스트,ATS없음,,,https://www.uni-test.com,,,채용링크 4개
+㈜유진테크,채용링크없음,,,http://www.eugenetech.co.kr,,,채용링크 0개
+㈜이오테크닉스,채용링크없음,,,https://www.eotechnics.com,,,채용링크 0개
+㈜이큐테크플러스,채용링크없음,,,http://www.eqtechplus.com,,,채용링크 0개
+㈜인포웍스,채용링크없음,,,https://www.info-works.co.kr,,,채용링크 0개
+㈜자람테크놀로지,채용링크없음,,,https://www.zaram.com,,,채용링크 0개
+㈜자비스,채용링크없음,,,https://www.xavis.co.kr,,,채용링크 0개
+㈜제우스,채용링크없음,,,https://www.globalzeus.com,,,채용링크 0개
+㈜제이티,ATS없음,,,https://www.jtcorp.co.kr,,,채용링크 6개
+㈜제주반도체,ATS없음,,,http://www.jeju-semi.com/kr,,,채용링크 4개
+㈜칩스앤미디어,ATS없음,,,https://www.chipsnmedia.com,,,채용링크 1개
+㈜케이씨,채용링크없음,,,https://www.kct.co.kr,,,채용링크 0개
+㈜코아리버,ATS없음,,,http://www.coreriver.com,,,채용링크 1개
+㈜큐빅셀,ATS없음,,,https://www.cubixel.co.kr,,,채용링크 2개
+㈜클랩,채용링크없음,,,https://www.clap.co.kr,,,채용링크 0개
+㈜테크윙,채용링크없음,,,https://www.techwing.co.kr,,,채용링크 0개
+㈜텔레칩스,채용링크없음,,,https://www.telechips.com,,,채용링크 0개
+㈜티에스이,ATS없음,,,https://www.tse21.com,,,채용링크 6개
+㈜파인스,채용링크없음,,,https://www.pines.co.kr,,,채용링크 0개
+㈜평창반도체,접속실패,,,https://pcsemicon.com,,,https://pcsemicon.com TimeoutError:timed out | http://pcsemicon.com TimeoutError:timed out | https://www.pcsemicon.com TimeoutError:timed out | http://www.pcsemicon.com TimeoutError:timed out
+㈜피티씨,채용링크없음,,,http://ptcsemi.com,,,채용링크 0개
+㈜픽셀플러스,ATS없음,,,https://www.pixelplus.com,,,채용링크 2개
+㈜한국비철,채용링크없음,,,http://www.hanbee.com,,,채용링크 0개
+㈜한국에바라정밀기계,ATS없음,,,https://www.ebara.co.kr,,,채용링크 1개
+㈜한영,접속실패,,,http://www.hyqaurtz.co.kr,,,https://www.hyqaurtz.co.kr gaierror:[Errno -2] Name or servi | http://www.hyqaurtz.co.kr gaierror:[Errno -2] Name or servi | https://hyqaurtz.co.kr gaierror:[Errno -2] Name or servi | http://hyqaurtz.co.kr gaierror:[Errno -2] Name or servi
+㈜후성,ATS없음,,,https://www.foosungchem.com,,,채용링크 1개
+국제엘렉트릭코리아㈜,ATS없음,,,https://www.kekorea.co.kr,,,채용링크 6개
+나노엑스,채용링크없음,,,https://nano-x.co.kr,,,채용링크 0개
+넷솔 주식회사,채용링크없음,,,https://www.netsol.co.kr,,,채용링크 0개
+뉴라텍,ATS없음,,,https://newratek.com,,,채용링크 1개
+다믈멀티미디어,채용링크없음,,,https://www.tamulm.com,,,채용링크 0개
+다이헨한국㈜,채용링크없음,,,http://www.daihen.co.kr/index.html,,,채용링크 0개
+동우화인켐㈜,채용링크없음,,,https://www.dwchem.co.kr,,,채용링크 0개
+디아이티 주식회사,채용링크없음,,,https://www.okdit.co.kr,,,채용링크 0개
+레이저세미콘㈜,접속실패,,,http://www.lasersemicon.com,,,https://www.lasersemicon.com HTTP429 | http://www.lasersemicon.com HTTP429 | https://lasersemicon.com HTTP429 | http://lasersemicon.com HTTP429
+레이저쎌 주식회사,채용링크없음,,,https://www.laserssel.com,,,채용링크 0개
+로움하이텍 주식회사,채용링크없음,,,http://www.loum.co.kr,,,채용링크 0개
+로체시스템즈㈜,ATS없음,,,https://www.rorze.co.kr,,,채용링크 3개
+매그나칩반도체 유한회사,채용링크없음,,,https://www.magnachip.com,,,채용링크 0개
+메타일렉트로(주),채용링크없음,,,https://www.metaelectro.co.kr,,,채용링크 0개
+멜콘㈜,ATS없음,,,https://www.melcon.co.kr,,,채용링크 5개
+바이탈아이씨 주식회사,채용링크없음,,,https://vitalic.tech,,,채용링크 0개
+버슘머트리얼즈 한양기공㈜,접속실패,,,https://www.merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html,,,https://www.merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html 시간초과 | http://www.merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html 시간초과 | https://merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html 시간초과 | http://merckgroup.com/kr-ko/expertise/semiconductors/offering/dss-hyt.html 시간초과
+보스반도체,접속실패,,,http://www.bos-semi.com,,,https://www.bos-semi.com HTTP429 | http://www.bos-semi.com HTTP429 | https://bos-semi.com HTTP429 | http://bos-semi.com HTTP429
+부쉬코리아,ATS없음,,,https://www.buschvacuum.com,,,채용링크 3개
+브이에이디인스트루먼트,ATS없음,,,https://www.vadi.co.kr/main.php,,,채용링크 1개
+브이엠(주),ATS없음,,,https://www.vmsemi.com,,,채용링크 1개
+빌리브마이크론㈜,채용링크없음,,,http://www.vlv.co.kr,,,채용링크 0개
+세메스㈜,ATS없음,,,https://www.semes.com,,,채용링크 6개
+세미로드,채용링크없음,,,http://www.semiroad.co.kr,,,채용링크 0개
+세미솔루션,채용링크없음,,,http://www.semisolution.com,,,채용링크 0개
+세미파이브,ATS없음,,,https://www.semifive.com,,,채용링크 2개
+솔브레인㈜,ATS없음,,,https://www.soulbrain.co.kr,,,채용링크 2개
+수퍼게이트 주식회사,채용링크없음,,,https://supergate.cc,,,채용링크 0개
+심텍,ATS없음,,,https://www.simmtech.com,,,채용링크 4개
+싸이머코리아,접속실패,,,http://www.cymer.com,,,https://www.cymer.com HTTP403 | http://www.cymer.com HTTP403 | https://cymer.com TimeoutError:timed out | http://cymer.com TimeoutError:timed out
+쓰리에이로직스㈜,ATS없음,,,https://www.3alogics.com,,,채용링크 1개
+씨에스케이㈜,ATS없음,,,https://www.csk.kr,,,채용링크 2개
+아데카코리아㈜,채용링크없음,,,https://www.adekakorea.co.kr,,,채용링크 0개
+아드반테스트코리아㈜,ATS없음,,,https://www.advantest.com,,,채용링크 2개
+아토텍코리아㈜,채용링크없음,,,http://www.atotech.co.kr,,,채용링크 0개
+어보브반도체 ㈜,채용링크없음,,,https://www.abov.co.kr,,,채용링크 0개
+에스엔칩스 주식회사,채용링크없음,,,https://www.snchips.com,,,채용링크 0개
+에어프로덕츠코리아㈜,접속실패,,,http://www.airproducts.com,,,https://www.airproducts.com HTTP403 | http://www.airproducts.com HTTP403 | https://airproducts.com HTTP403 | http://airproducts.com HTTP403
+에이씨엠리서치코리아,접속실패,,,http://www.acmrech.com,,,https://www.acmrech.com gaierror:[Errno -2] Name or servi | http://www.acmrech.com gaierror:[Errno -2] Name or servi | https://acmrech.com gaierror:[Errno -2] Name or servi | http://acmrech.com gaierror:[Errno -2] Name or servi
+에이에스엠케이㈜,ATS없음,,,https://www.asm.com,,,채용링크 1개
+에이프로세미콘,채용링크없음,,,http://www.aprosemicon.com,,,채용링크 0개
+엑사리온 주식회사,채용링크없음,,,https://exarion.ai,,,채용링크 0개
+엔비스아나㈜,접속실패,,,http://www.nvisana.com,,,https://www.nvisana.com HTTP406 | http://www.nvisana.com HTTP403 | https://nvisana.com HTTP406 | http://nvisana.com HTTP403
+엔에스엔텍,ATS없음,,,https://nsntek.com,,,채용링크 1개
+엘에스이 주식회사,ATS없음,,,https://lse-r.com,,,채용링크 4개
+엠에이티플러스㈜,ATS없음,,,https://www.mat.co.kr,,,채용링크 3개
+엠이엠씨코리아㈜,ATS없음,,,https://www.memc.co.kr,,,채용링크 6개
+엠텍비젼주식회사,ATS없음,,,https://www.mtekvision.com,,,채용링크 1개
+오픈엣지테크놀로지(주),접속실패,,,http://www.openedges.com,,,https://www.openedges.com HTTP429 | http://www.openedges.com HTTP429 | https://openedges.com HTTP429 | http://openedges.com HTTP429
+온세미컨덕터코리아㈜,ATS없음,,,https://www.onsemi.com,,,채용링크 6개
+와이씨켐,채용링크없음,,,https://www.ycchem.co.kr,,,채용링크 0개
+유니셈㈜,채용링크없음,,,http://www.unisem.co.kr,,,채용링크 0개
+유비머트리얼즈㈜,채용링크없음,,,http://ubmaterials.com,,,채용링크 0개
+이미지스테크놀로지,채용링크없음,,,https://www.imagis.co.kr,,,채용링크 0개
+잇다반도체,ATS없음,,,https://www.itdasemi.com,,,채용링크 1개
+제이케이머트리얼즈,ATS없음,,,https://www.cgpmaterials.com,,,채용링크 1개
+주식회사 라텔세미컨덕터,채용링크없음,,,https://www.ratelsemicon.com,,,채용링크 0개
+주식회사 마인즈아이,채용링크없음,,,http://www.mindseyes.co.kr,,,채용링크 0개
+주식회사 모빌린트,접속실패,,,http://www.mobilint.com,,,https://www.mobilint.com HTTP429 | http://www.mobilint.com HTTP429 | https://mobilint.com HTTP429 | http://mobilint.com HTTP429
+주식회사 베셀,채용링크없음,,,http://www.vessel21.com,,,채용링크 0개
+주식회사 비엔에스알,채용링크없음,,,https://www.bnsr.co.kr,,,채용링크 0개
+주식회사 세오,ATS없음,,,https://www.seoitv.com,,,채용링크 1개
+주식회사 쎄닉,접속실패,,,http://senic.co.kr,,,https://senic.co.kr gaierror:[Errno -2] Name or servi | http://senic.co.kr gaierror:[Errno -2] Name or servi | https://www.senic.co.kr gaierror:[Errno -2] Name or servi | http://www.senic.co.kr gaierror:[Errno -2] Name or servi
+주식회사 아이에스티이,채용링크없음,,,http://www.iste.co.kr,,,채용링크 0개
+주식회사 아이엠티,채용링크없음,,,https://www.imt-c.co.kr,,,채용링크 0개
+주식회사 아크칩스,ATS없음,,,https://arkchips.com,,,채용링크 2개
+주식회사 에이아이웍스,ATS없음,,,https://www.testworks.co.kr,,,채용링크 1개
+주식회사 에이티세미콘,ATS없음,,,http://www.atsemi.com,,,채용링크 2개
+주식회사 에티포스,접속실패,,,http://www.ettifos.com/ko,,,https://www.ettifos.com/ko HTTP429 | http://www.ettifos.com/ko HTTP429 | https://ettifos.com/ko HTTP429 | http://ettifos.com/ko HTTP429
+주식회사 이큐셀,ATS없음,,,https://www.eqcell.co.kr,,,채용링크 3개
+주식회사 이포트,채용링크없음,,,https://www.e-port.co.kr,,,채용링크 0개
+주식회사 저스템,채용링크없음,,,http://www.justem.co.kr,,,채용링크 0개
+주식회사 젠,채용링크없음,,,http://www.gencell.co.kr,,,채용링크 0개
+주식회사 지아이에스,채용링크없음,,,http://www.neontech.co.kr,,,채용링크 0개
+주식회사 케이이씨,ATS없음,,,https://www.kec.co.kr,,,채용링크 2개
+주식회사 크레셈,ATS없음,,,https://www.cressem.com,,,채용링크 4개
+주식회사 티에스케이코퍼레이션,채용링크없음,,,https://tskcorp.kr,,,채용링크 0개
+주식회사 티에프이,채용링크없음,,,https://www.tfe.co.kr,,,채용링크 0개
+주식회사 펨트론,채용링크없음,,,https://www.pemtron.com,,,채용링크 0개
+주식회사 퓨리오사에이아이,ATS없음,,,https://furiosa.ai,,,채용링크 1개
+주식회사 프로텍,ATS없음,,,https://www.protec21.co.kr,,,채용링크 3개
+지니틱스,ATS없음,,,https://www.zinitix.com,,,채용링크 3개
+청진테크㈜,채용링크없음,,,http://www.chungjintech.com,,,채용링크 0개
+코닉오토메이션,ATS없음,,,https://kornic.co.kr/kr,,,채용링크 2개
+코리아테크노㈜,채용링크없음,,,https://www.ktsemi.co.kr,,,채용링크 0개
+코아시아세미코리아,채용링크없음,,,https://coasiasemi.com,,,채용링크 0개
+큐알티 주식회사,ATS없음,,,https://www.qrtkr.com,,,채용링크 2개
+테크센드포토마스크㈜,ATS없음,,,https://www.photomask.com,,,채용링크 1개
+테크위드유 주식회사,채용링크없음,,,http://www.techwidu.com,,,채용링크 0개
+티이엠씨 주식회사,ATS없음,,,https://www.temc.co.kr,,,채용링크 2개
+파인솔루션,ATS없음,,,https://pinesolution.co.kr,,,채용링크 1개
+파크시스템스㈜,ATS없음,,,https://www.parksystems.com,,,채용링크 1개
+피에스케이㈜,채용링크없음,,,https://www.psk-inc.com,,,채용링크 0개
+한국알박㈜,ATS없음,,,https://www.ulvackorea.co.kr,,,채용링크 4개
+한덕화학(주),접속실패,,,http://hantok.com,,,https://hantok.com TimeoutError:timed out | http://hantok.com TimeoutError:timed out | https://www.hantok.com TimeoutError:timed out | http://www.hantok.com TimeoutError:timed out
+한미반도체,ATS없음,,,https://www.hanmisemi.com,,,채용링크 2개
