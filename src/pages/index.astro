@@ -42,6 +42,14 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
         <button class="sortbtn" id="sort" type="button">마감 임박순</button>
       </div>
+      {industries().length > 1 && (
+        <div class="chips ind" id="fIn">
+          {industries().map((i) => (
+            <button class="chip" type="button" data-k="in" data-v={i.name} aria-pressed="false">{i.name}<span class="n">{i.jobs.length}</span></button>
+          ))}
+          <button class="chip morebtn" id="moreIn" type="button" hidden></button>
+        </div>
+      )}
       <div class="chips" id="fCo">
         {tally((j) => j.company).map(([v, n]) => (
           <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
@@ -54,15 +62,6 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
         ))}
         <button class="chip morebtn" id="moreCa" type="button" hidden></button>
       </div>
-      {industries().length > 1 && (
-        <div class="chips" id="fIn">
-          {industries().map((i) => (
-            <button class="chip" type="button" data-k="in" data-v={i.name} aria-pressed="false">{i.name}<span class="n">{i.jobs.length}</span></button>
-          ))}
-          <button class="chip morebtn" id="moreIn" type="button" hidden></button>
-        </div>
-      )}
-
     </div>
   </div>
 
@@ -190,6 +189,32 @@ const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올�
     font-variant-numeric: tabular-nums;
   }
   .chips .morebtn:hover { color: var(--ink, #16181C); }
+
+  /*
+   * 산업 칩.
+   *
+   * 회사·경력 칩과 같은 층위가 아닙니다. 산업은 가장 큰 분류이고 셋뿐입니다.
+   * 같은 모양이면 "회사 이름 중 하나" 로 읽혀 지나칩니다.
+   * 그래서 위치를 맨 위로 올리고 형태를 사각형으로 바꿉니다.
+   *
+   * 색은 스틸블루를 쓰지 않습니다. 그건 접수방식 탭이 쓰고 있어
+   * 같은 색이면 다시 헷갈립니다. 먹색으로 무게를 줍니다.
+   */
+  .chips.ind { margin-bottom: 2px; }
+  .chips.ind .chip {
+    border-radius: 3px;
+    border-color: #B9C0C6;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .chips.ind .chip:hover { border-color: var(--ink, #16181C); }
+  .chips.ind .chip[aria-pressed='true'] {
+    background: var(--ink, #16181C);
+    border-color: var(--ink, #16181C);
+    color: #fff;
+  }
+  .chips.ind .chip[aria-pressed='true'] .n { color: #fff; opacity: .7; }
+  .chips.ind .morebtn { font-weight: 400; }
 
   /*
    * 갱신이 밀렸을 때만 나타납니다.
