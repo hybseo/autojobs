@@ -79,7 +79,12 @@ SIGNATURES = [
     # 아래 셋은 실제로 국내 기업이 쓰는 것을 확인하고 추가했습니다.
     # 목록에 없으면 "ATS없음" 으로 잘못 분류됩니다. Ashby 를 그렇게 놓쳤습니다.
     ("breezy",    r"([a-z0-9\-\_]+)\.breezy\.hr"),           # 베어로보틱스
-    ("ninehire",  r"([a-z0-9\-\_]+)\.ninehire\.site"),       # 로보티즈
+    ("ninehire",  r"([a-z0-9\-\_]+)\.ninehire\.site"),
+    # 외국계가 많이 씁니다. 주소 형태가 몇 가지라 넉넉히 잡습니다.
+    ("successfactors", r"([a-z0-9\-]+)\.(?:jobs\.)?(?:successfactors|sapsf)\.(?:com|eu)"),
+    ("smartrecruiters", r"jobs\.smartrecruiters\.com/([a-zA-Z0-9\-\_]+)"),
+    ("icims",     r"([a-z0-9\-]+)\.icims\.com"),
+    ("taleo",     r"([a-z0-9\-]+)\.taleo\.net"),       # 로보티즈
 ]
 
 # 자체 도메인이라 주소로는 알 수 없는 경우, 페이지 내용으로 판별합니다.
