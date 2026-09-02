@@ -1,31 +1,51 @@
 ﻿name,status,ats,code,home,found_at,how,note
-트위니,발견,greeting,twinny,http://www.twinny.ai,https://twinny.ai/careers,링크,채용링크 1개
-HD현대로보틱스,ATS없음,,,https://www.hyundai-robotics.com,,,채용링크 1개
-고영테크놀러지,접속실패,,,https://www.koh-young.com,,,https://www.koh-young.com gaierror:[Errno -2] Name or servi | http://www.koh-young.com gaierror:[Errno -2] Name or servi | https://koh-young.com gaierror:[Errno -2] Name or servi | http://koh-young.com gaierror:[Errno -2] Name or servi
-뉴로메카,채용링크없음,,,https://www.neuromeka.com,,,채용링크 0개
-도구공간,접속실패,,,https://www.dogu.space,,,https://www.dogu.space gaierror:[Errno -2] Name or servi | http://www.dogu.space gaierror:[Errno -2] Name or servi | https://dogu.space gaierror:[Errno -2] Name or servi | http://dogu.space gaierror:[Errno -2] Name or servi
-두산로보틱스,ATS없음,,,https://www.doosanrobotics.com,,,채용링크 2개
-라온테크,접속실패,,,https://www.raontech.net,,,https://www.raontech.net HTTP403 | http://www.raontech.net HTTP403 | https://raontech.net HTTP403 | http://raontech.net HTTP403
-레인보우로보틱스,채용링크없음,,,https://www.rainbow-robotics.com,,,채용링크 0개
-로보스타,ATS없음,,,https://www.robostar.co.kr,,,채용링크 3개
-로보큐브테크,채용링크없음,,,http://www.robocubetech.com,,,채용링크 0개
-로보티즈,ATS없음,,,https://www.robotis.com,,,채용링크 1개
-로보프리,접속실패,,,https://www.robopree.com,,,https://www.robopree.com gaierror:[Errno -2] Name or servi | http://www.robopree.com gaierror:[Errno -2] Name or servi | https://robopree.com gaierror:[Errno -2] Name or servi | http://robopree.com gaierror:[Errno -2] Name or servi
-베어로보틱스,ATS없음,,,https://www.bearrobotics.ai,,,채용링크 1개
-빅웨이브로보틱스,채용링크없음,,,https://www.bigwaverobotics.com,,,채용링크 0개
-삼현,채용링크없음,,,https://www.samhyun.net,,,채용링크 0개
-서울로보틱스,채용링크없음,,,https://www.seoulrobotics.org,,,채용링크 0개
-씨메스,채용링크없음,,,https://www.cmes.co.kr,,,채용링크 0개
-알에스오토메이션,채용링크없음,,,https://www.rsautomation.co.kr,,,채용링크 0개
-에스비비테크,접속실패,,,https://www.sbbtech.com,,,https://www.sbbtech.com gaierror:[Errno -3] Temporary fai | http://www.sbbtech.com gaierror:[Errno -3] Temporary fai | https://sbbtech.com gaierror:[Errno -3] Temporary fai | http://sbbtech.com gaierror:[Errno -3] Temporary fai
-에스에프에이,접속실패,,,https://www.sfa.co.kr,,,https://www.sfa.co.kr HTTP403 | http://www.sfa.co.kr HTTP403 | https://sfa.co.kr gaierror:[Errno -5] No address as | http://sfa.co.kr gaierror:[Errno -5] No address as
-에스피지,ATS없음,,,https://www.spg.co.kr,,,채용링크 1개
-에이로봇,접속실패,,,https://www.airobot.kr,,,https://www.airobot.kr SSLError:[SSL: WRONG_VERSION_NUMB | http://www.airobot.kr HTTP302 | https://airobot.kr SSLError:[SSL: WRONG_VERSION_NUMB | http://airobot.kr HTTP302
-엔젤로보틱스,ATS없음,,,https://www.angel-robotics.com,,,채용링크 4개
-유일로보틱스,채용링크없음,,,https://www.yuilrobotics.com,,,채용링크 0개
-큐렉소,ATS없음,,,https://www.curexo.com,,,채용링크 1개
-클로봇,접속실패,,,https://www.klbot.co.kr,,,https://www.klbot.co.kr gaierror:[Errno -2] Name or servi | http://www.klbot.co.kr gaierror:[Errno -2] Name or servi | https://klbot.co.kr gaierror:[Errno -2] Name or servi | http://klbot.co.kr gaierror:[Errno -2] Name or servi
-티라로보틱스,접속실패,,,https://www.tirarobotics.com,,,https://www.tirarobotics.com gaierror:[Errno -2] Name or servi | http://www.tirarobotics.com gaierror:[Errno -2] Name or servi | https://tirarobotics.com gaierror:[Errno -2] Name or servi | http://tirarobotics.com gaierror:[Errno -2] Name or servi
-티로보틱스,채용링크없음,,,http://www.trobotics.co.kr,,,채용링크 0개
-하이젠알앤엠,채용링크없음,,,http://www.higenmotor.com,,,채용링크 0개
-한화로보틱스,채용링크없음,,,https://www.hanwharobotics.com,,,채용링크 0개
+만앤휴멜코리아,발견,successfactors,career5,https://www.mann-hummel.com,https://www.mann-hummel.com,링크,
+브로제코리아,발견,successfactors,career2,https://www.brose.com,https://www.brose.com,링크,
+타이코에이엠피,발견,successfactors,performancemanager8,http://www.tycoelectronics.com,https://careers.te.com,링크,채용링크 1개
+헨켈코리아오토모티브,발견,taleo,henkel,https://www.henkel.co.kr,https://www.henkel.co.kr/careers/jobs-and-application/faq,링크,채용링크 6개
+가레트모션코리아,ATS없음,,,https://www.garrettmotion.com,,,채용링크 6개
+게스템프카테크,채용링크없음,,,https://kartek.co.kr,,,채용링크 0개
+니덱모빌리티코리아,접속실패,,,http://gw.nmok.nidec.com,,,https://gw.nmok.nidec.com TimeoutError:timed out | http://gw.nmok.nidec.com TimeoutError:timed out | https://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi | http://www.gw.nmok.nidec.com gaierror:[Errno -2] Name or servi
+덴소코리아,접속실패,,,http://www.denso.com/kr/ko,,,https://www.denso.com/kr/ko HTTP403 | http://www.denso.com/kr/ko HTTP403 | https://denso.com/kr/ko gaierror:[Errno -5] No address as | http://denso.com/kr/ko gaierror:[Errno -5] No address as
+로버트보쉬코리아,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
+말레동현필터시스템,접속실패,,,http://www.kr.mahle.com,,,https://www.kr.mahle.com gaierror:[Errno -2] Name or servi | http://www.kr.mahle.com gaierror:[Errno -2] Name or servi | https://kr.mahle.com gaierror:[Errno -2] Name or servi | http://kr.mahle.com gaierror:[Errno -2] Name or servi
+보그워너창녕,ATS없음,,,https://www.borgwarner.com,,,채용링크 1개
+보쉬전장,ATS없음,,,https://www.bosch.co.kr,,,채용링크 1개
+비테스코테크놀로지스코리아,ATS없음,,,https://www.vitesco-technologies.com,,,채용링크 6개
+삼성발레오써멀시스템스,접속실패,,,http://www.samsungvaleo.com,,,https://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | http://www.samsungvaleo.com gaierror:[Errno -2] Name or servi | https://samsungvaleo.com gaierror:[Errno -5] No address as | http://samsungvaleo.com gaierror:[Errno -5] No address as
+센싸타테크놀러지스코리아,접속실패,,,http://www.sensata.com,,,https://www.sensata.com HTTP403 | http://www.sensata.com HTTP403 | https://sensata.com HTTP403 | http://sensata.com HTTP403
+셰플러안산,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
+셰플러코리아,ATS없음,,,https://www.schaeffler.kr,,,채용링크 6개
+스타빌루스,채용링크없음,,,https://www.stabilus.com,,,채용링크 0개
+아이티더블유오토모티브코리아,채용링크없음,,,http://www.itwautokorea.com,,,채용링크 0개
+애디언트코리아,접속실패,,,http://www.adientkorea.co.kr,,,https://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://www.adientkorea.co.kr gaierror:[Errno -3] Temporary fai | https://adientkorea.co.kr gaierror:[Errno -3] Temporary fai | http://adientkorea.co.kr gaierror:[Errno -3] Temporary fai
+오토리브,ATS없음,,,https://www.autoliv.com,,,채용링크 6개
+유진에스엠알시오토모티브테크노,ATS없음,,,https://www.ysat.kr,,,채용링크 4개
+이튼인더스트리즈,접속실패,,,http://www.eaton.com,,,https://www.eaton.com 시간초과 | http://www.eaton.com 시간초과 | https://eaton.com 시간초과 | http://eaton.com 시간초과
+제트에프삭스코리아,접속실패,,,http://www.sachs.co.kr,,,https://www.sachs.co.kr gaierror:[Errno -2] Name or servi | http://www.sachs.co.kr gaierror:[Errno -2] Name or servi | https://sachs.co.kr gaierror:[Errno -2] Name or servi | http://sachs.co.kr gaierror:[Errno -2] Name or servi
+제트에프오토모티브코리아,ATS없음,,,https://www.zf.com,,,채용링크 1개
+조이슨세이프티시스템스코리아,접속실패,,,http://www.takata.com,,,https://www.takata.com gaierror:[Errno -2] Name or servi | http://www.takata.com gaierror:[Errno -2] Name or servi | https://takata.com TimeoutError:timed out | http://takata.com TimeoutError:timed out
+존슨일렉트릭오퍼레이션스,채용링크없음,,,https://www.hallastackpole.co.kr,,,채용링크 0개
+카펙발레오,접속실패,,,http://www.kapec.com,,,https://www.kapec.com gaierror:[Errno -3] Temporary fai | http://www.kapec.com gaierror:[Errno -3] Temporary fai | https://kapec.com gaierror:[Errno -3] Temporary fai | http://kapec.com gaierror:[Errno -3] Temporary fai
+콘티넨탈오토모티브일렉트로닉스,ATS없음,,,https://www.continental-corporation.com,,,채용링크 6개
+쿠퍼스탠다드오토모티브앤인더스트리얼,접속실패,,,http://www.cooperstandard.com,,,https://www.cooperstandard.com HTTP307 | http://www.cooperstandard.com HTTP307 | https://cooperstandard.com HTTP307 | http://cooperstandard.com HTTP307
+클라리오스델코,채용링크없음,,,https://www.delkor.com,,,채용링크 0개
+티아이오토모티브,채용링크없음,,,https://www.tiautomotive.com,,,채용링크 0개
+파이오락스,채용링크없음,,,https://www.piolax.co.kr,,,채용링크 0개
+파카코리아,접속실패,,,http://www.parker.com,,,https://www.parker.com HTTP403 | http://www.parker.com HTTP403 | https://parker.com HTTP403 | http://parker.com HTTP403
+파카하니핀커넥터,접속실패,,,http://www.hsparker.co.kr,,,https://www.hsparker.co.kr gaierror:[Errno -2] Name or servi | http://www.hsparker.co.kr gaierror:[Errno -2] Name or servi | https://hsparker.co.kr gaierror:[Errno -2] Name or servi | http://hsparker.co.kr gaierror:[Errno -2] Name or servi
+패커드코리아,채용링크없음,,,https://www.packardkorea.co.kr,,,채용링크 0개
+페더럴모굴세종,채용링크없음,,,http://www.fm-korea.co.kr,,,채용링크 0개
+평화발레오,채용링크없음,,,https://www.vph.co.kr,,,채용링크 0개
+포레시아코리아,ATS없음,,,https://www.faurecia.com,,,채용링크 3개
+플라스틱옴니엄,접속실패,,,http://www.plasticomnium.com,,,https://www.plasticomnium.com gaierror:[Errno -5] No address as | http://www.plasticomnium.com gaierror:[Errno -5] No address as | https://plasticomnium.com gaierror:[Errno -5] No address as | http://plasticomnium.com gaierror:[Errno -5] No address as
+한국댓와일러,접속실패,,,http://www.sealtech.co.kr,,,https://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | http://www.sealtech.co.kr gaierror:[Errno -2] Name or servi | https://sealtech.co.kr gaierror:[Errno -5] No address as | http://sealtech.co.kr gaierror:[Errno -5] No address as
+한국보그워너티에스,ATS없음,,,https://www.Borgwarner.com,,,채용링크 1개
+한국세큐리트,채용링크없음,,,http://www.hanglas.co.kr,,,채용링크 0개
+한국쓰리엠,접속실패,,,http://www.3m.com,,,https://www.3m.com 시간초과 | http://www.3m.com 시간초과 | https://3m.com 시간초과 | http://3m.com 시간초과
+한국아이티더블유,접속실패,,,http://www.itwkorea.com,,,https://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://www.itwkorea.com ConnectionResetError:[Errno 104] Connection r | https://itwkorea.com ConnectionResetError:[Errno 104] Connection r | http://itwkorea.com ConnectionResetError:[Errno 104] Connection r
+한국알프스,접속실패,,,http://www.alpsalpine.com/ko,,,https://www.alpsalpine.com/ko HTTP403 | http://www.alpsalpine.com/ko HTTP403 | https://alpsalpine.com/ko gaierror:[Errno -5] No address as | http://alpsalpine.com/ko gaierror:[Errno -5] No address as
+한국에스케이에프씰,채용링크없음,,,https://www.skfkorea.co.kr,,,채용링크 0개
+한국엔에스케이,ATS없음,,,https://www.kr.nsk.com,,,채용링크 1개
+한국유미코아촉매,ATS없음,,,https://www.umicore.kr,,,채용링크 6개
+한국후꼬꾸,채용링크없음,,,https://fukokukorea.com,,,채용링크 0개
