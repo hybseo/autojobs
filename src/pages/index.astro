@@ -8,8 +8,6 @@ const jobs = openJobs().sort(byDeadline);
 const cos = companies().length;
 const alwaysN = jobs.filter(isAlways).length;
 const deadlineN = jobs.length - alwaysN;
-// 상시 구간이 시작되는 위치. 여기 앞에 구획선을 넣습니다.
-const cut = jobs.findIndex(isAlways);
 const tally = (f) => {
   const m = new Map();
   jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
@@ -21,7 +19,15 @@ const tally = (f) => {
 // 늘 때마다 제목을 고치면 그때마다 다시 크롤링돼야 반영됩니다.
 // 산업 키워드는 /industry/{slug}/ 페이지가 각각 받아냅니다.
 const title = '기업 공식 채용공고 통합 검색 | SEARCHJOB';
-const desc = `자동차부품 기업 ${cos}곳의 공식 채용페이지에 올라온 접수중 공고 ${jobs.length}건을 한곳에 모았습니다. 마감 있는 공고 ${deadlineN}건, 상시채용 ${alwaysN}건. 마감 임박순 정렬, 기업·경력별 필터 제공.`;
+// 검색 결과에 뜨는 설명문입니다.
+//
+// 숫자를 넣지 않습니다. 매일 바뀌는데 검색엔진은 크롤링 시점 값을 캐시해서,
+// 며칠 지난 숫자가 그대로 노출됩니다. 실제로 구글 결과에 "15곳 58건" 이
+// 한참 남아 있었습니다.
+//
+// 산업도 넣지 않습니다. 자동차부품 외에 반도체·로봇이 들어왔고 앞으로 더
+// 늘어납니다. 산업 키워드는 /industry/{slug}/ 페이지가 각각 받아냅니다.
+const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모았습니다. 흩어진 채용정보를 한눈에 검색하고 원문으로 바로 이동하세요.';
 ---
 <Base title={title} description={desc}>
   <header class="mast">
