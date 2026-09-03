@@ -1008,6 +1008,17 @@
    "note": "반도체 장비"
   },
   {
+   "name": "하나마이크론",
+   "slug": "hanamicron",
+   "ats": "recruiter",
+   "code": "hanamicron",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 후공정 패키징(OSAT). KPCA 명단에서 발견. PCB는 별도 산업으로 두지 않고 반도체로 분류"
+  },
+  {
    "name": "원익",
    "slug": "wonik",
    "ats": "recruiter",
