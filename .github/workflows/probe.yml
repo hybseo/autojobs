@@ -20,6 +20,7 @@ on:
           - '외국계 부품사 50개사 (약 25분)'
           - '반도체 218개사 (약 1시간)'
           - '전기전자 상장사 295개사 (약 1시간 30분)'
+          - 'IT 서비스 상장사 231개사 (약 1시간 10분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -51,6 +52,7 @@ jobs:
             외국계*)   ARGS="--urls scripts/targets_foreign.txt" ;;
             반도체*)   ARGS="--urls scripts/targets_semi.txt" ;;
             전기전자*) ARGS="--urls scripts/targets_electronics.txt" ;;
+            IT*)       ARGS="--urls scripts/targets_it.txt" ;;
             *)        ARGS="" ;;
           esac
           if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
