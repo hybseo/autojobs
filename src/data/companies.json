@@ -1080,8 +1080,8 @@
    "industry": [
     "전기전자"
    ],
-   "enabled": true,
-   "note": "전력선·통신케이블"
+   "enabled": false,
+   "note": "전력선·통신케이블. LS 계열. 코스피 6조. 리크루터 구버전(appsite)이라 우리 API 가 HTTP 400. 서버가 HTML 을 완성해 보내는 방식. 2026-09-04 확인 시점 접수중 공고 0건(전부 마감)이라 구버전 어댑터를 만들 근거가 약함. 효성·미래컴퍼니·탑엔지니어링·고려아연도 같은 구버전 문제. 이런 곳이 더 쌓이면 그때 만들 것"
   },
   {
    "name": "덕산네오룩스",
@@ -1300,6 +1300,17 @@
    ],
    "enabled": true,
    "note": "중전기기·발전설비"
+  },
+  {
+   "name": "LS머트리얼즈",
+   "slug": "ls-materials",
+   "ats": "greeting",
+   "code": "lsmaterials-recruit",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "울트라커패시터·이차전지 소재. LS 계열. 코스닥"
   },
   {
    "name": "원익",
