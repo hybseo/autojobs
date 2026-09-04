@@ -122,10 +122,10 @@ const rows = jobs.map(rowOf);
       <main class="list">
         <div class="tabs" role="tablist">
           <button class="tab on" data-tab="마감 있음" role="tab" aria-selected="true">
-            마감 있음 <span class="tn">{deadlineN}</span>
+            마감 있음 <span class="tn" id="tnD">{deadlineN}</span>
           </button>
           <button class="tab" data-tab="상시채용" role="tab" aria-selected="false">
-            상시채용 <span class="tn">{alwaysN}</span>
+            상시채용 <span class="tn" id="tnA">{alwaysN}</span>
           </button>
           <div class="spacer"></div>
           <span class="shown" id="shown"></span>
@@ -331,6 +331,13 @@ const rows = jobs.map(rowOf);
   }
 
   .empty { padding: 48px 8px; color: var(--dim); font-size: 14px; }
+  .empty b { color: var(--ink); font-weight: 600; }
+  .empty .jump {
+    margin-left: 6px; padding: 6px 12px; border: 1px solid var(--line);
+    background: #fff; border-radius: 4px; font: inherit; font-size: 13.5px;
+    cursor: pointer; color: var(--ink);
+  }
+  .empty .jump:hover { background: var(--field); }
   .more {
     display: block; width: 100%; margin: 8px 0 60px; padding: 12px;
     border: 1px solid var(--line); background: #fff; border-radius: 4px;
@@ -379,26 +386,68 @@ const rows = jobs.map(rowOf);
   const STEP = 60;
   let limit = STEP;
 
-  const match = (el) => {
+  /*
+   * 탭 숫자는 '지금 필터에서' 각 탭에 몇 건인지를 보여줘야 합니다.
+   *
+   * 처음에는 서버에서 계산한 전체값을 그대로 두었는데, 산업을 골라도
+   * 숫자가 그대로여서 "반도체에 마감 있는 공고가 몇 건인지" 를 알 수
+   * 없었습니다. 탭을 눌러봐야 알게 되는 건 답이 아닙니다.
+   *
+   * 그래서 탭 조건만 뺀 나머지 필터로 한 번 세고, 그 결과를 두 탭에
+   * 나눠 담습니다.
+   */
+  const passFilters = (el) => {
     const inds = (el.dataset.in || '').split('|');
-    return el.dataset.op === state.tab
-      && (!state.in.size || inds.some((v) => state.in.has(v)))
+    return (!state.in.size || inds.some((v) => state.in.has(v)))
       && (!state.ca.size || state.ca.has(el.dataset.career))
       && (!state.co.size || state.co.has(el.dataset.co))
       && (!state.q || el.dataset.text.includes(state.q));
   };
+  const match = (el) => el.dataset.op === state.tab && passFilters(el);
+
+  const tnD = document.getElementById('tnD');
+  const tnA = document.getElementById('tnA');
 
   function apply() {
-    let n = 0;
+    let n = 0, dN = 0, aN = 0;
     for (const el of rows) {
-      const ok = match(el);
+      const pass = passFilters(el);
+      if (pass) (el.dataset.op === '상시채용' ? aN++ : dN++);
+      const ok = pass && el.dataset.op === state.tab;
       if (ok) n += 1;
       el.hidden = !ok || n > limit;
     }
-    shown.textContent = n ? `${Math.min(limit, n)} / ${n}` : '';
+    tnD.textContent = dN;
+    tnA.textContent = aN;
+    /*
+     * 오른쪽 표시.
+     *
+     * 처음에는 "55 / 55" 처럼 그린 수 / 이 탭 건수만 보여줬습니다.
+     * IT 를 고르면 전체가 381건인데 55/55 로 보여, 55건뿐인 것처럼
+     * 읽혔습니다. 둘이 같은 값일 때는 더 헷갈립니다.
+     *
+     * 이 탭의 건수와 필터 전체 건수를 함께 보여줍니다.
+     */
+    const tot = dN + aN;
+    const drawn = Math.min(limit, n);
+    const part = drawn < n ? `${drawn} / ${n}건` : `${n}건`;   // 다 그렸으면 분수를 빼서 군더더기를 없앱니다
+    shown.textContent = !n ? ''
+      : (n === tot ? part : `${part} · 전체 ${tot}건`);
     empty.hidden = n > 0;
     more.hidden = n <= limit;
     more.textContent = `더 보기 (${n - limit}건 남음)`;
+
+    // 지금 탭이 0건인데 반대 탭에 있으면 그쪽을 알려줍니다.
+    const other = state.tab === '마감 있음' ? aN : dN;
+    if (!n && other) {
+      empty.innerHTML = `이 조건에 맞는 <b>${state.tab}</b> 공고가 없습니다. `
+        + `<button class="jump" type="button">${state.tab === '마감 있음' ? '상시채용' : '마감 있음'} ${other}건 보기</button>`;
+      empty.querySelector('.jump').onclick = () => {
+        document.querySelector(`.tab[data-tab="${state.tab === '마감 있음' ? '상시채용' : '마감 있음'}"]`).click();
+      };
+    } else if (!n) {
+      empty.textContent = '조건에 맞는 공고가 없습니다. 필터를 줄이거나 검색어를 지워보세요.';
+    }
   }
 
   document.getElementById('q').addEventListener('input', (e) => {
