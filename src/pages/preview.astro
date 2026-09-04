@@ -70,8 +70,13 @@ const rows = jobs.map(rowOf);
     </div>
 
     <div class="body">
-      <!-- 왼쪽 고정 필터 -->
-      <aside class="side">
+      <!-- 왼쪽 고정 필터. 모바일에서는 접어둡니다. -->
+      <button class="ftoggle" id="ftoggle" type="button" aria-expanded="false">
+        <span>필터</span>
+        <span class="fsum" id="fsum">전체</span>
+        <span class="chev" aria-hidden="true">▾</span>
+      </button>
+      <aside class="side" id="side">
         <section class="fgroup">
           <h2>산업</h2>
           <ul class="flist">
@@ -345,25 +350,64 @@ const rows = jobs.map(rowOf);
   }
   .more:hover { background: var(--field); }
 
+  /* PC 에서는 토글 버튼이 필요 없습니다. */
+  .ftoggle { display: none; }
+
   /* ── 좁은 화면 ─────────────────────────────────── */
+  /*
+   * 모바일에서 필터를 그대로 펼치면 약 698px 을 먹습니다.
+   * 화면 하나를 통째로 넘겨야 공고가 나옵니다. 예전 칩 방식은
+   * 191px 이었으니 세 배 넘게 늘어난 셈입니다.
+   *
+   * 그래서 접어둡니다. 필터는 한 줄 버튼이 되고, 눌러야 열립니다.
+   * 무엇을 고른 상태인지는 버튼에 요약해 보여줍니다.
+   */
   @media (max-width: 860px) {
     .body { grid-template-columns: 1fr; gap: 0; padding: 0; }
     .list { padding: 0 16px; }
+    .ftoggle {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 11px 16px; border: 0; border-bottom: 1px solid var(--line);
+      background: var(--field); font: inherit; font-size: 14px;
+      color: var(--ink); cursor: pointer; text-align: left;
+    }
+    .ftoggle .fsum {
+      flex: 1; min-width: 0; font-size: 13px; color: var(--dim);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ftoggle .chev { transition: transform .15s; color: var(--dim); }
+    .ftoggle[aria-expanded='true'] .chev { transform: rotate(180deg); }
     .side {
       position: static; padding: 14px 16px; min-height: 0;
       border-right: 0; border-bottom: 1px solid var(--line);
       display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px;
     }
+    .side[hidden] { display: none; }
     .fgroup:last-child { grid-column: 1 / -1; }
     .flist.scroll { max-height: 180px; }
     .tabs { top: 0; }
-    .row a { grid-template-columns: 4px 1fr 46px; gap: 10px; row-gap: 2px; padding: 10px 4px; }
-    .row .co { grid-column: 2; }
-    .row .ttl { grid-column: 2; white-space: normal; }
-    .row .meta { grid-column: 2; }
-    .row .dday { grid-column: 3; grid-row: 1 / 3; align-self: center; }
+    /*
+     * 모바일 행은 두 줄입니다.
+     *   1줄  회사명 · 근무지/경력          D-day
+     *   2줄  공고 제목
+     * 제목을 아래에 두는 이유는, 좁은 화면에서 제목이 길어 줄바꿈되면
+     * 회사명이 밀려나기 때문입니다. 훑을 때는 회사명이 먼저 잡힙니다.
+     */
+    .row a {
+      grid-template-columns: 4px 1fr auto;
+      gap: 4px 10px; padding: 11px 4px;
+    }
+    .row .co { grid-column: 2; grid-row: 1; font-size: 12.5px; }
+    .row .meta { grid-column: 2; grid-row: 1; justify-self: end; margin-right: 4px; }
+    .row .ttl {
+      grid-column: 2 / 4; grid-row: 2; white-space: normal;
+      line-height: 1.4; font-size: 14px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .row .dday { grid-column: 3; grid-row: 1; }
     .row .upto { display: none; }
-    .bar { grid-row: 1 / 4; height: 100%; }
+    .bar { grid-row: 1 / 3; height: 100%; }
   }
   @media (max-width: 520px) {
     .sb-inner { flex-direction: column; align-items: stretch; gap: 8px; }
@@ -461,7 +505,7 @@ const rows = jobs.map(rowOf);
       const on = b.getAttribute('aria-pressed') === 'true';
       b.setAttribute('aria-pressed', String(!on));
       on ? state[k].delete(v) : state[k].add(v);
-      limit = STEP; apply();
+      limit = STEP; apply(); syncSummary();
     });
   });
 
@@ -486,6 +530,34 @@ const rows = jobs.map(rowOf);
       li.hidden = q && !name.includes(q);
     });
   });
+
+  /*
+   * 모바일 필터 접기.
+   * 처음에는 닫아둡니다. 무엇을 고른 상태인지 버튼에 요약합니다.
+   */
+  const side = document.getElementById('side');
+  const ftoggle = document.getElementById('ftoggle');
+  const fsum = document.getElementById('fsum');
+  const isNarrow = () => window.matchMedia('(max-width: 860px)').matches;
+
+  function syncSide() {
+    if (!isNarrow()) { side.hidden = false; return; }
+    side.hidden = ftoggle.getAttribute('aria-expanded') !== 'true';
+  }
+  function syncSummary() {
+    const picked = [...state.in, ...state.ca, ...state.co];
+    fsum.textContent = picked.length
+      ? (picked.length <= 2 ? picked.join(' · ') : `${picked[0]} 외 ${picked.length - 1}개`)
+      : '전체';
+  }
+  ftoggle.addEventListener('click', () => {
+    const on = ftoggle.getAttribute('aria-expanded') === 'true';
+    ftoggle.setAttribute('aria-expanded', String(!on));
+    syncSide();
+  });
+  window.addEventListener('resize', syncSide);
+  syncSide();
+  syncSummary();
 
   apply();
 </script>
