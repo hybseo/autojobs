@@ -388,18 +388,6 @@
    "note": "와이퍼·모터. 확인 시점 공고 0건"
   },
   {
-   "name": "효성",
-   "slug": "hyosung",
-   "ats": "recruiter",
-   "code": "hyosung",
-   "industry": [
-    "자동차부품",
-    "소재"
-   ],
-   "enabled": false,
-   "note": "타이어보강재. 2026-08-31 리크루터 API 가 HTTP 400 으로 거부. 코드가 더 이상 유효하지 않은 것으로 보임. 올바른 코드를 찾으면 enabled 를 true 로 되돌리세요"
-  },
-  {
    "name": "LG그룹",
    "slug": "lg-careers",
    "ats": "lg",
@@ -440,10 +428,11 @@
    "ats": "greeting",
    "code": "stradvision",
    "industry": [
-    "자동차부품"
+    "자동차부품",
+    "IT"
    ],
    "enabled": true,
-   "note": "자율주행 인지 SW. 서울·포항. 확인 시점 26건"
+   "note": "자율주행 AI 카메라 영상인식 SW. KRX 업종은 IT서비스, 실제는 차량용이라 양쪽에 넣음"
   },
   {
    "name": "라이드플럭스",
@@ -1292,14 +1281,15 @@
   },
   {
    "name": "효성중공업",
-   "slug": "hyosung-e",
+   "slug": "hyosung",
    "ats": "recruiter",
    "code": "hyosung",
    "industry": [
-    "전기전자"
+    "전기전자",
+    "자동차부품"
    ],
    "enabled": true,
-   "note": "중전기기·발전설비"
+   "note": "중전기기·발전설비. 타이어보강재도 함. 예전에 code=hyosung 으로 등록했다가 HTTP 400 이 나 비활성했는데, 전기전자 탐지에서 같은 코드로 다시 잡혀 살아났습니다"
   },
   {
    "name": "LS머트리얼즈",
@@ -1311,6 +1301,359 @@
    ],
    "enabled": true,
    "note": "울트라커패시터·이차전지 소재. LS 계열. 코스닥"
+  },
+  {
+   "name": "KT밀리의서재",
+   "slug": "millie",
+   "ats": "greeting",
+   "code": "millie",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "전자책 구독"
+  },
+  {
+   "name": "데브시스터즈",
+   "slug": "devsisters",
+   "ats": "greeting",
+   "code": "devsisters",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 게임"
+  },
+  {
+   "name": "딥노이드",
+   "slug": "deepnoid",
+   "ats": "greeting",
+   "code": "deepnoid",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "의료 AI 플랫폼"
+  },
+  {
+   "name": "마키나락스",
+   "slug": "makinarocks",
+   "ats": "greeting",
+   "code": "makinarocks",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "산업 특화 AI 플랫폼"
+  },
+  {
+   "name": "미트박스",
+   "slug": "meatbox",
+   "ats": "greeting",
+   "code": "meatbox",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "축산물 유통 플랫폼"
+  },
+  {
+   "name": "뷰노",
+   "slug": "vunohire",
+   "ats": "greeting",
+   "code": "vunohire",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "의료 AI 영상·음성"
+  },
+  {
+   "name": "셀바스AI",
+   "slug": "selvasai",
+   "ats": "greeting",
+   "code": "selvasai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 솔루션"
+  },
+  {
+   "name": "스피어",
+   "slug": "spherecorp",
+   "ats": "greeting",
+   "code": "spherecorp",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "우주항공 부품·디지털헬스 SW"
+  },
+  {
+   "name": "신세계 I&C",
+   "slug": "shinsegaeinc",
+   "ats": "recruiter",
+   "code": "shinsegaeinc",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "유통 IT·SI"
+  },
+  {
+   "name": "신테카바이오",
+   "slug": "syntekabio",
+   "ats": "greeting",
+   "code": "syntekabio",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 신약개발"
+  },
+  {
+   "name": "씨이랩",
+   "slug": "xiilab",
+   "ats": "greeting",
+   "code": "xiilab",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "빅데이터 플랫폼"
+  },
+  {
+   "name": "아우토크립트",
+   "slug": "autocrypt",
+   "ats": "greeting",
+   "code": "autocrypt",
+   "industry": [
+    "자동차부품",
+    "IT"
+   ],
+   "enabled": true,
+   "note": "자동차 사이버보안 SW"
+  },
+  {
+   "name": "아이스크림미디어",
+   "slug": "i-screammedia",
+   "ats": "greeting",
+   "code": "i-screammedia",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "교육출판·커머스"
+  },
+  {
+   "name": "아크릴",
+   "slug": "acryl",
+   "ats": "greeting",
+   "code": "acryl",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "통합 AI 플랫폼"
+  },
+  {
+   "name": "안랩",
+   "slug": "ahnlab",
+   "ats": "recruiter",
+   "code": "ahnlab",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "정보보안·백신"
+  },
+  {
+   "name": "에스에스알",
+   "slug": "ssrinc",
+   "ats": "greeting",
+   "code": "ssrinc",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "취약점 진단·모의해킹"
+  },
+  {
+   "name": "에스투더블유",
+   "slug": "s2w",
+   "ats": "greeting",
+   "code": "s2w",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "사이버위협 인텔리전스"
+  },
+  {
+   "name": "엑셈",
+   "slug": "ex-em",
+   "ats": "greeting",
+   "code": "ex-em",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "IT 성능관리·AI 데이터"
+  },
+  {
+   "name": "엠아이큐브솔루션",
+   "slug": "micube",
+   "ats": "greeting",
+   "code": "micube",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "스마트팩토리 솔루션"
+  },
+  {
+   "name": "웹젠",
+   "slug": "webzen",
+   "ats": "recruiter",
+   "code": "webzen",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "온라인게임"
+  },
+  {
+   "name": "이스트에이드",
+   "slug": "estfamily",
+   "ats": "greeting",
+   "code": "estfamily",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "줌닷컴 등 포털"
+  },
+  {
+   "name": "이씨에스",
+   "slug": "ecstel",
+   "ats": "greeting",
+   "code": "ecstel",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "컨택센터 시스템"
+  },
+  {
+   "name": "이지케어텍",
+   "slug": "ezcaretech",
+   "ats": "greeting",
+   "code": "ezcaretech",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "의료정보시스템"
+  },
+  {
+   "name": "카카오게임즈",
+   "slug": "recruit-kakaogames-com",
+   "ats": "greeting",
+   "code": "recruit.kakaogames.com",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일·PC게임 퍼블리싱"
+  },
+  {
+   "name": "코나아이",
+   "slug": "konai",
+   "ats": "greeting",
+   "code": "konai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "전자화폐·결제 단말"
+  },
+  {
+   "name": "코난테크놀로지",
+   "slug": "konantec",
+   "ats": "greeting",
+   "code": "konantec",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "자연어처리·검색엔진 AI"
+  },
+  {
+   "name": "크라우드웍스",
+   "slug": "crowdworks",
+   "ats": "greeting",
+   "code": "crowdworks",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 학습데이터 구축"
+  },
+  {
+   "name": "키다리스튜디오",
+   "slug": "kstd-lezhin",
+   "ats": "greeting",
+   "code": "kstd-lezhin",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "웹툰·웹소설 플랫폼"
+  },
+  {
+   "name": "탑코미디어",
+   "slug": "topco",
+   "ats": "recruiter",
+   "code": "topco",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "웹툰·만화"
+  },
+  {
+   "name": "플리토",
+   "slug": "flitto",
+   "ats": "greeting",
+   "code": "flitto",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "언어 데이터 구축"
+  },
+  {
+   "name": "한컴",
+   "slug": "hancom",
+   "ats": "greeting",
+   "code": "hancom",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "오피스 소프트웨어"
+  },
+  {
+   "name": "헥토이노베이션",
+   "slug": "hecto",
+   "ats": "greeting",
+   "code": "hecto",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "휴대폰 부가서비스"
   },
   {
    "name": "원익",
