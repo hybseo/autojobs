@@ -190,7 +190,8 @@ const rows = jobs.map(rowOf);
   /* ── 검색줄. 스크롤해도 붙어 있습니다. ────────────── */
   .searchbar {
     position: sticky; top: 0; z-index: 20;
-    background: #fff; border-bottom: 1px solid var(--line);
+    background: #fff; border-bottom: 1px solid #C9D0CB;
+    box-shadow: 0 1px 0 rgba(22,24,28,.04);
   }
   .sb-inner {
     max-width: 1180px; margin: 0 auto; padding: 12px 20px;
@@ -198,8 +199,8 @@ const rows = jobs.map(rowOf);
   }
   #q {
     flex: 1; min-width: 0; height: 40px; padding: 0 14px;
-    border: 1px solid var(--line); border-radius: 4px;
-    font: inherit; font-size: 15px; background: var(--field);
+    border: 1px solid #C9D0CB; border-radius: 4px;
+    font: inherit; font-size: 15px; background: #fff;
   }
   #q:focus { outline: 2px solid var(--auto); outline-offset: -1px; background: #fff; }
   .sb-meta {
@@ -214,14 +215,30 @@ const rows = jobs.map(rowOf);
   }
 
   /* ── 본문 2단 ──────────────────────────────────── */
+  /*
+   * 배경을 나눕니다.
+   *
+   * 처음에는 필터도 목록도 배경을 주지 않았습니다. 흰 바탕을 전제하고
+   * 색을 골랐는데, 실제로는 body 의 연회색(#F1F3F2)이 그대로 비쳐서
+   * 필터·목록·행 구분선이 모두 같은 회색이 됐습니다. 어디가 어디인지
+   * 눈으로 구분되지 않았습니다.
+   *
+   * 필터는 면으로 물러나고(연회색), 목록이 앞으로 나옵니다(흰색).
+   * 색을 아끼는 것과 구조를 숨기는 것은 다른 일입니다.
+   */
   .body {
-    max-width: 1180px; margin: 0 auto; padding: 0 20px;
-    display: grid; grid-template-columns: 208px 1fr; gap: 28px;
+    max-width: 1180px; margin: 0 auto; padding: 0 20px 0 0;
+    display: grid; grid-template-columns: 232px 1fr; gap: 0;
     align-items: start;
   }
 
   /* ── 왼쪽 필터 ─────────────────────────────────── */
-  .side { position: sticky; top: 65px; padding: 20px 0 40px; }
+  .side {
+    position: sticky; top: 65px; padding: 20px 18px 40px;
+    background: var(--field);
+    border-right: 1px solid var(--line);
+    min-height: calc(100vh - 65px);
+  }
   .fgroup { margin-bottom: 22px; }
   .fgroup h2 {
     margin: 0 0 8px; font-size: 12px; font-weight: 600; color: var(--dim);
@@ -238,7 +255,7 @@ const rows = jobs.map(rowOf);
     font: inherit; font-size: 13.5px; color: var(--ink);
     text-align: left; border-radius: 3px;
   }
-  .fbtn:hover { background: var(--field); }
+  .fbtn:hover { background: #E8ECE9; }
   .fbtn[aria-pressed='true'] { background: var(--ink); color: #fff; }
   .fbtn[aria-pressed='true'] .fn { color: #fff; opacity: .65; }
   .fname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -260,6 +277,7 @@ const rows = jobs.map(rowOf);
     display: flex; align-items: center; gap: 4px;
     padding: 16px 0 0; border-bottom: 1px solid var(--line);
     position: sticky; top: 65px; background: #fff; z-index: 10;
+    margin: 0 -20px; padding-left: 20px; padding-right: 20px;
   }
   .tab {
     border: 0; background: none; cursor: pointer; font: inherit; font-size: 14px;
@@ -275,18 +293,22 @@ const rows = jobs.map(rowOf);
   }
 
   /* ── 목록: 카드가 아니라 행 ─────────────────────── */
+  .list { background: #fff; padding: 0 20px; min-height: 100vh; }
   .rows { list-style: none; margin: 0; padding: 0 0 60px; }
-  .row + .row { border-top: 1px solid #EDF0EE; }
+  /* 909건을 훑을 때 줄을 놓치지 않도록 홀짝을 아주 옅게 나눕니다.
+     표에서 쓰는 방식이고 '사양서 감각' 과도 맞습니다. */
+  .row:nth-child(even) a { background: #FAFBFA; }
+  .row + .row { border-top: 1px solid #E6EAE7; }
   .row[hidden] { display: none; }
   .row a {
     display: grid;
-    grid-template-columns: 3px 132px 1fr auto 52px 44px;
+    grid-template-columns: 4px 132px 1fr auto 52px 44px;
     align-items: center; gap: 12px;
     padding: 11px 8px; text-decoration: none; color: inherit;
   }
   .row a:hover { background: var(--field); }
   .row a:focus-visible { outline: 2px solid var(--auto); outline-offset: -2px; }
-  .bar { height: 26px; border-radius: 1px; background: var(--c, #E3E7E4); }
+  .bar { height: 30px; border-radius: 2px; background: var(--c, #D5DAD6); }
   .row .co {
     font-size: 13px; color: var(--dim);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -318,15 +340,17 @@ const rows = jobs.map(rowOf);
 
   /* ── 좁은 화면 ─────────────────────────────────── */
   @media (max-width: 860px) {
-    .body { grid-template-columns: 1fr; gap: 0; }
+    .body { grid-template-columns: 1fr; gap: 0; padding: 0; }
+    .list { padding: 0 16px; }
     .side {
-      position: static; padding: 14px 0 0;
+      position: static; padding: 14px 16px; min-height: 0;
+      border-right: 0; border-bottom: 1px solid var(--line);
       display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px;
     }
     .fgroup:last-child { grid-column: 1 / -1; }
     .flist.scroll { max-height: 180px; }
     .tabs { top: 0; }
-    .row a { grid-template-columns: 3px 1fr 46px; gap: 10px; row-gap: 2px; padding: 10px 4px; }
+    .row a { grid-template-columns: 4px 1fr 46px; gap: 10px; row-gap: 2px; padding: 10px 4px; }
     .row .co { grid-column: 2; }
     .row .ttl { grid-column: 2; white-space: normal; }
     .row .meta { grid-column: 2; }
