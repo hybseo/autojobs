@@ -285,10 +285,20 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     font-variant-numeric: tabular-nums;
   }
   .chips .morebtn:hover { color: var(--ink, #16181C); }
-  /* 펼친 동안의 접기 버튼. 줄 맨 앞에 오므로 구분되게 둡니다. */
+  /* 펼친 동안의 접기 버튼. 칩과 구분되게 테두리를 줍니다. */
   .chips .morebtn.folding {
     border: 1px solid #C9D0CB; border-radius: 999px;
     padding: 4px 11px; background: #fff; color: var(--ink, #16181C);
+  }
+  /*
+   * 버튼이 화면 밖으로 밀려나면 아래에 띄웁니다.
+   * 자리는 목록 맨 뒤 그대로고, 보이지 않을 때만 떠오릅니다.
+   */
+  .chips .morebtn.floating {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: 20px; z-index: 40;
+    box-shadow: 0 2px 10px rgba(22,24,28,.18);
+    padding: 9px 20px;
   }
 
   /*
@@ -425,19 +435,16 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       btn.hidden = false;
       btn.textContent = '접기';
       /*
-       * 펼친 뒤 접기 버튼이 목록 맨 아래로 밀려납니다. 기업 칩이 126개면
-       * 화면 밖으로 나가 접을 방법이 없어집니다.
-       * 그래서 펼친 동안에는 버튼을 줄 맨 앞으로 옮겨 늘 보이게 합니다.
+       * 접기 버튼은 목록 맨 뒤가 자연스럽습니다. 펼치기와 같은 자리니까요.
+       *
+       * 다만 기업 칩이 126개라 펼치면 버튼이 한참 아래로 밀려 화면 밖에
+       * 나갑니다. 그래서 자리는 그대로 두고, 화면에서 벗어나 있는 동안만
+       * 아래쪽에 띄웁니다. 스크롤해서 버튼이 보이면 다시 제자리로.
        */
-      box.insertBefore(btn, box.firstChild);
       btn.classList.add('folding');
       return;
     }
-    // 접힌 상태에서는 원래 자리(맨 뒤)로 돌려놓습니다.
-    if (btn.classList.contains('folding')) {
-      box.appendChild(btn);
-      btn.classList.remove('folding');
-    }
+    btn.classList.remove('folding', 'floating');
 
     const top = chips[0].offsetTop;
     // 선택된 칩은 접지 않습니다. 접히면 해제할 방법이 없어집니다.
@@ -468,6 +475,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     btn.addEventListener('click', () => {
       box.dataset.expanded = box.dataset.expanded === '1' ? '0' : '1';
       layoutChips();
+      syncFloat();
     });
   });
   let rt;
@@ -476,6 +484,30 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     rt = setTimeout(layoutChips, 150);
   });
   layoutChips();
+
+  /*
+   * 펼친 상태에서 접기 버튼이 화면 밖에 있으면 아래에 띄웁니다.
+   * 버튼이 보이는 위치까지 스크롤하면 다시 제자리로 돌아갑니다.
+   */
+  function syncFloat() {
+    for (const [box, btn] of foldables) {
+      if (box.dataset.expanded !== '1' || btn.hidden) {
+        btn.classList.remove('floating');
+        continue;
+      }
+      // floating 중에는 제자리 좌표를 알 수 없으므로 잠시 떼고 잽니다.
+      const wasFloating = btn.classList.contains('floating');
+      if (wasFloating) btn.classList.remove('floating');
+      const r = btn.getBoundingClientRect();
+      const off = r.bottom > window.innerHeight - 8;
+      btn.classList.toggle('floating', off);
+    }
+  }
+  let st;
+  window.addEventListener('scroll', () => {
+    clearTimeout(st);
+    st = setTimeout(syncFloat, 80);
+  }, { passive: true });
 
   // 탭 전환. 필터·검색어는 그대로 두고 대상만 바꿉니다.
   document.querySelectorAll('.tabs .tab').forEach((t) => {
