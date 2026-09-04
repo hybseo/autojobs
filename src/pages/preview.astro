@@ -173,6 +173,9 @@ const rows = jobs.map(rowOf);
     --semi: #6B4E8F;   /* 반도체 */
     --elec: #B5651D;   /* 전기전자 — 구리 */
     --robo: #2F7A5C;   /* 로봇 */
+    --it:   #4A5A6B;   /* IT — 색을 다섯째로 늘리지 않고 회청색으로 눌렀습니다.
+                          IT 는 33곳이지만 게임·의료·보안이 섞여 성격이 넓습니다.
+                          다른 넷처럼 또렷한 색을 주면 화면이 무지개가 됩니다. */
     --field: #F4F6F5;
     --line: #DDE1DE;
     --ink: #16181C;
@@ -182,6 +185,7 @@ const rows = jobs.map(rowOf);
   .ind-semiconductor { --c: var(--semi); }
   .ind-electronics   { --c: var(--elec); }
   .ind-robotics      { --c: var(--robo); }
+  .ind-it            { --c: var(--it); }
 
   /* ── 검색줄. 스크롤해도 붙어 있습니다. ────────────── */
   .searchbar {
