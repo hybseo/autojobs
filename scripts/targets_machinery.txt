@@ -1,0 +1,173 @@
+# 기계·장비 상장사 (한국거래소 업종분류 현황)
+#
+# 출처: KRX 업종분류 현황 '기계·장비' 업종. 2026-09-06 확인.
+#   코스피 + 코스닥 = 215곳 (우선주 제외)
+#
+# 홈페이지는 KIND 상장법인목록에서 종목코드로 대조해 자동으로 채웠습니다.
+#   https://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13
+#
+# 이 업종을 넣는 이유
+#   지금 방문자층인 자동차 전장·기구·제어 엔지니어와 인력 풀이 겹칩니다.
+#   반도체 장비사가 상당수 포함돼 반도체 명단과도 이어집니다.
+#
+# 뺀 곳: 이미 수집 중 13곳 · 이미 탐지함 47곳 · 홈페이지 없음 9곳
+#
+# 주의: '테스'(code=hites)는 이미 등록돼 있습니다. 기계·장비의 테스와
+#       같은 회사이고 반도체 명단에서 먼저 잡혔습니다.
+#       '대모'·'에이치케이'는 현대모비스·삼익티에이치케이와 이름이 겹쳐
+#       자동 대조에서 잘못 걸렸던 것이라 바로잡아 넣었습니다.
+#
+# 시가총액 순으로 정렬했습니다.
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_machinery.txt
+
+두산에너빌리티,https://doosanenerbility.com
+HD건설기계,https://hd-hyundaice.com
+원익IPS,https://ips.co.kr
+HPSP,https://thehpsp.com
+현대엘리베이터,https://hyundaielevator.co.kr
+현대무벡스,https://hyundaimovex.com
+코미코,https://komico.com
+기가비스,https://gigavis.com
+STX엔진,https://stxengine.co.kr
+GST,https://gst-in.com
+휴림로봇,https://dstrobot.com
+선익시스템,https://sunic.co.kr
+피엔티,https://epnt.co.kr
+SNT에너지,https://hisnt.com
+SFA넥셀,https://sfanexel.co.kr
+예스티,https://yest.co.kr
+네오셈,https://neosem.com
+엠앤씨솔루션,https://mncsolution.com
+젬백스,https://kael.co.kr
+인텍플러스,https://intekplus.com
+유진로봇,https://yujinrobot.com
+뉴파워프라즈마,https://newpower.co.kr
+한솔아이원스,https://hansoliones.com
+코세스,https://koses.co.kr
+유니슨,https://unison.co.kr
+아스플로,https://asflow.com
+TYM,https://tym.world
+진성티이씨,https://jinsungtec.com
+스맥,https://esmec.com
+필에너지,https://philenergy.co.kr
+오리엔탈정공,https://opco.co.kr
+티엑스알로보틱스,https://txr.kr
+KZ정밀,https://kzpc.co.kr
+나우로보틱스,https://naurobot.com
+HB테크놀러지,https://ncbnet.co.kr
+엘오티베큠,https://lotvacuum.com
+삼익THK,https://samickthk.co.kr
+윤성에프앤씨,https://ysfc.co.kr
+비엠티,https://superlok.com
+지앤비에스 에코,https://gnbseng.com
+앤로보틱스,https://hjfm.co.kr
+DMS,https://dms21.co.kr
+나노팀,https://nanotim.co.kr
+이노테크,https://innotech2013.com
+링크솔루션,https://lincsolution.com
+씨앤지하이테크,https://cnghitech.com
+피아이이,https://piegroup.co.kr
+디와이파워,https://power.dy.co.kr
+나인테크,https://naintec.co.kr
+라온로보틱스,https://raonrobot.com
+HB솔루션,https://hb-solution.co.kr
+톱텍,https://toptec.co.kr
+코윈테크,https://cowintech.com
+현대에버다임,https://hyundaieverdigm.com
+수산세보틱스,https://soosanheavy.com
+케이엔솔,https://k-ensol.com
+하나기술,https://hn-tech.co.kr
+엠플러스,https://mplusi.co.kr
+디에스케이,https://dsk.co.kr
+케이에스피,https://kspvalve.com
+씨에스베어링,https://csbrg.com
+비아트론,https://viatrontech.com
+우림피티에스,https://woorimgear.co.kr
+워트,https://wot.co.kr
+KC코트렐,https://kc-cottrell.com
+계양전기,https://keyang.co.kr
+동아엘텍,https://dongaeltek.co.kr
+에프엔에스테크,https://fnstech.com
+야스,https://yasoled.com
+한빛레이저,https://hblaser.co.kr
+원익피앤이,https://wonikpne.com
+넥사다이내믹스,https://nexadynamics.kr
+케이엔에스,https://knssystem.com
+엠오티,https://motfa.com
+제이스로보틱스,https://jastech.co.kr
+와이제이링크,https://yjlink.com
+제너셈,https://genesem.com
+제일엠앤에스,https://jeilm.co.kr
+디와이피엔에프,https://dypnf.com
+디케이락,https://dklok.com
+세미티에스,https://semi-ts.com
+화천기공,https://hwacheon.com
+원준,https://onejoon.co.kr
+제닉스로보틱스,https://zenixkorea.co.kr
+한신기계,https://hanshin.co.kr
+엠엑스로보틱스,https://smck.com
+DKME,https://dkme.com
+이노메트리,https://innometry.com
+한울반도체,https://wintec.co.kr
+티에스아이,https://taesungind.co.kr
+디에이테크놀로지,https://dat21.co.kr
+나래나노텍,https://naraenano.co.kr
+우신시스템,https://wooshinsys.co.kr
+모델솔루션,https://model-solution.com
+팬스타엔터프라이즈,https://heshbon.com
+지아이텍,https://gitec.kr
+흥국,https://heungkuk.co.kr
+원일티엔아이,https://woniltni.co.kr
+기신정기,https://kishin.com
+다원넥스뷰,https://nexview.co.kr
+엔젯,https://enjet.co.kr
+제이엔케이글로벌,https://jnk-global.com
+화성밸브,https://hsvalve.co.kr
+브이원텍,https://v-one.co.kr
+성원에너텍,https://youilet.com
+위지트,https://wizit.co.kr
+포스뱅크,https://posbank.com
+TPC로보틱스,https://TPCpage.com
+에이테크솔루션,https://atechsolution.co.kr
+에스피시스템스,https://spsystems.co.kr
+러셀,https://erussell.co.kr
+에너토크,https://enertork.com
+에어레인,https://airrane.com
+대모,https://daemo.co.kr
+씨케이솔루션,https://cksolution.co.kr
+이엔플러스,https://en3.co.kr
+영우디에스피,https://ywdsp.com
+엔투텍,https://n2tech.kr
+한독크린텍,https://hdctech.co.kr
+에쎈테크,https://essentech.co.kr
+서연탑메탈,https://seoyontop.com
+서암기계공업,https://smiltd.co.kr
+아세아텍,https://asiakor.com
+나라엠앤디,https://naramnd.com
+우진플라임,https://woojinplaimm.com
+파라텍,https://paratech.co.kr
+아이비젼웍스,https://ivw.co.kr
+넥스턴앤롤코리아,https://nexturn.co.kr
+제이엔비,https://jnbeng.com
+팸텍,https://pamtek.com
+한국주강,https://hascokorea.co.kr
+티에스넥스젠,https://hlbpower.com
+에이아이코리아,https://aik.co.kr
+케이웨더,https://kweather.co.kr
+힘스,https://hims.co.kr
+에이치케이,https://hk-global.com
+한국정밀기계,https://hnkkorea.com
+신도기연,https://lcd.co.kr
+참엔지니어링,https://charmeng.com
+피엔티엠에스,https://ms-mc.co.kr
+스페코,https://speco.co.kr
+루트K,https://abprobio.co.kr
+케이지에이,https://kga-i.com
+인베니아,https://inveniacorp.com
+에스앤더블류,https://snwcorp.com
+크린앤사이언스,https://cands.co.kr
+수성웹툰,https://soosung.com
+다이나믹디자인,https://dynamicdesign.co.kr
+KS인더스트리,https://ks-industry.co.kr
