@@ -50,19 +50,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         <button class="sortbtn" id="sort" type="button">마감 임박순</button>
       </div>
       {industries().length > 1 && (
+        <div class="fhead">산업</div>
         <div class="chips ind" id="fIn">
           {industries().map((i) => (
-            <button class="chip" type="button" data-k="in" data-v={i.name} aria-pressed="false">{i.name}<span class="n">{i.jobs.length}</span></button>
+            <button class:list={['chip', `ind-${i.slug}`]} type="button" data-k="in" data-v={i.name} aria-pressed="false"><span class="sw"></span>{i.name}<span class="n">{i.jobs.length}</span></button>
           ))}
           <button class="chip morebtn" id="moreIn" type="button" hidden></button>
         </div>
       )}
+      <div class="fhead">기업</div>
       <div class="chips" id="fCo">
         {tally((j) => j.company).map(([v, n]) => (
           <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
         <button class="chip morebtn" id="moreCo" type="button" hidden></button>
       </div>
+      <div class="fhead">경력구분</div>
       <div class="chips" id="fCa">
         {tally((j) => j.career).map(([v, n]) => (
           <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
@@ -128,6 +131,31 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    * 색과 타이포는 양쪽에 똑같이 입힙니다. 같은 사이트니까요.
    * ═══════════════════════════════════════════════════ */
 
+
+  /* ── 필터 소제목 ─────────────────────────────── */
+  .fhead {
+    font-size: 12px; font-weight: 600; color: #6B7178;
+    letter-spacing: .02em; margin: 18px 0 7px;
+  }
+  .fhead:first-of-type { margin-top: 0; }
+
+  /* ── 산업 칩: 색으로 구분 ────────────────────── */
+  .chips.ind .chip .sw {
+    width: 3px; height: 13px; border-radius: 1px;
+    background: var(--c, #C7CDD2); flex: none; margin-right: 2px;
+  }
+  .chips.ind .chip { display: inline-flex; align-items: center; gap: 6px; }
+  .chip.ind-auto-parts    { --c: var(--auto); }
+  .chip.ind-semiconductor { --c: var(--semi); }
+  .chip.ind-electronics   { --c: var(--elec); }
+  .chip.ind-robotics      { --c: var(--robo); }
+  .chip.ind-it            { --c: var(--it); }
+  .chips.ind .chip[aria-pressed='true'] {
+    background: var(--c, #16181C); border-color: var(--c, #16181C); color: #fff;
+  }
+  .chips.ind .chip[aria-pressed='true'] .sw { background: #fff; opacity: .8; }
+  .chips.ind .chip[aria-pressed='true'] .n { color: #fff; opacity: .75; }
+
   /* ── 산업 색 ────────────────────────────────────
    * 부품 카탈로그의 분류 색인에서 가져왔습니다. 장식이 아니라
    * 1,200건을 훑을 때 눈이 잡는 표지입니다.
@@ -180,15 +208,25 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       border-right: 1px solid #DDE1DE; border-bottom: 0;
       min-height: 100vh; padding: 18px 0 40px;
     }
-    .controls .ctrl-in { padding: 0 16px; max-width: none; }
+    /*
+     * .ctrl-in 은 wrap 클래스를 함께 갖습니다.
+     * 전역 .wrap 이 max-width:940px + margin:0 auto 라,
+     * max-width 만 풀면 margin auto 가 남아 236px 칸 안에서 정렬이
+     * 어긋납니다. 둘 다 풀어야 칸을 꽉 채웁니다.
+     */
+    .controls .ctrl-in {
+      padding: 0 16px; max-width: none; margin: 0; width: 100%;
+    }
     .searchrow { flex-direction: column; align-items: stretch; gap: 8px; }
     .searchrow .sortbtn { width: 100%; }
 
     /* 칩을 세로 목록으로. 기업이 126개라 가로 나열은 한계입니다. */
-    .controls .chips {
-      display: block; margin-top: 14px;
-      max-height: 240px; overflow-y: auto;
-    }
+    /*
+     * 기업이 121개입니다. 스크롤 상자에 넣어봤더니 안에서 또 스크롤하게
+     * 되어 답답합니다. 10개까지 보이고 더보기로 펼치는 편이 낫습니다.
+     */
+    .controls .chips { display: block; margin-top: 0; }
+    .controls .chips.ind .chip { display: flex; }
     .controls .chip {
       display: flex; width: 100%; justify-content: space-between;
       border: 0; border-radius: 3px; background: none; padding: 5px 8px;
@@ -198,9 +236,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     .controls .chip[aria-pressed='true'] {
       background: #16181C; color: #fff;
     }
-    .controls .morebtn { display: none !important; }
+    /* 더보기는 넓은 화면에서도 씁니다. 기업이 121개라 다 펼치면 깁니다. */
+    .controls .morebtn {
+      justify-content: flex-start; color: #6B7178; font-size: 13px;
+      padding-left: 8px;
+    }
 
-    main.wrap { background: #fff; padding: 0 22px; max-width: none; min-height: 100vh; }
+    /*
+     * 전역 .wrap 이 max-width:940px + margin:0 auto 입니다.
+     * max-width 만 풀고 margin 을 그대로 두었더니, 목록이 오른쪽 칸
+     * 안에서 다시 가운데로 몰려 왼쪽에 큰 공백이 생겼습니다.
+     * 2단에서는 칸을 꽉 채워야 합니다.
+     */
+    main.wrap {
+      background: #fff; padding: 0 22px; min-height: 100vh;
+      max-width: none; margin: 0; width: 100%;
+    }
   }
 
   /*
@@ -374,8 +425,16 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     empty.hidden = shown > 0;
     // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
     const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
+    /*
+     * "95건 표시 중 · 마감 있음 전체 414건" 은 두 숫자가 무슨 관계인지
+     * 읽히지 않았습니다. 하나의 문장으로 바꿉니다.
+     *   필터를 걸었을 때   마감 있는 공고 414건 중 95건
+     *   전부 보일 때       마감 있는 공고 414건
+     */
     count.innerHTML = shown
-      ? `<b>${shown}</b>건 표시 중${shown < inTab ? ` · ${state.tab} 전체 ${inTab}건` : ''}`
+      ? (shown < inTab
+          ? `${state.tab} 공고 <b>${inTab}</b>건 중 <b>${shown}</b>건`
+          : `${state.tab} 공고 <b>${shown}</b>건`)
       : '조건에 맞는 자리 없음';
 
     // 이 탭에서 0건이어도 반대 탭에는 있을 수 있습니다.
@@ -442,8 +501,26 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     btn.hidden = true;
 
     if (isWide()) {
-      // 세로 목록. 전부 보이고 버튼도 숨깁니다.
+      /*
+       * 세로 목록에서는 줄바꿈(offsetTop) 으로 접을 수 없습니다.
+       * 개수로 자릅니다. 기업이 121개라 다 펼치면 화면이 길어집니다.
+       *
+       * 산업·경력은 적으니 자르지 않습니다. 기업만 10개까지.
+       */
       btn.classList.remove('folding', 'floating');
+      const LIMIT = box.id === 'fCo' ? 10 : 99;
+      if (box.dataset.expanded === '1' || chips.length <= LIMIT) {
+        if (chips.length > LIMIT) { btn.hidden = false; btn.textContent = '접기'; }
+        return;
+      }
+      // 선택된 칩은 접지 않습니다. 접히면 해제할 방법이 없어집니다.
+      const keep = chips.filter((c) => c.getAttribute('aria-pressed') === 'true');
+      const rest = chips.filter((c) => c.getAttribute('aria-pressed') !== 'true');
+      let shown = keep.length, folded = 0;
+      for (const c of rest) {
+        if (shown < LIMIT) { shown++; } else { c.hidden = true; folded++; }
+      }
+      if (folded) { btn.hidden = false; btn.textContent = `+${folded}개 더`; }
       return;
     }
 
