@@ -1656,6 +1656,40 @@
    "note": "휴대폰 부가서비스"
   },
   {
+   "name": "코미코",
+   "slug": "komico",
+   "ats": "recruiter",
+   "code": "komico",
+   "industry": [
+    "반도체",
+    "기계장비"
+   ],
+   "enabled": true,
+   "note": "반도체 부품 세정·코팅. 코스닥 1.35조"
+  },
+  {
+   "name": "엠앤씨솔루션",
+   "slug": "mnc-solution",
+   "ats": "recruiter",
+   "code": "motionncontrol",
+   "industry": [
+    "기계장비"
+   ],
+   "enabled": true,
+   "note": "방위산업용 유압·전기식 부품. 코스피 4,861억"
+  },
+  {
+   "name": "NAVER",
+   "slug": "naver",
+   "ats": "naver",
+   "code": "recruit.navercorp.com",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "네이버 통합 채용. 한 주소로 계열사 전부(NAVER·웹툰·클라우드·랩스·SNOW·파이낸셜·I&S)가 나옴. affiliates 를 적으면 계열사만 담김"
+  },
+  {
    "name": "원익",
    "slug": "wonik",
    "ats": "recruiter",
