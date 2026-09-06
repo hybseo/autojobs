@@ -34,6 +34,17 @@ const url = canonical ?? (site + Astro.url.pathname);
     border-bottom: 1px solid var(--line, #DDE1DE);
     background: var(--paper, #fff);
   }
+  /*
+   * 넓은 화면에서는 워드마크 줄을 붙여둡니다. 검색창·탭과 함께
+   * 세 줄이 고정되어 스크롤 중에도 조작할 수 있습니다.
+   *
+   * 좁은 화면에서는 붙이지 않습니다. 세로 700px 중 고정 영역이
+   * 166px 이면 공고 볼 자리가 그만큼 줄어듭니다. 모바일에서 사이트
+   * 이름이 계속 보일 이유는 약합니다.
+   */
+  @media (min-width: 861px) {
+    header.site { position: sticky; top: 0; z-index: 40; }
+  }
   header.site .wrap {
     display: flex;
     align-items: baseline;
