@@ -425,11 +425,27 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     [document.getElementById('fIn'), document.getElementById('moreIn')],
   ].filter(([box, btn]) => box && btn);
 
+  /*
+   * 넓은 화면에서는 칩이 세로 목록이고 스크롤이 붙습니다. 접을 이유가
+   * 없습니다. 오히려 접기 로직이 offsetTop 으로 줄바꿈을 판단하는데,
+   * 세로 목록에서는 칩마다 offsetTop 이 달라 "첫 칩만 같은 줄" 로 보고
+   * 나머지를 전부 숨깁니다. 실제로 기업 119개가 1개만 남았습니다.
+   *
+   * 접기는 칩이 가로로 늘어서는 좁은 화면에서만 필요합니다.
+   */
+  const isWide = () => window.matchMedia('(min-width: 861px)').matches;
+
   function foldOne(box, btn) {
     const chips = [...box.querySelectorAll('.chip:not(.morebtn)')];
     if (!chips.length) return;
     chips.forEach((c) => { c.hidden = false; });
     btn.hidden = true;
+
+    if (isWide()) {
+      // 세로 목록. 전부 보이고 버튼도 숨깁니다.
+      btn.classList.remove('folding', 'floating');
+      return;
+    }
 
     if (box.dataset.expanded === '1') {
       btn.hidden = false;
