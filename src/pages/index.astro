@@ -59,7 +59,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         </div>
       )}
       <button class="fhead ftoggle" id="coToggle" type="button" aria-expanded="false" aria-controls="fCo">
-        기업명<span class="chev" aria-hidden="true">▾</span>
+        기업명<span class="chev" aria-hidden="true">▼</span>
       </button>
       <div class="chips" id="fCo">
         {tally((j) => j.company).map(([v, n]) => (
@@ -154,10 +154,17 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     font-size: 12.5px; font-weight: 700; color: var(--ink, #16181C);
     padding: 0; text-align: left;
   }
+  /*
+   * 여닫기 기호. 10px 회색 화살표는 잘 보이지 않았습니다.
+   * 채워진 삼각형을 글자와 같은 크기로 쓰고 색도 올립니다.
+   * 회전시키는 대신 ▼ 와 ▲ 를 각각 표시합니다. 코드가 명확합니다.
+   */
   button.fhead.ftoggle .chev {
-    font-size: 10px; color: #8A9198; transition: transform .15s;
+    font-size: inherit; color: #5A6068; line-height: 1;
   }
-  button.fhead.ftoggle[aria-expanded='true'] .chev { transform: rotate(180deg); }
+  button.fhead.ftoggle:hover .chev { color: var(--ink, #16181C); }
+  /* 줄 전체가 눌리도록 여백을 줍니다. 글자와 기호만 누르기엔 좁습니다. */
+  button.fhead.ftoggle { padding: 4px 0; }
 
   /*
    * 좁은 화면에서는 필터가 화면 위쪽을 통째로 먹습니다.
@@ -767,6 +774,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   const coBox = document.getElementById('fCo');
   function syncCo() {
     if (!coToggle || !coBox) return;
+    const chev = coToggle.querySelector('.chev');
     if (!isWide()) {
       // 모바일은 지금 방식(칩 가로 + 더보기)을 그대로 씁니다.
       coBox.removeAttribute('data-closed');
@@ -776,6 +784,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     const open = coToggle.getAttribute('aria-expanded') === 'true';
     if (open) coBox.removeAttribute('data-closed');
     else coBox.setAttribute('data-closed', '1');
+    // 펼쳐져 있으면 접기(▲), 접혀 있으면 펼치기(▼)
+    if (chev) chev.textContent = open ? '▲' : '▼';
   }
   if (coToggle) {
     coToggle.addEventListener('click', () => {
