@@ -133,7 +133,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    * 1,200건을 훑을 때 눈이 잡는 표지입니다.
    * IT 는 게임·의료·보안이 섞여 성격이 넓어 회청색으로 눌렀습니다.
    */
-  :global(:root) {
+  :root {
     --auto: #2D5F7C;
     --semi: #6B4E8F;
     --elec: #B5651D;
@@ -143,14 +143,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   }
   /* 주 산업(data-ind) 하나로만 칠합니다. data-in 은 여러 산업이 들어가
      여러 선택자가 걸리고, 나중 선언이 이겨 엉뚱한 색이 붙습니다. */
-  :global(.card[data-ind="자동차부품"]) { --c: var(--auto); }
-  :global(.card[data-ind="반도체"])     { --c: var(--semi); }
-  :global(.card[data-ind="전기전자"])   { --c: var(--elec); }
-  :global(.card[data-ind="로봇"])       { --c: var(--robo); }
-  :global(.card[data-ind="IT"])         { --c: var(--it); }
+  .card[data-ind="자동차부품"] { --c: var(--auto); }
+  .card[data-ind="반도체"]     { --c: var(--semi); }
+  .card[data-ind="전기전자"]   { --c: var(--elec); }
+  .card[data-ind="로봇"]       { --c: var(--robo); }
+  .card[data-ind="IT"]         { --c: var(--it); }
 
   /* 카드 왼쪽에 산업 색 띠. 지금 구조를 건드리지 않고 얹습니다. */
-  :global(.list .card) {
+  .list .card {
     position: relative;
     border-left: 4px solid var(--c, #D5DAD6) !important;
   }
@@ -158,14 +158,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   /* ── 검색줄 대비 ────────────────────────────────
    * 흰 바탕에 흰 입력창이라 묻혔습니다.
    */
-  .searchrow :global(#q) { border-color: #C9D0CB; background: #fff; }
+  .searchrow #q { border-color: #C9D0CB; background: #fff; }
   .controls { border-bottom: 1px solid #C9D0CB; }
 
   /* ── 마감 임박 ─────────────────────────────────
    * 색이 정보를 나르도록. 지금은 회색 계열이라 눈에 안 띕니다.
    */
-  :global(.dday.d-urgent) { color: #B3261E; font-weight: 600; }
-  :global(.dday.d-warn)   { color: #8A5A20; }
+  .dday.d-urgent { color: #B3261E; font-weight: 600; }
+  .dday.d-warn   { color: #8A5A20; }
 
   /* ── 넓은 화면: 필터를 왼쪽에 고정 ────────────── */
   @media (min-width: 861px) {
@@ -180,25 +180,25 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       border-right: 1px solid #DDE1DE; border-bottom: 0;
       min-height: 100vh; padding: 18px 0 40px;
     }
-    .controls :global(.ctrl-in) { padding: 0 16px; max-width: none; }
+    .controls .ctrl-in { padding: 0 16px; max-width: none; }
     .searchrow { flex-direction: column; align-items: stretch; gap: 8px; }
-    .searchrow :global(.sortbtn) { width: 100%; }
+    .searchrow .sortbtn { width: 100%; }
 
     /* 칩을 세로 목록으로. 기업이 126개라 가로 나열은 한계입니다. */
-    .controls :global(.chips) {
+    .controls .chips {
       display: block; margin-top: 14px;
       max-height: 240px; overflow-y: auto;
     }
-    .controls :global(.chip) {
+    .controls .chip {
       display: flex; width: 100%; justify-content: space-between;
       border: 0; border-radius: 3px; background: none; padding: 5px 8px;
       margin: 0; font-size: 13.5px;
     }
-    .controls :global(.chip:hover) { background: #E8ECE9; }
-    .controls :global(.chip[aria-pressed='true']) {
+    .controls .chip:hover { background: #E8ECE9; }
+    .controls .chip[aria-pressed='true'] {
       background: #16181C; color: #fff;
     }
-    .controls :global(.morebtn) { display: none !important; }
+    .controls .morebtn { display: none !important; }
 
     main.wrap { background: #fff; padding: 0 22px; max-width: none; min-height: 100vh; }
   }
