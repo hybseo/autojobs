@@ -134,22 +134,41 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
 
   /* ── 필터 소제목 ─────────────────────────────── */
   .fhead {
-    font-size: 12px; font-weight: 600; color: #6B7178;
-    letter-spacing: .02em; margin: 18px 0 7px;
+    font-size: 12.5px; font-weight: 700; color: var(--ink, #16181C);
+    letter-spacing: .01em; margin: 18px 0 8px;
   }
   .fhead:first-of-type { margin-top: 0; }
 
   /* ── 산업 칩: 색으로 구분 ────────────────────── */
+  /*
+   * 산업 칩은 옅은 색 배경 + 같은 색 테두리로 박스를 만듭니다.
+   * 필터가 연회색 면 위에 있어서, 흰 배경이면 카드처럼 떠 보입니다.
+   * 옅은 색이 배경에 자연스럽게 앉습니다.
+   */
+  /*
+   * 산업 칩은 옅은 색 배경 + 같은 색 테두리로 박스를 만듭니다.
+   * 필터가 연회색 면 위에 있어서, 흰 배경이면 카드처럼 떠 보입니다.
+   * 옅은 색이 배경에 자연스럽게 앉습니다.
+   *
+   * color-mix 는 아직 안 되는 브라우저가 있어 값을 직접 씁니다.
+   * --bg 는 배경, --bd 는 테두리입니다.
+   */
+  .chips.ind .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--bd, #D5DAD6);
+    background: var(--bg, #fff);
+    border-radius: 4px;
+  }
   .chips.ind .chip .sw {
     width: 3px; height: 13px; border-radius: 1px;
     background: var(--c, #C7CDD2); flex: none; margin-right: 2px;
   }
-  .chips.ind .chip { display: inline-flex; align-items: center; gap: 6px; }
-  .chip.ind-auto-parts    { --c: var(--auto); }
-  .chip.ind-semiconductor { --c: var(--semi); }
-  .chip.ind-electronics   { --c: var(--elec); }
-  .chip.ind-robotics      { --c: var(--robo); }
-  .chip.ind-it            { --c: var(--it); }
+  .chips.ind .chip:hover { border-color: var(--c, #C7CDD2); }
+  .chip.ind-auto-parts    { --c: var(--auto); --bg: #EDF3F6; --bd: #B9CFDB; }
+  .chip.ind-semiconductor { --c: var(--semi); --bg: #F2EEF7; --bd: #CFC1DF; }
+  .chip.ind-electronics   { --c: var(--elec); --bg: #FAF1E8; --bd: #E4C7A8; }
+  .chip.ind-robotics      { --c: var(--robo); --bg: #EDF5F1; --bd: #B8D6C7; }
+  .chip.ind-it            { --c: var(--it);   --bg: #EFF1F3; --bd: #C4CBD2; }
   .chips.ind .chip[aria-pressed='true'] {
     background: var(--c, #16181C); border-color: var(--c, #16181C); color: #fff;
   }
@@ -201,9 +220,13 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       max-width: 1180px; margin: 0 auto;
       display: grid; grid-template-columns: 236px 1fr; align-items: start;
     }
-    /* 필터가 면으로 물러나고 목록이 앞으로 나옵니다. */
+    /*
+     * 헤더(62px) 아래에 검색줄과 탭을 붙입니다.
+     * 스크롤 중에도 검색·탭 조작이 가능하고, 검은 헤더는 올라갑니다.
+     * 세 줄을 다 고정하면 화면을 많이 먹어 공고 볼 자리가 줄어듭니다.
+     */
     .controls {
-      position: sticky; top: 0; align-self: start;
+      position: sticky; top: var(--hdr, 66px); align-self: start;
       background: var(--field);
       border-right: 1px solid #DDE1DE; border-bottom: 0;
       min-height: 100vh; padding: 18px 0 40px;
@@ -282,6 +305,16 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     gap: 4px;
     border-bottom: 1px solid var(--line, #DDE1DE);
     margin-bottom: 4px;
+    /*
+     * 탭은 스크롤해도 붙어 있어야 합니다. 목록을 훑다가 마감/상시를
+     * 바꾸려고 맨 위로 올라가는 건 번거롭습니다.
+     * 좁은 화면은 top:0, 넓은 화면은 헤더 높이만큼 내립니다.
+     */
+    position: sticky; top: 0; z-index: 15;
+    background: var(--paper, #fff);
+  }
+  @media (min-width: 861px) {
+    .tabs { top: var(--hdr, 66px); margin-left: -22px; margin-right: -22px; padding: 0 22px; }
   }
   .tabs .tab {
     appearance: none;
@@ -640,4 +673,19 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     e.target.textContent = state.sort === 'dday' ? '마감 임박순' : '기업별';
     sortCards();
   });
+
+  /*
+   * 고정 위치의 기준이 되는 헤더 높이를 직접 잽니다.
+   * 62px 로 박아뒀더니 워드마크를 24px 로 키운 뒤 4px 어긋났습니다.
+   * 글꼴 로딩이나 화면 폭에 따라서도 달라지므로 잰 값을 씁니다.
+   */
+  const hdrEl = document.querySelector('header.site');
+  function syncHeaderVar() {
+    if (!hdrEl) return;
+    const h = Math.round(hdrEl.getBoundingClientRect().height);
+    if (h > 0) document.documentElement.style.setProperty('--hdr', h + 'px');
+  }
+  syncHeaderVar();
+  window.addEventListener('resize', syncHeaderVar);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderVar);
 </script>
