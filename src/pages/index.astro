@@ -8,10 +8,18 @@ const jobs = openJobs().sort(byDeadline);
 const cos = companies().length;
 const alwaysN = jobs.filter(isAlways).length;
 const deadlineN = jobs.length - alwaysN;
-const tally = (f) => {
+/*
+ * 필터 칩 목록.
+ *
+ * 기업명은 가나다순입니다. 121개나 되어 공고 수 순으로 늘어놓으면
+ * 찾는 회사가 어디쯤 있는지 짐작할 수 없습니다.
+ * 경력구분은 6개뿐이라 많은 순이 자연스럽습니다.
+ */
+const tally = (f, alpha = false) => {
   const m = new Map();
   jobs.forEach((j) => m.set(f(j), (m.get(f(j)) || 0) + 1));
-  return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  return [...m.entries()].sort((a, b) =>
+    alpha ? a[0].localeCompare(b[0], 'ko') : b[1] - a[1]);
 };
 // 검색 노출은 키워드가 좌우합니다. 브랜드만 남기면 신규 도메인은 잡힐 근거가 없습니다.
 // 두 번째 산업이 실제로 들어오면 그때 넓히세요.
@@ -62,7 +70,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         기업명<span class="chev" aria-hidden="true">▼</span>
       </button>
       <div class="chips" id="fCo">
-        {tally((j) => j.company).map(([v, n]) => (
+        {tally((j) => j.company, true).map(([v, n]) => (
           <button class="chip" type="button" data-k="co" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
         <button class="chip morebtn" id="moreCo" type="button" hidden></button>
@@ -140,6 +148,9 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     letter-spacing: .01em; margin: 18px 0 8px;
   }
   .fhead:first-of-type { margin-top: 0; }
+
+  /* 지금 조건에서 0건인 칩. 숨기지 않고 흐리게 둡니다. */
+  .chip.none { opacity: .38; }
 
   /*
    * 기업명은 121개라 펼치면 화면을 통째로 먹습니다. 접어두고 필요할 때만
@@ -531,6 +542,50 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   const count = document.getElementById('count');
   const total = cards.length;
 
+  /*
+   * 칩 옆 숫자를 지금 조건 기준으로 다시 셉니다.
+   *
+   * 전에는 처음 그릴 때의 전체 건수를 그대로 두었습니다. 그래서
+   * 검색창에 "네이버" 를 친 상태에서 NAVER 칩에 3 이 적혀 있는데
+   * 눌러보면 0건이 나왔습니다. 한글 "네이버" 와 영문 제목이 겹치지
+   * 않아 결과가 없었던 것입니다.
+   *
+   * 자기 자신의 조건은 빼고 셉니다. 기업 칩 숫자를 셀 때 기업 필터를
+   * 적용하면, 이미 고른 회사 말고는 전부 0이 되어 다른 회사를 고를 수
+   * 없게 됩니다.
+   */
+  function updateChipCounts(q) {
+    const pass = (c, skip) =>
+      c.dataset.op === state.tab
+      && (skip === 'co' || !state.co.size || state.co.has(c.dataset.co))
+      && (skip === 'ca' || !state.ca.size || state.ca.has(c.dataset.career))
+      && (skip === 'in' || !state.in.size
+          || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
+      && (!q || c.dataset.text.includes(q));
+
+    for (const [id, key, get] of [
+      ['fCo', 'co', (c) => [c.dataset.co]],
+      ['fCa', 'ca', (c) => [c.dataset.career]],
+      ['fIn', 'in', (c) => (c.dataset.in || '').split('|')],
+    ]) {
+      const box = document.getElementById(id);
+      if (!box) continue;
+      const tallyMap = new Map();
+      for (const c of cards) {
+        if (!pass(c, key)) continue;
+        for (const v of get(c)) tallyMap.set(v, (tallyMap.get(v) || 0) + 1);
+      }
+      for (const chip of box.querySelectorAll('.chip:not(.morebtn)')) {
+        const n = tallyMap.get(chip.dataset.v) || 0;
+        const el = chip.querySelector('.n');
+        if (el) el.textContent = n;
+        // 0건인 칩은 흐리게 둡니다. 숨기면 목록이 계속 흔들려 어지럽습니다.
+        chip.classList.toggle('none', n === 0
+          && chip.getAttribute('aria-pressed') !== 'true');
+      }
+    }
+  }
+
   function apply() {
     const q = state.q.trim().toLowerCase();
     let shown = 0;
@@ -547,6 +602,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       if (ok) shown++;
     }
     empty.hidden = shown > 0;
+    updateChipCounts(q);
     // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
     const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
     /*
