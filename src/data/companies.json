@@ -391,7 +391,7 @@
    "name": "LG그룹",
    "slug": "lg-careers",
    "ats": "lg",
-   "code": "LGE,LGIT,MAGNA,LGES,RBO",
+   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS",
    "affiliateIndustry": {
     "LG전자": [
      "자동차부품",
@@ -412,12 +412,16 @@
     "로보스타": [
      "로봇",
      "기계장비"
+    ],
+    "LG CNS": [
+     "IT"
     ]
    },
    "industry": [
     "자동차부품",
     "전기전자",
-    "로봇"
+    "로봇",
+    "IT"
    ],
    "enabled": true,
    "note": "LG전자(VS사업본부 포함)·LG이노텍·LG Magna·LG에너지솔루션·로보스타. 코드를 늘리면 계열사가 추가됨"
@@ -1021,12 +1025,14 @@
     "삼성전기",
     "삼성SDI",
     "삼성디스플레이",
-    "삼성전자"
+    "삼성전자",
+    "삼성SDS"
    ],
    "industry": [
     "자동차부품",
     "반도체",
-    "전기전자"
+    "전기전자",
+    "IT"
    ],
    "enabled": true,
    "affiliateIndustry": {
@@ -1045,6 +1051,9 @@
     "삼성전자": [
      "반도체",
      "전기전자"
+    ],
+    "삼성SDS": [
+     "IT"
     ]
    },
    "note": "삼성 통합 채용. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공. HTML 파싱이라 화면 개편 시 깨질 수 있음"
@@ -1721,6 +1730,17 @@
    ],
    "enabled": true,
    "note": "모바일 게임. 코스닥. 컴투스홀딩스도 같은 채용 페이지를 쓰므로 한 항목으로 둡니다. 사이트맵 방식은 infra1-static(리크루터 정적 서버)을 잘못 잡았고, 브라우저 방식이 com2us 를 정확히 찾았습니다"
+  },
+  {
+   "name": "크래프톤",
+   "slug": "krafton",
+   "ats": "greenhouse",
+   "code": "krafton",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임(배틀그라운드). 코스피 10조. 홈페이지 채용 화면이 자체 구현이라 탐지기가 Greenhouse 흔적을 못 봤습니다. 구글 검색으로 job-boards.greenhouse.io/krafton 을 찾았습니다"
   },
   {
    "name": "원익",
