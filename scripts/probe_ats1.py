@@ -49,6 +49,10 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 PAUSE = 0.5          # 요청 간격. 남의 서버입니다. 줄이지 마세요.
 TIMEOUT = 25         # 국내 중견기업 홈페이지는 느린 곳이 많습니다. 짧으면 멀쩡한 곳을 놓칩니다.
+# 없을 법한 주소를 찔러볼 때는 오래 기다릴 이유가 없습니다.
+# 사이트맵·하위도메인 추정에 이 값을 씁니다. 179곳 재탐지가 1시간 51분
+# 걸렸는데, 없는 주소를 25초씩 기다린 것이 큰 몫이었습니다.
+GUESS_TIMEOUT = 8
 
 # ATS 지문. 페이지 HTML 안에 이 흔적이 있으면 그 ATS 를 씁니다.
 # 괄호로 잡히는 부분이 그대로 companies.json 의 code 가 됩니다.
@@ -126,7 +130,7 @@ def career_links(html, page_url, cap=6):
     return out
 
 
-def http_get(url, _insecure=False):
+def http_get(url, _insecure=False, timeout=None):
     """페이지를 받아옵니다. 실패 원인을 남기기 위해 예외를 그대로 올립니다."""
     req = urllib.request.Request(url, headers={
         "User-Agent": UA,
@@ -141,7 +145,7 @@ def http_get(url, _insecure=False):
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-    with urllib.request.urlopen(req, timeout=TIMEOUT, context=ctx) as r:
+    with urllib.request.urlopen(req, timeout=timeout or TIMEOUT, context=ctx) as r:
         ct = (r.headers.get("Content-Type") or "").lower()
         if "html" not in ct and "json" not in ct and "text" not in ct:
             return ""
@@ -171,7 +175,7 @@ def variants(url):
     return out
 
 
-def fetch_any(url):
+def fetch_any(url, timeout=None):
     """여러 형태를 차례로 시도합니다. (본문, 최종주소, 실패기록) 을 돌려줍니다.
 
     하나라도 성공하면 즉시 반환합니다. 전부 실패하면 무엇이 어떻게 실패했는지
@@ -181,7 +185,7 @@ def fetch_any(url):
     for u in variants(url):
         for insecure in (False, True):
             try:
-                html = http_get(u, _insecure=insecure)
+                html = http_get(u, _insecure=insecure, timeout=timeout)
                 if html:
                     return html, u, ""
                 notes.append(f"{u} 본문없음")
@@ -232,12 +236,28 @@ def allowed(url):
         return True
 
 
+# 회사 계정이 아닌 코드.
+#
+# ATS 업체가 자기 서비스용으로 쓰는 이름들입니다. 회사 홈페이지에
+# 이 주소가 섞여 있으면 탐지기가 회사 코드로 착각합니다.
+# 실제로 컴투스가 infra1-static 으로 잡혔는데, 열어보니 리크루터의
+# 정적 파일 서버였고 XML 오류만 떴습니다.
+BAD_CODES = {
+    "infra1-static", "static", "www", "api", "cdn", "assets",
+    "img", "images", "file", "files", "common", "resource", "resources",
+}
+
+
 def detect(html, page_url):
     """HTML 한 장에서 ATS 를 판별합니다. (ats, code, 근거) 또는 None."""
     for ats, pat in SIGNATURES:
         m = re.search(pat, html, re.I)
         if m:
-            return ats, m.group(1), "링크"
+            code = m.group(1)
+            # 회사 계정이 아닌 것은 못 본 것으로 칩니다.
+            if code.lower() in BAD_CODES:
+                continue
+            return ats, code, "링크"
     # 자체 도메인 그리팅. 채용 페이지 자체가 그리팅으로 만들어진 경우입니다.
     if GREETING_MARKER.search(html) and re.search(
             r"openings|openingJobPosition", html):
@@ -299,7 +319,7 @@ def sitemap_career_urls(base, cap=4):
 
     cands = []
     try:
-        rob = http_get(f"{origin}/robots.txt")
+        rob = http_get(f"{origin}/robots.txt", timeout=GUESS_TIMEOUT)
         if rob:
             cands += [m.group(1) for m in SITEMAP_HINT.finditer(rob)][:2]
     except Exception:
@@ -309,7 +329,7 @@ def sitemap_career_urls(base, cap=4):
     locs = []
     for sm in cands[:2]:
         try:
-            xml = http_get(sm)
+            xml = http_get(sm, timeout=GUESS_TIMEOUT)
         except Exception:
             continue
         if not xml:
@@ -320,7 +340,7 @@ def sitemap_career_urls(base, cap=4):
             sub = next((u for u in found if CAREER_WORD.search(u)), None)
             if sub:
                 try:
-                    xml2 = http_get(sub)
+                    xml2 = http_get(sub, timeout=GUESS_TIMEOUT)
                     if xml2:
                         found = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", xml2, re.I)
                 except Exception:
@@ -397,7 +417,8 @@ def probe_company(name, home):
     for u in sitemap_career_urls(base) + career_guesses(base):
         if not allowed(u):
             continue
-        h, final, _ = fetch_any(u)
+        # 있을지 모르는 주소입니다. 오래 기다리지 않습니다.
+        h, final, _ = fetch_any(u, timeout=GUESS_TIMEOUT)
         time.sleep(PAUSE)
         if not h:
             continue
