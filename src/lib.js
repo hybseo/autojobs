@@ -60,6 +60,34 @@ export const openJobs = () =>
 export const closedJobs = () =>
   JOBS.filter((j) => j.closesAt && parseDate(j.closesAt) < TODAY);
 
+/*
+ * 마감 공고 보관 기간.
+ *
+ * 공고가 마감되면 다음 수집 때 데이터에서 빠지고, /job/{id}/ 페이지도
+ * 사라져 404 가 됩니다. 구글은 색인한 주소를 한동안 계속 방문하므로
+ * 404 가 쌓입니다. 실제로 색인 32개 중 14개가 404 였습니다.
+ *
+ * 그래서 마감 뒤에도 일정 기간 페이지를 남깁니다. 검색으로 들어온
+ * 사람에게 "마감됐다" 고 알려주고 다른 공고로 안내하는 편이,
+ * 빈손으로 돌려보내는 것보다 낫습니다.
+ *
+ * 60일로 잡은 근거: 구글이 404 를 색인에서 지우기까지 대개 1~2개월
+ * 걸립니다. 실제로 이 사이트의 404 14건은 2026-07-16 에 처음 감지돼
+ * 8-29 에도 재크롤링되고 있었습니다. 30일이면 보관이 끝나는 시점에
+ * 구글이 아직 재방문 중이라 404 가 다시 생깁니다.
+ *
+ * 더 늘리면 마감 공고로도 검색 유입을 받을 수 있지만 데이터가 커집니다.
+ * 하루 평균 11건이 마감되므로 30일 늘릴 때마다 약 330건이 쌓입니다.
+ */
+export const KEEP_DAYS = 60;
+
+/** 보관 기간이 지나지 않은 마감 공고. 페이지를 남겨둡니다. */
+export const isRecentlyClosed = (j) => {
+  if (!j.closesAt) return false;
+  const gone = (TODAY - parseDate(j.closesAt)) / day;
+  return gone > 0 && gone <= KEEP_DAYS;
+};
+
 /** 남은 일수. 마감일이 없으면 Infinity 입니다. 정렬에 쓸 때 주의하세요. */
 export const daysLeft = (j) =>
   j.closesAt ? Math.ceil((parseDate(j.closesAt) - TODAY) / day) : Infinity;
