@@ -1712,6 +1712,17 @@
    "note": "드론 자율비행·풍력 점검 솔루션. 코스닥. 그리팅 자체도메인"
   },
   {
+   "name": "컴투스",
+   "slug": "com2us",
+   "ats": "recruiter",
+   "code": "com2us",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 게임. 코스닥. 컴투스홀딩스도 같은 채용 페이지를 쓰므로 한 항목으로 둡니다. 사이트맵 방식은 infra1-static(리크루터 정적 서버)을 잘못 잡았고, 브라우저 방식이 com2us 를 정확히 찾았습니다"
+  },
+  {
    "name": "원익",
    "slug": "wonik",
    "ats": "recruiter",
