@@ -264,11 +264,29 @@ export const industries = () => {
 
 export const byIndustry = (slug) => industries().find((i) => i.slug === slug);
 
+/*
+ * 회사 목록.
+ *
+ * 대표 이름은 companies.json 의 name 을 씁니다.
+ *
+ * 예전에는 첫 공고의 company 값을 썼는데, 그룹 어댑터는 계열사가 한
+ * 항목에 섞여 있어 데이터 순서에 따라 이름이 바뀌었습니다. LG그룹
+ * 페이지 제목이 어느 날은 "LG전자", 어느 날은 "LG Magna" 가 됐습니다.
+ * 실제로 마감 공고 화면에서 제목은 LG전자인데 아래 목록은
+ * "LG Magna 진행중 공고" 로 나와 어긋났습니다.
+ */
+const REG_NAME = Object.fromEntries(
+  (registry.companies || []).map((c) => [c.slug, c.name]));
+
 export const companies = () => {
   const m = new Map();
   for (const j of JOBS) {
     if (!m.has(j.companySlug))
-      m.set(j.companySlug, { slug: j.companySlug, name: j.company, jobs: [] });
+      m.set(j.companySlug, {
+        slug: j.companySlug,
+        name: REG_NAME[j.companySlug] || j.company,
+        jobs: [],
+      });
     m.get(j.companySlug).jobs.push(j);
   }
   return [...m.values()].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
