@@ -113,6 +113,40 @@ def _date(s):
     return str(s)[:10].replace(".", "-")
 
 
+def _to_html(text):
+    """줄바꿈만 있는 평문을 문단으로 바꿉니다.
+
+    LG API 는 본문을 HTML 이 아니라 평문으로 줍니다. 줄바꿈(\n)으로만
+    구분돼 있는데, HTML 에서 줄바꿈은 공백으로 취급되므로 화면에서
+    한 덩어리로 붙어 보입니다.
+
+    실제로 "2027년 전기 연세대 이차전지융합공학과 신입생 모집" 공고가
+    지원자격·접수방법·유의사항이 전부 한 문단으로 이어져 읽기
+    어려웠습니다. 다른 어댑터(그리팅·리크루터·Ashby 등)는 HTML 을
+    주므로 이 처리가 필요 없습니다.
+
+    빈 줄이 있으면 문단을 나누고, 한 줄 줄바꿈은 <br> 로 둡니다.
+    이미 HTML 이 섞여 있으면 건드리지 않습니다.
+    """
+    t = (text or "").strip()
+    if not t:
+        return ""
+    if re.search(r"<(p|br|div|ul|li)\b", t, re.I):
+        return t          # 이미 HTML 입니다.
+
+    import html as _html
+    blocks = re.split(r"\n\s*\n", t)
+    out = []
+    for b in blocks:
+        b = b.strip()
+        if not b:
+            continue
+        lines = [_html.escape(x.strip()) for x in b.split("\n") if x.strip()]
+        if lines:
+            out.append("<p>" + "<br>".join(lines) + "</p>")
+    return "\n".join(out)
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     slug = company["slug"]
@@ -156,7 +190,7 @@ def fetch(company):
             "multiRole": image_only,
             "sourceTitle": "",
             "sourceUrl": SITE.format(nid),
-            "description": body if not image_only else "",
+            "description": _to_html(body) if not image_only else "",
         })
         time.sleep(0.3)
 
