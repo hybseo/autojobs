@@ -1,5 +1,5 @@
 ---
-import { daysLeft, progress, isAlways, sortValue, industriesOf } from '../lib.js';
+import { daysLeft, progress, isAlways, sortValue, industriesOf, searchAlias } from '../lib.js';
 const { job, href } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
@@ -28,7 +28,7 @@ const external = link === job.sourceUrl;
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds} data-ind={mainInd}
-   data-dday={sv} data-text={`${job.title} ${job.company} ${job.location} ${job.sourceTitle}`.toLowerCase()}
+   data-dday={sv} data-text={`${job.title} ${job.company} ${searchAlias(job.company)} ${job.location} ${job.sourceTitle}`.toLowerCase()}
    {...external ? { target: '_blank', rel: 'noopener' } : {}}>
   <div class="chead">
     <span class="co">{job.company}</span>
