@@ -294,6 +294,37 @@ export const companies = () => {
 
 export const byCompany = (slug) => companies().find((c) => c.slug === slug);
 
+/*
+ * 회사명 검색 별칭.
+ *
+ * 회사명이 영문이면 한글로 검색해도 안 나옵니다. "네이버" 로 찾으면
+ * NAVER WEBTOON 만 걸렸는데, 그건 공고 제목에 "[네이버웹툰]" 이 한글로
+ * 들어 있었기 때문입니다. NAVER·NAVER Cloud 는 제목까지 영문이라
+ * 아무리 쳐도 안 나왔습니다.
+ *
+ * 반대도 마찬가지입니다. 한글 회사명을 영문으로 검색하는 사람도 있습니다.
+ *
+ * 그래서 검색용 텍스트에 다른 표기를 함께 넣습니다. 화면에는 보이지
+ * 않고 검색에만 쓰입니다.
+ */
+const NAME_ALIAS = {
+  'NAVER': '네이버',
+  'NAVER Cloud': '네이버 네이버클라우드 클라우드',
+  'NAVER LABS': '네이버 네이버랩스 랩스',
+  'NAVER WEBTOON': '네이버 네이버웹툰 웹툰',
+  'SNOW': '스노우 네이버',
+  'SK on': '에스케이온 SK온',
+  'SK ons': '에스케이온 SK온',
+  'SK siltron': '에스케이실트론 SK실트론',
+  'LG Magna': '엘지마그나 LG마그나',
+  'HL Klemove': '에이치엘클레무브 HL클레무브 만도',
+  '42dot': '포티투닷',
+  'OCI': '오씨아이',
+};
+
+/** 검색용 별칭. 없으면 빈 문자열입니다. */
+export const searchAlias = (name) => NAME_ALIAS[name] || '';
+
 /**
  * JobPosting 구조화 데이터.
  * 구글은 페이지에 직무 설명 본문이 있을 것을 요구합니다.
