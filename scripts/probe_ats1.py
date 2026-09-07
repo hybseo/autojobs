@@ -50,10 +50,6 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 PAUSE = 0.5          # 요청 간격. 남의 서버입니다. 줄이지 마세요.
 TIMEOUT = 25         # 국내 중견기업 홈페이지는 느린 곳이 많습니다. 짧으면 멀쩡한 곳을 놓칩니다.
 
-# 기업 홈페이지에서 채용 페이지를 찾을 때 훑어볼 경로
-CAREER_PATHS = ["", "/recruit", "/recruit/", "/career", "/careers",
-                "/jobs", "/ko/recruit", "/company/recruit", "/recruit.html"]
-
 # ATS 지문. 페이지 HTML 안에 이 흔적이 있으면 그 ATS 를 씁니다.
 # 괄호로 잡히는 부분이 그대로 companies.json 의 code 가 됩니다.
 # 어느 조각을 잡는지가 중요합니다. 실제로 Workday 에서 회사명이 아니라
@@ -250,6 +246,102 @@ def detect(html, page_url):
     return None
 
 
+# 채용 하위 도메인.
+#
+# 경로(/careers, /recruit …)는 추측하지 않습니다.
+# 이미 찾은 107곳의 실제 주소를 보니 경로가 제각각이었습니다.
+#   /sub/promotion/recruit.php   /sub/recruitment/information.asp
+#   /recruit_04.aspx             /hr/recruit_list.html
+#   /etc/employ.asp
+# 몇 개를 추측해봐야 대부분 빗나갑니다. 실제로 삼성SDS 는
+# /kr/careers/overview/about_care_over.html 이라 흔한 후보 6개가
+# 전부 404 였습니다.
+#
+# 경로는 사이트맵에서 찾습니다(아래 sitemap_career_urls).
+# 회사가 스스로 만든 목록이라 추측할 필요가 없고 요청도 적습니다.
+#
+# 하위 도메인은 추측이 통합니다. 실제로 careers. 4건, recruit. 1건이
+# 이 방식으로 잡혔습니다.
+CAREER_SUBS = ("recruit", "career", "careers", "job")
+
+
+def career_guesses(base):
+    """채용 하위 도메인 후보를 만듭니다."""
+    try:
+        sp = urllib.parse.urlsplit(base)
+    except Exception:
+        return []
+    host = sp.netloc
+    root = host[4:] if host.startswith("www.") else host
+    if root.count(".") == 0:
+        return []
+    return [f"https://{sub}.{root}" for sub in CAREER_SUBS]
+
+
+SITEMAP_HINT = re.compile(r"^\s*Sitemap:\s*(\S+)", re.I | re.M)
+
+
+def sitemap_career_urls(base, cap=4):
+    """사이트맵에서 채용 페이지로 보이는 주소를 찾습니다.
+
+    회사마다 채용 경로가 제각각이라 추측이 잘 빗나갑니다. 사이트맵은
+    회사가 직접 만든 주소 목록이므로 그 문제가 없습니다.
+
+    robots.txt 의 Sitemap: 줄을 먼저 보고, 없으면 /sitemap.xml 을 봅니다.
+    사이트맵이 다른 사이트맵을 가리키는 경우(sitemapindex)는 첫 번째만
+    한 단계 더 들어갑니다. 끝까지 따라가면 요청이 크게 늘어납니다.
+    """
+    try:
+        sp = urllib.parse.urlsplit(base)
+        origin = f"{sp.scheme}://{sp.netloc}"
+    except Exception:
+        return []
+
+    cands = []
+    try:
+        rob = http_get(f"{origin}/robots.txt")
+        if rob:
+            cands += [m.group(1) for m in SITEMAP_HINT.finditer(rob)][:2]
+    except Exception:
+        pass
+    cands.append(f"{origin}/sitemap.xml")
+
+    locs = []
+    for sm in cands[:2]:
+        try:
+            xml = http_get(sm)
+        except Exception:
+            continue
+        if not xml:
+            continue
+        found = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", xml, re.I)
+        # 사이트맵 색인이면 채용이 있을 법한 것 하나만 더 들어갑니다.
+        if "<sitemapindex" in xml.lower():
+            sub = next((u for u in found if CAREER_WORD.search(u)), None)
+            if sub:
+                try:
+                    xml2 = http_get(sub)
+                    if xml2:
+                        found = re.findall(r"<loc>\s*([^<\s]+)\s*</loc>", xml2, re.I)
+                except Exception:
+                    found = []
+        locs += found
+        if locs:
+            break
+
+    out, seen = [], set()
+    for u in locs:
+        if not CAREER_WORD.search(u):
+            continue
+        if u in seen:
+            continue
+        seen.add(u)
+        out.append(u)
+        if len(out) >= cap:
+            break
+    return out
+
+
 def probe_company(name, home):
     """기업 홈페이지를 열고, 채용 링크를 따라가며 ATS 를 찾습니다.
 
@@ -292,7 +384,45 @@ def probe_company(name, home):
                        how=hit[2], status="발견")
             return rec
 
-    # 3단계: 도메인 이름으로 그리팅 주소를 찍어봅니다. (kyungshin.co.kr → kyungshin)
+    # 3단계: 사이트맵에서 채용 주소를 찾고, 채용 하위 도메인도 찔러봅니다.
+    #
+    # 요즘 사이트는 메뉴를 자바스크립트로 그립니다. 서버가 주는 HTML 에는
+    # 뼈대만 있어서 2단계에서 채용 링크를 찾지 못합니다. 실제로 삼성SDS 는
+    # 서버 HTML 에 채용 링크가 0개인데 브라우저 화면에는 3개가 있었고,
+    # IT 231곳 중 93곳(40%)이 이 이유로 "채용링크없음" 이 됐습니다.
+    #
+    # 브라우저를 띄워 실행하면 확실하지만 회사당 5~10초가 걸립니다.
+    # 채용 페이지 주소는 관행이 정해져 있으므로 직접 찔러보는 편이
+    # 훨씬 가볍고, 대부분 이걸로 잡힙니다.
+    for u in sitemap_career_urls(base) + career_guesses(base):
+        if not allowed(u):
+            continue
+        h, final, _ = fetch_any(u)
+        time.sleep(PAUSE)
+        if not h:
+            continue
+        hit = detect(h, final or u)
+        if hit:
+            rec.update(ats=hit[0], code=hit[1], found_at=final or u,
+                       how="주소추정", status="발견")
+            return rec
+        # ATS 는 없지만 채용 페이지 자체는 찾았습니다. 그 안의 링크도 봅니다.
+        if CAREER_WORD.search(h[:4000]) or "채용" in h[:4000]:
+            rec["note"] = f"채용페이지 추정: {u}"
+            for u2 in career_links(h, final or u, cap=3):
+                if not allowed(u2):
+                    continue
+                h2, f2, _ = fetch_any(u2)
+                time.sleep(PAUSE)
+                if not h2:
+                    continue
+                hit = detect(h2, f2 or u2)
+                if hit:
+                    rec.update(ats=hit[0], code=hit[1], found_at=f2 or u2,
+                               how="주소추정→링크", status="발견")
+                    return rec
+
+    # 4단계: 도메인 이름으로 그리팅 주소를 찍어봅니다. (kyungshin.co.kr → kyungshin)
     label = urllib.parse.urlsplit(base).netloc.replace("www.", "").split(".")[0]
     if len(label) >= 3:
         guess = f"https://{label}.career.greetinghr.com/ko"
