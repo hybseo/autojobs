@@ -22,8 +22,8 @@ on:
           - '전기전자 상장사 295개사 (약 1시간 30분)'
           - 'IT 서비스 상장사 231개사 (약 1시간 10분)'
           - '기계장비 상장사 149개사 (약 45분)'
-          - 'IT 재탐지 (사이트맵 방식, 약 25분)'
-          - 'IT 재탐지 (브라우저 방식, 약 25분)'
+          - 'IT 재탐지 (사이트맵 방식, 약 2시간)'
+          - 'IT 재탐지 (브라우저 방식, 약 1시간)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -89,7 +89,12 @@ jobs:
         run: |
           git config user.name  "github-actions"
           git config user.email "actions@github.com"
-          git add -f scripts/probe_result.csv scripts/probe_browser_result.csv || true
+          # 한 줄에 여러 파일을 넣으면 하나라도 없을 때 전체가 실패합니다.
+          # 브라우저 방식을 안 돌리면 probe_browser_result.csv 가 없어서
+          # 사이트맵 결과까지 저장되지 않았습니다. 따로 처리합니다.
+          for f in scripts/probe_result.csv scripts/probe_browser_result.csv; do
+            [ -f "$f" ] && git add -f "$f"
+          done
           git diff --staged --quiet || git commit -m "ATS 탐지 결과 $(date +%F)"
           git push || true
 
