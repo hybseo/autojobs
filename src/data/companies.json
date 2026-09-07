@@ -1690,6 +1690,28 @@
    "note": "네이버 통합 채용. 한 주소로 계열사 전부(NAVER·웹툰·클라우드·랩스·SNOW·파이낸셜·I&S)가 나옴. affiliates 를 적으면 계열사만 담김"
   },
   {
+   "name": "펄어비스",
+   "slug": "pearlabyss",
+   "ats": "breezy",
+   "code": "pearl-abyss-america",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "게임(검은사막). 코스닥. 탐지된 pearl-abyss-america 는 미국법인 채용 페이지로, 공고가 Community Specialist·Live Service Coordinator 등 현지 자리뿐입니다. 국내 채용은 별도 경로를 쓰는 것으로 보여 비활성. 국내 페이지를 찾으면 code 를 바꾸고 살리세요"
+  },
+  {
+   "name": "니어스랩",
+   "slug": "nearthlab",
+   "ats": "greeting",
+   "code": "career.nearthlab.com",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "드론 자율비행·풍력 점검 솔루션. 코스닥. 그리팅 자체도메인"
+  },
+  {
    "name": "원익",
    "slug": "wonik",
    "ats": "recruiter",
