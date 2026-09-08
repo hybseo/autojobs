@@ -100,9 +100,16 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     <div class="list" id="list">
       {jobs.map((j) => <JobCard job={j} />)}
       <div class="empty" id="empty" hidden>
+        <svg class="empty-ico" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="21" cy="21" r="13" fill="none" stroke="currentColor" stroke-width="2.2"/>
+          <line x1="31" y1="31" x2="41" y2="41" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
         <b>조건에 맞는 자리가 없습니다</b>
-        검색어를 줄이거나 필터를 해제해 보세요.
-        <button class="othertab" id="otherTab" type="button" hidden></button>
+        <span class="empty-sub">검색어를 줄이거나 필터를 해제해 보세요.</span>
+        <div class="empty-act">
+          <button class="othertab" id="otherTab" type="button" hidden></button>
+          <button class="resetbtn" id="resetAll" type="button" hidden>필터 모두 해제</button>
+        </div>
       </div>
     </div>
 
@@ -149,6 +156,57 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   }
   .fhead:first-of-type { margin-top: 0; }
 
+  /*
+   * 결과 없음 화면.
+   *
+   * 전에는 점선 상자에 브라우저 기본 버튼이 놓여 있었습니다. .othertab 에
+   * 스타일이 없어 타원형 기본 버튼으로 나왔고, 만들다 만 화면처럼 보였습니다.
+   *
+   * 목록이 비었을 때가 오히려 사이트 인상을 좌우합니다. 다음에 뭘 할지
+   * 분명히 보여주는 편이 낫습니다.
+   */
+  .empty {
+    background: var(--paper, #fff);
+    border: 1px solid var(--line, #DDE1DE);
+    border-radius: 6px;
+    padding: 52px 24px 46px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .empty-ico {
+    width: 40px; height: 40px; color: #C2C9CF; margin-bottom: 16px;
+  }
+  .empty b {
+    display: block; font-size: 16.5px; font-weight: 600;
+    color: var(--ink, #16181C); margin: 0 0 6px;
+  }
+  .empty-sub { font-size: 13.5px; color: #7A8189; }
+  .empty-act {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center; margin-top: 20px;
+  }
+  .empty-act button {
+    appearance: none; font: inherit; font-size: 13.5px; cursor: pointer;
+    padding: 9px 16px; border-radius: 4px; line-height: 1;
+  }
+  /* 반대 탭으로 넘어가는 버튼. 여기가 다음 행동이라 눈에 띄게 둡니다. */
+  .empty-act .othertab {
+    border: 1px solid var(--ink, #16181C);
+    background: var(--ink, #16181C); color: #fff; font-weight: 600;
+  }
+  .empty-act .othertab:hover { background: #2B2F36; border-color: #2B2F36; }
+  /* 필터 해제는 보조입니다. */
+  .empty-act .resetbtn {
+    border: 1px solid var(--line, #DDE1DE);
+    background: #fff; color: var(--ink, #16181C);
+  }
+  .empty-act .resetbtn:hover { background: var(--field, #F4F6F5); }
+  @media (max-width: 520px) {
+    .empty { padding: 40px 18px 36px; }
+    .empty-act { flex-direction: column; align-self: stretch; }
+    .empty-act button { width: 100%; padding: 11px 16px; }
+  }
+
   /* 지금 조건에서 0건인 칩. 숨기지 않고 흐리게 둡니다. */
   .chip.none { opacity: .38; }
 
@@ -184,6 +242,17 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    */
   @media (max-width: 860px) {
     /* 소제목과 그 아래 칩은 한 덩어리입니다. 사이는 좁게, 덩어리끼리만 띄웁니다. */
+    /*
+     * 전역 .controls 가 position:sticky 입니다. 넓은 화면에서는 필터를
+     * 왼쪽에 붙여두려고 쓰지만, 모바일에서는 필터가 화면 위에 고정되면서
+     * 칩을 펼쳐도 화면 높이 이상 늘어나지 못하고 중간에 잘렸습니다.
+     * 기업명 124개를 펼쳤는데 86번째(이솔)에서 끊겼습니다.
+     *
+     * 모바일에서는 고정을 풉니다. 검색창과 탭은 따로 고정돼 있어
+     * 조작에는 지장이 없습니다.
+     */
+    .controls { position: static; max-height: none; overflow: visible; }
+
     .fhead { font-size: 12px; margin: 9px 0 3px; }
     .fhead:first-of-type { margin-top: 2px; }
     /* 모바일은 여닫지 않으므로 꺾은선을 숨기고 커서도 되돌립니다. */
@@ -633,11 +702,25 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     const hint = document.getElementById('otherTab');
     if (hint) {
       if (!shown && inOther) {
-        hint.innerHTML = `이 조건에 맞는 자리가 <b>${other}</b>에 ${inOther}건 있습니다.`;
+        // 버튼 안에 문장을 다 넣으면 길어집니다. 행동만 적습니다.
+        hint.textContent = `${other} ${inOther}건 보기`;
         hint.hidden = false;
       } else {
         hint.hidden = true;
       }
+    }
+    // 필터나 검색어가 걸려 있을 때만 해제 버튼을 보여줍니다.
+    const reset = document.getElementById('resetAll');
+    if (reset) {
+      const anyFilter = state.q.trim() || state.co.size || state.ca.size || state.in.size;
+      reset.hidden = !(!shown && anyFilter);
+    }
+    // 반대 탭 안내 문구는 설명줄에 둡니다. 버튼은 짧게, 설명은 여기에.
+    const sub = document.querySelector('.empty-sub');
+    if (sub) {
+      sub.textContent = (!shown && inOther)
+        ? `${other} 탭에 ${inOther}건이 있습니다.`
+        : '검색어를 줄이거나 필터를 해제해 보세요.';
     }
   }
 
@@ -781,11 +864,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   // 탭 전환. 필터·검색어는 그대로 두고 대상만 바꿉니다.
   document.querySelectorAll('.tabs .tab').forEach((t) => {
     t.addEventListener('click', () => {
-      state.tab = t.dataset.tab;
-      document.querySelectorAll('.tabs .tab').forEach((o) => {
-        o.setAttribute('aria-selected', String(o === t));
-      });
-      // 상시채용은 마감일이 없어 "마감 임박순" 이 뜻을 잃습니다. 최근 게시순으로 둡니다.
+      switchTab(t.dataset.tab);
       apply();
       layoutChips();
     });
@@ -799,6 +878,28 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     });
   }
 
+  /*
+   * 필터 모두 해제.
+   *
+   * 결과가 없을 때 무엇 때문인지 찾아 하나씩 푸는 건 번거롭습니다.
+   * 검색어와 칩을 한 번에 비웁니다. 탭은 그대로 둡니다 — 탭까지 바꾸면
+   * 어디를 보고 있었는지 잃습니다.
+   */
+  const resetBtn = document.getElementById('resetAll');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      state.q = '';
+      const q = document.getElementById('q');
+      if (q) q.value = '';
+      for (const k of ['co', 'ca', 'in']) state[k].clear();
+      document.querySelectorAll('.chip[aria-pressed="true"]').forEach((b) => {
+        b.setAttribute('aria-pressed', 'false');
+      });
+      apply();
+      layoutChips();
+    });
+  }
+
   document.querySelectorAll('.chip:not(.morebtn)').forEach((b) => {
     b.addEventListener('click', () => {
       const s = state[b.dataset.k];
@@ -808,8 +909,48 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       layoutChips();
     });
   });
+  /*
+   * 검색은 탭에 갇히면 안 됩니다.
+   *
+   * 탭이 필터라서, "마감 있음" 을 보는 중에 상시채용만 있는 회사를
+   * 검색하면 0건이 나왔습니다. 회사 이름을 정확히 쳤는데 결과가 없다고
+   * 나오면 사이트에 그 회사가 없는 줄 알게 됩니다.
+   *
+   * 지금 탭에 결과가 없고 반대 탭에 있으면 그쪽으로 옮깁니다.
+   * 탭 상태와 화면이 어긋나지 않으면서 원하는 결과를 보여줍니다.
+   */
+  function hitsIn(tab, q) {
+    return cards.filter((c) =>
+      c.dataset.op === tab
+      && (!state.co.size || state.co.has(c.dataset.co))
+      && (!state.ca.size || state.ca.has(c.dataset.career))
+      && (!state.in.size
+          || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
+      && (!q || c.dataset.text.includes(q))).length;
+  }
+
+  function switchTab(tab) {
+    state.tab = tab;
+    document.querySelectorAll('.tabs .tab').forEach((o) => {
+      o.setAttribute('aria-selected', String(o.dataset.tab === tab));
+    });
+    // 상시채용은 마감일이 없어 "마감 임박순" 이 뜻을 잃습니다.
+    const sortBtn = document.getElementById('sort');
+    if (tab === '상시채용' && state.sort === 'dday') {
+      state.sort = 'co';
+      if (sortBtn) sortBtn.textContent = '기업별';
+      sortCards();
+    }
+  }
+
   document.getElementById('q').addEventListener('input', (e) => {
-    state.q = e.target.value; apply();
+    state.q = e.target.value;
+    const q = state.q.trim().toLowerCase();
+    if (q) {
+      const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+      if (!hitsIn(state.tab, q) && hitsIn(other, q)) switchTab(other);
+    }
+    apply();
   });
   document.getElementById('sort').addEventListener('click', (e) => {
     state.sort = state.sort === 'dday' ? 'co' : 'dday';
