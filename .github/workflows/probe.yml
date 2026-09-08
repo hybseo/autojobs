@@ -24,6 +24,7 @@ on:
           - '기계장비 상장사 149개사 (약 45분)'
           - 'IT 재탐지 (사이트맵 방식, 약 2시간)'
           - 'IT 재탐지 (브라우저 방식, 약 1시간)'
+          - '금융 상장사 75개사 (약 20분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -56,6 +57,7 @@ jobs:
             반도체*)   ARGS="--urls scripts/targets_semi.txt" ;;
             전기전자*) ARGS="--urls scripts/targets_electronics.txt" ;;
             기계장비*) ARGS="--urls scripts/targets_machinery.txt" ;;
+            금융*)     ARGS="--urls scripts/targets_finance.txt" ;;
             # "IT 재탐지" 가 "IT*" 보다 앞에 와야 합니다.
             # case 는 위에서부터 먼저 맞는 것을 고르므로, 순서가 바뀌면
             # 재탐지를 골라도 원래 IT 목록이 돌아갑니다.
