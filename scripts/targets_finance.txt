@@ -1,0 +1,92 @@
+# 금융 상장사 (한국거래소 업종분류 현황)
+#
+# 출처: KRX 업종분류 현황의 은행·증권·보험·금융·기타금융 업종.
+#   2026-09-08 확인. 코스피 + 코스닥.
+#
+# 걸러낸 것
+#   우선주
+#   스팩 70곳 — 상장만 시켜둔 껍데기 회사라 채용이 없습니다
+#   지주회사 51곳 — SK·LG·GS·HD현대 등. 그룹 채용을 쓰므로 계열사로 다룹니다
+#   오분류 27곳 — 에코프로(2차전지 소재)·한진칼(항공)·HD한국조선해양 등
+#                KRX 가 지주회사를 '기타금융' 으로 분류해 섞여 있었습니다
+#
+# 홈페이지는 KIND 상장법인목록에서 종목코드로 대조해 자동으로 채웠습니다.
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_finance.txt
+
+KB금융,https://kbfg.com
+삼성생명,https://samsunglife.com
+삼성화재,https://samsungfire.com
+미래에셋증권,https://securities.miraeasset.com
+기업은행,https://ibk.co.kr
+DB손해보험,https://idbins.com
+NH투자증권,https://nhqv.com
+삼성증권,https://samsungpop.com
+키움증권,https://kiwoom.com
+카카오페이,https://kakaopay.com
+삼성카드,https://samsungcard.co.kr
+한화생명,https://hanwhalife.com
+현대해상,https://hi.co.kr
+서울보증보험,https://sgic.co.kr
+미래에셋생명,https://life.miraeasset.com
+코리안리,https://koreanre.co.kr
+신영증권,https://shinyoung.com
+케이뱅크,https://kbanknow.com
+대신증권,https://daishin.com
+교보증권,https://iprovest.com
+한화투자증권,https://koreastock.co.kr
+한화손해보험,https://hwgeneralins.com
+유안타증권,https://yuantakorea.com
+미래에셋벤처투자,https://venture.miraeasset.co.kr
+롯데손해보험,https://lotteins.co.kr
+SK증권,https://sks.co.kr
+부국증권,https://bookook.co.kr
+인카금융서비스,https://incar.co.kr
+우리기술투자,https://wooricapital.co.kr
+현대차증권,https://hmsec.com
+유진투자증권,https://eugenefn.com
+DB증권,https://dbsec.co.kr
+제주은행,https://e-jejubank.com
+아주IB투자,https://ajuib.co.kr
+LS증권,https://ls-sec.co.kr
+스틱인베스트먼트,https://stic.co.kr
+헥토파이낸셜,https://hectofinancial.co.kr
+한국자산신탁,https://kait.com
+한양증권,https://hygood.co.kr
+대신밸류리츠,https://daishinvaluereit.com
+다올투자증권,https://daolsecurities.com
+흥국화재,https://insurance.co.kr
+한국캐피탈,https://hkcapital.co.kr
+DSC인베스트먼트,https://dscinvestment.com
+유화증권,https://yhs.co.kr
+푸른저축은행,https://prsb.co.kr
+SV인베스트먼트,https://svinvest.com
+샘표,https://sempio.com
+디와이,https://dy.co.kr
+경동인베스트,https://kdinvest.co.kr
+상상인증권,https://sangsanginib.com
+에이티넘인베스트,https://hanmivc.co.kr
+LB인베스트먼트,https://lbinvestment.com
+컴퍼니케이,https://kpartners.co.kr
+스톤브릿지벤처스,https://stonebridgeventures.vc
+SBI인베스트먼트,https://sbik.co.kr
+테라뷰,https://teraview.com
+APS,https://apsholdings.co.kr
+한패스,https://hanpass.com
+대성창투,https://daesungpe.com
+TS인베스트먼트,https://tsinvestment.co.kr
+HB인베스트먼트,https://hbvc.co.kr
+린드먼아시아,https://laic.kr
+코리아에셋투자증권,https://kasset.co.kr
+신한글로벌액티브리츠,https://shglobalreit.com
+크리스탈신소재,https://crystalnewmaterial.com
+큐캐피탈,https://qcapital.co.kr
+캡스톤파트너스,https://cspartners.co.kr
+컬러레이,https://coloray.co.kr
+메이슨캐피탈,https://mason-capital.co.kr
+GMI벤처,https://geminivc.co.kr
+글로벌에스엠,https://globalsmtech.com
+딥커머스,https://qiuzhi.com
+헝셩그룹,https://hengsheng.co.kr
+윙입푸드,https://wingyip-food.com
