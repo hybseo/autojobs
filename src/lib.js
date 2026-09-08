@@ -190,6 +190,7 @@ const INDUSTRY_SLUG = {
   '물류': 'logistics',
   '화학': 'chemical',
   '기계': 'machinery',
+  '금융': 'finance',
 };
 
 // slug → 회사 산업 목록
