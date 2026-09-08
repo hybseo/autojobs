@@ -79,10 +79,18 @@ def _html(url, _tries=3):
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             ctx = None
             if i == _tries - 1:
-                ctx = ssl.create_default_context()
+                # SECLEVEL=1 로도 안 되는 서버가 있습니다.
+                # 카카오게임즈·니어스랩이 그렇습니다. 더 낮추고 옛 TLS 도
+                # 허용합니다. 여기까지 왔다는 건 그러지 않으면 그 회사
+                # 공고가 통째로 빠진다는 뜻입니다.
+                ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
                 ctx.check_hostname = False
                 ctx.verify_mode = ssl.CERT_NONE
-                ctx.set_ciphers("DEFAULT@SECLEVEL=1")
+                ctx.minimum_version = ssl.TLSVersion.TLSv1
+                try:
+                    ctx.set_ciphers("ALL:@SECLEVEL=0")
+                except ssl.SSLError:
+                    ctx.set_ciphers("DEFAULT@SECLEVEL=1")
             with urllib.request.urlopen(req, timeout=25, context=ctx) as r:
                 return r.read().decode("utf-8", "replace")
         except Exception as e:
