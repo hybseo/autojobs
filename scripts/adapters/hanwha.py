@@ -48,6 +48,7 @@ www.hanwhain.com 과 hwadm.hanwhain.com 모두 robots.txt 가 없습니다.
 """
 import json
 import re
+import time
 import urllib.request
 
 LIST_URL = ("https://hwadm.hanwhain.com/new-backend/portal/api/"
@@ -76,8 +77,19 @@ def _post(page):
                  "Accept": "application/json",
                  "Referer": "https://www.hanwhain.com/",
                  "User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.load(r)
+    # 2026-09-08 갱신에서 timed out 으로 실패해 17건이 통째로 빠졌습니다.
+    # 같은 주소를 브라우저로 부르면 73건이 정상으로 왔습니다.
+    # 서버가 가끔 느린 것이라 몇 초 쉬었다 다시 걸어봅니다.
+    last = None
+    for i in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=40) as r:
+                return json.load(r)
+        except Exception as e:
+            last = e
+            if i < 2:
+                time.sleep(3 + i * 3)
+    raise last
 
 
 def _date(v):

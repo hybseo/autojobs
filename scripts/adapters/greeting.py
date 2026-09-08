@@ -39,6 +39,7 @@ import json
 import re
 import time
 import html
+import ssl
 import urllib.request
 
 UA = "Mozilla/5.0 (compatible; searchjob.co.kr job aggregator)"
@@ -50,10 +51,45 @@ NEXT_DATA = re.compile(
     r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S)
 
 
-def _html(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return r.read().decode("utf-8", "replace")
+def _html(url, _tries=3):
+    """페이지를 받아옵니다. 실패하면 잠시 쉬었다 다시 시도합니다.
+
+    왜 재시도가 필요한가
+    --------------------
+    2026-09-08 갱신에서 8개사가 실패했는데 대부분 일시적인 것이었습니다.
+    한화는 timed out, 카카오게임즈·니어스랩은 SSL 핸드셰이크 실패였습니다.
+    같은 주소를 브라우저로 열면 정상이었습니다.
+
+    한 번 실패하면 그 회사 공고가 통째로 빠집니다. 실제로 한화 17건이
+    하루 사라졌습니다. 몇 초 기다렸다 다시 걸어보는 편이 낫습니다.
+
+    SSL 핸드셰이크 실패에 대하여
+    ----------------------------
+    자체 도메인을 쓰는 그리팅 사이트에서 나옵니다
+    (recruit.kakaogames.com, career.nearthlab.com).
+    서버가 오래된 TLS 설정을 쓰거나 중간 인증서를 빠뜨린 경우입니다.
+    브라우저는 관대하게 넘어가지만 파이썬 기본 설정은 거부합니다.
+
+    마지막 시도에서만 검증을 완화합니다. 우리는 공개된 채용 공고를
+    읽을 뿐이고, 그마저 못 읽으면 그 회사가 통째로 빠지기 때문입니다.
+    """
+    last = None
+    for i in range(_tries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            ctx = None
+            if i == _tries - 1:
+                ctx = ssl.create_default_context()
+                ctx.check_hostname = False
+                ctx.verify_mode = ssl.CERT_NONE
+                ctx.set_ciphers("DEFAULT@SECLEVEL=1")
+            with urllib.request.urlopen(req, timeout=25, context=ctx) as r:
+                return r.read().decode("utf-8", "replace")
+        except Exception as e:
+            last = e
+            if i < _tries - 1:
+                time.sleep(2 + i * 2)
+    raise last
 
 
 def _next_data(url):

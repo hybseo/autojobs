@@ -52,6 +52,7 @@ import json
 import time
 import html
 import re
+import urllib.error
 import urllib.request
 
 API = "https://api-recruiter.recruiter.co.kr"
@@ -110,12 +111,28 @@ def _host(prefix):
 
 
 def _post(path, prefix, body):
+    """목록을 받아옵니다. 일시적 실패는 몇 초 쉬었다 다시 시도합니다.
+
+    HTTP 400 은 재시도하지 않습니다. 그건 그 회사가 리크루터를 쓰지만
+    자체 화면을 붙인 경우라 몇 번을 걸어도 같습니다(효성중공업·탑코미디어·
+    엠앤씨솔루션). 시간 초과나 연결 오류만 다시 걸어봅니다.
+    """
     req = urllib.request.Request(
         API + path, method="POST",
         data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json", "prefix": _host(prefix)})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return json.load(r)
+    last = None
+    for i in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return json.load(r)
+        except urllib.error.HTTPError:
+            raise                      # 400·404 는 다시 걸어도 같습니다.
+        except Exception as e:
+            last = e
+            if i < 2:
+                time.sleep(2 + i * 2)
+    raise last
 
 
 def _get(path, prefix):
@@ -133,7 +150,18 @@ def list_open(prefix):
             "pageableRq": {"page": page, "size": 100, "sort": ["END_DATE_TIME"]},
             "filter": {"keyword": "", "tagSnList": [], "jobGroupSnList": [],
                        "careerTypeList": [], "regionSnList": [],
-                       "submissionStatusList": ["IN_SUBMISSION"],
+                       # 요청 단계에서 상태로 거르지 않습니다.
+                       #
+                       # 컴투스에서 이상한 일이 있었습니다. 필터를 비우면 60건이
+                       # 오고 그중 48건이 IN_SUBMISSION 인데, 같은 값으로 요청하면
+                       # 1건만 왔습니다. 서버 쪽 필터가 응답의 상태값과 다르게
+                       # 동작합니다. 사이트 화면에는 10건 이상이 보이는데 우리는
+                       # "2026 인재 DB" 하나만 수집하고 있었습니다.
+                       #
+                       # 전부 받아서 아래 줄에서 우리가 거릅니다. 어차피 응답에서
+                       # 한 번 더 확인하고 있었으므로 결과는 같고, 서버 필터가
+                       # 회사마다 다르게 동작하는 위험만 사라집니다.
+                       "submissionStatusList": [],
                        "openStatusList": [], "resumeLanguageTypeList": []}})
         out += [x for x in j.get("list", []) if x.get("submissionStatus") == "IN_SUBMISSION"]
         pg = j.get("pagination") or {}
