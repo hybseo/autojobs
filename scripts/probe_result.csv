@@ -1,150 +1,76 @@
 ﻿name,status,ats,code,home,found_at,how,note
-HB솔루션,발견,ninehire,hbsolution,https://www.hb-solution.co.kr,https://www.hb-solution.co.kr,링크,
-디와이파워,발견,recruiter,dy,https://power.dy.co.kr,https://power.dy.co.kr,링크,
-삼익THK,발견,recruiter,samickthk,https://samickthk.co.kr,https://samickthk.co.kr,링크,
-엠앤씨솔루션,발견,recruiter,motionncontrol,https://mncsolution.com,https://mncsolution.com,링크,
-코미코,발견,recruiter,komico,https://komico.com,https://komico.com,링크,
-DKME,채용링크없음,,,http://dkme.com,,,채용링크 0개
-DMS,채용링크없음,,,https://dms21.co.kr,,,채용링크 0개
-GST,ATS없음,,,https://gst-in.com,,,채용링크 1개
-HB테크놀러지,접속실패,,,https://ncbnet.co.kr,,,https://ncbnet.co.kr gaierror:[Errno -3] Temporary fai | http://ncbnet.co.kr gaierror:[Errno -3] Temporary fai | https://www.ncbnet.co.kr gaierror:[Errno -3] Temporary fai | http://www.ncbnet.co.kr gaierror:[Errno -3] Temporary fai
-HD건설기계,채용링크없음,,,https://hd-hyundaice.com,,,채용링크 0개
-HPSP,ATS없음,,,https://thehpsp.com,,,채용링크 2개
-KC코트렐,채용링크없음,,,https://kc-cottrell.com,,,채용링크 0개
-KS인더스트리,채용링크없음,,,https://ks-industry.co.kr,,,채용링크 0개
-KZ정밀,채용링크없음,,,https://www.kzpc.co.kr,,,채용링크 0개
-SFA넥셀,ATS없음,,,https://sfanexel.co.kr,,,채용링크 2개
-SNT에너지,채용링크없음,,,http://hisnt.com,,,채용링크 0개
-STX엔진,ATS없음,,,https://www.stxengine.co.kr,,,채용링크 6개
-TPC로보틱스,채용링크없음,,,https://TPCpage.com,,,채용링크 0개
-TYM,채용링크없음,,,https://tym.world,,,채용링크 0개
-계양전기,채용링크없음,,,https://keyang.co.kr,,,채용링크 0개
-기가비스,채용링크없음,,,https://gigavis.com,,,채용링크 0개
-기신정기,채용링크없음,,,http://kishin.com,,,채용링크 0개
-나노팀,채용링크없음,,,https://nanotim.co.kr,,,채용링크 0개
-나라엠앤디,채용링크없음,,,https://www.naramnd.com,,,채용링크 0개
-나래나노텍,채용링크없음,,,https://naraenano.co.kr,,,채용링크 0개
-나우로보틱스,채용링크없음,,,https://naurobot.com,,,채용링크 0개
-나인테크,ATS없음,,,https://naintec.co.kr,,,채용링크 2개
-네오셈,ATS없음,,,https://neosem.com,,,채용링크 6개
-넥사다이내믹스,채용링크없음,,,https://nexadynamics.kr,,,채용링크 0개
-넥스턴앤롤코리아,채용링크없음,,,http://nexturn.co.kr,,,채용링크 0개
-뉴파워프라즈마,채용링크없음,,,https://newpower.co.kr,,,채용링크 0개
-다원넥스뷰,채용링크없음,,,https://nexview.co.kr,,,채용링크 0개
-다이나믹디자인,ATS없음,,,https://dynamicdesign.co.kr,,,채용링크 2개
-대모,채용링크없음,,,https://daemo.co.kr,,,채용링크 0개
-동아엘텍,ATS없음,,,https://dongaeltek.co.kr,,,채용링크 1개
-두산에너빌리티,ATS없음,,,https://doosanenerbility.com,,,채용링크 2개
-디에스케이,채용링크없음,,,https://dsk.co.kr,,,채용링크 0개
-디에이테크놀로지,ATS없음,,,http://dat21.co.kr,,,채용링크 3개
-디와이피엔에프,채용링크없음,,,https://dypnf.com,,,채용링크 0개
-디케이락,채용링크없음,,,https://dklok.com,,,채용링크 0개
-라온로보틱스,채용링크없음,,,https://raonrobot.com,,,채용링크 0개
-러셀,채용링크없음,,,https://erussell.co.kr,,,채용링크 0개
-루트K,채용링크없음,,,http://abprobio.co.kr,,,채용링크 0개
-링크솔루션,ATS없음,,,https://lincsolution.com,,,채용링크 1개
-모델솔루션,채용링크없음,,,https://www.model-solution.com,,,채용링크 0개
-브이원텍,ATS없음,,,http://v-one.co.kr,,,채용링크 1개
-비아트론,채용링크없음,,,https://viatrontech.com,,,채용링크 0개
-비엠티,채용링크없음,,,https://superlok.com,,,채용링크 0개
-서암기계공업,채용링크없음,,,https://www.smiltd.co.kr,,,채용링크 0개
-서연탑메탈,ATS없음,,,https://seoyontop.com,,,채용링크 5개
-선익시스템,채용링크없음,,,https://sunic.co.kr,,,채용링크 0개
-성원에너텍,채용링크없음,,,http://youilet.com,,,채용링크 0개
-세미티에스,ATS없음,,,http://semi-ts.com,,,채용링크 4개
-수산세보틱스,접속실패,,,https://soosanheavy.com,,,https://soosanheavy.com gaierror:[Errno -2] Name or servi | http://soosanheavy.com gaierror:[Errno -2] Name or servi | https://www.soosanheavy.com gaierror:[Errno -2] Name or servi | http://www.soosanheavy.com gaierror:[Errno -2] Name or servi
-수성웹툰,채용링크없음,,,https://soosung.com,,,채용링크 0개
-스맥,채용링크없음,,,https://www.esmec.com,,,채용링크 0개
-스페코,채용링크없음,,,https://speco.co.kr,,,채용링크 0개
-신도기연,채용링크없음,,,https://lcd.co.kr,,,채용링크 0개
-씨앤지하이테크,ATS없음,,,http://cnghitech.com,,,채용링크 2개
-씨에스베어링,ATS없음,,,https://csbrg.com,,,채용링크 3개
-씨케이솔루션,ATS없음,,,https://cksolution.co.kr,,,채용링크 4개
-아세아텍,ATS없음,,,https://asiakor.com,,,채용링크 1개
-아스플로,채용링크없음,,,https://asflow.com,,,채용링크 0개
-아이비젼웍스,ATS없음,,,http://ivw.co.kr,,,채용링크 2개
-앤로보틱스,채용링크없음,,,http://hjfm.co.kr,,,채용링크 0개
-야스,ATS없음,,,https://www.yasoled.com,,,채용링크 3개
-에너토크,채용링크없음,,,https://enertork.com,,,채용링크 0개
-에스앤더블류,채용링크없음,,,https://snwcorp.com,,,채용링크 0개
-에스피시스템스,채용링크없음,,,https://spsystems.co.kr,,,채용링크 0개
-에쎈테크,채용링크없음,,,https://essentech.co.kr,,,채용링크 0개
-에어레인,채용링크없음,,,https://airrane.com,,,채용링크 0개
-에이아이코리아,ATS없음,,,https://aik.co.kr,,,채용링크 2개
-에이치케이,ATS없음,,,https://hk-global.com,,,채용링크 3개
-에이테크솔루션,ATS없음,,,https://atechsolution.co.kr,,,채용링크 2개
-에프엔에스테크,ATS없음,,,https://fnstech.com,,,채용링크 4개
-엔젯,채용링크없음,,,https://enjet.co.kr,,,채용링크 0개
-엔투텍,채용링크없음,,,https://n2tech.kr,,,채용링크 0개
-엘오티베큠,ATS없음,,,https://lotvacuum.com,,,채용링크 3개
-엠엑스로보틱스,채용링크없음,,,https://smck.com,,,채용링크 0개
-엠오티,채용링크없음,,,https://motfa.com,,,채용링크 0개
-엠플러스,ATS없음,,,https://mplusi.co.kr,,,채용링크 4개
-영우디에스피,ATS없음,,,https://ywdsp.com,,,채용링크 1개
-예스티,ATS없음,,,https://yest.co.kr,,,채용링크 5개
-오리엔탈정공,채용링크없음,,,https://www.opco.co.kr,,,채용링크 0개
-와이제이링크,ATS없음,,,https://yjlink.com,,,채용링크 5개
-우림피티에스,접속실패,,,https://woorimgear.co.kr,,,https://woorimgear.co.kr gaierror:[Errno -2] Name or servi | http://woorimgear.co.kr gaierror:[Errno -2] Name or servi | https://www.woorimgear.co.kr gaierror:[Errno -2] Name or servi | http://www.woorimgear.co.kr gaierror:[Errno -2] Name or servi
-우신시스템,ATS없음,,,http://wooshinsys.co.kr,,,채용링크 1개
-우진플라임,채용링크없음,,,https://woojinplaimm.com,,,채용링크 0개
-워트,채용링크없음,,,https://wot.co.kr,,,채용링크 0개
-원익IPS,채용링크없음,,,https://www.ips.co.kr,,,채용링크 0개
-원익피앤이,채용링크없음,,,https://wonikpne.com,,,채용링크 0개
-원일티엔아이,ATS없음,,,http://woniltni.co.kr,,,채용링크 5개
-원준,접속실패,,,https://onejoon.co.kr,,,https://onejoon.co.kr HTTP403 | http://onejoon.co.kr HTTP403 | https://www.onejoon.co.kr HTTP403 | http://www.onejoon.co.kr HTTP403
-위지트,ATS없음,,,http://wizit.co.kr,,,채용링크 1개
-유니슨,ATS없음,,,https://unison.co.kr,,,채용링크 6개
-유진로봇,ATS없음,,,https://yujinrobot.com,,,채용링크 2개
-윤성에프앤씨,ATS없음,,,https://ysfc.co.kr,,,채용링크 1개
-이노메트리,ATS없음,,,https://innometry.com,,,채용링크 3개
-이노테크,ATS없음,,,http://innotech2013.com,,,채용링크 1개
-이엔플러스,채용링크없음,,,https://en3.co.kr,,,채용링크 0개
-인베니아,ATS없음,,,https://inveniacorp.com,,,채용링크 5개
-인텍플러스,ATS없음,,,https://intekplus.com,,,채용링크 5개
-제너셈,ATS없음,,,https://genesem.com,,,채용링크 5개
-제닉스로보틱스,채용링크없음,,,https://zenixkorea.co.kr,,,채용링크 0개
-제이스로보틱스,ATS없음,,,https://jastech.co.kr,,,채용링크 6개
-제이엔비,ATS없음,,,http://jnbeng.com,,,채용링크 3개
-제이엔케이글로벌,채용링크없음,,,https://jnk-global.com,,,채용링크 0개
-제일엠앤에스,ATS없음,,,https://jeilm.co.kr,,,채용링크 3개
-젬백스,채용링크없음,,,https://kael.co.kr,,,채용링크 0개
-지아이텍,채용링크없음,,,http://gitec.kr,,,채용링크 0개
-지앤비에스 에코,채용링크없음,,,http://gnbseng.com,,,채용링크 0개
-진성티이씨,채용링크없음,,,https://jinsungtec.com,,,채용링크 0개
-참엔지니어링,ATS없음,,,http://charmeng.com,,,채용링크 2개
-케이에스피,ATS없음,,,http://www.kspvalve.com,,,채용링크 4개
-케이엔솔,채용링크없음,,,https://k-ensol.com,,,채용링크 0개
-케이엔에스,채용링크없음,,,https://knssystem.com,,,채용링크 0개
-케이웨더,접속실패,,,https://kweather.co.kr,,,https://kweather.co.kr SSLError:[SSL: SSLV3_ALERT_HANDSH | http://kweather.co.kr SSLError:[SSL: SSLV3_ALERT_HANDSH | https://www.kweather.co.kr SSLError:[SSL: SSLV3_ALERT_HANDSH | http://www.kweather.co.kr SSLError:[SSL: SSLV3_ALERT_HANDSH
-케이지에이,채용링크없음,,,https://kga-i.com,,,채용링크 0개
-코세스,채용링크없음,,,https://koses.co.kr,,,채용링크 0개
-코윈테크,채용링크없음,,,http://cowintech.com,,,채용링크 0개
-크린앤사이언스,채용링크없음,,,http://cands.co.kr,,,채용링크 0개
-톱텍,채용링크없음,,,https://toptec.co.kr,,,채용링크 0개
-티에스넥스젠,접속실패,,,https://hlbpower.com,,,https://hlbpower.com HTTP403 | http://hlbpower.com HTTP403 | https://www.hlbpower.com HTTP403 | http://www.hlbpower.com HTTP403
-티에스아이,ATS없음,,,https://taesungind.co.kr,,,채용링크 5개
-티엑스알로보틱스,ATS없음,,,https://txr.kr,,,채용링크 2개
-파라텍,ATS없음,,,https://paratech.co.kr,,,채용링크 3개
-팬스타엔터프라이즈,채용링크없음,,,https://www.heshbon.com,,,채용링크 0개
-팸텍,ATS없음,,,https://pamtek.com,,,채용링크 2개
-포스뱅크,접속실패,,,https://posbank.com,,,https://posbank.com HTTP302 | http://posbank.com HTTP302 | https://www.posbank.com HTTP302 | http://www.posbank.com HTTP302
-피아이이,채용링크없음,,,https://piegroup.co.kr,,,채용링크 0개
-피엔티,ATS없음,,,https://epnt.co.kr,,,채용링크 2개
-피엔티엠에스,ATS없음,,,https://ms-mc.co.kr,,,채용링크 1개
-필에너지,ATS없음,,,http://philenergy.co.kr,,,채용링크 6개
-하나기술,ATS없음,,,https://hn-tech.co.kr,,,채용링크 2개
-한국정밀기계,접속실패,,,https://hnkkorea.com,,,https://hnkkorea.com SSLError:[SSL: DH_KEY_TOO_SMALL]  | http://hnkkorea.com SSLError:[SSL: DH_KEY_TOO_SMALL]  | https://www.hnkkorea.com SSLError:[SSL: DH_KEY_TOO_SMALL]  | http://www.hnkkorea.com SSLError:[SSL: DH_KEY_TOO_SMALL] 
-한국주강,ATS없음,,,https://hascokorea.co.kr,,,채용링크 2개
-한독크린텍,채용링크없음,,,https://hdctech.co.kr,,,채용링크 0개
-한빛레이저,ATS없음,,,https://hblaser.co.kr,,,채용링크 1개
-한솔아이원스,채용링크없음,,,https://hansoliones.com,,,채용링크 0개
-한신기계,채용링크없음,,,http://hanshin.co.kr,,,채용링크 0개
-한울반도체,접속실패,,,https://wintec.co.kr,,,https://wintec.co.kr HTTP404 | http://wintec.co.kr HTTP404 | https://www.wintec.co.kr HTTP404 | http://www.wintec.co.kr HTTP404
-현대무벡스,ATS없음,,,https://hyundaimovex.com,,,채용링크 4개
-현대에버다임,채용링크없음,,,https://www.hyundaieverdigm.com,,,채용링크 0개
-현대엘리베이터,채용링크없음,,,http://hyundaielevator.co.kr,,,채용링크 0개
-화성밸브,채용링크없음,,,https://hsvalve.co.kr,,,채용링크 0개
-화천기공,ATS없음,,,https://hwacheon.com,,,채용링크 1개
-휴림로봇,접속실패,,,https://dstrobot.com,,,https://dstrobot.com gaierror:[Errno -3] Temporary fai | http://dstrobot.com gaierror:[Errno -3] Temporary fai | https://www.dstrobot.com gaierror:[Errno -3] Temporary fai | http://www.dstrobot.com gaierror:[Errno -3] Temporary fai
-흥국,채용링크없음,,,https://heungkuk.co.kr,,,채용링크 0개
-힘스,채용링크없음,,,http://hims.co.kr,,,채용링크 0개
+DB증권,발견,recruiter,dbgroup,https://dbsec.co.kr,https://dbsec.co.kr,링크,
+교보증권,발견,recruiter,iprovest,https://iprovest.com,https://recruit.iprovest.com,주소추정,채용링크 0개
+디와이,발견,recruiter,dy,https://www.dy.co.kr,https://www.dy.co.kr,링크,
+샘표,발견,recruiter,sempio,https://www.sempio.com,https://www.sempio.com,링크,
+카카오페이,발견,greeting,kakaopay,https://kakaopay.com,https://kakaopay.career.greetinghr.com/ko,주소추정,채용링크 0개
+한양증권,발견,greeting,hygood,https://hygood.co.kr,https://hygood.career.greetinghr.com/ko,주소추정,채용링크 3개
+한패스,발견,ninehire,recruithanpass,https://hanpass.com,https://hanpass.com,링크,
+흥국화재,발견,recruiter,taekwang,https://www.insurance.co.kr,https://www.insurance.co.kr,링크,
+APS,채용링크없음,,,https://apsholdings.co.kr,,,채용링크 0개
+DB손해보험,채용링크없음,,,https://idbins.com,,,채용링크 0개
+DSC인베스트먼트,채용링크없음,,,https://dscinvestment.com,,,채용링크 0개
+GMI벤처,접속실패,,,https://geminivc.co.kr,,,https://geminivc.co.kr gaierror:[Errno -2] Name or servi | http://geminivc.co.kr gaierror:[Errno -2] Name or servi | https://www.geminivc.co.kr gaierror:[Errno -2] Name or servi | http://www.geminivc.co.kr gaierror:[Errno -2] Name or servi
+HB인베스트먼트,채용링크없음,,,https://hbvc.co.kr,,,채용링크 0개
+KB금융,채용링크없음,,,https://kbfg.com,,,채용페이지 추정: https://careers.kbfg.com
+LB인베스트먼트,접속실패,,,https://lbinvestment.com,,,https://lbinvestment.com HTTP503 | http://lbinvestment.com HTTP503 | https://www.lbinvestment.com HTTP503 | http://www.lbinvestment.com HTTP503
+LS증권,채용링크없음,,,https://ls-sec.co.kr,,,채용링크 0개
+NH투자증권,채용링크없음,,,https://nhqv.com,,,채용링크 0개
+SBI인베스트먼트,채용링크없음,,,https://sbik.co.kr,,,채용링크 0개
+SK증권,채용링크없음,,,http://sks.co.kr,,,채용링크 0개
+SV인베스트먼트,채용링크없음,,,https://svinvest.com,,,채용링크 0개
+TS인베스트먼트,채용링크없음,,,https://tsinvestment.co.kr,,,채용페이지 추정: https://job.tsinvestment.co.kr
+경동인베스트,채용링크없음,,,https://www.kdinvest.co.kr,,,채용링크 0개
+글로벌에스엠,채용링크없음,,,http://globalsmtech.com,,,채용링크 0개
+기업은행,채용링크없음,,,https://ibk.co.kr,,,채용링크 0개
+다올투자증권,채용링크없음,,,https://daolsecurities.com,,,채용링크 0개
+대성창투,채용링크없음,,,http://daesungpe.com,,,채용링크 0개
+대신밸류리츠,채용링크없음,,,https://daishinvaluereit.com,,,채용링크 0개
+대신증권,채용링크없음,,,https://daishin.com,,,채용링크 0개
+딥커머스,채용링크없음,,,https://qiuzhi.com,,,채용링크 0개
+롯데손해보험,채용링크없음,,,https://lotteins.co.kr,,,채용링크 0개
+린드먼아시아,채용링크없음,,,http://laic.kr,,,채용페이지 추정: https://job.laic.kr
+메이슨캐피탈,ATS없음,,,http://mason-capital.co.kr,,,채용링크 1개
+미래에셋벤처투자,채용링크없음,,,http://venture.miraeasset.co.kr,,,채용링크 0개
+미래에셋생명,채용링크없음,,,https://life.miraeasset.com,,,채용링크 0개
+미래에셋증권,채용링크없음,,,https://securities.miraeasset.com,,,채용링크 0개
+부국증권,채용링크없음,,,https://bookook.co.kr,,,채용링크 0개
+삼성생명,채용링크없음,,,https://samsunglife.com,,,채용링크 0개
+삼성증권,채용링크없음,,,https://samsungpop.com,,,채용링크 0개
+삼성카드,채용링크없음,,,https://samsungcard.co.kr,,,채용링크 0개
+삼성화재,채용링크없음,,,https://samsungfire.com,,,채용링크 0개
+상상인증권,채용링크없음,,,https://sangsanginib.com,,,채용링크 0개
+서울보증보험,채용링크없음,,,https://sgic.co.kr,,,채용링크 0개
+스톤브릿지벤처스,채용링크없음,,,https://stonebridgeventures.vc,,,채용링크 0개
+스틱인베스트먼트,채용링크없음,,,https://stic.co.kr,,,채용링크 0개
+신영증권,채용링크없음,,,https://shinyoung.com,,,채용링크 0개
+신한글로벌액티브리츠,채용링크없음,,,https://shglobalreit.com,,,채용링크 0개
+아주IB투자,채용링크없음,,,https://ajuib.co.kr,,,채용링크 0개
+에이티넘인베스트,접속실패,,,https://hanmivc.co.kr,,,https://hanmivc.co.kr gaierror:[Errno -2] Name or servi | http://hanmivc.co.kr gaierror:[Errno -2] Name or servi | https://www.hanmivc.co.kr gaierror:[Errno -2] Name or servi | http://www.hanmivc.co.kr gaierror:[Errno -2] Name or servi
+우리기술투자,채용링크없음,,,https://wooricapital.co.kr,,,채용링크 0개
+윙입푸드,채용링크없음,,,https://wingyip-food.com,,,채용링크 0개
+유안타증권,ATS없음,,,https://www.yuantakorea.com,,,채용링크 6개
+유진투자증권,채용링크없음,,,https://eugenefn.com,,,채용링크 0개
+유화증권,채용링크없음,,,https://www.yhs.co.kr,,,채용링크 0개
+인카금융서비스,접속실패,,,https://incar.co.kr,,,https://incar.co.kr TimeoutError:timed out | http://incar.co.kr TimeoutError:timed out | https://www.incar.co.kr TimeoutError:timed out | http://www.incar.co.kr TimeoutError:timed out
+제주은행,접속실패,,,https://e-jejubank.com,,,https://e-jejubank.com TimeoutError:timed out | http://e-jejubank.com TimeoutError:timed out | https://www.e-jejubank.com TimeoutError:timed out | http://www.e-jejubank.com TimeoutError:timed out
+캡스톤파트너스,채용링크없음,,,https://cspartners.co.kr,,,채용링크 0개
+컬러레이,채용링크없음,,,https://coloray.co.kr,,,채용링크 0개
+컴퍼니케이,채용링크없음,,,https://kpartners.co.kr,,,채용링크 0개
+케이뱅크,ATS없음,,,https://kbanknow.com,,,채용페이지 추정: https://recruit.kbanknow.com
+코리아에셋투자증권,ATS없음,,,https://kasset.co.kr,,,채용링크 2개
+코리안리,접속실패,,,https://koreanre.co.kr,,,https://koreanre.co.kr HTTP403 | http://koreanre.co.kr TimeoutError:timed out | https://www.koreanre.co.kr RemoteDisconnected | http://www.koreanre.co.kr HTTP403
+큐캐피탈,채용링크없음,,,https://qcapital.co.kr,,,채용링크 0개
+크리스탈신소재,채용링크없음,,,http://crystalnewmaterial.com,,,채용페이지 추정: https://job.crystalnewmaterial.com
+키움증권,채용링크없음,,,https://kiwoom.com,,,채용링크 0개
+테라뷰,ATS없음,,,https://teraview.com,,,채용링크 1개
+푸른저축은행,채용링크없음,,,https://www.prsb.co.kr,,,채용링크 0개
+한국자산신탁,ATS없음,,,https://kait.com,,,채용링크 6개
+한국캐피탈,채용링크없음,,,https://www.hkcapital.co.kr,,,채용링크 0개
+한화생명,접속실패,,,https://hanwhalife.com,,,https://hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | http://hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | https://www.hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | http://www.hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE
+한화손해보험,접속실패,,,https://hwgeneralins.com,,,https://hwgeneralins.com gaierror:[Errno -5] No address as | http://hwgeneralins.com gaierror:[Errno -5] No address as | https://www.hwgeneralins.com TimeoutError:timed out | http://www.hwgeneralins.com TimeoutError:timed out
+한화투자증권,채용링크없음,,,https://koreastock.co.kr,,,채용링크 0개
+헝셩그룹,채용링크없음,,,https://hengsheng.co.kr,,,채용페이지 추정: https://job.hengsheng.co.kr
+헥토파이낸셜,채용링크없음,,,https://hectofinancial.co.kr,,,채용링크 0개
+현대차증권,채용링크없음,,,https://hmsec.com,,,채용링크 0개
+현대해상,채용링크없음,,,http://hi.co.kr,,,채용링크 0개
