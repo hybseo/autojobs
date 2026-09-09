@@ -22,14 +22,25 @@ corpCodes=AG 로 걸러 쓰는 것입니다. 그래서 계열사 어댑터가 �
 그룹 어댑터로 만들었습니다. LG·삼성·한화와 같은 방식입니다.
 
 계열사 코드 (2026-09-09 확인)
-    NX 넥슨코리아    NO 네오플      AG 넥슨게임즈
-    HQ 넥슨에이치큐  DV 데브캣      그 외는 /open/corps 로 확인
+    NX 넥슨코리아      NO 네오플          AG 넥슨게임즈
+    HQ 넥슨에이치큐    DV 데브캣          MR 민트로켓
+    UV 넥슨유니버스    SD 넥슨네트웍스    NU 넥슨커뮤니케이션즈
+    MD 엔미디어플랫폼  DQ 딜로퀘스트      SE 넥슨스페이스
+    XC 엔엑스씨
 
 companies.json 의 "code" 에 쉼표로 적으면 그 계열사만 담습니다.
 
     "code": "AG"            넥슨게임즈만
     "code": "NX,NO,AG"      셋만
-    "code": ""              그룹 전체(142건)
+
+code 를 빈 문자열로 두면 이 어댑터는 그룹 전체를 받지만,
+fetch_jobs.py 가 파일을 읽는 단계에서 먼저 막힙니다.
+
+    companies.json 143번째 항목에 ['code'] 이(가) 없습니다.
+
+필수항목 검사가 `not company.get(k)` 라서 빈 문자열도 없는 값으로 봅니다.
+그래서 companies.json 에는 계열사 코드를 모두 적어 두었습니다.
+계열사가 늘면 /career/v1/open/corps 로 확인해 추가하세요.
 
 LG 어댑터의 companyCodeList 와 같은 취지입니다.
 
