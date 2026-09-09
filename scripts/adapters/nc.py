@@ -125,8 +125,25 @@ def _loose_ctx():
     return ctx
 
 
+def _opener(loose=False):
+    """쿠키를 유지하는 opener 를 만듭니다.
+
+    세션 쿠키가 없으면 토큰이 있어도 403 입니다.
+
+    loose=True 면 인증서 검증과 TLS 버전을 완화한 핸들러를 씁니다.
+    주의: opener.open() 은 context 인자를 받지 않습니다. 그건
+    urlopen() 에만 있습니다. TLS 설정은 이렇게 만들 때 넣어야 합니다.
+    (그렇게 하지 않아 아래 오류가 났습니다.
+     OpenerDirector.open() got an unexpected keyword argument 'context')
+    """
+    handlers = [urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())]
+    if loose:
+        handlers.append(urllib.request.HTTPSHandler(context=_loose_ctx()))
+    return urllib.request.build_opener(*handlers)
+
+
 def _open(op, req, tries=TRIES):
-    """끈질기게 시도합니다. 마지막에는 TLS 를 완화합니다.
+    """끈질기게 시도합니다.
 
     403 은 재시도해도 같으므로 바로 올립니다. 토큰이나 쿠키가 거부된
     것이라 기다린다고 달라지지 않습니다.
@@ -134,8 +151,7 @@ def _open(op, req, tries=TRIES):
     last = None
     for i in range(tries):
         try:
-            ctx = _loose_ctx() if i == tries - 1 else None
-            return op.open(req, timeout=TIMEOUT, context=ctx)
+            return op.open(req, timeout=TIMEOUT)
         except urllib.error.HTTPError as e:
             if e.code == 403:
                 raise
@@ -145,12 +161,6 @@ def _open(op, req, tries=TRIES):
         if i < tries - 1:
             time.sleep(3 * (i + 1))
     raise last
-
-
-def _opener():
-    """쿠키를 유지하는 opener. 세션 쿠키가 없으면 토큰이 있어도 403 입니다."""
-    cj = http.cookiejar.CookieJar()
-    return urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
 
 
 def _token(op):
@@ -194,12 +204,9 @@ def _dday(v):
     return int(m.group(0)) if m else None
 
 
-def list_open():
-    """접수중 공고 목록. probe 용으로 밖에서도 씁니다.
-
-    직군(job_group_cd)을 비워 네 영역을 한 번에 받습니다.
-    """
-    op = _opener()
+def _collect(loose):
+    """토큰을 받고 목록을 가져옵니다. loose 면 TLS 를 완화해 붙습니다."""
+    op = _opener(loose=loose)
     token = _token(op)
     time.sleep(0.5)
 
@@ -222,15 +229,35 @@ def list_open():
         "User-Agent": UA,
     })
 
+    with _open(op, req) as r:
+        return json.load(r)
+
+
+def list_open():
+    """접수중 공고 목록. probe 용으로 밖에서도 씁니다.
+
+    직군(job_group_cd)을 비워 네 영역을 한 번에 받습니다.
+
+    보통 방식으로 먼저 붙고, 실패하면 TLS 를 완화해 한 번 더 붙습니다.
+    2026-09-09 실행에서 핸드셰이크 시간초과가 났기 때문입니다.
+    """
     try:
-        with _open(op, req) as r:
-            j = json.load(r)
+        j = _collect(loose=False)
     except urllib.error.HTTPError as e:
         if e.code == 403:
             raise RuntimeError(
                 "NC: 403 입니다. CSRF 토큰이나 세션 쿠키가 거부됐습니다. "
                 "목록 페이지의 <meta name=\"_csrf\"> 를 확인하세요.") from None
         raise
+    except Exception as first:
+        print(f"  · NC: 보통 방식 실패({type(first).__name__}). "
+              f"TLS 를 완화해 다시 시도합니다.")
+        time.sleep(3)
+        try:
+            j = _collect(loose=True)
+        except Exception:
+            # 원래 오류를 올립니다. 두 번째 오류보다 원인에 가깝습니다.
+            raise first
 
     res = j.get("result") or {}
     if str(res.get("State")) != "0":
