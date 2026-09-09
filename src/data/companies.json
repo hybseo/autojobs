@@ -1807,6 +1807,50 @@
    ],
    "enabled": true,
    "note": "넷마블컴퍼니 통합 채용. 넷마블네오·몬스터·에프앤씨 등 계열사가 한 사이트에 섞여 있고 companyNm 이 정확해 그대로 씁니다"
+  },
+  {
+   "name": "NC",
+   "slug": "nc",
+   "ats": "nc",
+   "code": "nc",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "엔씨소프트 그룹 통합 채용. NC·NC AI·퍼스트스파크게임즈·77ST. Games 가 한 사이트에 섞여 있고 companyNm 이 정확해 그대로 씁니다. API 호출에 CSRF 토큰이 필요해 목록 페이지를 먼저 읽습니다. 목록에 본문이 없어 원문 링크만 제공합니다"
+  },
+  {
+   "name": "NHN",
+   "slug": "nhn",
+   "ats": "nhn",
+   "code": "nhn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "NHN 그룹 통합 채용. 계열사 16곳이 한 API 로 나옵니다. 일본 법인은 제외하며 해외까지 원하면 overseas: true 를 넣으세요"
+  },
+  {
+   "name": "넥슨",
+   "slug": "nexon",
+   "ats": "nexon",
+   "code": "",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "넥슨 그룹 통합 채용. code 에 계열사 코드를 쉼표로 적으면 그 계열사만 담고, 비우면 전체입니다(NX 넥슨코리아, NO 네오플, AG 넥슨게임즈, HQ 넥슨에이치큐, DV 데브캣). 목록 응답에 본문이 함께 와 요청이 적습니다"
+  },
+  {
+   "name": "네오위즈",
+   "slug": "neowiz",
+   "ats": "neowiz",
+   "code": "neowiz",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "자체 채용 페이지. 공개 API 가 없어 HTML 의 script 안 serverData 배열을 꺼내 씁니다. 인재풀·프리랜서 상시 창구는 제외합니다"
   }
  ]
 }
