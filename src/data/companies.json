@@ -1834,12 +1834,12 @@
    "name": "넥슨",
    "slug": "nexon",
    "ats": "nexon",
-   "code": "",
+   "code": "NX,NO,AG,HQ,DV,MR,UV,SD,NU,MD,DQ,SE,XC",
    "industry": [
     "IT"
    ],
    "enabled": true,
-   "note": "넥슨 그룹 통합 채용. code 에 계열사 코드를 쉼표로 적으면 그 계열사만 담고, 비우면 전체입니다(NX 넥슨코리아, NO 네오플, AG 넥슨게임즈, HQ 넥슨에이치큐, DV 데브캣). 목록 응답에 본문이 함께 와 요청이 적습니다"
+   "note": "넥슨 그룹 통합 채용. code 를 비우면 fetch_jobs.py 의 필수항목 검사에 걸리므로(빈 문자열도 없는 값으로 봅니다) 계열사 코드를 모두 적습니다. NX 넥슨코리아, NO 네오플, AG 넥슨게임즈, HQ 넥슨에이치큐, DV 데브캣, MR 민트로켓, UV 넥슨유니버스, SD 넥슨네트웍스, NU 넥슨커뮤니케이션즈, MD 엔미디어플랫폼, DQ 딜로퀘스트, SE 넥슨스페이스, XC 엔엑스씨. 계열사가 늘면 career-gateway.nexon.com/career/v1/open/corps 로 확인해 추가하세요. 목록 응답에 본문이 함께 와 요청이 적습니다"
   },
   {
    "name": "네오위즈",
