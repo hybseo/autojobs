@@ -103,25 +103,47 @@ CAREER = {"경력": "경력", "신입": "신입", "경력무관": "무관",
 
 
 def _post(body):
-    """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    """끈질기게 시도합니다.
+
+    2026-09-09 깃허브 Actions 실행에서 403 이 났습니다. 같은 시각
+    브라우저에서는 어떤 헤더 조합이든 200 이었고, robots.txt 도 API 를
+    막지 않습니다(/recruit? 만 금지). 클라우드에서 오는 접속을 봇으로
+    보고 막는 것으로 추정됩니다.
+
+    그래서 브라우저가 보내는 헤더를 최대한 맞추고 몇 번 다시 걸어봅니다.
+    그래도 403 이면 잡히지 않는 것이 맞습니다. 우회하지 않습니다.
+    """
     req = urllib.request.Request(
         API, method="POST", data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json",
-                 "Accept": "application/json",
+                 "Accept": "application/json, text/plain, */*",
+                 "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
                  "Origin": "https://careers.nexon.com",
-                 "Referer": "https://careers.nexon.com/",
+                 "Referer": "https://careers.nexon.com/recruit",
+                 "Connection": "close",
                  "User-Agent": UA})
     last = None
     for i in range(3):
         try:
-            with urllib.request.urlopen(req, timeout=25) as r:
+            with urllib.request.urlopen(req, timeout=40) as r:
                 return json.load(r)
-        except urllib.error.HTTPError:
+        except urllib.error.HTTPError as e:
+            if e.code == 403:
+                # 몇 초 쉬었다 한 번 더 걸어봅니다. 그래도 같으면 포기합니다.
+                last = e
+                if i < 2:
+                    time.sleep(5 * (i + 1))
+                    continue
+                raise RuntimeError(
+                    "넥슨: 403 입니다. 서버가 이 접속을 막고 있습니다. "
+                    "브라우저에서는 열리므로 공고가 없는 것은 아닙니다. "
+                    "계속 실패하면 companies.json 에서 enabled 를 false 로 "
+                    "두고 이유를 적어두세요.") from None
             raise
         except Exception as e:
             last = e
             if i < 2:
-                time.sleep(2 + i * 2)
+                time.sleep(3 * (i + 1))
     raise last
 
 

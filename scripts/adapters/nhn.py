@@ -113,6 +113,18 @@ def _get(url):
     raise last
 
 
+def _int(v):
+    """숫자로 바꿉니다. 못 바꾸면 0.
+
+    NHN 은 paging.totalSize 를 문자열("69")로 줍니다. 정수와 그대로
+    비교하면 터지므로 반드시 이걸 거쳐야 합니다.
+    """
+    try:
+        return int(str(v).strip())
+    except (TypeError, ValueError):
+        return 0
+
+
 def _date(v):
     """'2026-09-09T23:59:00' → '2026-09-09'.
 
@@ -172,7 +184,10 @@ def list_open(overseas=False):
         j = _get(f"{API}?page={page}&size={PAGE}")
         got = j.get("result") or []
         rows += got
-        total = ((j.get("paging") or {}).get("totalSize")) or 0
+        # totalSize 가 숫자가 아니라 문자열("69")로 옵니다.
+        # 브라우저 콘솔에서는 숫자처럼 보여 놓치기 쉽습니다. 그대로
+        # 비교하면 '>=' not supported between 'int' and 'str' 이 납니다.
+        total = _int(((j.get("paging") or {}).get("totalSize")))
         if not got or len(rows) >= total:
             break
         page += 1
