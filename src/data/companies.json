@@ -1851,6 +1851,61 @@
    ],
    "enabled": true,
    "note": "자체 채용 페이지. 공개 API 가 없어 HTML 의 script 안 serverData 배열을 꺼내 씁니다. 인재풀·프리랜서 상시 창구는 제외합니다"
+  },
+  {
+   "name": "더존ICT그룹",
+   "slug": "douzone",
+   "ats": "douzone",
+   "code": "douzone",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "더존비즈온을 포함한 더존ICT그룹 통합 채용. 목록 API 가 마감된 공고까지 전부 주므로 접수기간으로 걸러야 합니다(opbl_yn 은 마감된 것도 Y 라 못 씁니다). 본문이 PNG 이미지라 원문 링크만 제공합니다"
+  },
+  {
+   "name": "시프트업",
+   "slug": "shiftup",
+   "ats": "shiftup",
+   "code": "shiftup",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임(스텔라 블레이드·승리의 여신 니케). 코스피. 그리팅을 자체 도메인으로 쓰지만 그리팅 목록 페이지가 열려 있지 않아 greeting 어댑터를 쓸 수 없습니다. 목록은 자사 페이지 HTML, 본문은 그리팅 상세에서 가져옵니다"
+  },
+  {
+   "name": "SOOP",
+   "slug": "soop",
+   "ats": "soop",
+   "code": "soop",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "라이브 스트리밍(구 아프리카TV). 코스피. 자체 채용 사이트 HTML 파싱. 회사정보 칸에 SOOP·숲이스포츠가 섞여 있어 그 값을 회사명으로 씁니다"
+  },
+  {
+   "name": "루닛",
+   "slug": "lunit",
+   "ats": "workable",
+   "code": "lunit",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 의료영상 진단. 코스피. Workable ATS. 일본 법인 공고가 섞여 있어 국내만 담으며 해외까지 원하면 overseas: true 를 넣으세요"
+  },
+  {
+   "name": "골프존",
+   "slug": "golfzon",
+   "ats": "recruiter",
+   "code": "golfzon",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "스크린골프. 코스닥. 리크루터 ATS 라 기존 어댑터를 그대로 씁니다. 참고로 /career/home 에는 '진행 중인 공고가 없어요' 위젯이 뜨지만 실제 목록은 /career/job 에 있습니다. 2026-09-09 확인 시점 접수중 7건"
   }
  ]
 }
