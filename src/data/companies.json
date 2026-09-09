@@ -1785,6 +1785,28 @@
    ],
    "enabled": true,
    "note": "원익로보틱스 포함"
+  },
+  {
+   "name": "다우기술",
+   "slug": "daou-tech",
+   "ats": "daou",
+   "code": "daou",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "자체 채용 사이트. 응답이 XML 입니다. 목록 API 의 comNm 필드가 'LS전선' 으로 잘못 내려오므로 회사명은 이 name 을 씁니다"
+  },
+  {
+   "name": "넷마블",
+   "slug": "netmarble",
+   "ats": "netmarble",
+   "code": "netmarble",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "넷마블컴퍼니 통합 채용. 넷마블네오·몬스터·에프앤씨 등 계열사가 한 사이트에 섞여 있고 companyNm 이 정확해 그대로 씁니다"
   }
  ]
 }
