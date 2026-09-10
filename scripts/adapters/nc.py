@@ -104,8 +104,24 @@ TRIES = 4
 CAREER = {"경력": "경력", "신입": "신입", "신입/경력": "신입/경력",
           "무관": "무관", "단기": "무관", "인턴": "무관"}
 
-CSRF = re.compile(r'name="_csrf"\s+content="([^"]+)"')
-CSRF_ALT = re.compile(r'content="([^"]+)"\s+name="_csrf"')
+# CSRF 토큰을 찾는 식.
+#
+# 주의: 서버가 내려주는 원본 HTML 은 이렇게 생겼습니다.
+#
+#     <meta name="_csrf" content= "138bac2c-fa6d-44ba-8e3d-4a50d33932ff" />
+#                               ↑ 등호 뒤에 공백이 있습니다
+#
+# 브라우저 개발자도구로 보면 정규화되어 공백이 안 보입니다. 그래서
+# content=" 로만 찾다가 토큰을 못 잡았습니다.
+#
+#     ! NC: CSRF 토큰을 찾지 못했습니다. 받은 HTML 146000자 · '_csrf' 2회
+#
+# 등호 앞뒤 공백과 홑/겹따옴표를 모두 허용합니다. name 과 content 의
+# 순서가 바뀌는 경우도 대비해 두 벌을 둡니다.
+CSRF = re.compile(
+    r'name\s*=\s*["\']_csrf["\'][^>]*?content\s*=\s*["\']([^"\']+)["\']', re.I)
+CSRF_ALT = re.compile(
+    r'content\s*=\s*["\']([^"\']+)["\'][^>]*?name\s*=\s*["\']_csrf["\']', re.I)
 
 
 def _loose_ctx():
