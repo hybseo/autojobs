@@ -1917,6 +1917,29 @@
    ],
    "enabled": true,
    "note": "전선·해저케이블. LS 계열. SAP SuccessFactors ATS 라 successfactors 어댑터를 씁니다. code 는 채용 사이트 도메인입니다. 마감일을 주지 않아 전부 상시채용으로 표시됩니다"
+  },
+  {
+   "name": "동진쎄미켐",
+   "slug": "dongjin",
+   "ats": "inhr",
+   "code": "CO202504082484,dongjin",
+   "industry": [
+    "반도체",
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "포토레지스트·반도체 소재. 코스닥. inhr(careerlink) ATS. code 는 '회사번호,사이트이름' 두 값입니다. 앞은 API 에 보낼 coNo, 뒤는 원문 주소를 만들 하위도메인입니다. 본문이 이미지라 원문 링크만 제공합니다"
+  },
+  {
+   "name": "HPSP",
+   "slug": "hpsp",
+   "ats": "hpsp",
+   "code": "hpsp",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "고압 수소 어닐링 장비. 코스닥. 그누보드 게시판이지만 포지션이 하나씩 특정되어 있고 본문에 담당업무·자격요건이 제대로 적혀 있어 담습니다. 전부 '채용시 마감'이라 상시채용으로 표시됩니다. 게시일이 오래돼 보여도 마감이 아니니 날짜로 거르지 마세요"
   }
  ]
 }
