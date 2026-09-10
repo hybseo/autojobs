@@ -31,7 +31,20 @@ const { job } = Astro.props;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const pageUrl = `${site}/job/${job.id}/`;
 const d = daysLeft(job);
-const closed = d <= 0 && !!job.closesAt;
+/*
+ * 마감 판정.
+ *
+ * d < 0 이어야 합니다. d <= 0 으로 두면 오늘 마감인 공고가 마감으로
+ * 처리됩니다. daysLeft 는 마감일이 오늘이면 0 을 돌려주기 때문입니다.
+ *
+ * 실제로 그런 적이 있습니다. 목록에는 "오늘 마감" 으로 멀쩡히 떠 있는데
+ * 눌러 들어가면 "이 공고는 마감되었습니다" 가 뜨고 지원 버튼이 사라졌습니다.
+ * 아직 접수가 열려 있는 자리인데 구직자를 돌려보낸 것입니다.
+ *
+ * lib.js 의 openJobs 는 parseDate(closesAt) >= TODAY 로 오늘 마감을
+ * 진행중으로 봅니다. 이 파일도 같은 기준이어야 합니다.
+ */
+const closed = d < 0 && !!job.closesAt;
 const co = byCompany(job.companySlug);
 
 // 마감된 공고는 구조화 데이터를 넣지 않습니다.
