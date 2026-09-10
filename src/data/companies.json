@@ -1906,6 +1906,17 @@
    ],
    "enabled": true,
    "note": "스크린골프. 코스닥. 리크루터 ATS 라 기존 어댑터를 그대로 씁니다. 참고로 /career/home 에는 '진행 중인 공고가 없어요' 위젯이 뜨지만 실제 목록은 /career/job 에 있습니다. 2026-09-09 확인 시점 접수중 7건"
+  },
+  {
+   "name": "LS전선",
+   "slug": "lscable",
+   "ats": "successfactors",
+   "code": "careers.lscablebiz.com",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "전선·해저케이블. LS 계열. SAP SuccessFactors ATS 라 successfactors 어댑터를 씁니다. code 는 채용 사이트 도메인입니다. 마감일을 주지 않아 전부 상시채용으로 표시됩니다"
   }
  ]
 }
