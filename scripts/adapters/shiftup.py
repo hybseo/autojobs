@@ -3,84 +3,123 @@
 시프트업(shiftup.co.kr) 채용 수집기.
 
 목록  GET https://shiftup.co.kr/recruit/recruit.php
-상세  GET https://career.shiftup.co.kr/ko/o/{openingId}
 
-왜 greeting 어댑터를 쓰지 않는가
+요청 한 번이면 끝납니다. 서버가 내려주는 HTML 안에 제목·직군·경력·
+고용형태·본문이 전부 들어 있습니다. 상세 페이지를 따로 읽지 않습니다.
+
+브라우저 화면을 보고 짜면 안 됩니다 — 실제로 그래서 0건이 났습니다
+------------------------------------------------------------------
+처음에는 지원 버튼의 그리팅 주소(/ko/o/{번호})에서 공고 번호를 뽑아
+쓰도록 짰습니다. 개발자도구로 보면 분명히 그 링크가 있었습니다.
+
+그런데 2026-09-10 수집에서 0건이 나왔습니다. 서버가 내려주는 원본
+HTML 을 그대로 받아 보니 "/o/" 가 한 번도 나오지 않았습니다.
+그 링크는 자바스크립트가 나중에 만들어 넣는 것이었습니다.
+
+개발자도구에 보이는 것은 자바스크립트가 다 돌고 난 뒤의 모습입니다.
+수집기는 그 전 상태를 받습니다. 서버 응답을 직접 확인하고 짜세요.
+
+다행히 원본 HTML 에 본문까지 다 들어 있어 그리팅에 갈 이유가 없습니다.
+공고 51건이면 51번 왕복할 것을 한 번으로 끝냅니다.
+
+함정 — 마감된 공고가 같이 옵니다
 --------------------------------
-시프트업은 그리팅(greetinghr)을 자체 도메인(career.shiftup.co.kr)으로
-씁니다. 그러면 greeting.py 에 "domain" 만 적으면 될 것 같지만 안 됩니다.
+2026-09-10 기준 recruit_list 블록이 185개인데 화면에는 51건만 보입니다.
+서버가 지난 공고까지 전부 보내고 자바스크립트가 걸러내기 때문입니다.
 
-greeting.py 는 루트 /ko 를 읽어 __NEXT_DATA__ 의 openings 배열을 꺼냅니다.
-그런데 시프트업은 그리팅 쪽 목록 페이지를 열어두지 않았습니다.
+구분은 블록 첫머리의 상태 표시입니다.
 
-    career.shiftup.co.kr/ko        페이지를 찾을 수 없습니다
-    career.shiftup.co.kr/ko/home   페이지를 찾을 수 없습니다
-    career.shiftup.co.kr/ko/guide  페이지를 찾을 수 없습니다
+    <span class='status ing'>진행중</span>    ← 51건
+    <span class='status'>마감</span>          ← 134건
 
-개별 공고(/ko/o/{id})만 열립니다. 목록은 자사 홈페이지에서만 보여주고
-지원 단계에서 그리팅으로 넘기는 설정입니다.
+주의: class 가 홑따옴표(')이고 뒤에 ing 가 더 붙습니다. 겹따옴표로만
+찾으면 하나도 못 잡습니다. 아래 정규식이 둘 다 받습니다.
 
-그래서 목록은 자사 페이지 HTML 에서 읽고, 본문은 그리팅 상세에서
-가져옵니다. greeting.py 를 고쳐 이 경우를 지원하게 만들 수도 있지만,
-이미 40여 개사가 잘 도는 어댑터를 건드리는 것은 위험이 큽니다.
+이걸 안 거르면 마감된 공고 134건이 진행중으로 올라갑니다.
 
-목록 HTML 구조 (2026-09-09 확인)
---------------------------------
+블록 구조 (2026-09-10 확인)
+---------------------------
     <div class="recruit_list">
       <div class="recruit_title">
         <div class="tit">
-          <span class="status">신규 프로젝트</span>   프로젝트/부문
-          <h4>3D 캐릭터 모델러</h4>                    공고 제목
+          <span class='status ing'>진행중</span>
+          <h4>3D 캐릭터 모델러</h4>
         </div>
         <ul>
-          <li>Artist</li>          직군
-          <li>3D 캐릭터 모델러</li>  세부 직무
-          <li>3년 이상</li>         경력 요건
-          <li>정규직</li>           고용형태
+          <li>3D 캐릭터 모델러</li>   세부 직무
+          <li>3년 이상</li>          경력 요건
+          <li>정규직</li>            고용형태
         </ul>
       </div>
-      <div class="btn"><a href="https://career.shiftup.co.kr/ko/o/235689/apply">
+      <div class="recruit_desc">
+        <div class="recruit_content"> ... 본문 ... </div>
+      </div>
     </div>
 
-51건 모두 li 가 정확히 4개였고 지원 링크에서 공고 번호를 얻을 수 있었습니다.
-화면이 바뀌면 0건이 되므로 아래에서 경고를 남깁니다.
+원문 주소에 대하여
+------------------
+공고마다 고유 주소가 없습니다. 지원 버튼의 그리팅 주소는 자바스크립트가
+만들고, 목록 페이지 자체에는 개별 주소가 없습니다. 그래서 모두 목록
+페이지로 보냅니다. 본문은 우리 상세 페이지에서 볼 수 있으니 구직자가
+헤매지는 않습니다.
+
+없는 주소를 지어내지 않습니다. 그리팅 번호를 추측해 붙이면 엉뚱한 회사
+공고로 보내게 됩니다.
+
+id 에 대하여
+------------
+공고 번호가 없어 제목으로 만듭니다. 같은 제목이 여럿이면 뒤에 순번을
+붙입니다. 파이썬 hash() 는 실행마다 값이 바뀌므로 쓰면 안 됩니다.
+매번 다른 id 가 나오면 어제 공고와 오늘 공고를 다른 것으로 봅니다.
 
 경력 표기에 대하여
 ------------------
-사이트가 "3년 이상", "5년 이하", "0~3년", "무관", "경력 3년 이상" 처럼
-제각각으로 적습니다. 신입/경력 구분이 아니라 연차 요건입니다.
-
-숫자가 있으면 경력, "무관" 이면 무관으로 봅니다. "0~3년" 은 신입도
-지원 가능하다는 뜻이라 신입/경력으로 봅니다. 애매하면 무관으로 접습니다.
-지어내지 않습니다.
+"3년 이상", "0~3년", "무관", "5년 이하" 처럼 연차로 적습니다.
+신입/경력 구분이 아닙니다. 0년부터 시작하면 신입도 받는다는 뜻으로
+읽고, 숫자가 있으면 경력, "무관" 이면 무관으로 봅니다.
 """
+import hashlib
 import html
-import json
 import re
-import ssl
 import time
 import urllib.error
 import urllib.request
 
 LIST_URL = "https://shiftup.co.kr/recruit/recruit.php"
-GREETING = "https://career.shiftup.co.kr"
-DETAIL = GREETING + "/ko/o/{}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-NEXT_DATA = re.compile(
-    r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S)
-
-# 공고 한 덩어리. class 에 recruit_list 가 들어간 div 를 통째로 자릅니다.
-BLOCK = re.compile(
-    r'<div[^>]+class="[^"]*recruit_list[^"]*"[^>]*>(.*?)(?=<div[^>]+class="[^"]*recruit_list[^"]*"|</section>|</main>)',
+# 상태 표시. class 가 홑따옴표이고 'status ing' 처럼 뒤에 더 붙습니다.
+STATUS = re.compile(r"""class=['"]status[^'"]*['"][^>]*>([^<]{0,12})<""", re.I)
+TITLE = re.compile(r"<h4[^>]*>(.*?)</h4>", re.S | re.I)
+LI = re.compile(r"<li[^>]*>(.*?)</li>", re.S | re.I)
+# 본문. recruit_content 안쪽입니다.
+BODY = re.compile(
+    r'<div[^>]+class="[^"]*recruit_content[^"]*"[^>]*>(.*?)</div>\s*</div>',
     re.S | re.I)
-TITLE = re.compile(r'<h4[^>]*>(.*?)</h4>', re.S | re.I)
-STATUS = re.compile(r'class="[^"]*status[^"]*"[^>]*>(.*?)</span>', re.S | re.I)
-LI = re.compile(r'<li[^>]*>(.*?)</li>', re.S | re.I)
-OPENING = re.compile(r'/o/(\d+)')
+
+
+def _get(url):
+    """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml",
+        "Accept-Language": "ko-KR,ko;q=0.9",
+    })
+    last = None
+    for i in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return r.read().decode("utf-8", "replace")
+        except urllib.error.HTTPError:
+            raise
+        except Exception as e:
+            last = e
+            if i < 2:
+                time.sleep(2 + i * 2)
+    raise last
 
 
 def _text(s):
@@ -95,40 +134,6 @@ def strip_html(s):
     return re.sub(r"\n{2,}", "\n", html.unescape(s)).strip()
 
 
-def _get(url, _tries=3):
-    """페이지를 받아옵니다. 마지막 시도에서만 인증서 검증을 완화합니다.
-
-    그리팅 자체 도메인은 TLS 설정이 낡아 파이썬 기본값으로는 거부되는
-    경우가 있습니다(카카오게임즈·니어스랩에서 겪었습니다).
-    greeting.py 와 같은 처리입니다.
-    """
-    last = None
-    for i in range(_tries):
-        try:
-            req = urllib.request.Request(url, headers={
-                "User-Agent": UA,
-                "Accept": "text/html,application/xhtml+xml",
-                "Accept-Language": "ko-KR,ko;q=0.9",
-            })
-            ctx = None
-            if i == _tries - 1:
-                ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-                ctx.check_hostname = False
-                ctx.verify_mode = ssl.CERT_NONE
-                ctx.minimum_version = ssl.TLSVersion.TLSv1
-                try:
-                    ctx.set_ciphers("ALL:@SECLEVEL=0")
-                except ssl.SSLError:
-                    ctx.set_ciphers("DEFAULT@SECLEVEL=1")
-            with urllib.request.urlopen(req, timeout=25, context=ctx) as r:
-                return r.read().decode("utf-8", "replace")
-        except Exception as e:
-            last = e
-            if i < _tries - 1:
-                time.sleep(2 + i * 2)
-    raise last
-
-
 def _career(v):
     """연차 요건을 사이트 표기로 옮깁니다.
 
@@ -136,9 +141,7 @@ def _career(v):
     "0~3년"   → 신입/경력  그 외 → 무관
     """
     t = str(v or "").strip()
-    if not t:
-        return "무관"
-    if "무관" in t:
+    if not t or "무관" in t:
         return "무관"
     # 0년부터 시작하면 신입도 받는다는 뜻입니다.
     if re.match(r"^0\s*[~\-]", t):
@@ -152,61 +155,60 @@ def _career(v):
     return "무관"
 
 
-def _opening_info(oid):
-    """그리팅 상세에서 본문과 상태를 꺼냅니다. 실패하면 빈 값."""
-    try:
-        page = _get(DETAIL.format(oid))
-    except Exception:
-        return "", ""
-    m = NEXT_DATA.search(page)
-    if not m:
-        return "", ""
-    try:
-        data = json.loads(m.group(1))
-    except Exception:
-        return "", ""
+def _slug(title):
+    """제목으로 안정된 id 조각을 만듭니다.
 
-    queries = (data.get("props", {}).get("pageProps", {})
-               .get("dehydratedState", {}).get("queries", []) or [])
-    for q in queries:
-        key = json.dumps(q.get("queryKey") or [], ensure_ascii=False)
-        if "getOpeningById" not in key:
-            continue
-        d = (q.get("state") or {}).get("data") or {}
-        info = (d.get("data") or d).get("openingsInfo") or {}
-        return info.get("detail") or "", info.get("status") or ""
-    return "", ""
+    hash() 는 실행마다 값이 달라 쓰면 안 됩니다. md5 는 언제나 같습니다.
+    """
+    return hashlib.md5(title.encode("utf-8")).hexdigest()[:10]
 
 
 def list_open():
-    """공고 목록. probe 용으로 밖에서도 씁니다."""
+    """진행중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다."""
     page = _get(LIST_URL)
-    rows = []
-    for m in BLOCK.finditer(page):
-        chunk = m.group(1)
-        t = TITLE.search(chunk)
+    blocks = page.split('class="recruit_list"')[1:]
+
+    if not blocks:
+        # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다.
+        print(f"  ! 시프트업: 공고 블록을 찾지 못했습니다. ({LIST_URL})")
+        print(f"    받은 HTML {len(page)}자 · "
+              f"'recruit_list' {page.count('recruit_list')}회 · "
+              f"'<h4' {page.count('<h4')}회")
+        return []
+
+    rows, closed = [], 0
+    for b in blocks:
+        st = STATUS.search(b)
+        state = _text(st.group(1)) if st else ""
+        # 마감된 공고가 함께 옵니다. 진행중만 담습니다.
+        if state != "진행중":
+            closed += 1
+            continue
+
+        t = TITLE.search(b)
         if not t:
             continue
-        oid = OPENING.search(chunk)
-        lis = [_text(x) for x in LI.findall(chunk)]
+        title = _text(t.group(1))
+        if not title:
+            continue
+
+        lis = [_text(x) for x in LI.findall(b)]
+        m = BODY.search(b)
+
         rows.append({
-            "openingId": oid.group(1) if oid else "",
-            "title": _text(t.group(1)),
-            "status": _text(STATUS.search(chunk).group(1)) if STATUS.search(chunk) else "",
-            "group": lis[0] if len(lis) > 0 else "",
-            "role": lis[1] if len(lis) > 1 else "",
-            "career": lis[2] if len(lis) > 2 else "",
-            "employment": lis[3] if len(lis) > 3 else "",
+            "title": title,
+            "role": lis[0] if len(lis) > 0 else "",
+            "career": lis[1] if len(lis) > 1 else "",
+            "employment": lis[2] if len(lis) > 2 else "",
+            "body": m.group(1) if m else "",
         })
 
     if not rows:
-        # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다.
-        # 무엇을 받았는지 남겨야 다음에 정확히 손볼 수 있습니다.
-        print(f"  ! 시프트업: 공고를 하나도 찾지 못했습니다. ({LIST_URL})")
-        print(f"    받은 HTML {len(page)}자 · "
-              f"'recruit_list' {page.count('recruit_list')}회 · "
-              f"'<h4' {page.count('<h4')}회 · "
-              f"'/o/' {page.count('/o/')}회")
+        print(f"  ! 시프트업: 진행중 공고가 없습니다. "
+              f"(블록 {len(blocks)}개 중 마감 {closed}개) "
+              f"상태 표시가 바뀌었는지 확인하세요.")
+    else:
+        print(f"  · 시프트업: 블록 {len(blocks)}개 중 진행중 {len(rows)}건")
     return rows
 
 
@@ -217,50 +219,41 @@ def fetch(company):
 
     rows = list_open()
 
-    jobs = []
+    jobs, seen = [], {}
     for x in rows:
-        oid = x["openingId"]
-        if not oid:
-            # 지원 링크가 없으면 상세 주소를 만들 수 없습니다.
-            continue
-
-        raw, status = _opening_info(oid)
-        time.sleep(0.3)
-
-        # 그리팅 쪽에서 마감된 것으로 나오면 담지 않습니다.
-        if status and status != "OPEN":
-            continue
-
+        raw = x["body"]
         text = strip_html(raw)
-        # 본문이 이미지뿐이면 세부 직무를 읽을 수 없습니다. 원문으로 보냅니다.
+        # 본문이 이미지뿐이면 세부 직무를 읽을 수 없습니다.
         image_only = len(text) < 50 and "<img" in raw.lower()
 
-        # 프로젝트명을 제목 앞에 붙입니다. 어느 프로젝트인지가 중요한 회사입니다.
+        # 정규직이 아니면 제목에 표시합니다.
         title = x["title"]
-        proj = x["status"]
-        if proj and proj not in title:
-            title = f"[{proj}] {title}"
-        # 인턴 등 정규직이 아니면 표시합니다.
         emp = x["employment"]
         if emp and emp != "정규직" and emp not in title:
             title = f"{title} ({emp})"
 
+        # 공고 번호가 없어 제목으로 만듭니다. 같은 제목이 여럿이면 순번을 붙입니다.
+        base = _slug(x["title"])
+        seen[base] = seen.get(base, 0) + 1
+        jid = base if seen[base] == 1 else f"{base}-{seen[base]}"
+
         jobs.append({
-            "id": f"shiftup-{oid}",
+            "id": f"shiftup-{jid}",
             "unit": "공고",
             "company": name,
             "companySlug": slug,
-            # 근무지를 목록에 주지 않습니다. 지어내지 않습니다.
-            "location": "",
             "title": title,
+            # 근무지를 주지 않습니다. 지어내지 않습니다.
+            "location": "",
             "career": _career(x["career"]),
-            # 게시일·마감일을 목록에 주지 않습니다. 상시채용으로 표시됩니다.
+            # 게시일·마감일을 주지 않습니다. 상시채용으로 표시됩니다.
             "postedAt": "",
             "closesAt": "",
             "dday": None,
             "multiRole": image_only,
             "sourceTitle": "",
-            "sourceUrl": DETAIL.format(oid),
+            # 공고마다 고유 주소가 없습니다. 목록으로 보냅니다.
+            "sourceUrl": LIST_URL,
             "description": raw if not image_only else "",
         })
 
