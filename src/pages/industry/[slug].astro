@@ -24,6 +24,15 @@ const { slug } = Astro.params;
 const ind = byIndustry(slug);
 const jobs = [...ind.jobs].sort(byDeadline);
 const cos = [...new Set(jobs.map((j) => j.company))];
+
+/*
+ * 기업 이름을 몇 개까지 먼저 보여줄지.
+ *
+ * IT 는 44곳, 반도체는 39곳이라 전부 펼치면 이름만 화면 두세 줄을 넘게
+ * 차지하고, 정작 보러 온 공고 목록이 아래로 밀립니다. 열두 개면 두 줄
+ * 정도라 "어떤 회사들이 있구나" 를 파악하기에 충분합니다.
+ */
+const FOLD_AT = 12;
 const alwaysN = jobs.filter(isAlways).length;
 const deadlineN = jobs.length - alwaysN;
 
@@ -55,9 +64,17 @@ const schema = {
 
   <main class="wrap">
     <div class="section-h">이 분야 기업</div>
-    <div class="chips cos">
-      {cos.map((n) => <span class="chip">{n}</span>)}
+    <div class="chips cos" id="cos" data-open="false">
+      {cos.map((n, i) => (
+        <span class="chip" data-extra={i >= FOLD_AT ? 'y' : null}>{n}</span>
+      ))}
     </div>
+    {cos.length > FOLD_AT && (
+      <button type="button" id="cos-toggle" class="cos-more"
+              aria-expanded="false" aria-controls="cos">
+        기업 {cos.length - FOLD_AT}곳 더 보기
+      </button>
+    )}
 
     <div class="section-h">진행중인 채용</div>
     {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
@@ -76,8 +93,40 @@ const schema = {
   </main>
 </Base>
 
+<script>
+  /*
+   * 기업 이름 더 보기 / 접기.
+   *
+   * 자바스크립트가 막혀 있어도 이름은 모두 보입니다. 아래 CSS 가 접는 일을
+   * 하는데, 그 CSS 는 data-open="false" 일 때만 적용되고 이 값은 서버가
+   * 미리 넣어둡니다. 스크립트가 하는 일은 그 값을 뒤집는 것뿐입니다.
+   */
+  const box = document.getElementById('cos');
+  const btn = document.getElementById('cos-toggle');
+  if (box && btn) {
+    const hidden = box.querySelectorAll('[data-extra]').length;
+    btn.addEventListener('click', () => {
+      const open = box.dataset.open === 'true';
+      box.dataset.open = open ? 'false' : 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      btn.textContent = open ? `기업 ${hidden}곳 더 보기` : '접기';
+    });
+  }
+</script>
+
 <style>
   /* 이 분야 기업 목록. 누르는 필터가 아니라 보여주기용이라 커서를 바꾸지 않습니다. */
   .chips.cos { margin-bottom: 8px; }
   .chips.cos .chip { cursor: default; }
+
+  /* 접힌 상태에서만 뒤쪽 이름을 숨깁니다. 자바스크립트가 없으면 모두 보입니다. */
+  .chips.cos[data-open="false"] .chip[data-extra] { display: none; }
+
+  .cos-more {
+    display: inline-block; margin: 0 0 8px;
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 2px;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--mono); font-size: 12.5px; cursor: pointer;
+  }
+  .cos-more:hover { border-color: var(--steel); color: var(--steel); }
 </style>
