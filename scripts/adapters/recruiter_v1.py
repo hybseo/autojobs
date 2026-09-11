@@ -17,58 +17,52 @@ recruiter.py 와 무엇이 다른가
 
 2026-09-11 확인 기준 구버전을 쓰는 곳
     효성그룹     hyosung     계열사 여럿
-    JW중외제약    jwholdings  JW생명과학 등 포함
+    JW중외제약    jwholdings  JW생명과학·JW케미타운 등 포함
     메디톡스      medytox
-    차바이오텍     chamc
 
-화면 HTML 을 긁으면 안 됩니다 — 실제로 그래서 0건이 났습니다
-------------------------------------------------------------
-처음에는 목록 화면의 <li> 를 파싱하도록 짰습니다. 개발자도구로 보면
-data-jobnoticesn 속성이 분명히 10개 있었습니다.
+함정 1 — JSON 이 아니라 form 으로 보내야 합니다
+-----------------------------------------------
+경로가 .json 으로 끝나서 JSON 본문을 받을 것처럼 보이지만 아닙니다.
+application/x-www-form-urlencoded 로 보내야 합니다.
 
-그런데 2026-09-11 수집에서 네 곳 모두 0건이 나왔습니다. 서버가 주는 HTML 을
-그대로 받아 보니 <div class="list-bbs"> 빈 껍데기뿐이고 그 안에 <ul> 조차
-없었습니다. 공고는 자바스크립트가 나중에 채워 넣는 것이었습니다.
+JSON 으로 보내면 오류가 나지 않고 200 을 돌려주는데, 파라미터를 전부
+무시하고 기본값(1쪽 5건)만 줍니다. 그래서 페이지를 넘겨도 같은 5건이
+계속 오고, 그것을 쌓으면 같은 공고가 수십 번 담깁니다.
 
-개발자도구에 보이는 것은 자바스크립트가 다 돌고 난 뒤의 모습입니다.
-수집기는 그 전 상태를 받습니다. 서버 응답을 직접 확인하고 짜세요.
+2026-09-11 수집에서 실제로 그랬습니다.
 
-숨은 JSON 경로를 어떻게 찾았는가
---------------------------------
-XHR 후킹은 새로고침 때마다 풀려서 초기 요청을 놓쳤습니다. 대신
-performance.getEntriesByType('resource') 로 이미 끝난 요청 기록을 뒤져
-찾았습니다. 비슷한 상황에서 쓸 만한 방법입니다.
+    JW중외제약  160건  (실제 4건 × 잘못된 반복)
+    효성그룹    120건  (실제 3건)
+    메디톡스     40건  (실제 1건)
 
-함정 1 — GET 은 받지 않습니다
------------------------------
-POST 로만 응답합니다. GET 으로 부르면 이렇게 돌려줍니다.
+페이지 반복 대신 pageSize 를 크게 주세요
+----------------------------------------
+form 으로 제대로 보내면 pageSize 가 먹습니다. 100 을 주면 한 번에 다 옵니다.
+JW 기준 lastPage 가 1 이 되어 페이지를 넘길 일이 없어집니다.
 
-    {"code":"HttpRequestMethodNotSupportedException", ...}
+함정 2 — jobnoticeStateCode 만으로는 부족합니다
+-----------------------------------------------
+10 을 주면 "진행중" 쪽만 추리지만 최근 마감된 것이 섞여 옵니다.
+JW 기준 25건이 왔고 그중 접수중은 4건이었습니다.
+receiptState 가 "접수중" 인 것만 담아 한 번 더 거릅니다.
 
-함정 2 — 한 쪽에 5건씩 고정입니다
----------------------------------
-maxRows·pageSize·limit·rows 를 다 넣어 봤지만 전부 무시하고 5건만 줍니다.
-currentPage 를 올려 가며 여러 번 받아야 합니다.
-
-JW중외제약은 전체 509건(102쪽)이었습니다. 다만 접수중은 앞쪽에 몰려 있어
-끝까지 갈 필요는 없습니다. 아래에서 접수중이 한 건도 없는 쪽이 두 번
-연달아 나오면 멈춥니다.
-
-함정 3 — 마감된 공고가 함께 옵니다
-----------------------------------
-receiptState 가 "접수중" 인 것만 담습니다. 신버전의 submissionStatus 와
-같은 역할입니다. 2026-09-11 JW 기준 20건 중 4건이 접수마감이었습니다.
-
-함정 4 — 날짜가 자바 객체로 옵니다
+함정 3 — 날짜가 자바 객체로 옵니다
 ----------------------------------
     "applyEndDate": {"year":126, "month":8, "date":20, "time":1789916399000, ...}
 
 year 는 1900 을 더해야 하고(126 → 2026), month 는 0부터 셉니다(8 → 9월).
 헷갈리기 쉬우니 time(밀리초)만 쓰고 나머지는 보지 않습니다.
 
+숨은 경로를 어떻게 찾았는가
+---------------------------
+목록 화면의 HTML 에는 <div class="list-bbs"> 빈 껍데기뿐이고 공고는
+자바스크립트가 채웁니다. XHR 후킹은 새로고침 때마다 풀려 초기 요청을
+놓쳤는데, performance.getEntriesByType('resource') 로 이미 끝난 요청
+기록을 뒤져 찾았습니다. 파라미터 이름과 형식도 같은 방법으로 확인했습니다.
+
 응답 구조 (2026-09-11 실제 확인)
 --------------------------------
-{ "pageUtil": {"currentPage":1, "lastPage":102, "recordCount":509, ...},
+{ "pageUtil": {"currentPage":1, "lastPage":1, "recordCount":25, ...},
   "list": [ ... ] }
 
     jobnoticeSn      266223       공고 번호
@@ -104,8 +98,8 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 KST = timezone(timedelta(hours=9))
 
-MAX_PAGES = 40      # 한 쪽 5건이니 200건까지 봅니다.
-EMPTY_STOP = 2      # 접수중이 없는 쪽이 이만큼 연달아 나오면 멈춥니다.
+PAGE_SIZE = 100   # form 으로 보내면 먹습니다. 대개 한 번에 다 옵니다.
+MAX_PAGES = 10    # 그래도 넘칠 때를 위한 안전장치.
 
 # recruitClassName → 사이트 career 표기.
 CAREER = {"신입": "신입", "경력": "경력", "신입/경력": "신입/경력",
@@ -126,11 +120,12 @@ def _base(code):
     return f"https://{c}.recruiter.co.kr"
 
 
-def _post(url, body):
-    """POST 로만 응답합니다. GET 은 받지 않습니다."""
+def _post(url, params):
+    """form 인코딩으로 보냅니다. JSON 으로 보내면 파라미터가 무시됩니다."""
+    data = urllib.parse.urlencode(params).encode()
     req = urllib.request.Request(
-        url, method="POST", data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json",
+        url, method="POST", data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                  "Accept": "application/json",
                  "X-Requested-With": "XMLHttpRequest",
                  "Accept-Language": "ko-KR,ko;q=0.9",
@@ -178,37 +173,50 @@ def list_open(code):
     base = _base(code)
     url = base + "/app/jobnotice/list.json"
 
-    rows, closed, empty_run, total = [], 0, 0, None
+    rows, seen, closed, total = [], set(), 0, None
     for p in range(1, MAX_PAGES + 1):
-        j = _post(url, {"currentPage": p})
-        got = (j.get("list") or [])
+        j = _post(url, {
+            "recruitClassSn": "", "recruitClassName": "",
+            # 10 = 진행중. 최근 마감된 것이 섞여 오므로 아래에서 다시 거릅니다.
+            "jobnoticeStateCode": "10",
+            "pageSize": str(PAGE_SIZE),
+            "searchByNameOnly": "true",
+            "currentPage": str(p),
+        })
+        got = j.get("list") or []
+        page_util = j.get("pageUtil") or {}
         if total is None:
-            total = (j.get("pageUtil") or {}).get("recordCount")
+            total = page_util.get("recordCount")
         if not got:
             break
 
-        live = [x for x in got if str(x.get("receiptState") or "").strip() == "접수중"]
-        closed += len(got) - len(live)
-        rows += live
+        added = 0
+        for x in got:
+            sn = x.get("jobnoticeSn")
+            # 같은 공고가 두 번 담기지 않게 합니다. 페이지가 안 넘어가는
+            # 서버를 만나도 숫자가 부풀지 않습니다.
+            if sn in seen:
+                continue
+            seen.add(sn)
+            added += 1
+            if str(x.get("receiptState") or "").strip() == "접수중":
+                rows.append(x)
+            else:
+                closed += 1
 
-        # 접수중은 앞쪽에 몰려 있습니다. 빈 쪽이 이어지면 멈춥니다.
-        empty_run = empty_run + 1 if not live else 0
-        if empty_run >= EMPTY_STOP:
-            break
-
-        last_page = (j.get("pageUtil") or {}).get("lastPage") or 0
-        if p >= last_page:
+        last_page = page_util.get("lastPage") or 1
+        if added == 0 or p >= last_page:
             break
         time.sleep(0.3)
 
     if not rows:
         print(f"  ! recruiter_v1({code}): 접수중 공고가 없습니다. ({url})")
-        print(f"    전체 {total}건 중 마감으로 걸러진 것 {closed}건.")
+        print(f"    받은 {len(seen)}건 중 마감 {closed}건. 전체 {total}건.")
         print(f"    0건이 계속되면 신버전으로 옮겼는지 확인하고 "
               f"recruiter 어댑터로 바꾸세요.")
-    elif closed:
+    else:
         print(f"  · recruiter_v1({code}): 접수중 {len(rows)}건 "
-              f"(마감 {closed}건 제외, 전체 {total}건)")
+              f"(받은 {len(seen)}건 중 마감 {closed}건 제외)")
     return rows
 
 
