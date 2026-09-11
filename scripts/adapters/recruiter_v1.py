@@ -2,104 +2,115 @@
 """
 리크루터(recruiter.co.kr) 구버전 수집기.
 
-목록  GET https://{code}.recruiter.co.kr/app/jobnotice/list
-상세  GET https://{code}.recruiter.co.kr/app/jobnotice/view?systemKindCode={종류}&jobnoticeSn={번호}
+목록  POST https://{code}.recruiter.co.kr/app/jobnotice/list.json
+원문  https://{code}.recruiter.co.kr/app/jobnotice/view?systemKindCode={종류}&jobnoticeSn={번호}
 
 recruiter.py 와 무엇이 다른가
 ------------------------------
 같은 회사(인크루트 리크루터)의 서비스인데 화면이 두 세대입니다.
 
-    신버전  /career/home        api-recruiter.recruiter.co.kr 의 JSON API
-    구버전  /app/jobnotice/list 서버가 그린 HTML
+    신버전  /career/home         api-recruiter.recruiter.co.kr 의 JSON API
+    구버전  /app/jobnotice/list  이 파일
 
-신버전용 어댑터(recruiter.py)로 구버전 회사를 부르면 400 이 떨어집니다.
-회사가 신버전으로 옮기면 이 어댑터가 0건이 되니, 그때는 recruiter.py 로
-바꾸고 code 만 옮기면 됩니다.
+신버전용 어댑터로 구버전 회사를 부르면 400 이 떨어집니다. 회사가 신버전으로
+옮기면 이 어댑터가 0건이 되니 그때는 recruiter.py 로 바꾸고 code 만 옮기세요.
 
 2026-09-11 확인 기준 구버전을 쓰는 곳
-    효성그룹     hyosung    접수중 3건 (계열사 여럿)
-    메디톡스      medytox    접수중 1건
-    JW중외제약    jwholdings
+    효성그룹     hyosung     계열사 여럿
+    JW중외제약    jwholdings  JW생명과학 등 포함
+    메디톡스      medytox
     차바이오텍     chamc
 
-목록 구조 (2026-09-11 효성 확인)
+화면 HTML 을 긁으면 안 됩니다 — 실제로 그래서 0건이 났습니다
+------------------------------------------------------------
+처음에는 목록 화면의 <li> 를 파싱하도록 짰습니다. 개발자도구로 보면
+data-jobnoticesn 속성이 분명히 10개 있었습니다.
+
+그런데 2026-09-11 수집에서 네 곳 모두 0건이 나왔습니다. 서버가 주는 HTML 을
+그대로 받아 보니 <div class="list-bbs"> 빈 껍데기뿐이고 그 안에 <ul> 조차
+없었습니다. 공고는 자바스크립트가 나중에 채워 넣는 것이었습니다.
+
+개발자도구에 보이는 것은 자바스크립트가 다 돌고 난 뒤의 모습입니다.
+수집기는 그 전 상태를 받습니다. 서버 응답을 직접 확인하고 짜세요.
+
+숨은 JSON 경로를 어떻게 찾았는가
 --------------------------------
-    <div class="list-bbs with-tab">
-      <ul>
-        <li>
-          <div class="list-bbs-type">공채</div>
-          <h2 class="list-bbs-title">
-            <a href="/app/jobnotice/view?..."
-               data-jobnoticesn="265361"
-               data-systemkindcode="MRS2">2026 하반기 효성그룹 신입·경력사원 채용</a>
-          </h2>
-          <span class="list-bbs-date">2026.09.07(월) 09:00 ~ 2026.09.20(일) 23:59</span>
-          <span class="list-bbs-dday">D-9</span>
-          <div class="list-bbs-status"><span class="text-label open">접수중</span></div>
-        </li>
+XHR 후킹은 새로고침 때마다 풀려서 초기 요청을 놓쳤습니다. 대신
+performance.getEntriesByType('resource') 로 이미 끝난 요청 기록을 뒤져
+찾았습니다. 비슷한 상황에서 쓸 만한 방법입니다.
 
-공고 번호는 href 를 파싱하지 말고 data-jobnoticesn 속성에서 꺼냅니다.
-주소 형식이 바뀌어도 이 속성은 잘 안 바뀝니다.
+함정 1 — GET 은 받지 않습니다
+-----------------------------
+POST 로만 응답합니다. GET 으로 부르면 이렇게 돌려줍니다.
 
-함정 1 — 마감된 공고가 함께 옵니다
+    {"code":"HttpRequestMethodNotSupportedException", ...}
+
+함정 2 — 한 쪽에 5건씩 고정입니다
+---------------------------------
+maxRows·pageSize·limit·rows 를 다 넣어 봤지만 전부 무시하고 5건만 줍니다.
+currentPage 를 올려 가며 여러 번 받아야 합니다.
+
+JW중외제약은 전체 509건(102쪽)이었습니다. 다만 접수중은 앞쪽에 몰려 있어
+끝까지 갈 필요는 없습니다. 아래에서 접수중이 한 건도 없는 쪽이 두 번
+연달아 나오면 멈춥니다.
+
+함정 3 — 마감된 공고가 함께 옵니다
 ----------------------------------
-2026-09-11 효성 기준 10건 중 접수중은 3건뿐이었고 나머지는 접수마감이었습니다.
-text-label 의 글자가 "접수중" 인 것만 담습니다.
+receiptState 가 "접수중" 인 것만 담습니다. 신버전의 submissionStatus 와
+같은 역할입니다. 2026-09-11 JW 기준 20건 중 4건이 접수마감이었습니다.
 
-신버전의 submissionStatus 와 같은 역할입니다. 걸러내지 않으면 지난 공고가
-진행중으로 올라갑니다.
+함정 4 — 날짜가 자바 객체로 옵니다
+----------------------------------
+    "applyEndDate": {"year":126, "month":8, "date":20, "time":1789916399000, ...}
 
-함정 2 — 상세 주소에 값이 둘 필요합니다
----------------------------------------
-jobnoticeSn 만으로는 상세 페이지가 열리지 않습니다. systemKindCode 도
-함께 넘겨야 합니다. 회사마다 값이 다를 수 있어(효성은 MRS2) 목록에서
-읽은 것을 그대로 씁니다. 고정값으로 박아두지 마세요.
+year 는 1900 을 더해야 하고(126 → 2026), month 는 0부터 셉니다(8 → 9월).
+헷갈리기 쉬우니 time(밀리초)만 쓰고 나머지는 보지 않습니다.
+
+응답 구조 (2026-09-11 실제 확인)
+--------------------------------
+{ "pageUtil": {"currentPage":1, "lastPage":102, "recordCount":509, ...},
+  "list": [ ... ] }
+
+    jobnoticeSn      266223       공고 번호
+    jobnoticeName                 공고 제목
+    receiptState     접수중        접수 상태
+    systemKindCode   MRS2         상세 주소에 필요합니다
+    recruitClassName 수시          채용 구분
+    applyStartDate   {time: ...}  접수 시작
+    applyEndDate     {time: ...}  접수 마감
+    deadlineCount    9            남은 일수
 
 본문에 대하여
 ------------
-상세 페이지는 자바스크립트로 그려집니다. 서버가 주는 HTML 은 빈 껍데기라
-(효성 기준 6,780자) 본문을 가져올 수 없었습니다. description 을 비우고
-원문 링크로 보냅니다.
-
-삼성·한화·NC 어댑터와 같은 방침입니다. 본문이 없으면 자체 상세 페이지와
-JobPosting 스키마도 만들어지지 않습니다.
+상세 페이지도 자바스크립트로 그려집니다. 본문을 가져올 수 없어 원문 링크로
+보냅니다. 삼성·한화·NC 어댑터와 같은 방침입니다.
 
 계열사에 대하여
 --------------
-효성처럼 그룹 통합 채용이면 계열사 공고가 섞여 옵니다. 회사 구분 필드가
-없고 제목 앞 대괄호로만 표시되므로([효성티앤씨㈜] ...), 회사명은
-companies.json 의 name 을 그대로 씁니다.
+효성·JW 처럼 그룹 통합이면 계열사 공고가 섞여 옵니다. 회사 구분 필드가 없고
+제목 앞 대괄호로만 표시되므로([JW생명과학] ...) 회사명은 name 을 그대로 씁니다.
 """
-import html
+import json
 import re
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone, timedelta
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-# 공고 한 덩어리. list-bbs 안의 <li> 입니다.
-BLOCK = re.compile(r"<li[^>]*>(.*?)</li>", re.S | re.I)
-# 공고 링크. 번호와 종류를 속성에서 꺼냅니다.
-LINK = re.compile(
-    r'<a[^>]*?data-jobnoticesn="(\d+)"[^>]*?data-systemkindcode="([^"]*)"[^>]*>(.*?)</a>',
-    re.S | re.I)
-# 속성 순서가 반대인 경우도 대비합니다.
-LINK_ALT = re.compile(
-    r'<a[^>]*?data-systemkindcode="([^"]*)"[^>]*?data-jobnoticesn="(\d+)"[^>]*>(.*?)</a>',
-    re.S | re.I)
-STATUS = re.compile(r'class="[^"]*text-label[^"]*"[^>]*>([^<]{0,12})<', re.I)
-DATE = re.compile(r'class="[^"]*list-bbs-date[^"]*"[^>]*>(.*?)</', re.S | re.I)
-DDAY = re.compile(r'class="[^"]*list-bbs-dday[^"]*"[^>]*>([^<]{0,12})<', re.I)
-TYPE = re.compile(r'class="[^"]*list-bbs-type[^"]*"[^>]*>([^<]{0,20})<', re.I)
+KST = timezone(timedelta(hours=9))
 
-# list-bbs-type 값 → 사이트 career 표기.
+MAX_PAGES = 40      # 한 쪽 5건이니 200건까지 봅니다.
+EMPTY_STOP = 2      # 접수중이 없는 쪽이 이만큼 연달아 나오면 멈춥니다.
+
+# recruitClassName → 사이트 career 표기.
 CAREER = {"신입": "신입", "경력": "경력", "신입/경력": "신입/경력",
-          "경력무관": "무관", "무관": "무관", "공채": "신입/경력",
-          "상시채용": "무관", "인턴": "무관"}
+          "경력무관": "무관", "무관": "무관", "수시": "무관",
+          "공채": "신입/경력", "상시": "무관", "인턴": "무관"}
 
 
 def _base(code):
@@ -115,19 +126,20 @@ def _base(code):
     return f"https://{c}.recruiter.co.kr"
 
 
-def _get(url):
-    """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
-    req = urllib.request.Request(url, headers={
-        "User-Agent": UA,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "ko-KR,ko;q=0.9",
-        "Upgrade-Insecure-Requests": "1",
-    })
+def _post(url, body):
+    """POST 로만 응답합니다. GET 은 받지 않습니다."""
+    req = urllib.request.Request(
+        url, method="POST", data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json",
+                 "Accept": "application/json",
+                 "X-Requested-With": "XMLHttpRequest",
+                 "Accept-Language": "ko-KR,ko;q=0.9",
+                 "User-Agent": UA})
     last = None
     for i in range(3):
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
-                return r.read().decode("utf-8", "replace")
+                return json.load(r)
         except urllib.error.HTTPError:
             raise
         except Exception as e:
@@ -137,86 +149,66 @@ def _get(url):
     raise last
 
 
-def _text(s):
-    s = re.sub(r"<[^>]+>", " ", s or "")
-    return re.sub(r"\s+", " ", html.unescape(s)).strip()
-
-
-def _dates(v):
-    """'2026.09.07(월) 09:00 ~ 2026.09.20(일) 23:59' → 두 날짜."""
-    got = re.findall(r"(\d{4})\.(\d{1,2})\.(\d{1,2})", str(v or ""))
-    out = [f"{y}-{int(m):02d}-{int(d):02d}" for y, m, d in got[:2]]
-    while len(out) < 2:
-        out.append("")
-    return out[0], out[1]
+def _date(v):
+    """자바 날짜 객체에서 날짜만. time(밀리초)만 쓰고 year·month 는 보지 않습니다."""
+    if not isinstance(v, dict):
+        return ""
+    ms = v.get("time")
+    if not isinstance(ms, (int, float)):
+        return ""
+    try:
+        d = datetime.fromtimestamp(ms / 1000, KST)
+    except (ValueError, OSError, OverflowError):
+        return ""
+    if d.year >= 2100:   # 먼 미래는 상시채용을 뜻하는 가짜 값입니다.
+        return ""
+    return d.strftime("%Y-%m-%d")
 
 
 def _dday(v):
-    """'D-9' → 9. 부호를 그대로 읽으면 음수가 되어 마감으로 취급됩니다."""
-    t = str(v or "").strip()
-    if not t:
+    try:
+        n = int(v)
+    except (TypeError, ValueError):
         return None
-    if re.search(r"오늘|D-?DAY", t, re.I):
-        return 0
-    m = re.search(r"\d+", t)
-    return int(m.group(0)) if m else None
+    return n if n >= 0 else None
 
 
 def list_open(code):
     """접수중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다."""
     base = _base(code)
-    url = base + "/app/jobnotice/list"
-    page = _get(url)
+    url = base + "/app/jobnotice/list.json"
 
-    rows, closed = [], 0
-    for chunk in BLOCK.findall(page):
-        m = LINK.search(chunk)
-        if m:
-            sn, kind, title_html = m.group(1), m.group(2), m.group(3)
-        else:
-            m = LINK_ALT.search(chunk)
-            if not m:
-                continue
-            kind, sn, title_html = m.group(1), m.group(2), m.group(3)
+    rows, closed, empty_run, total = [], 0, 0, None
+    for p in range(1, MAX_PAGES + 1):
+        j = _post(url, {"currentPage": p})
+        got = (j.get("list") or [])
+        if total is None:
+            total = (j.get("pageUtil") or {}).get("recordCount")
+        if not got:
+            break
 
-        st = STATUS.search(chunk)
-        state = _text(st.group(1)) if st else ""
-        # 마감된 공고가 함께 옵니다. 접수중만 담습니다.
-        if state and state != "접수중":
-            closed += 1
-            continue
+        live = [x for x in got if str(x.get("receiptState") or "").strip() == "접수중"]
+        closed += len(got) - len(live)
+        rows += live
 
-        title = _text(title_html)
-        if not title:
-            continue
+        # 접수중은 앞쪽에 몰려 있습니다. 빈 쪽이 이어지면 멈춥니다.
+        empty_run = empty_run + 1 if not live else 0
+        if empty_run >= EMPTY_STOP:
+            break
 
-        d = DATE.search(chunk)
-        start, end = _dates(_text(d.group(1)) if d else "")
-        t = TYPE.search(chunk)
-        dd = DDAY.search(chunk)
-
-        rows.append({
-            "sn": sn,
-            "kind": kind,
-            "title": title,
-            "type": _text(t.group(1)) if t else "",
-            "start": start,
-            "end": end,
-            "dday": _dday(dd.group(1) if dd else ""),
-            "url": (f"{base}/app/jobnotice/view"
-                    f"?systemKindCode={urllib.parse.quote(kind)}&jobnoticeSn={sn}"),
-        })
+        last_page = (j.get("pageUtil") or {}).get("lastPage") or 0
+        if p >= last_page:
+            break
+        time.sleep(0.3)
 
     if not rows:
-        # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다.
-        print(f"  ! recruiter_v1({code}): 접수중 공고를 찾지 못했습니다. ({url})")
-        print(f"    받은 HTML {len(page)}자 · "
-              f"'list-bbs' {page.count('list-bbs')}회 · "
-              f"'data-jobnoticesn' {page.count('data-jobnoticesn')}회 · "
-              f"마감으로 걸러진 것 {closed}건")
-        print(f"    신버전으로 옮겼다면 recruiter 어댑터를 쓰세요.")
+        print(f"  ! recruiter_v1({code}): 접수중 공고가 없습니다. ({url})")
+        print(f"    전체 {total}건 중 마감으로 걸러진 것 {closed}건.")
+        print(f"    0건이 계속되면 신버전으로 옮겼는지 확인하고 "
+              f"recruiter 어댑터로 바꾸세요.")
     elif closed:
-        print(f"  · recruiter_v1({code}): 접수중 {len(rows)}건 (마감 {closed}건 제외)")
+        print(f"  · recruiter_v1({code}): 접수중 {len(rows)}건 "
+              f"(마감 {closed}건 제외, 전체 {total}건)")
     return rows
 
 
@@ -225,28 +217,36 @@ def fetch(company):
     name = company["name"]
     slug = company["slug"]
     code = company["code"]
+    base = _base(code)
 
     rows = list_open(code)
 
     jobs = []
     for x in rows:
+        sn = x.get("jobnoticeSn")
+        if not sn:
+            continue
+        kind = str(x.get("systemKindCode") or "").strip()
+
         jobs.append({
-            "id": f"recruiterv1-{slug}-{x['sn']}",
+            "id": f"recruiterv1-{slug}-{sn}",
             "unit": "공고",
             # 계열사 구분 필드가 없습니다. 등록한 이름을 씁니다.
             "company": name,
             "companySlug": slug,
-            "title": x["title"],
-            # 근무지를 목록에 주지 않습니다. 지어내지 않습니다.
+            "title": str(x.get("jobnoticeName") or "").strip(),
+            # 근무지를 주지 않습니다. 지어내지 않습니다.
             "location": "",
-            "career": CAREER.get(x["type"], "무관"),
-            "postedAt": x["start"],
-            "closesAt": x["end"],
-            "dday": x["dday"],
+            "career": CAREER.get(str(x.get("recruitClassName") or "").strip(), "무관"),
+            "postedAt": _date(x.get("applyStartDate")),
+            "closesAt": _date(x.get("applyEndDate")),
+            "dday": _dday(x.get("deadlineCount")),
             "multiRole": False,
             "sourceTitle": "",
-            "sourceUrl": x["url"],
-            # 상세가 자바스크립트로 그려져 본문을 가져올 수 없습니다. 원문으로 보냅니다.
+            "sourceUrl": (f"{base}/app/jobnotice/view"
+                          f"?systemKindCode={urllib.parse.quote(kind)}"
+                          f"&jobnoticeSn={sn}"),
+            # 상세도 자바스크립트로 그려집니다. 원문으로 보냅니다.
             "description": "",
         })
 
