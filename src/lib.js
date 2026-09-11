@@ -191,6 +191,7 @@ const INDUSTRY_SLUG = {
   '화학': 'chemical',
   '기계': 'machinery',
   '금융': 'finance',
+  '제약바이오': 'pharma-bio',
 };
 
 // slug → 회사 산업 목록
@@ -238,6 +239,7 @@ export const industrySlug = (name) =>
  *   반도체     KSIA 218곳 목록을 만들어 훑음        → 페이지 있음
  *   전기전자   KRX 상장사 295곳을 훑음              → 페이지 있음
  *   IT        KRX 상장사 231곳을 훑음              → 페이지 있음
+ *   제약바이오  시총 상위 제약·바이오·의료기기를 훑음   → 페이지 있음
  *
  * 소재·기계장비·물류·화학 태그도 붙어 있지만 페이지는 만들지
  * 않습니다. 그 산업을 겨냥해 회사를 모은 적이 없고, 그룹 계열사를
@@ -248,7 +250,7 @@ export const industrySlug = (name) =>
  * 제대로 파고들어 회사를 모으면 아래 목록에 한 줄 추가하는 것으로
  * 페이지가 열립니다.
  */
-const PAGE_INDUSTRIES = ['자동차부품', '반도체', '로봇', '전기전자', 'IT'];
+const PAGE_INDUSTRIES = ['자동차부품', '반도체', '로봇', '전기전자', 'IT', '제약바이오'];
 
 /** 페이지를 만들 산업만. 각 산업의 접수중 공고 수와 함께 돌려줍니다. */
 export const industries = () => {
