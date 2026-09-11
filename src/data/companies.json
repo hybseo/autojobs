@@ -497,7 +497,11 @@
     "SK바이오텍",
     "SK바이오사이언스",
     "SK플라즈마",
-    "SK케미칼"
+    "SK케미칼",
+    "SKC",
+    "SK넥실리스",
+    "SK피아이씨글로벌",
+    "ISC"
    ],
    "affiliateIndustry": {
     "SK on": [
@@ -538,6 +542,20 @@
     ],
     "SK케미칼": [
      "제약바이오"
+    ],
+    "SKC": [
+     "전기전자",
+     "소재"
+    ],
+    "SK넥실리스": [
+     "전기전자",
+     "소재"
+    ],
+    "SK피아이씨글로벌": [
+     "소재"
+    ],
+    "ISC": [
+     "반도체"
     ]
    },
    "industry": [
@@ -2170,6 +2188,96 @@
    ],
    "enabled": true,
    "note": "ADC 항암제. 코스닥. 나인하이어(잡코리아 계열) ATS. code 는 '하위도메인,companyId' 두 값입니다. 2026-09-11 확인 진행중 6건(인재풀 1건 제외 시 5건)"
+  },
+  {
+   "name": "LX그룹",
+   "slug": "lx-careers",
+   "ats": "recruiter",
+   "code": "lx",
+   "industry": [
+    "전기전자",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "LX그룹 통합 채용. LX세미콘·LX글라스·LX판토스·LX인터내셔널·LX하우시스 등 계열사 공고가 함께 옵니다. 리크루터 ATS. 응답에 회사 구분 필드가 없고 제목 앞 대괄호로만 표시되므로 회사명은 이 name 을 씁니다. 2026-09-11 확인 접수중 20건"
+  },
+  {
+   "name": "일진전기",
+   "slug": "iljin-electric",
+   "ats": "workday",
+   "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Electric",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "전선·중전기. 코스피. Workday ATS. 일진하이솔루스와 같은 테넌트(iljini)를 쓰고 사이트 이름만 Electric 으로 다릅니다. 2026-09-11 확인 14건"
+  },
+  {
+   "name": "LIG D&A",
+   "slug": "ligdna",
+   "ats": "recruiter",
+   "code": "ligdna",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "방산 전자(레이다·미사일·유도무기). 코스피. 구 LIG넥스원이 2026년 LIG디펜스앤에어로스페이스로 사명을 바꿨습니다. 홈페이지도 ligdefenseaerospace.com 입니다. 리크루터 ATS. 2026-09-11 확인 접수중 6건"
+  },
+  {
+   "name": "호반그룹",
+   "slug": "hoban",
+   "ats": "recruiter",
+   "code": "ihoban",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "대한전선이 여기 소속입니다. 호반건설·대한전선·호반호텔&리조트·호반골프·호반프라퍼티·삼성금거래소·대아청과 7개 계열사가 한 채용 사이트를 씁니다. 2026-09-11 확인 시점 전 계열사 0건이지만 공고가 열리면 자동으로 잡힙니다"
+  },
+  {
+   "name": "효성그룹",
+   "slug": "hyosung-group",
+   "ats": "recruiter_v1",
+   "code": "hyosung",
+   "industry": [
+    "전기전자",
+    "IT"
+   ],
+   "enabled": true,
+   "note": "효성그룹 통합 채용. ㈜효성·효성중공업·효성티앤씨·효성TNS·효성네오켐·진흥기업 등 계열사 공고가 함께 옵니다. 리크루터 구버전이라 recruiter 가 아니라 recruiter_v1 을 씁니다(신버전 API 는 400). 계열사 구분 필드가 없고 제목 앞 대괄호로만 표시되므로 회사명은 이 name 을 씁니다. 2026-09-11 확인 접수중 3건"
+  },
+  {
+   "name": "메디톡스",
+   "slug": "medytox",
+   "ats": "recruiter_v1",
+   "code": "medytox",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "보툴리눔 톡신. 코스닥. 리크루터 구버전. 2026-09-11 확인 접수중 1건"
+  },
+  {
+   "name": "JW중외제약",
+   "slug": "jw-pharma",
+   "ats": "recruiter_v1",
+   "code": "jwholdings",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "전통 제약. 코스피. JW홀딩스 통합 채용이라 JW중외제약·JW생명과학 등 계열사가 함께 옵니다. 리크루터 구버전"
+  },
+  {
+   "name": "차바이오텍",
+   "slug": "chabio",
+   "ats": "recruiter_v1",
+   "code": "chamc",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "세포치료제·CDMO. 코스닥. 차병원그룹 통합 채용(recruit.chamc.co.kr)이라 의료기관 공고가 섞일 수 있습니다. 리크루터 구버전"
   }
  ]
 }
