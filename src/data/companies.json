@@ -996,10 +996,12 @@
    "ats": "recruiter",
    "code": "samickthk",
    "industry": [
+    "기계장비",
+    "로봇",
     "반도체"
    ],
    "enabled": true,
-   "note": "반도체 장비"
+   "note": "직선운동 부품(LM 가이드)·산업용 로봇. 코스닥. 일본 THK 합작사. 반도체 장비뿐 아니라 로봇·기계장비 쪽 공고도 나옵니다. 2026-09-11 확인 접수중 1건"
   },
   {
    "name": "에스피삼화",
@@ -2315,6 +2317,87 @@
    ],
    "enabled": true,
    "note": "세포치료제·CDMO. 코스닥. 차병원그룹 통합 채용(recruit.chamc.co.kr)이라 의료기관 공고가 섞일 수 있습니다. 리크루터 구버전"
+  },
+  {
+   "name": "클로봇",
+   "slug": "clobot",
+   "ats": "ninehire",
+   "code": "clobotroas,f9d44830-8d90-11ee-81de-379e41464736",
+   "industry": [
+    "로봇",
+    "IT"
+   ],
+   "enabled": true,
+   "domain": "clobotroas-recruit.com",
+   "note": "실내 자율주행 로봇 SW. 코스닥. 나인하이어 ATS 를 자체 도메인으로 씁니다. 클로봇과 로아스 두 회사 공고가 함께 옵니다. 2026-09-11 확인 진행중 12건"
+  },
+  {
+   "name": "로보티즈",
+   "slug": "robotis",
+   "ats": "ninehire",
+   "code": "robotisrecruiter,beb507d0-12bd-11f1-a3b5-8d315495dba8",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "액추에이터·자율주행 로봇. 코스닥. 나인하이어 ATS. 2026-09-11 확인 시점 진행중 0건이지만 공고가 열리면 자동으로 잡힙니다"
+  },
+  {
+   "name": "레인보우로보틱스",
+   "slug": "rainbow",
+   "ats": "rainbow",
+   "code": "rainbow",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "협동로봇·휴머노이드. 코스닥. 삼성전자가 최대주주. 워드프레스 KBoard 게시판이라 서버 HTML 에 공고가 다 들어 있습니다. 주소에 한글이 들어가니 퍼센트 인코딩해야 합니다. 화면 텍스트 추출 도구로는 맨 아래 FAQ 만 잡혀 '공고 없음'으로 오해하기 쉽습니다. 2026-09-11 확인 10건"
+  },
+  {
+   "name": "뉴로메카",
+   "slug": "neuromeka",
+   "ats": "greeting",
+   "code": "neuromeka1",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "협동로봇. 코스닥. 그리팅 ATS. code 끝에 숫자 1 이 붙습니다(neuromeka 가 아니라 neuromeka1). 회사 홈페이지의 '수시채용 공고보기' 는 사람인으로 넘기지만 그리팅 사이트가 따로 있습니다. 홈페이지 링크만 보고 '외부 포털만 쓴다'고 판단하면 놓칩니다. 2026-09-11 확인 9건"
+  },
+  {
+   "name": "씨메스로보틱스",
+   "slug": "cmes",
+   "ats": "greeting",
+   "code": "cmesairobotics",
+   "industry": [
+    "로봇",
+    "IT"
+   ],
+   "enabled": true,
+   "note": "3D 비전 로봇·물류 자동화. 코스닥. 그리팅 ATS. code 가 회사명과 달라 cmesairobotics 입니다. 2026-09-11 확인 29건으로 로봇 분야 최다"
+  },
+  {
+   "name": "뉴빌리티",
+   "slug": "neubility",
+   "ats": "greeting",
+   "code": "neubility",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "자율주행 배달로봇. 그리팅 ATS. 2026-09-11 확인 13건(인재풀 1건 제외)"
+  },
+  {
+   "name": "엔젤로보틱스",
+   "slug": "angel",
+   "ats": "angel",
+   "code": "angel",
+   "industry": [
+    "로봇",
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "웨어러블 재활로봇. 코스닥. 의료기기라 제약바이오에도 넣었습니다. 서버 HTML 에 공고가 다 들어 있어 요청 한 번이면 끝납니다. Tailwind 사이트라 클래스에 기대지 않고 li 안의 span 순서로 값을 찾습니다. 2026-09-11 확인 10건"
   }
  ]
 }
