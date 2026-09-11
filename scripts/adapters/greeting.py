@@ -34,6 +34,26 @@ robots.txt (2026-08-25 확인)
 - dueDate 가 null 인 상시채용 공고가 많습니다. 마감일 없이 그대로 둡니다.
 - 한 공고에 여러 직무(openingJobPositions)가 붙을 수 있습니다.
   경력 조건이 서로 다르면 "분야별상이" 로 표시합니다.
+
+인재풀 공고는 담지 않습니다
+---------------------------
+"인재풀 등록", "Talent Pool", "상시 인재채용" 같은 공고가 섞여 옵니다.
+지금 자리가 난 것이 아니라 이력서를 미리 받아두는 창구입니다.
+
+구직자가 목록에서 보고 "채용 중이구나" 하고 들어갔다가 이력서만 넣고
+나오게 됩니다. 지원할 수 있는 자리를 찾으러 온 사람에게는 헛걸음입니다.
+그래서 Ashby·Workable·네오위즈 어댑터와 같은 기준으로 뺍니다.
+
+2026-09-11 기준 그리팅 888건 중 39건이 여기 해당했습니다. 회사 이름만
+다를 뿐 전부 같은 성격이었고, 실제 공고를 잘못 거르는 경우는 없었습니다.
+
+표기가 회사마다 다릅니다. "인재풀 등록", "Talent Pool", "인재 Pool",
+"상시 인재채용", "인재DB 등록", "People Database" 를 모두 잡습니다.
+다만 "지역우수인재 채용" 처럼 실제 공고에도 '인재' 가 들어가므로,
+뒤에 상시·풀·pool·db 가 따라올 때만 거릅니다. 그냥 '인재' 로 거르면
+멀쩡한 공고가 사라집니다.
+
+담고 싶으면 companies.json 에 "includePool": true 를 넣으세요.
 """
 import json
 import re
@@ -46,6 +66,11 @@ UA = "Mozilla/5.0 (compatible; searchjob.co.kr job aggregator)"
 
 # 그리팅 careerType → 사이트 표기
 CAREER = {"EXPERIENCED": "경력", "NEW_COMER": "신입", "NOT_MATTER": "무관"}
+
+# 이력서만 받아두는 창구. 실제 자리가 아닙니다.
+# "인재풀 등록", "Talent Pool", "상시 인재채용", "인재 Pool" 을 모두 잡습니다.
+POOL = re.compile(
+    r"인재\s*(?:상시|풀|pool|db)|talent\s*pool|상시\s*인재|people\s*database", re.I)
 
 NEXT_DATA = re.compile(
     r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S)
@@ -181,7 +206,16 @@ def list_open(company, path=""):
         return []
     # 배열이 아니라 {"0":{...},"1":{...}} 형태로 실려 옵니다.
     rows = list(raw.values()) if isinstance(raw, dict) else list(raw)
-    return [r for r in rows if r.get("deploy") is not False]
+    rows = [r for r in rows if r.get("deploy") is not False]
+
+    if company.get("includePool"):
+        return rows
+
+    kept = [r for r in rows if not POOL.search(str(r.get("title") or ""))]
+    dropped = len(rows) - len(kept)
+    if dropped:
+        print(f"      · 인재풀 {dropped}건 제외")
+    return kept
 
 
 def fetch(company):
