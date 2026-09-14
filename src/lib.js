@@ -267,6 +267,93 @@ export const industries = () => {
 
 export const byIndustry = (slug) => industries().find((i) => i.slug === slug);
 
+
+/*
+ * 직무 분류.
+ *
+ * 왜 필요한가
+ *   지금까지는 회사별로만 볼 수 있었습니다. 그런데 구직자는 "삼성에 뭐 있나"
+ *   보다 "회로설계 자리 있나" 로 찾습니다. 자기 직무로 걸러 보게 합니다.
+ *
+ * 어떻게 나누는가
+ *   공고에 직무 필드가 따로 없습니다. 회사마다 제각각이라 있어도 못 씁니다.
+ *   제목과 본문의 말을 보고 정합니다.
+ *
+ *   제목을 먼저 봅니다. 제목에 없을 때만 본문 앞 600자를 봅니다.
+ *   본문 전체를 보면 스쳐 지나간 단어까지 잡혀 엉뚱하게 분류됩니다.
+ *   실제로 본문 1200자를 봤더니 "AI" 가 592건으로 부풀었습니다.
+ *
+ *   한 공고에 최대 세 개까지만 답니다. 더 달면 무엇으로 찾아도 다 나와서
+ *   거르는 의미가 없어집니다.
+ *
+ * 2026-09-12 기준 2,418건 중 68% 가 분류됩니다.
+ * 남은 32% 는 장학생 선발·그룹 공채·인재풀·해외법인 관리자처럼 직무가
+ * 정해지지 않은 공고입니다. 억지로 붙이지 않습니다.
+ *
+ * 규칙을 고칠 때
+ *   한 직무의 건수가 갑자기 튀면 너무 넓게 잡은 것입니다. 전체의 15% 를
+ *   넘는 직무가 생기면 규칙을 좁히세요.
+ */
+const ROLE_RULES = [
+  ['backend',   '백엔드',        /백엔드|back-?end|서버\s*개발|서버\s*엔지니어|Spring|Node\.?js/i],
+  ['frontend',  '프론트엔드',     /프론트|front-?end|웹\s*개발|퍼블리셔|React\b|Vue\b/i],
+  ['mobile',    '모바일',        /\bAndroid\b|\biOS\b|모바일\s*앱|앱\s*개발|Flutter/i],
+  ['embedded',  '임베디드·펌웨어',  /임베디드|펌웨어|firmware|\bBSP\b|디바이스\s*드라이버|\bMCU\b/i],
+  ['sw',        '소프트웨어개발',   /\bSW\s*(개발|엔지니어)|소프트웨어\s*(개발|엔지니어)|Software\s*Engineer|개발자/i],
+  ['ai',        'AI·머신러닝',    /\bAI\b|인공지능|머신러닝|딥러닝|\bML\b|\bLLM\b|Perception|비전\s*알고리즘/i],
+  ['data',      '데이터',        /데이터\s*(분석|엔지니어|사이언|플랫폼)|빅데이터|\bDBA\b|Data\s*(Engineer|Scientist|Analyst)/i],
+  ['devops',    '인프라·DevOps', /\bDevOps\b|인프라|클라우드|\bSRE\b|쿠버네티스|시스템\s*엔지니어/i],
+  ['security',  '보안',          /보안|시큐리티|Security|취약점|모의해킹/i],
+  ['gamedev',   '게임개발',       /게임\s*(개발|클라이언트|서버|기획)|클라이언트\s*개발|Unity|언리얼/i],
+  ['circuit',   '회로·전장설계',   /회로\s*설계|아날로그\s*설계|전장\s*(설계|개발)|\bPCB\b|전력\s*변환|\bHW\s*개발|하드웨어\s*(설계|개발)/i],
+  ['semi',      '반도체설계',      /반도체\s*설계|\bSoC\b|\bRTL\b|Verilog|물리\s*설계|\bDFT\b/i],
+  ['process',   '반도체공정',      /반도체\s*공정|포토|식각|증착|\bCMP\b|수율|패키징|공정\s*(개발|기술)/i],
+  ['mech',      '기구설계',       /기구\s*(설계|개발)|금형|구조\s*해석|\bCAE\b|선행\s*설계/i],
+  ['control',   '제어·로보틱스',   /제어\s*(개발|알고리즘)|로봇\s*제어|모션\s*제어|\bSLAM\b|로보틱스/i],
+  ['chem',      '화학·소재',      /소재\s*(개발|연구)|화학\s*합성|고분자|촉매|전해질/i],
+  ['bio',       '바이오·신약',     /신약|후보물질|비임상|전임상|세포\s*배양|항체|\bCMC\b|제형/i],
+  ['clinical',  '임상·인허가',     /임상|\bCRA\b|인허가|허가\s*담당|\bMSL\b|약물감시/i],
+  ['qa',        '품질·QA',       /\bQA\b|\bQC\b|품질\s*(관리|보증)|신뢰성|\bGMP\b|밸리데이션/i],
+  ['prod',      '생산·제조',      /생산\s*(관리|기술|직)|제조\s*(기술|관리)|설비\s*(엔지니어|관리|보전)|오퍼레이터|현장직|기계\s*보전/i],
+  ['safety',    '안전·환경',      /안전\s*(관리|보건)|\bEHS\b|환경\s*안전|산업\s*안전/i],
+  ['sales',     '영업',          /영업|세일즈|\bSales\b|사업\s*개발/i],
+  ['marketing', '마케팅',        /마케팅|브랜드\s*매니저|홍보/i],
+  ['pm',        '기획·PM',       /서비스\s*기획|프로덕트|\bPM\b|\bPO\b|사업\s*기획|전략\s*기획/i],
+  ['design',    '디자인',        /디자인|\bUX\b|그래픽|아트|일러스트/i],
+  ['hr',        '경영지원',       /인사|\bHR\b|재무|회계|총무|법무|\bIR\b|구매\s*담당|재경|감사/i],
+  ['research',  '연구개발',       /연구원|연구소|\bR&D\b|연구\s*개발|선행\s*연구/i],
+];
+
+const ROLE_NAME = Object.fromEntries(ROLE_RULES.map(([k, label]) => [k, label]));
+
+/** 공고 하나의 직무 코드들. 없으면 빈 배열입니다. */
+export const rolesOf = (job) => {
+  const title = job.title || '';
+  let got = ROLE_RULES.filter(([, , re]) => re.test(title)).map(([k]) => k);
+  if (!got.length) {
+    // 제목에 없을 때만 본문을 봅니다. 앞부분에 담당업무가 나옵니다.
+    const body = (job.description || '').slice(0, 600);
+    if (body) got = ROLE_RULES.filter(([, , re]) => re.test(body)).map(([k]) => k);
+  }
+  return got.slice(0, 3);
+};
+
+export const roleName = (code) => ROLE_NAME[code] || code;
+
+/** 공고가 있는 직무만. 건수와 함께 많은 순으로 돌려줍니다. */
+export const roles = () => {
+  const m = new Map();
+  for (const j of openJobs()) {
+    for (const code of rolesOf(j)) {
+      if (!m.has(code)) m.set(code, { code, name: roleName(code), jobs: [] });
+      m.get(code).jobs.push(j);
+    }
+  }
+  return [...m.values()].sort((a, b) => b.jobs.length - a.jobs.length);
+};
+
+export const byRole = (code) => roles().find((r) => r.code === code);
+
 /*
  * 회사 목록.
  *
