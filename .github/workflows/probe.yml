@@ -25,6 +25,9 @@ on:
           - 'IT 재탐지 (사이트맵 방식, 약 2시간)'
           - 'IT 재탐지 (브라우저 방식, 약 1시간)'
           - '금융 상장사 75개사 (약 20분)'
+          - 'ATS직접탐지: 제약바이오 50개사 (약 20분)'
+          - 'ATS직접탐지: 전기전자 60개사 (약 25분)'
+          - 'ATS직접탐지: 로봇 37개사 (약 15분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -50,6 +53,9 @@ jobs:
           case "${{ inputs.scope }}" in
             30개사*)  ARGS="--limit 30" ;;
             100개사*) ARGS="--limit 100" ;;
+            ATS직접탐지*제약바이오*) SCRIPT=probe_ats2.py; ARGS="--names scripts/names_pharma.txt" ;;
+            ATS직접탐지*전기전자*)   SCRIPT=probe_ats2.py; ARGS="--names scripts/names_electronics.txt" ;;
+            ATS직접탐지*로봇*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_robot.txt" ;;
             PCB*)     ARGS="--urls scripts/targets_pcb.txt" ;;
             모빌리티*) ARGS="--urls scripts/targets_startup.txt" ;;
             로봇*)     ARGS="--urls scripts/targets_robot.txt" ;;
@@ -78,6 +84,11 @@ jobs:
             playwright install --with-deps chromium
             echo "실행: python scripts/probe_browser.py $ARGS"
             python scripts/probe_browser.py $ARGS
+          elif [ "$SCRIPT" = "probe_ats2.py" ]; then
+            # 이름으로 ATS 주소를 직접 두드리는 방식.
+            # --new-only 가 없습니다. 등록된 곳은 스크립트가 알아서 건너뜁니다.
+            echo "실행: python scripts/probe_ats2.py $ARGS"
+            python scripts/probe_ats2.py $ARGS
           else
             if [ "${{ inputs.new_only }}" = "true" ]; then ARGS="$ARGS --new-only"; fi
             echo "실행: python scripts/probe_ats1.py $ARGS"
@@ -94,7 +105,7 @@ jobs:
           # 한 줄에 여러 파일을 넣으면 하나라도 없을 때 전체가 실패합니다.
           # 브라우저 방식을 안 돌리면 probe_browser_result.csv 가 없어서
           # 사이트맵 결과까지 저장되지 않았습니다. 따로 처리합니다.
-          for f in scripts/probe_result.csv scripts/probe_browser_result.csv; do
+          for f in scripts/probe_result.csv scripts/probe_browser_result.csv scripts/probe_ats2_result.csv; do
             [ -f "$f" ] && git add -f "$f"
           done
           git diff --staged --quiet || git commit -m "ATS 탐지 결과 $(date +%F)"
