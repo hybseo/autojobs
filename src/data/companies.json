@@ -2398,6 +2398,118 @@
    ],
    "enabled": true,
    "note": "웨어러블 재활로봇. 코스닥. 의료기기라 제약바이오에도 넣었습니다. 서버 HTML 에 공고가 다 들어 있어 요청 한 번이면 끝납니다. Tailwind 사이트라 클래스에 기대지 않고 li 안의 span 순서로 값을 찾습니다. 2026-09-11 확인 10건"
+  },
+  {
+   "name": "위로보틱스",
+   "slug": "wirobotics",
+   "ats": "greeting",
+   "code": "wirobotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "웨어러블·휴머노이드 로봇. 비상장. 그리팅 ATS. 2026-09-12 ATS 직접탐지로 찾았습니다(홈페이지 경유로는 못 찾던 곳). 확인 28건(인재풀 1건 제외)"
+  },
+  {
+   "name": "현대약품",
+   "slug": "hyundaipharm",
+   "ats": "greeting",
+   "code": "hyundaipharm",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "전통 제약. 코스피. 그리팅 ATS. 2026-09-12 ATS 직접탐지로 찾았습니다. 확인 16건"
+  },
+  {
+   "name": "루트로닉",
+   "slug": "lutronic",
+   "ats": "greeting",
+   "code": "lutronic",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "미용·의료 레이저 장비. 그리팅 ATS. 2026-09-12 ATS 직접탐지로 찾았습니다. 확인 13건"
+  },
+  {
+   "name": "유바이오로직스",
+   "slug": "eubiologics",
+   "ats": "recruiter",
+   "code": "eubiologics",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "백신(콜레라·장티푸스). 코스닥. 리크루터 ATS. 2026-09-12 확인 5건"
+  },
+  {
+   "name": "경보제약",
+   "slug": "kyongbo",
+   "ats": "recruiter",
+   "code": "kyongbo",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "원료의약품·완제. 코스피. 리크루터 ATS. 2026-09-12 확인 2건"
+  },
+  {
+   "name": "대원제약",
+   "slug": "daewonpharm",
+   "ats": "recruiter",
+   "code": "daewonpharm",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "전통 제약(코대원). 코스피. 리크루터 ATS. 2026-09-12 확인 2건"
+  },
+  {
+   "name": "삼진제약",
+   "slug": "samjinpharm",
+   "ats": "recruiter",
+   "code": "samjinpharm",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "전통 제약(게보린). 코스피. 리크루터 ATS. 2026-09-12 확인 1건"
+  },
+  {
+   "name": "에이비엘바이오",
+   "slug": "ablbio",
+   "ats": "greeting",
+   "code": "ablbio",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "이중항체 신약. 코스닥. 그리팅 ATS. 회사 홈페이지의 채용 게시판은 2025년 이후 갱신이 없지만 그리팅 사이트가 따로 살아 있습니다. 2026-09-12 확인 1건(상시모집)"
+  },
+  {
+   "name": "티씨케이",
+   "slug": "tck",
+   "ats": "recruiter",
+   "code": "tck",
+   "industry": [
+    "반도체",
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "SiC 링 등 반도체 공정 부품. 코스닥. 리크루터 ATS. 2026-09-12 ATS 직접탐지로 찾았습니다. 확인 접수중 3건"
+  },
+  {
+   "name": "테크윙",
+   "slug": "techwing",
+   "ats": "recruiter_v1",
+   "code": "techwing",
+   "industry": [
+    "반도체",
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "반도체 테스트 핸들러. 코스닥. 리크루터 구버전. 2026-09-12 확인 시점 0건이지만 사이트가 살아 있어 공고가 열리면 잡힙니다"
   }
  ]
 }
