@@ -1,0 +1,169 @@
+---
+import Base from '../layouts/Base.astro';
+import JobCard from '../components/JobCard.astro';
+import { roles, byRole, byDeadline, isAlways, industriesOf, COLLECTED_AT } from '../lib.js';
+
+/*
+ * 직무별 채용공고 페이지.
+ *
+ * 왜 만들었나
+ *   그전까지는 회사와 산업으로만 볼 수 있었습니다. 그런데 구직자는
+ *   "삼성에 뭐 있나" 보다 "회로설계 자리 있나" 로 찾습니다.
+ *
+ *   검색어도 그렇게 들어옵니다. "반도체 채용" 은 산업 페이지가 받지만
+ *   "회로설계 채용", "임베디드 개발자 채용" 은 받을 곳이 없었습니다.
+ *   이 페이지들이 그 검색을 받습니다.
+ *
+ * 직무는 어떻게 정해지나
+ *   lib.js 의 rolesOf 가 제목과 본문에서 읽습니다. 공고에 직무 필드가
+ *   따로 없어서(회사마다 제각각이라 있어도 못 씁니다) 말을 보고 정합니다.
+ *
+ * 한 공고가 여러 직무에 걸칠 수 있습니다
+ *   "AI 기반 로봇 제어 SW 개발" 이면 AI·제어·소프트웨어 셋 다입니다.
+ *   어느 쪽으로 찾아와도 나와야 하므로 양쪽에 모두 싣습니다.
+ *   다만 최대 세 개까지입니다. 더 달면 거르는 의미가 없어집니다.
+ *
+ * 공고가 없는 직무는 페이지를 만들지 않습니다
+ *   roles() 가 접수중 공고가 있는 직무만 돌려줍니다. 빈 페이지를 만들면
+ *   들어온 사람이 헛걸음하고 검색엔진에도 좋지 않습니다.
+ */
+/*
+ * 주소는 /role/{직무코드}/ 입니다.
+ *
+ * 원래는 src/pages/role/[code].astro 로 두는 것이 자연스럽지만,
+ * 깃허브 웹 화면에서는 업로드할 때 폴더를 새로 만들기가 번거롭습니다.
+ * 그래서 파일은 src/pages 에 두고, 주소의 role/ 부분까지 여기서 만듭니다.
+ *
+ * [...path] 는 슬래시가 들어간 주소를 통째로 받는 표기입니다.
+ * 아래에서 path 에 'role/ai' 같은 값을 넣으면 /role/ai/ 가 만들어집니다.
+ */
+export function getStaticPaths() {
+  return roles().map((r) => ({
+    params: { path: `role/${r.code}` },
+    props: { code: r.code },
+  }));
+}
+
+const { code } = Astro.props;
+const role = byRole(code);
+const jobs = [...role.jobs].sort(byDeadline);
+const cos = [...new Set(jobs.map((j) => j.company))];
+
+/*
+ * 기업 이름을 몇 개까지 먼저 보여줄지.
+ * 산업 페이지와 같은 이유로 열두 개에서 접습니다.
+ */
+const FOLD_AT = 12;
+const alwaysN = jobs.filter(isAlways).length;
+const deadlineN = jobs.length - alwaysN;
+
+/*
+ * 이 직무를 많이 뽑는 산업.
+ *
+ * "이 직무가 어느 분야에서 주로 나오는지" 를 보여주면 구직자가 다음에
+ * 어디를 볼지 정하는 데 도움이 됩니다. 상위 세 개만 적습니다.
+ */
+const indCount = new Map();
+for (const j of jobs) {
+  for (const name of industriesOf(j)) {
+    indCount.set(name, (indCount.get(name) || 0) + 1);
+  }
+}
+const topInds = [...indCount.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([name]) => name);
+
+const title = `${role.name} 채용공고 | SEARCHJOB`;
+const desc = `${role.name} 직무 채용공고 ${jobs.length}건을 모았습니다. `
+  + `기업 ${cos.length}곳의 공식 채용페이지에 올라온 공고를 한눈에 보고 원문으로 바로 이동하세요.`;
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: `${site}/role/${code}/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">전체 채용공고</a></div>
+      <h1>{role.name} 채용 <em>{jobs.length}</em></h1>
+      <div class="meta">
+        <b>{cos.length}</b>개사 공식 채용페이지 ·
+        마감 있는 공고 <b>{deadlineN}</b>건 · 상시채용 <b>{alwaysN}</b>건 ·
+        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+        {topInds.length > 0 && <span> · 주로 {topInds.join('·')} 분야</span>}
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="section-h">이 직무를 뽑는 기업</div>
+    <div class="chips cos" id="cos" data-open="false">
+      {cos.map((n, i) => (
+        <span class="chip" data-extra={i >= FOLD_AT ? 'y' : null}>{n}</span>
+      ))}
+    </div>
+    {cos.length > FOLD_AT && (
+      <button type="button" id="cos-toggle" class="cos-more"
+              aria-expanded="false" aria-controls="cos">
+        기업 {cos.length - FOLD_AT}곳 더 보기
+      </button>
+    )}
+
+    <div class="section-h">진행중인 채용</div>
+    {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
+      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
+        다른 직무를 살펴보시거나 전체 목록에서 검색해 보세요.</div>
+    )}
+
+    <div class="section-h">다른 직무</div>
+    <ul class="archive">
+      {roles().filter((r) => r.code !== code).map((r) => (
+        <li><a href={`/role/${r.code}/`}>{r.name} 채용</a><time>{r.jobs.length}건</time></li>
+      ))}
+    </ul>
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
+  </main>
+</Base>
+
+<script>
+  /*
+   * 기업 이름 더 보기 / 접기.
+   * 자바스크립트가 막혀 있어도 이름은 모두 보입니다. 접는 일은 CSS 가 하고,
+   * 그 CSS 는 data-open="false" 일 때만 듣습니다. 스크립트는 값만 뒤집습니다.
+   */
+  const box = document.getElementById('cos');
+  const btn = document.getElementById('cos-toggle');
+  if (box && btn) {
+    const hidden = box.querySelectorAll('[data-extra]').length;
+    btn.addEventListener('click', () => {
+      const open = box.dataset.open === 'true';
+      box.dataset.open = open ? 'false' : 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      btn.textContent = open ? `기업 ${hidden}곳 더 보기` : '접기';
+    });
+  }
+</script>
+
+<style>
+  /* 기업 목록. 누르는 필터가 아니라 보여주기용이라 커서를 바꾸지 않습니다. */
+  .chips.cos { margin-bottom: 8px; }
+  .chips.cos .chip { cursor: default; }
+
+  /* 접힌 상태에서만 뒤쪽 이름을 숨깁니다. 자바스크립트가 없으면 모두 보입니다. */
+  .chips.cos[data-open="false"] .chip[data-extra] { display: none; }
+
+  .cos-more {
+    display: inline-block; margin: 0 0 8px;
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 2px;
+    background: var(--paper); color: var(--ink);
+    font-family: var(--mono); font-size: 12.5px; cursor: pointer;
+  }
+  .cos-more:hover { border-color: var(--steel); color: var(--steel); }
+</style>

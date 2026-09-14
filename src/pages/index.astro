@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies, industries, industriesOf } from '../lib.js';
+import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies, industries, industriesOf, roles } from '../lib.js';
 
 // 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
 const jobs = openJobs().sort(byDeadline);
@@ -64,6 +64,17 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
             <button class:list={['chip', `ind-${i.slug}`]} type="button" data-k="in" data-v={i.name} aria-pressed="false"><span class="sw"></span>{i.name}<span class="n">{i.jobs.length}</span></button>
           ))}
           <button class="chip morebtn" id="moreIn" type="button" hidden></button>
+        </div>
+      )}
+      {roles().length > 1 && (
+        <button class="fhead ftoggle" id="roToggle" type="button" aria-expanded="false" aria-controls="fRo">
+          직무<span class="chev" aria-hidden="true">▼</span>
+        </button>
+        <div class="chips" id="fRo">
+          {roles().map((r) => (
+            <button class="chip" type="button" data-k="ro" data-v={r.code} aria-pressed="false">{r.name}<span class="n">{r.jobs.length}</span></button>
+          ))}
+          <button class="chip morebtn" id="moreRo" type="button" hidden></button>
         </div>
       )}
       <button class="fhead ftoggle" id="coToggle" type="button" aria-expanded="false" aria-controls="fCo">
@@ -605,7 +616,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
 <script>
   // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
   const cards = [...document.querySelectorAll('#list .card')];
-  const state = { q: '', co: new Set(), ca: new Set(), in: new Set(), tab: '마감 있음', sort: 'dday' };
+  const state = { q: '', co: new Set(), ca: new Set(), in: new Set(), ro: new Set(), tab: '마감 있음', sort: 'dday' };
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
@@ -630,12 +641,15 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       && (skip === 'ca' || !state.ca.size || state.ca.has(c.dataset.career))
       && (skip === 'in' || !state.in.size
           || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
+      && (skip === 'ro' || !state.ro.size
+          || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
       && (!q || c.dataset.text.includes(q));
 
     for (const [id, key, get] of [
       ['fCo', 'co', (c) => [c.dataset.co]],
       ['fCa', 'ca', (c) => [c.dataset.career]],
       ['fIn', 'in', (c) => (c.dataset.in || '').split('|')],
+      ['fRo', 'ro', (c) => (c.dataset.role || '').split('|')],
     ]) {
       const box = document.getElementById(id);
       if (!box) continue;
@@ -665,6 +679,9 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         // 한 공고가 여러 산업에 걸칩니다. 하나라도 고른 산업에 들면 보여줍니다.
         (!state.in.size ||
           (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
+        // 직무도 한 공고에 여러 개 붙습니다. 하나라도 맞으면 보여줍니다.
+        (!state.ro.size ||
+          (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
         c.dataset.op === state.tab &&
         (!q || c.dataset.text.includes(q));
       c.hidden = !ok;
@@ -697,6 +714,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         (!state.ca.size || state.ca.has(c.dataset.career)) &&
         (!state.in.size ||
           (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
+        (!state.ro.size ||
+          (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
         (!q2 || c.dataset.text.includes(q2));
     }).length;
     const hint = document.getElementById('otherTab');
@@ -712,7 +731,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     // 필터나 검색어가 걸려 있을 때만 해제 버튼을 보여줍니다.
     const reset = document.getElementById('resetAll');
     if (reset) {
-      const anyFilter = state.q.trim() || state.co.size || state.ca.size || state.in.size;
+      const anyFilter = state.q.trim() || state.co.size || state.ca.size || state.in.size || state.ro.size;
       reset.hidden = !(!shown && anyFilter);
     }
     // 반대 탭 안내 문구는 설명줄에 둡니다. 버튼은 짧게, 설명은 여기에.
@@ -891,7 +910,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       state.q = '';
       const q = document.getElementById('q');
       if (q) q.value = '';
-      for (const k of ['co', 'ca', 'in']) state[k].clear();
+      for (const k of ['co', 'ca', 'in', 'ro']) state[k].clear();
       document.querySelectorAll('.chip[aria-pressed="true"]').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
       });
@@ -926,6 +945,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       && (!state.ca.size || state.ca.has(c.dataset.career))
       && (!state.in.size
           || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
+      && (!state.ro.size
+          || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
       && (!q || c.dataset.text.includes(q))).length;
   }
 

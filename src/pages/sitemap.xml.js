@@ -1,4 +1,4 @@
-import { companies, industries, JOBS, daysLeft } from '../lib.js';
+import { companies, industries, roles, JOBS, daysLeft } from '../lib.js';
 
 export async function GET({ site }) {
   const base = site.href.replace(/\/$/, '');
@@ -6,6 +6,8 @@ export async function GET({ site }) {
     { loc: `${base}/`, pri: '1.0', freq: 'daily' },
     // 산업 페이지가 산업 키워드 검색을 받습니다. 메인 다음으로 중요합니다.
     ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily' })),
+    // 직무 페이지. "회로설계 채용", "임베디드 개발자 채용" 같은 검색을 받습니다.
+    ...roles().map((r) => ({ loc: `${base}/role/${r.code}/`, pri: '0.9', freq: 'daily' })),
     ...companies().map((c) => ({ loc: `${base}/company/${c.slug}/`, pri: '0.8', freq: 'daily' })),
     /*
      * 공고 상세.
