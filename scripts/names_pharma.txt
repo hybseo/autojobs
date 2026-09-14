@@ -1,0 +1,61 @@
+# 제약·바이오·의료기기 — ATS 하위도메인 탐지용
+#
+# 2026-09-12 작성. 이미 등록된 곳은 스크립트가 알아서 건너뜁니다.
+#
+# 형식: 회사명,영문이름[,별칭...]
+#   영문이름은 회사가 실제로 쓰는 표기를 적으세요. 홈페이지 주소에서
+#   따오면 대개 맞습니다(예: alteogen.com → alteogen).
+#   회사명과 아예 다른 주소를 쓰는 곳은 별칭을 덧붙이세요.
+#
+# 사용법: python scripts/probe_ats2.py --names scripts/names_pharma.txt
+
+알테오젠,alteogen
+에이비엘바이오,ablbio
+펩트론,peptron
+에스티팜,stpharm
+바이오니아,bioneer
+제이브이엠,jvm
+이수앱지스,isubio,isubiosciences
+삼진제약,samjinpharm
+대원제약,daewonpharm
+일양약품,ilyang
+보령,boryung
+HK이노엔,hkinnoen,hkinno
+동화약품,dowha,dong-wha
+유나이티드제약,kup,united
+환인제약,whanin
+부광약품,bukwang
+안국약품,ahnguk
+한독,handok
+신풍제약,shinpoong
+경보제약,kyongbo
+하나제약,hanapharm
+삼천당제약,scd,samchundang
+휴온스,huons
+대한약품,daihanpharm
+현대약품,hyundaipharm
+알피바이오,rpbio
+제넥신,genexine
+네이처셀,naturecell
+메지온,mezzion
+셀트리온제약,celltrionph
+바이오톡스텍,biotoxtech
+디엑스앤브이엑스,dxvx
+차바이오텍,chabio,chamc
+메디포스트,medipost
+녹십자웰빙,gcwb
+유바이오로직스,eubiologics
+아이센스,i-sens
+씨젠,seegene
+엔케이맥스,nkmax
+지놈앤컴퍼니,genomecom,genomeandcompany
+브릿지바이오,bridgebiorx
+오스코텍,oscotec
+큐리언트,qurient
+앱클론,abclon
+파멥신,pharmabcine
+레고켐,legochem
+인바디,inbody
+루트로닉,lutronic
+제이시스메디칼,jeisys
+클래시스,classys

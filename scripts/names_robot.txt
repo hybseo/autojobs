@@ -1,0 +1,48 @@
+# 로봇·자동화 — ATS 하위도메인 탐지용
+#
+# 2026-09-12 작성. 로봇을 20곳 이상으로 올리는 것이 목표입니다.
+#
+# 로봇은 스타트업이 많아 그리팅·나인하이어 비중이 높습니다.
+# 2026-09-11 확인: 씨메스 29건·뉴빌리티 13건·클로봇 12건·뉴로메카 9건이
+# 모두 이 두 곳이었고, 회사 홈페이지에는 링크가 없는 경우도 있었습니다.
+#
+# 형식: 회사명,영문이름[,별칭...]
+# 사용법: python scripts/probe_ats2.py --names scripts/names_robot.txt
+
+유일로보틱스,yuilrobotics,yuil
+티로보틱스,trobotics
+에이딘로보틱스,aidinrobotics,aidin
+위로보틱스,wirobotics
+로브로스,robros
+플로틱,flotic
+마로솔,marosol,solomon
+빅웨이브로보틱스,bigwave,bwrobotics
+시스콘,syscon
+로보웨어,roboware
+고카트,gocart
+브이디컴퍼니,vdcompany
+알지티,rgt
+비트코퍼레이션,beatcorp
+라운지랩,loungelab
+에이치로보틱스,hrobotics
+코봇,cobot
+두산로보틱스,doosanrobotics
+로보스타,robostar
+현대무벡스,hyundaimovex,movex
+에스피지,spg
+스맥,esmec,smec
+아진엑스텍,ajinextek
+라온테크,raontech
+유진로봇,yujinrobot
+케이엔알시스템,knrsys,knr
+엠로,emro
+뉴로메카,neuromeka
+씨메스로보틱스,cmes,cmesairobotics
+뉴빌리티,neubility
+클로봇,clobot,clobotroas
+로보티즈,robotis,robotisrecruiter
+레인보우로보틱스,rainbow-robotics,rainbowrobotics
+엔젤로보틱스,angelrobotics,angel-robotics
+트위니,twinny
+서울로보틱스,seoulrobotics
+베어로보틱스,bearrobotics
