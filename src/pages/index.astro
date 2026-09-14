@@ -407,6 +407,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     .controls .chips { display: block; margin-top: 0; }
     /* 접힌 동안에는 기업 칩 목록을 통째로 숨깁니다. */
     .controls #fCo[data-closed='1'] { display: none; }
+    .controls #fRo[data-closed='1'] { display: none; }
     .controls .chips.ind .chip { display: flex; }
     .controls .chip {
       display: flex; width: 100%; justify-content: space-between;
@@ -764,6 +765,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     [document.getElementById('fCo'), document.getElementById('moreCo')],
     [document.getElementById('fCa'), document.getElementById('moreCa')],
     [document.getElementById('fIn'), document.getElementById('moreIn')],
+    [document.getElementById('fRo'), document.getElementById('moreRo')],
   ].filter(([box, btn]) => box && btn);
 
   /*
@@ -1012,6 +1014,45 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       syncCo();
     });
   }
+
+  /*
+   * 직무 필터 접기.
+   *
+   * 기업명과 같은 방식입니다. 27개나 되어 펼쳐두면 아래 필터가 화면 밖으로
+   * 밀립니다. 처음에는 접혀 있고, 머리글을 눌러야 열립니다.
+   */
+  const roToggle = document.getElementById('roToggle');
+  const roBox = document.getElementById('fRo');
+  function syncRo() {
+    if (!roToggle || !roBox) return;
+    const chev = roToggle.querySelector('.chev');
+    if (!isWide()) {
+      // 모바일은 기업명과 같이 칩 가로 + 더보기 방식을 씁니다.
+      roBox.removeAttribute('data-closed');
+      roToggle.setAttribute('aria-expanded', 'true');
+      if (chev) chev.hidden = true;
+      return;
+    }
+    if (chev) chev.hidden = false;
+    if (state.ro.size) {
+      // 고른 직무가 있으면 접지 않습니다. 무엇을 골랐는지 보이지 않으면
+      // 해제할 방법을 찾지 못합니다.
+      roToggle.setAttribute('aria-expanded', 'true');
+    }
+    const open = roToggle.getAttribute('aria-expanded') === 'true';
+    roBox.dataset.closed = open ? '0' : '1';
+    if (chev) chev.textContent = open ? '▲' : '▼';
+  }
+
+  if (roToggle) {
+    roToggle.addEventListener('click', () => {
+      const on = roToggle.getAttribute('aria-expanded') === 'true';
+      roToggle.setAttribute('aria-expanded', String(!on));
+      syncRo();
+    });
+  }
+  window.addEventListener('resize', syncRo);
+  syncRo();
   window.addEventListener('resize', syncCo);
   syncCo();
 
