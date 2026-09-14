@@ -1,5 +1,5 @@
 ---
-import { daysLeft, progress, isAlways, sortValue, industriesOf, searchAlias } from '../lib.js';
+import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias } from '../lib.js';
 const { job, href } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
@@ -22,13 +22,24 @@ const inds = indList.join('|');
  * 그래서 주 산업만 따로 넘깁니다.
  */
 const mainInd = indList[0] || '';
+/*
+ * 직무.
+ *
+ * 제목과 본문에서 읽어낸 것이라 없을 수도 있습니다(장학생 선발, 그룹 공채처럼
+ * 직무가 정해지지 않은 공고). 그때는 빈 문자열이 되어 어느 직무 필터에도
+ * 걸리지 않습니다. 억지로 붙이지 않습니다.
+ */
+const roleList = rolesOf(job);
+const roleCodes = roleList.join('|');
+const roleNames = roleList.map(roleName).join(' ');
 // 본문이 있는 포지션 단위 공고만 자체 상세 페이지를 가집니다.
 const link = href ?? (job.description ? `/job/${job.id}/` : job.sourceUrl);
 const external = link === job.sourceUrl;
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds} data-ind={mainInd}
-   data-dday={sv} data-text={`${job.title} ${job.company} ${searchAlias(job.company)} ${job.location} ${job.sourceTitle}`.toLowerCase()}
+   data-role={roleCodes}
+   data-dday={sv} data-text={`${job.title} ${job.company} ${searchAlias(job.company)} ${job.location} ${job.sourceTitle} ${roleNames}`.toLowerCase()}
    {...external ? { target: '_blank', rel: 'noopener' } : {}}>
   <div class="chead">
     <span class="co">{job.company}</span>
