@@ -1,27 +1,48 @@
 ﻿name,status,ats,code,n,url,title,tried,note
-시스콘,발견,recruiter_v1,syscon,0,https://syscon.recruiter.co.kr/app/jobnotice/list,,2,
-엠로,발견,recruiter,emro,1,https://emro.recruiter.co.kr/career/home,,2,
-위로보틱스,발견,greeting,wirobotics,29,https://wirobotics.career.greetinghr.com,WIRobotics 채용 | 사람을 위한 로봇,1,
-유일로보틱스,발견,recruiter_v1,yuilrobotics,0,https://yuilrobotics.recruiter.co.kr/app/jobnotice/list,,2,
-고카트,못찾음,,,,,,40,후보 10개 확인
-라온테크,못찾음,,,,,,40,후보 10개 확인
-라운지랩,못찾음,,,,,,40,후보 10개 확인
-로보스타,못찾음,,,,,,40,후보 10개 확인
-로보웨어,못찾음,,,,,,40,후보 10개 확인
-로브로스,못찾음,,,,,,40,후보 10개 확인
-마로솔,못찾음,,,,,,80,후보 20개 확인
-브이디컴퍼니,못찾음,,,,,,40,후보 10개 확인
-비트코퍼레이션,못찾음,,,,,,40,후보 10개 확인
-빅웨이브로보틱스,못찾음,,,,,,80,후보 20개 확인
-스맥,못찾음,,,,,,80,후보 20개 확인
-아진엑스텍,못찾음,,,,,,40,후보 10개 확인
-알지티,못찾음,,,,,,40,후보 10개 확인
-에스피지,못찾음,,,,,,40,후보 10개 확인
-에이딘로보틱스,못찾음,,,,,,80,후보 20개 확인
-에이치로보틱스,못찾음,,,,,,40,후보 10개 확인
-유진로봇,못찾음,,,,,,40,후보 10개 확인
-케이엔알시스템,못찾음,,,,,,80,후보 20개 확인
-코봇,못찾음,,,,,,40,후보 10개 확인
-티로보틱스,못찾음,,,,,,40,후보 10개 확인
-플로틱,못찾음,,,,,,40,후보 10개 확인
-현대무벡스,못찾음,,,,,,80,후보 20개 확인
+경보제약,발견,recruiter,kyongbo,2,https://kyongbo.recruiter.co.kr/career/home,,2,
+녹십자웰빙,발견,recruiter_v1,gcwb,0,https://gcwb.recruiter.co.kr/app/jobnotice/list,,2,
+대원제약,발견,recruiter,daewonpharm,2,https://daewonpharm.recruiter.co.kr/career/home,,2,
+동화약품,발견,recruiter_v1,dongwha,0,https://dongwha.recruiter.co.kr/app/jobnotice/list,,42,
+루트로닉,발견,greeting,lutronic,13,https://lutronic.career.greetinghr.com,루트로닉 채용 LUTRONIC Careers,1,
+보령,발견,recruiter_v1,boryung,0,https://boryung.recruiter.co.kr/app/jobnotice/list,,2,
+삼진제약,발견,recruiter,samjinpharm,1,https://samjinpharm.recruiter.co.kr/career/home,,2,
+셀트리온제약,발견,recruiter,celltrionph,0,https://celltrionph.recruiter.co.kr/career/home,,2,
+에스티팜,발견,recruiter_v1,stpharm,0,https://stpharm.recruiter.co.kr/app/jobnotice/list,,2,
+에이비엘바이오,발견,greeting,ablbio,1,https://ablbio.career.greetinghr.com,ABL Bio 채용,1,
+유나이티드제약,발견,recruiter_v1,kup,0,https://kup.recruiter.co.kr/app/jobnotice/list,,2,
+유바이오로직스,발견,recruiter,eubiologics,5,https://eubiologics.recruiter.co.kr/career/home,,2,
+인바디,발견,recruiter_v1,inbody,0,https://inbody.recruiter.co.kr/app/jobnotice/list,,2,
+한독,발견,recruiter_v1,handok,0,https://handok.recruiter.co.kr/app/jobnotice/list,,2,
+현대약품,발견,greeting,hyundaipharm,16,https://hyundaipharm.career.greetinghr.com,현대약품(주) 채용,1,
+HK이노엔,못찾음,,,,,,80,후보 20개 확인
+네이처셀,못찾음,,,,,,40,후보 10개 확인
+대한약품,못찾음,,,,,,40,후보 10개 확인
+디엑스앤브이엑스,못찾음,,,,,,40,후보 10개 확인
+레고켐,못찾음,,,,,,40,후보 10개 확인
+메디포스트,못찾음,,,,,,40,후보 10개 확인
+메지온,못찾음,,,,,,40,후보 10개 확인
+바이오니아,못찾음,,,,,,40,후보 10개 확인
+바이오톡스텍,못찾음,,,,,,40,후보 10개 확인
+부광약품,못찾음,,,,,,40,후보 10개 확인
+브릿지바이오,못찾음,,,,,,40,후보 10개 확인
+삼천당제약,못찾음,,,,,,80,후보 20개 확인
+신풍제약,못찾음,,,,,,40,후보 10개 확인
+아이센스,못찾음,,,,,,40,후보 10개 확인
+안국약품,못찾음,,,,,,40,후보 10개 확인
+알테오젠,못찾음,,,,,,40,후보 10개 확인
+알피바이오,못찾음,,,,,,40,후보 10개 확인
+앱클론,못찾음,,,,,,40,후보 10개 확인
+엔케이맥스,못찾음,,,,,,40,후보 10개 확인
+오스코텍,못찾음,,,,,,40,후보 10개 확인
+이수앱지스,못찾음,,,,,,80,후보 20개 확인
+일양약품,못찾음,,,,,,40,후보 10개 확인
+제넥신,못찾음,,,,,,40,후보 10개 확인
+제이브이엠,못찾음,,,,,,40,후보 10개 확인
+제이시스메디칼,못찾음,,,,,,40,후보 10개 확인
+지놈앤컴퍼니,못찾음,,,,,,80,후보 20개 확인
+큐리언트,못찾음,,,,,,40,후보 10개 확인
+파멥신,못찾음,,,,,,40,후보 10개 확인
+펩트론,못찾음,,,,,,40,후보 10개 확인
+하나제약,못찾음,,,,,,40,후보 10개 확인
+환인제약,못찾음,,,,,,40,후보 10개 확인
+휴온스,못찾음,,,,,,40,후보 10개 확인
