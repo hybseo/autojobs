@@ -753,6 +753,15 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
 <script>
   // 카드는 서버에서 이미 렌더링돼 있습니다. 여기서는 보이기/숨기기만 합니다.
   const cards = [...document.querySelectorAll('#list .card')];
+
+  /*
+   * 필터를 걸지 않았을 때 탭에 적을 전체 건수.
+   *
+   * 검색이나 필터를 걸면 탭 숫자가 그 조건의 건수로 바뀝니다. 필터를
+   * 풀면 이 값으로 되돌립니다.
+   */
+  const TOTAL_DEADLINE = cards.filter((c) => c.dataset.op === '마감 있음').length;
+  const TOTAL_ALWAYS = cards.filter((c) => c.dataset.op === '상시채용').length;
   const state = { q: '', co: new Set(), ca: new Set(), in: new Set(), ro: new Set(), tab: '마감 있음', sort: 'dday' };
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
@@ -1112,6 +1121,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     hintBtn.addEventListener('click', () => {
       const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
       document.querySelector(`.tabs .tab[data-tab="${other}"]`).click();
+    });
+  }
+
+  /*
+   * 목록 끝 안내를 누르면 반대 탭으로 옮깁니다.
+   *
+   * 옮긴 뒤 목록 맨 위로 올려 줍니다. 목록 끝에서 눌렀는데 그 자리에
+   * 그대로 있으면 새 목록의 중간이나 끝을 보게 됩니다.
+   */
+  const tailBtn = document.getElementById('tailHint');
+  if (tailBtn) {
+    tailBtn.addEventListener('click', () => {
+      const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
+      document.querySelector(`.tabs .tab[data-tab="${other}"]`).click();
+      const top = document.querySelector('.tabs') || document.getElementById('list');
+      if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
