@@ -176,6 +176,35 @@ OUT = ROOT / "src" / "data" / "jobs.json"
 
 REQUIRED = ("name", "slug", "ats", "code")
 
+# ── 목록에서 빼는 공고 ──────────────────────────────────
+#
+# 회사 채용페이지에 올라와 있지만 지원할 자리가 아닌 것들입니다.
+# 채용박람회 안내, 행사 공지 같은 것이 여기 해당합니다.
+#
+# 패턴으로 거르지 않습니다. "박람회" 나 "공지" 로 거르면 정상 공고가
+# 함께 빠집니다. 실제로 덴티움의 "마케팅본부 PM팀/디자인팀/세미나팀/
+# 임상연구팀 인재 채용" 이 "세미나" 때문에 걸릴 뻔했습니다.
+#
+# 그래서 회사 이름과 제목이 정확히 맞는 것만 뺍니다. 새로 발견하면
+# 여기에 한 줄 추가하세요. 제목은 앞부분만 적어도 됩니다.
+DROP = [
+    ("티에이치엔", "채용박람회"),
+    ("로봇앤드디자인", "[공지] 2026년 「R&D 커리어랩 펠로우십"),
+    ("원익", "[원익IPS] 상시 채용 공고"),
+    ("토비스", "수시채용"),
+    ("LG전자", "[LG전자 VS본부] 채용계약Track 온라인 채용 설명회"),
+]
+
+
+def dropped(job):
+    """빼야 할 공고인지 봅니다. 회사와 제목이 모두 맞아야 뺍니다."""
+    co = str(job.get("company") or "").strip()
+    title = str(job.get("title") or "").strip()
+    for d_co, d_title in DROP:
+        if co == d_co and title.startswith(d_title):
+            return True
+    return False
+
 
 def load_companies(only_ats=None):
     data = json.loads(REGISTRY.read_text(encoding="utf-8"))
