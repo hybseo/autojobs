@@ -12,6 +12,19 @@ const url = canonical ?? (site + Astro.url.pathname);
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={url} />
+
+  {/*
+    파비콘.
+
+    선언이 없으면 브라우저와 검색 크롤러가 /favicon.ico 를 알아서 찾습니다.
+    그 파일이 없으면 오류가 납니다. 2026-09-13 네이버 사이트 진단에서
+    "접근 불가한 페이지 1건" 으로 잡힌 것이 이것이었습니다.
+
+    ico 안에 16~256px 여섯 가지를 담았습니다. 브라우저 탭은 작은 것을,
+    바탕화면 바로가기는 큰 것을 씁니다.
+  */}
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
