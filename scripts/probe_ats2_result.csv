@@ -1,58 +1,34 @@
 ﻿name,status,ats,code,n,url,title,tried,note
-LX세미콘,발견,recruiter_v1,lxsemicon,0,https://lxsemicon.recruiter.co.kr/app/jobnotice/list,,2,
-고영,발견,ninehire,kohyoung,,https://kohyoung.ninehire.site/,고영테크놀러지 - 채용 홈페이지,3,
-네패스,발견,ninehire,nepesrecruit,,https://nepesrecruit.ninehire.site/,네패스 - 채용 홈페이지,23,
-넥스틴,발견,ninehire,nextin,,https://nextin.ninehire.site/,NEXTIN - 채용 홈페이지,3,
-대덕전자,발견,recruiter_v1,daeduck,0,https://daeduck.recruiter.co.kr/app/jobnotice/list,,2,
-대주전자재료,발견,recruiter_v1,daejoohr,0,https://daejoohr.recruiter.co.kr/app/jobnotice/list,,10,
-싸이맥스,발견,recruiter_v1,cymechs,0,https://cymechs.recruiter.co.kr/app/jobnotice/list,,2,
-아모텍,발견,recruiter_v1,amotech,0,https://amotech.recruiter.co.kr/app/jobnotice/list,,2,
-엘오티베큠,발견,recruiter_v1,lotvacuum,0,https://lotvacuum.recruiter.co.kr/app/jobnotice/list,,2,
-와이아이케이,발견,recruiter_v1,yikcorp,0,https://yikcorp.recruiter.co.kr/app/jobnotice/list,,38,
-유진테크,발견,recruiter_v1,eugenetech,0,https://eugenetech.recruiter.co.kr/app/jobnotice/list,,2,
-저스템,발견,greeting,jusung,6,https://jusung.career.greetinghr.com,주성엔지니어링 채용,1,
-테크윙,발견,recruiter_v1,techwing,0,https://techwing.recruiter.co.kr/app/jobnotice/list,,2,
-티씨케이,발견,recruiter,tck,3,https://tck.recruiter.co.kr/career/home,,42,
-파크시스템스,발견,recruiter_v1,parksystems,0,https://parksystems.recruiter.co.kr/app/jobnotice/list,,2,
-피에스케이,발견,recruiter_v1,pskinc,0,https://pskinc.recruiter.co.kr/app/jobnotice/list,,2,
-KEC,못찾음,,,,,,40,후보 10개 확인
-나무가,못찾음,,,,,,40,후보 10개 확인
-뉴인텍,못찾음,,,,,,40,후보 10개 확인
-뉴프렉스,못찾음,,,,,,40,후보 10개 확인
-디아이,못찾음,,,,,,40,후보 10개 확인
-레이크머티리얼즈,못찾음,,,,,,40,후보 10개 확인
-미코,못찾음,,,,,,40,후보 10개 확인
-비에이치,못찾음,,,,,,80,후보 20개 확인
-비츠로셀,못찾음,,,,,,40,후보 10개 확인
-비츠로테크,못찾음,,,,,,40,후보 10개 확인
-삼화콘덴서,못찾음,,,,,,40,후보 10개 확인
-성호전자,못찾음,,,,,,40,후보 10개 확인
-신성델타테크,못찾음,,,,,,80,후보 20개 확인
-심텍,못찾음,,,,,,40,후보 10개 확인
-아비코전자,못찾음,,,,,,40,후보 10개 확인
-알에스오토메이션,못찾음,,,,,,40,후보 10개 확인
-알에프텍,못찾음,,,,,,40,후보 10개 확인
-액트로,못찾음,,,,,,40,후보 10개 확인
-에스비비테크,못찾음,,,,,,40,후보 10개 확인
-에스에프에이,못찾음,,,,,,40,후보 10개 확인
-에스텍,못찾음,,,,,,40,후보 10개 확인
-엘비세미콘,못찾음,,,,,,40,후보 10개 확인
-엠씨넥스,못찾음,,,,,,40,후보 10개 확인
-오로스테크놀로지,못찾음,,,,,,40,후보 10개 확인
-우주일렉트로닉스,못찾음,,,,,,80,후보 20개 확인
-월덱스,못찾음,,,,,,80,후보 20개 확인
-유니셈,못찾음,,,,,,40,후보 10개 확인
-유니테스트,못찾음,,,,,,40,후보 10개 확인
-이녹스첨단소재,못찾음,,,,,,80,후보 20개 확인
-인터플렉스,못찾음,,,,,,40,후보 10개 확인
-인텍플러스,못찾음,,,,,,40,후보 10개 확인
-제룡전기,못찾음,,,,,,40,후보 10개 확인
-제우스,못찾음,,,,,,40,후보 10개 확인
-제이앤티씨,못찾음,,,,,,40,후보 10개 확인
-켐트로닉스,못찾음,,,,,,40,후보 10개 확인
-코리아써키트,못찾음,,,,,,40,후보 10개 확인
-파트론,못찾음,,,,,,40,후보 10개 확인
-펨트론,못찾음,,,,,,40,후보 10개 확인
-하나기술,못찾음,,,,,,40,후보 10개 확인
-하이젠알앤엠,못찾음,,,,,,40,후보 10개 확인
-한솔테크닉스,못찾음,,,,,,40,후보 10개 확인
+도구공간,발견,recruiter,dogu,0,https://dogu.recruiter.co.kr/career/home,,2,
+아진엑스텍,발견,recruiter_v1,ajin,0,https://ajin.recruiter.co.kr/app/jobnotice/list,,42,
+LS메카피온,못찾음,,,,,,80,후보 20개 확인
+고카트,못찾음,,,,,,76,후보 19개 확인
+뉴로스,못찾음,,,,,,76,후보 19개 확인
+라온테크,못찾음,,,,,,76,후보 19개 확인
+라운지랩,못찾음,,,,,,80,후보 20개 확인
+로보로보,못찾음,,,,,,76,후보 19개 확인
+로보아르테,못찾음,,,,,,80,후보 20개 확인
+로보웨어,못찾음,,,,,,76,후보 19개 확인
+로보프린트,못찾음,,,,,,76,후보 19개 확인
+로브로스,못찾음,,,,,,76,후보 19개 확인
+마로솔,못찾음,,,,,,80,후보 20개 확인
+민트로봇,못찾음,,,,,,80,후보 20개 확인
+브이디컴퍼니,못찾음,,,,,,76,후보 19개 확인
+비전세미콘,못찾음,,,,,,80,후보 20개 확인
+비트코퍼레이션,못찾음,,,,,,80,후보 20개 확인
+빅웨이브로보틱스,못찾음,,,,,,80,후보 20개 확인
+알지티,못찾음,,,,,,76,후보 19개 확인
+에스엠코어,못찾음,,,,,,76,후보 19개 확인
+에스피지,못찾음,,,,,,80,후보 20개 확인
+에이딘로보틱스,못찾음,,,,,,80,후보 20개 확인
+에이치로보틱스,못찾음,,,,,,40,후보 10개 확인
+유진로봇,못찾음,,,,,,80,후보 20개 확인
+케이엔알시스템,못찾음,,,,,,80,후보 20개 확인
+코봇,못찾음,,,,,,76,후보 19개 확인
+큐렉소,못찾음,,,,,,76,후보 19개 확인
+티로보틱스,못찾음,,,,,,80,후보 20개 확인
+티피씨,못찾음,,,,,,80,후보 20개 확인
+퍼스텍,못찾음,,,,,,76,후보 19개 확인
+플로틱,못찾음,,,,,,76,후보 19개 확인
+현대무벡스,못찾음,,,,,,80,후보 20개 확인
+휴림로봇,못찾음,,,,,,80,후보 20개 확인
