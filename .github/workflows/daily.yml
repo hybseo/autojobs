@@ -43,7 +43,18 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
 
-      - run: python scripts/fetch_jobs.py
+      - run: python scripts/fetch_jobs.py | tee /tmp/fetch.log
+
+      # 수집한 결과가 멀쩡한지 커밋하기 전에 봅니다.
+      #
+      # 여기서 막지 않으면 이상한 데이터가 그대로 배포됩니다. 2026-09-11 에
+      # 같은 공고가 160번 중복된 채로 올라간 적이 있습니다. 며칠 뒤 숫자를
+      # 비교하다 알았습니다.
+      #
+      # 실패가 있으면 커밋을 멈춥니다. 이전 데이터가 남아 있는 편이
+      # 망가진 데이터가 올라가는 것보다 낫습니다.
+      - name: 자가진단
+        run: python scripts/check.py --log /tmp/fetch.log
 
       - name: commit
         run: |
