@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
-  industriesOf, industrySlug,
+  industriesOf, industrySlug, rolesOf, roleName,
 } from '../../lib.js';
 
 /*
@@ -60,14 +60,53 @@ const desc = closed
 
 // 마감 화면에서 안내할 대체 공고
 const inds = industriesOf(job);
-const sameCo = closed
-  ? openJobs().filter((j) => j.companySlug === job.companySlug).slice(0, 5)
+const roleCodes = rolesOf(job);
+
+/*
+ * 관련 공고.
+ *
+ * 전에는 마감된 공고에만 보여줬습니다. 진행중일 때는 지원 버튼에
+ * 집중하게 하려던 것인데, 두 가지가 아쉬웠습니다.
+ *
+ * 1) 검색엔진에게 막다른 길이 됩니다.
+ *    구글은 링크를 타고 다니며 페이지를 찾습니다. 공고 상세에서
+ *    나갈 데가 없으면 거기서 멈춥니다. 2026-09-15 서치콘솔에
+ *    "발견됨 - 색인이 생성되지 않음" 이 306건 쌓여 있었습니다.
+ *
+ * 2) 구직자도 아쉽습니다.
+ *    이 공고가 안 맞으면 그냥 뒤로 갑니다. 같은 직무 다른 공고를
+ *    보여주면 한 번 더 볼 이유가 생깁니다.
+ *
+ * 마감된 공고에는 조금 더 보여줍니다. 지원할 수 없는 자리에 온
+ * 사람에게는 대안이 본문보다 쓸모 있습니다.
+ */
+const LIMIT = closed ? 8 : 5;
+
+const sameCo = openJobs()
+  .filter((j) => j.companySlug === job.companySlug && j.id !== job.id)
+  .slice(0, LIMIT);
+
+/*
+ * 같은 직무.
+ *
+ * 구직자에게 가장 쓸모 있습니다. "이 회사 다른 자리" 보다
+ * "다른 회사 같은 자리" 를 찾는 경우가 많습니다.
+ *
+ * 같은 회사 공고는 빼고 뽑습니다. 바로 위에 이미 나오니까요.
+ */
+const sameRole = roleCodes.length
+  ? openJobs()
+      .filter((j) => j.id !== job.id
+        && j.companySlug !== job.companySlug
+        && rolesOf(j).some((c) => roleCodes.includes(c)))
+      .slice(0, LIMIT)
   : [];
-const sameInd = closed && inds.length
+
+const sameInd = inds.length
   ? openJobs()
       .filter((j) => j.companySlug !== job.companySlug
         && industriesOf(j).some((x) => inds.includes(x)))
-      .slice(0, 5)
+      .slice(0, LIMIT)
   : [];
 const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
 ---
@@ -102,7 +141,28 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       </div>
     )}
 
-    {closed && sameCo.length > 0 && (
+    {sameRole.length > 0 && (
+      <>
+        <div class="section-h">
+          같은 직무 진행중 공고
+          <span class="gn">{roleCodes.map(roleName).join(' · ')}</span>
+        </div>
+        <ul class="archive">
+          {sameRole.map((j) => (
+            <li>
+              <a href={j.description ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(j.description ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
+              <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
+            </li>
+          ))}
+        </ul>
+        <p style="margin:10px 0 0">
+          <a class="back" href={`/role/${roleCodes[0]}/`}>{roleName(roleCodes[0])} 채용 전체 보기 →</a>
+        </p>
+      </>
+    )}
+
+    {sameCo.length > 0 && (
       <>
         <div class="section-h">{co.name} 진행중 공고 <span class="gn">{sameCo.length}</span></div>
         <ul class="archive">
@@ -117,7 +177,7 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       </>
     )}
 
-    {closed && sameInd.length > 0 && (
+    {sameInd.length > 0 && (
       <>
         <div class="section-h">{inds[0]} 진행중 공고</div>
         <ul class="archive">
