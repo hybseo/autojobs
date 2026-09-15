@@ -126,11 +126,25 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   <main class="wrap">
     {alwaysN > 0 && deadlineN > 0 && (
       <div class="tabs" role="tablist" aria-label="접수 방식">
+        {/*
+          탭 숫자.
+
+          아무 필터도 없을 때는 사이트 전체 건수입니다. 이 사이트에 공고가
+          얼마나 있는지 보여주는 값입니다.
+
+          검색이나 필터를 걸면 그 조건의 건수로 바뀝니다. 두산을 검색하면
+          "마감 있는 공고 20 / 상시채용 10" 이 되어, 지금 보고 있지 않은
+          탭에도 공고가 있다는 것이 한눈에 들어옵니다.
+
+          전에는 늘 전체 건수만 보여줬습니다. 그래서 상시채용 탭에서
+          두산을 검색해 10건을 보고 "두산은 10건뿐" 이라고 오해하기
+          쉬웠습니다. 실제로는 마감 있는 쪽에 20건이 더 있었습니다.
+        */}
         <button class="tab" role="tab" data-tab="마감 있음" aria-selected="true">
-          마감 있는 공고 <span class="tn">{deadlineN}</span>
+          마감 있는 공고 <span class="tn" id="tnDeadline">{deadlineN}</span>
         </button>
         <button class="tab" role="tab" data-tab="상시채용" aria-selected="false">
-          상시채용 <span class="tn">{alwaysN}</span>
+          상시채용 <span class="tn" id="tnAlways">{alwaysN}</span>
         </button>
       </div>
     )}
@@ -164,6 +178,17 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         </div>
       </div>
     </div>
+
+    {/*
+      목록 끝 안내.
+
+      탭 숫자로 반대 탭에도 공고가 있다는 것을 알리지만, 스크롤해서
+      내려온 사람은 탭을 잊습니다. 목록을 다 보고 "이게 다인가" 싶은
+      바로 그 자리에서 한 번 더 알려 줍니다.
+
+      목록 끝이라 이미 스크롤한 위치입니다. 위쪽 공간을 뺏지 않습니다.
+    */}
+    <button class="tailhint" id="tailHint" type="button" hidden></button>
 
     {industries().length > 1 && (
       <>
@@ -253,6 +278,32 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     background: #fff; color: var(--ink, #16181C);
   }
   .empty-act .resetbtn:hover { background: var(--field, #F4F6F5); }
+
+  /*
+   * 목록 끝 안내.
+   *
+   * 목록을 다 보고 나서 만나는 자리입니다. 눈에 띄되 공고 카드보다
+   * 앞서 보이면 안 되므로 테두리만 두고 배경은 비웁니다.
+   */
+  .tailhint {
+    display: block; width: 100%;
+    margin: 4px 0 40px;
+    padding: 14px; border: 1px dashed var(--line, #DDE1DE);
+    border-radius: 4px; background: transparent;
+    font: inherit; font-size: 13.5px; color: var(--steel, #2D5F7C);
+    cursor: pointer; text-align: center; line-height: 1.4;
+  }
+  .tailhint:hover { border-color: var(--steel, #2D5F7C); border-style: solid; }
+  .tailhint::after { content: ' →'; }
+
+  /*
+   * 결과가 없는 탭.
+   *
+   * 검색 조건에 맞는 공고가 그 탭에 하나도 없을 때 흐리게 합니다.
+   * 누르는 것 자체는 막지 않습니다. 눌러보고 비어 있는 것을 확인하는
+   * 편이, 눌리지 않아 왜 안 되는지 모르는 것보다 낫습니다.
+   */
+  .tabs .tab.tab-empty { opacity: 0.45; }
   @media (max-width: 520px) {
     .empty { padding: 40px 18px 36px; }
     .empty-act { flex-direction: column; align-self: stretch; }
@@ -821,6 +872,49 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
           (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
         (!q2 || c.dataset.text.includes(q2));
     }).length;
+    /*
+     * 탭 숫자 갱신.
+     *
+     * 필터가 걸렸을 때만 결과 건수로 바꿉니다. 아무것도 안 걸었을 때는
+     * 사이트 전체 건수를 그대로 둡니다. 그게 이 사이트에 공고가 얼마나
+     * 있는지 알려주는 값이기 때문입니다.
+     *
+     * 0 이 되는 탭은 흐리게 합니다. 눌러도 빈 화면이 나오니 미리
+     * 알려주는 편이 낫습니다. 누르는 것 자체는 막지 않습니다.
+     */
+    const filtered = !!(state.q.trim() || state.co.size || state.ca.size
+                        || state.in.size || state.ro.size);
+    const nDeadline = state.tab === '마감 있음' ? shown : inOther;
+    const nAlways = state.tab === '상시채용' ? shown : inOther;
+    for (const [id, n, full] of [
+      ['tnDeadline', nDeadline, TOTAL_DEADLINE],
+      ['tnAlways', nAlways, TOTAL_ALWAYS],
+    ]) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const v = filtered ? n : full;
+      el.textContent = v;
+      const tab = el.closest('.tab');
+      if (tab) tab.classList.toggle('tab-empty', filtered && v === 0);
+    }
+
+    /*
+     * 목록 끝 안내.
+     *
+     * 지금 탭에 결과가 있어도 반대 탭에 더 있을 수 있습니다. 두산을
+     * 검색하면 상시채용 10건, 마감 있는 공고 20건입니다. 10건만 보고
+     * 떠나지 않도록 목록 끝에서 한 번 더 알려 줍니다.
+     */
+    const tail = document.getElementById('tailHint');
+    if (tail) {
+      if (shown && inOther) {
+        tail.textContent = `${other}에 ${inOther}건 더 있습니다`;
+        tail.hidden = false;
+      } else {
+        tail.hidden = true;
+      }
+    }
+
     const hint = document.getElementById('otherTab');
     if (hint) {
       if (!shown && inOther) {
