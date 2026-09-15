@@ -3,48 +3,74 @@
 유진로봇(yujinrobot.com) 채용 수집기.
 
 목록  GET https://yujinrobot.com/company/recruit
+상세  GET https://yujinrobot.com/company/recruit/{이름}
 
 물류·청소 자율주행 로봇(AMR). 코스닥. 독일 밀레가 최대주주입니다.
 
-요청 한 번이면 끝납니다
------------------------
-서버가 HTML 을 완성해서 보냅니다. 제목·접수기간·상태가 모두 그 안에 있어
-상세를 따로 읽지 않습니다.
+화면을 보고 짜면 안 됩니다 — 실제로 그래서 0건이 났습니다
+----------------------------------------------------------
+처음에는 개발자도구 화면을 보고 짰습니다. 거기에는 이렇게 보였습니다.
 
-함정 — 같은 페이지에 제품 소개가 섞여 있습니다
-----------------------------------------------
-<article> 이 열두 개인데 채용 공고는 넷뿐입니다. 나머지 여덟은 GoCart
-같은 제품 소개입니다. 한 페이지에 채용과 제품이 같이 있습니다.
-
-    <article class="recruit-item">   채용 공고
-    <article class="product-item">   제품 소개
-
-class 로 구분합니다. article 만 세면 열두 건이 잡혀 제품까지 공고로
-올라갑니다. 2026-09-15 에 실제로 그렇게 잘못 셌습니다.
-
-목록 구조 (2026-09-15 확인)
----------------------------
-    <article class="recruit-item" onclick="location.href='...'">
-      <h2>스마트자동화시스템사업부 전장설계(경력)</h2>
+    <article class="recruit-item">
+      <h2>...</h2>
       <div>2026-09-05 ~ 2026-10-05</div>
       <div>채용중</div>
     </article>
 
-상세 주소가 onclick 안에 있습니다
----------------------------------
-<a href> 가 아니라 onclick="location.href='...'" 로 이동합니다.
-그래서 링크만 찾으면 하나도 안 잡힙니다. onclick 속성에서 주소를 꺼냅니다.
+그런데 2026-09-15 수집에서 0건이 나왔습니다. 서버가 주는 HTML 을 그대로
+받아 보니 셋 다 없었습니다.
+
+    recruit-item   0회
+    날짜            0회
+    "채용중"        0회
+
+클래스도 날짜도 상태도 전부 자바스크립트가 나중에 만든 것이었습니다.
+시프트업·리크루터 구버전에 이어 세 번째로 같은 실수를 했습니다.
+개발자도구에 보이는 것은 자바스크립트가 다 돌고 난 뒤의 모습입니다.
+수집기는 그 전 상태를 받습니다.
+
+서버 HTML 의 실제 구조 (2026-09-15 확인)
+----------------------------------------
+    <article ...>
+      <span class="postList">
+        <div class="thumbNail">...</div>
+        <div class="description">
+          <h2>자율주행솔루션사업부 PM (경력)</h2>
+        </div>
+      </span>
+    </article>
+
+클래스는 postList·thumbNail·description 입니다. 날짜와 상태는 없습니다.
+
+채용 공고와 제품 소개를 어떻게 가르는가
+--------------------------------------
+같은 페이지에 제품 소개가 섞여 있습니다. article 열두 개 중 공고는 넷입니다.
+
+    0~3   채용 공고   onclick 에 /company/recruit/... 주소가 있음
+    4~11  제품 소개   GoCart180, 커스텀 AMR 등. onclick 이 없음
+
+그래서 onclick 에 상세 주소가 있는 것만 공고로 봅니다. article 만 세면
+GoCart 가 공고로 올라갑니다.
+
+마감일과 상태에 대하여
+---------------------
+서버 HTML 에 없습니다. 자바스크립트가 만들기 때문에 가져올 수 없습니다.
+
+    closesAt  비웁니다 → 사이트가 상시채용으로 표시
+    상태 필터  못 합니다 → 목록에 남은 것을 모두 담습니다
+
+2026-09-15 기준 목록의 넷이 모두 채용중이었습니다. 마감된 공고가 목록에
+남는 회사라면 마감된 것까지 담기게 됩니다. 그때는 상세 페이지를 읽어
+날짜를 가져오도록 고쳐야 합니다.
 
 주소에 한글이 들어갑니다
-
+------------------------
     /company/recruit/스마트자동화시스템사업부-전장설계경력
 
-퍼센트 인코딩해서 내보냅니다.
-
-상태로 거릅니다
---------------
-"채용중" 인 것만 담습니다. 마감된 공고도 목록에 남습니다.
+퍼센트 인코딩해서 내보냅니다. 영문 주소(rnd_pm, rnd_swe)인 공고도 섞여
+있어 둘 다 처리합니다.
 """
+import hashlib
 import html
 import re
 import time
@@ -59,17 +85,9 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-# 채용 공고만. 같은 페이지의 product-item 은 제품 소개입니다.
-ITEM = re.compile(r'<article[^>]*class="[^"]*recruit-item[^"]*"[^>]*>(.*?)</article>',
-                  re.S | re.I)
-# 위 정규식이 놓칠 때를 대비해 article 전체도 봅니다.
-ANY_ARTICLE = re.compile(r'<article([^>]*)>(.*?)</article>', re.S | re.I)
-
-TITLE = re.compile(r"<h\d[^>]*>(.*?)</h\d>", re.S | re.I)
-PERIOD = re.compile(r"(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})")
-STATE = re.compile(r"(채용중|채용\s*마감|마감)")
-ONCLICK = re.compile(r"""onclick=["'][^"']*?location\.href\s*=\s*['"]([^'"]+)['"]""",
-                     re.I)
+TITLE = re.compile(r"<h2[^>]*>([\s\S]{1,120}?)</h2>", re.I)
+# onclick 안의 상세 주소. 한글이 인코딩된 것도, 영문도 모두 잡습니다.
+DETAIL = re.compile(r"/company/recruit/([^'\"\s>]+)", re.I)
 
 
 def _get(url):
@@ -95,7 +113,8 @@ def _get(url):
 
 def _text(s):
     s = re.sub(r"<[^>]+>", " ", s or "")
-    return re.sub(r"\s+", " ", html.unescape(s)).strip()
+    s = html.unescape(s).replace("\xa0", " ")
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def _career(title):
@@ -112,65 +131,51 @@ def _career(title):
     return "무관"
 
 
-def _url(href):
-    """주소에 한글이 들어갑니다. 퍼센트 인코딩해서 내보냅니다."""
-    if not href:
+def _url(tail):
+    """상세 주소. 한글이 들어가므로 퍼센트 인코딩해서 내보냅니다."""
+    if not tail:
         return LIST_URL
-    u = urllib.parse.urljoin(LIST_URL + "/", html.unescape(href))
-    parts = urllib.parse.urlsplit(u)
-    return urllib.parse.urlunsplit((
-        parts.scheme, parts.netloc,
-        urllib.parse.quote(parts.path, safe="/"),
-        parts.query, parts.fragment))
+    t = html.unescape(tail).strip("'\" ")
+    # 이미 인코딩된 주소는 그대로 둡니다. 두 번 인코딩하면 깨집니다.
+    if re.search(r"%[0-9A-Fa-f]{2}", t):
+        return f"{LIST_URL}/{t}"
+    return f"{LIST_URL}/{urllib.parse.quote(t, safe='')}"
 
 
 def list_open():
-    """채용중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다."""
+    """공고 목록. probe 용으로 밖에서도 씁니다."""
     page = _get(LIST_URL)
 
-    chunks = ITEM.findall(page)
-    if not chunks:
-        # class 이름이 바뀌었을 수 있습니다. 날짜가 있는 article 만 골라 봅니다.
-        chunks = [body for attrs, body in ANY_ARTICLE.findall(page)
-                  if PERIOD.search(body)]
+    rows, products = [], 0
+    for chunk in page.split("<article")[1:]:
+        # 다음 article 전까지만 봅니다. 마지막 조각에는 뒤쪽 내용이 붙습니다.
+        body = chunk.split("</article>")[0]
 
-    rows, closed = [], 0
-    for chunk in chunks:
-        t = TITLE.search(chunk)
+        # 상세 주소가 있는 것만 채용 공고입니다.
+        # 제품 소개(GoCart 등)에는 onclick 이 없습니다.
+        m = DETAIL.search(body)
+        if not m:
+            products += 1
+            continue
+
+        t = TITLE.search(body)
         if not t:
             continue
         title = _text(t.group(1))
         if not title:
             continue
 
-        st = STATE.search(_text(chunk))
-        state = st.group(1) if st else ""
-        # 마감된 공고도 목록에 남습니다. 채용중만 담습니다.
-        if state and state != "채용중":
-            closed += 1
-            continue
-
-        p = PERIOD.search(chunk)
-        start = p.group(1) if p else ""
-        end = p.group(2) if p else ""
-
-        oc = ONCLICK.search(chunk)
-        rows.append({
-            "title": title,
-            "start": start,
-            "end": end,
-            "url": _url(oc.group(1) if oc else ""),
-        })
+        rows.append({"title": title, "url": _url(m.group(1))})
 
     if not rows:
         # HTML 파싱이라 화면이 바뀌면 조용히 0건이 됩니다.
-        print(f"  ! 유진로봇: 채용중 공고를 찾지 못했습니다. ({LIST_URL})")
+        print(f"  ! 유진로봇: 공고를 찾지 못했습니다. ({LIST_URL})")
         print(f"    받은 HTML {len(page)}자 · "
-              f"'recruit-item' {page.count('recruit-item')}회 · "
-              f"'<article' {page.count('<article')}회 · "
-              f"마감으로 걸러진 것 {closed}건")
-    elif closed:
-        print(f"  · 유진로봇: 채용중 {len(rows)}건 (마감 {closed}건 제외)")
+              f"'<article' {page.count('<article')}개 · "
+              f"'/company/recruit/' {page.count('/company/recruit/')}회 · "
+              f"제품으로 걸러진 것 {products}건")
+    elif products:
+        print(f"  · 유진로봇: 공고 {len(rows)}건 (제품 소개 {products}건 제외)")
     return rows
 
 
@@ -184,13 +189,20 @@ def fetch(company):
     jobs, seen = [], {}
     for x in rows:
         # 공고 번호가 없습니다. 주소 끝조각으로 만듭니다.
+        #
+        # id 는 우리 사이트의 주소(/job/{id}/)가 되므로 영문·숫자만 씁니다.
+        # 한글 주소인 공고가 있어 그대로 쓰면 주소에 한글이 섞입니다.
+        # 한글뿐이면 주소 전체를 짧은 숫자로 바꿔 씁니다.
         tail = urllib.parse.unquote(x["url"].rstrip("/").split("/")[-1])
-        jid = re.sub(r"[^\w]", "", tail)[:20]
-        if not jid:
-            jid = re.sub(r"[^\w]", "", x["title"])[:20]
+        jid = re.sub(r"[^A-Za-z0-9_]", "", tail)[:20]
+        if len(jid) < 3:
+            # hash() 는 파이썬을 새로 띄울 때마다 값이 달라집니다. 그러면
+            # 갱신할 때마다 id 가 바뀌어 같은 공고가 새 공고로 보입니다.
+            # md5 는 언제 돌려도 같은 값이 나옵니다.
+            jid = hashlib.md5(x["url"].encode()).hexdigest()[:10]
         seen[jid] = seen.get(jid, 0) + 1
         if seen[jid] > 1:
-            jid = f"{jid}-{seen[jid]}"
+            jid = f"{jid}{seen[jid]}"
 
         jobs.append({
             "id": f"yujin-{jid}",
@@ -201,8 +213,9 @@ def fetch(company):
             # 근무지를 목록에 주지 않습니다. 지어내지 않습니다.
             "location": "",
             "career": _career(x["title"]),
-            "postedAt": x["start"],
-            "closesAt": x["end"],
+            # 게시일과 마감일이 서버 HTML 에 없습니다. 상시채용으로 둡니다.
+            "postedAt": "",
+            "closesAt": "",
             "dday": None,
             "multiRole": False,
             "sourceTitle": "",
