@@ -242,6 +242,12 @@ def main():
             print(f"  ! {c['name']}: {e}")
             failed.append(c["name"])
             continue
+        # 지원할 자리가 아닌 공고를 뺍니다(채용박람회 안내, 설명회 등).
+        cut = [j for j in got if dropped(j)]
+        if cut:
+            got = [j for j in got if not dropped(j)]
+            for j in cut:
+                print(f"      · 제외: {str(j.get('title') or '')[:40]}")
         jobs += got
         print(f"  {c['name']}: {len(got)}건")
 
