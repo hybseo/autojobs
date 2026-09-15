@@ -318,6 +318,36 @@ def check_pages():
     if not bad:
         ok("화면", f"주요 페이지 {len(pages)}개가 모두 정상입니다")
 
+    # 공유 썸네일과 사이트맵 날짜.
+    # 둘 다 네이버가 참고하는 값이라 빠지면 노출에 불리합니다.
+    try:
+        _, home = _get(SITE + "/")
+        if 'property="og:image"' in home or "property='og:image'" in home:
+            ok("화면", "공유 썸네일(og:image) 설정됨")
+            m = re.search(r'og:image"[^>]*content="([^"]+)"', home)
+            if m:
+                try:
+                    st, _ = _get(m.group(1))
+                    if st == 200:
+                        ok("화면", "썸네일 이미지 파일이 열립니다")
+                    else:
+                        fail("화면", f"썸네일 이미지가 HTTP {st} 입니다: {m.group(1)}")
+                except Exception:
+                    fail("화면", f"썸네일 이미지를 열지 못했습니다: {m.group(1)}")
+        else:
+            warn("화면", "og:image 가 없습니다. 네이버·카카오 공유 시 그림이 안 나옵니다")
+    except Exception as e:
+        warn("화면", f"홈에서 og:image 를 확인하지 못했습니다: {str(e)[:40]}")
+
+    try:
+        _, sm2 = _get(SITE + "/sitemap.xml")
+        if "<lastmod>" in sm2:
+            ok("화면", "사이트맵에 lastmod 가 있습니다")
+        else:
+            warn("화면", "사이트맵에 lastmod 가 없습니다. 재방문 주기가 늦어집니다")
+    except Exception:
+        pass
+
     # 산업·직무 페이지가 실제로 만들어졌는지.
     for path, label in [("/industry/pharma-bio/", "제약바이오 산업"),
                         ("/industry/it/", "IT 산업"),
