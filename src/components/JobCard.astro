@@ -39,7 +39,7 @@ const external = link === job.sourceUrl;
 <a class="card" href={link} data-co={job.company} data-career={job.career}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds} data-ind={mainInd}
    data-role={roleCodes}
-   data-dday={sv} data-text={`${job.title} ${job.company} ${searchAlias(job.company)} ${job.location} ${job.sourceTitle} ${roleNames}`.toLowerCase()}
+   data-dday={sv} data-posted={job.postedAt || ''} data-text={`${job.title} ${job.company} ${searchAlias(job.company)} ${job.location} ${job.sourceTitle} ${roleNames}`.toLowerCase()}
    {...external ? { target: '_blank', rel: 'noopener' } : {}}>
   <div class="chead">
     <span class="co">{job.company}</span>
@@ -50,6 +50,11 @@ const external = link === job.sourceUrl;
     {job.location && <span class="f">{job.location}</span>}
     <span class="f">{job.career}</span>
     {job.multiRole && <span class="f multi">여러 직무 포함 가능</span>}
+    {/*
+      본문이 없는 공고는 누르면 회사 사이트로 바로 나갑니다.
+      같은 목록에 섞여 있어서 미리 알려주지 않으면 새 탭이 갑자기 열립니다.
+    */}
+    {external && <span class="f ext">원문 사이트 ↗</span>}
   </div>
   {job.sourceTitle && <div class="src">{job.sourceTitle}</div>}
   {p === null ? (
@@ -65,3 +70,21 @@ const external = link === job.sourceUrl;
     </div>
   )}
 </a>
+
+<style>
+  /*
+   * 원문으로 바로 나가는 카드 표시.
+   *
+   * 본문을 주지 않는 회사(삼성·현대모비스 등)의 공고는 우리 상세 페이지가
+   * 없어 카드를 누르면 새 탭이 열립니다. 표시가 없으면 누를 때마다
+   * 놀라게 됩니다.
+   *
+   * 눈에 띄되 공고 내용을 가리지 않도록 회색 계열로 둡니다.
+   */
+  .facts .f.ext {
+    /* 다른 칩(.f)과 같은 모양이되 글자만 진하게. 배경은 그대로 둡니다.
+       "여러 직무 포함 가능"(.multi)과 헷갈리지 않게 색을 달리합니다. */
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
