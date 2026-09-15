@@ -2510,6 +2510,44 @@
    ],
    "enabled": true,
    "note": "반도체 테스트 핸들러. 코스닥. 리크루터 구버전. 2026-09-12 확인 시점 0건이지만 사이트가 살아 있어 공고가 열리면 잡힙니다"
+  },
+  {
+   "name": "큐렉소",
+   "slug": "curexo",
+   "ats": "curexo",
+   "code": "a049e805-13d8-4ccc-97d2-a3fab412be13",
+   "industry": [
+    "로봇",
+    "제약바이오"
+   ],
+   "enabled": true,
+   "domain": "career.curexo.com",
+   "note": "수술로봇·재활로봇. 코스닥. 한국야쿠르트(hy) 계열. 노션으로 만든 채용 페이지(oopy)라 code 에 노션 페이지 ID 를 적습니다. 페이지를 다시 만들면 ID 가 바뀌니 0건이 계속되면 주소부터 확인하세요. 2026-09-15 확인 5건"
+  },
+  {
+   "name": "에스에프에이",
+   "slug": "sfa",
+   "ats": "sfa",
+   "code": "sfa",
+   "industry": [
+    "로봇",
+    "전기전자",
+    "기계장비"
+   ],
+   "enabled": true,
+   "domain": "recruit.sfa.co.kr",
+   "note": "디스플레이·2차전지·물류 자동화 설비. 코스피. 자체 시스템인데 서버 HTML 에 표로 다 들어 있습니다. '11개 부문' 처럼 여러 직무를 한 공고에 묶는 일이 잦아 multiRole 로 표시합니다. 2026-09-15 확인 접수중 3건"
+  },
+  {
+   "name": "유진로봇",
+   "slug": "yujinrobot",
+   "ats": "yujin",
+   "code": "yujin",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "물류·청소 자율주행 로봇(AMR). 코스닥. 독일 밀레가 최대주주. 채용 페이지에 제품 소개가 섞여 있어 article 만 세면 12건이 잡힙니다. class='recruit-item' 인 것만 공고입니다. 상세 주소는 onclick 안에 있고 한글이 들어갑니다. 2026-09-15 확인 4건"
   }
  ]
 }
