@@ -1,14 +1,30 @@
-import { companies, industries, roles, JOBS, daysLeft } from '../lib.js';
+import { companies, industries, roles, JOBS, daysLeft, COLLECTED_AT } from '../lib.js';
 
 export async function GET({ site }) {
   const base = site.href.replace(/\/$/, '');
+  /*
+   * lastmod — 마지막으로 바뀐 날.
+   *
+   * 검색엔진이 "언제 다시 와야 하나" 를 정할 때 봅니다. 없으면 감으로
+   * 정하는데, 네이버는 특히 이 값을 참고합니다.
+   *
+   * 목록 성격의 페이지(홈·산업·직무·기업)는 수집일을 씁니다. 하루 두 번
+   * 갱신되므로 내용도 그때 바뀝니다.
+   *
+   * 공고 상세는 게시일을 씁니다. 공고 내용 자체는 올라온 뒤 바뀌지
+   * 않으므로, 수집일을 적으면 "매일 바뀐다" 는 거짓 신호가 됩니다.
+   * 그러면 검색엔진이 헛걸음을 반복하고, 나중에는 lastmod 를 믿지
+   * 않게 됩니다.
+   */
+  const today = COLLECTED_AT || new Date().toISOString().slice(0, 10);
+
   const urls = [
-    { loc: `${base}/`, pri: '1.0', freq: 'daily' },
+    { loc: `${base}/`, pri: '1.0', freq: 'daily', mod: today },
     // 산업 페이지가 산업 키워드 검색을 받습니다. 메인 다음으로 중요합니다.
-    ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily' })),
+    ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily', mod: today })),
     // 직무 페이지. "회로설계 채용", "임베디드 개발자 채용" 같은 검색을 받습니다.
-    ...roles().map((r) => ({ loc: `${base}/role/${r.code}/`, pri: '0.9', freq: 'daily' })),
-    ...companies().map((c) => ({ loc: `${base}/company/${c.slug}/`, pri: '0.8', freq: 'daily' })),
+    ...roles().map((r) => ({ loc: `${base}/role/${r.code}/`, pri: '0.9', freq: 'daily', mod: today })),
+    ...companies().map((c) => ({ loc: `${base}/company/${c.slug}/`, pri: '0.8', freq: 'daily', mod: today })),
     /*
      * 공고 상세.
      *
@@ -21,11 +37,15 @@ export async function GET({ site }) {
      */
     ...JOBS.filter((j) => j.description && j.description.trim().length >= 50
         && daysLeft(j) > 0)
-      .map((j) => ({ loc: `${base}/job/${j.id}/`, pri: '0.6', freq: 'weekly' })),
+      .map((j) => ({
+        loc: `${base}/job/${j.id}/`, pri: '0.6', freq: 'weekly',
+        // 게시일이 없는 공고가 있습니다(상시채용 등). 그때는 수집일을 씁니다.
+        mod: /^\d{4}-\d{2}-\d{2}$/.test(j.postedAt || '') ? j.postedAt : today,
+      })),
   ];
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${u.loc}</loc><changefreq>${u.freq}</changefreq><priority>${u.pri}</priority></url>`).join('\n')}
+${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.mod}</lastmod><changefreq>${u.freq}</changefreq><priority>${u.pri}</priority></url>`).join('\n')}
 </urlset>`;
   return new Response(body, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }
