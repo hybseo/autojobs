@@ -1,48 +1,53 @@
 # 로봇·자동화 — ATS 하위도메인 탐지용
 #
-# 2026-09-12 작성. 로봇을 20곳 이상으로 올리는 것이 목표입니다.
+# 2026-09-15 갱신. 목표는 로봇 20곳입니다(현재 17곳).
 #
 # 로봇은 스타트업이 많아 그리팅·나인하이어 비중이 높습니다.
-# 2026-09-11 확인: 씨메스 29건·뉴빌리티 13건·클로봇 12건·뉴로메카 9건이
-# 모두 이 두 곳이었고, 회사 홈페이지에는 링크가 없는 경우도 있었습니다.
+# 2026-09-12 첫 탐지에서 위로보틱스 28건을 찾았습니다. 홈페이지 경유로는
+# 못 찾던 곳이라 이 방식이 효과를 본 사례입니다.
+#
+# 그때 "발견" 으로 나왔지만 사이트를 닫은 곳(등록하지 않음)
+#   시스콘 · 유일로보틱스
+#   → 지금은 probe_ats2.py 가 이런 곳을 걸러냅니다
+#
+# 엠로는 찾았지만 인재풀 1건뿐이고 공급망 SW 회사라 로봇이 아니어서 뺐습니다.
 #
 # 형식: 회사명,영문이름[,별칭...]
 # 사용법: python scripts/probe_ats2.py --names scripts/names_robot.txt
 
-유일로보틱스,yuilrobotics,yuil
-티로보틱스,trobotics
+# ── 첫 탐지에서 못 찾은 곳 (이름 후보를 늘려 재시도) ──
+티로보틱스,trobotics,tr-robotics
 에이딘로보틱스,aidinrobotics,aidin
-위로보틱스,wirobotics
-로브로스,robros
-플로틱,flotic
+로브로스,robros,robroshr
+플로틱,flotic,flotichr
 마로솔,marosol,solomon
 빅웨이브로보틱스,bigwave,bwrobotics
-시스콘,syscon
-로보웨어,roboware
-고카트,gocart
-브이디컴퍼니,vdcompany
-알지티,rgt
-비트코퍼레이션,beatcorp
-라운지랩,loungelab
-에이치로보틱스,hrobotics
-코봇,cobot
-두산로보틱스,doosanrobotics
-로보스타,robostar
+로보웨어,roboware,robowarehr
+고카트,gocart,gocarthr
+브이디컴퍼니,vdcompany,vdcompanyhr
+알지티,rgt,rgthr
+비트코퍼레이션,beatcorp,beatcorporation
+라운지랩,loungelab,loungex
+에이치로보틱스,hrobotics,h-robotics
+코봇,cobot,cobothr
 현대무벡스,hyundaimovex,movex
-에스피지,spg
-스맥,esmec,smec
-아진엑스텍,ajinextek
-라온테크,raontech
-유진로봇,yujinrobot
+에스피지,spg,spgmotor
+아진엑스텍,ajinextek,ajin
+라온테크,raontech,raontechhr
+유진로봇,yujinrobot,yujin
 케이엔알시스템,knrsys,knr
-엠로,emro
-뉴로메카,neuromeka
-씨메스로보틱스,cmes,cmesairobotics
-뉴빌리티,neubility
-클로봇,clobot,clobotroas
-로보티즈,robotis,robotisrecruiter
-레인보우로보틱스,rainbow-robotics,rainbowrobotics
-엔젤로보틱스,angelrobotics,angel-robotics
-트위니,twinny
-서울로보틱스,seoulrobotics
-베어로보틱스,bearrobotics
+
+# ── 새로 추가한 후보 ──
+LS메카피온,lsmecapion,mecapion
+로보로보,roborobo,roborobohr
+휴림로봇,hyulimrobot,hyulim
+티피씨,tpc,tpcmechatronics
+에스엠코어,smcore,smcorehr
+퍼스텍,firstec,firstechr
+큐렉소,curexo,curexohr
+민트로봇,mintrobot,minthr
+뉴로스,neuros,neuroshr
+로보프린트,roboprint,roboprinthr
+도구공간,dogu,doguspace
+로보아르테,roboarete,robert
+비전세미콘,visionsemicon,vision

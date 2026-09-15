@@ -1,61 +1,84 @@
 # 제약·바이오·의료기기 — ATS 하위도메인 탐지용
 #
-# 2026-09-12 작성. 이미 등록된 곳은 스크립트가 알아서 건너뜁니다.
+# 2026-09-15 갱신. 목표는 제약바이오 30곳입니다(현재 27곳).
 #
 # 형식: 회사명,영문이름[,별칭...]
-#   영문이름은 회사가 실제로 쓰는 표기를 적으세요. 홈페이지 주소에서
-#   따오면 대개 맞습니다(예: alteogen.com → alteogen).
+#   영문이름은 회사 홈페이지 주소에서 따오면 대개 맞습니다.
 #   회사명과 아예 다른 주소를 쓰는 곳은 별칭을 덧붙이세요.
+#
+# 이미 등록된 곳은 스크립트가 알아서 건너뜁니다.
+#
+# 2026-09-12 첫 탐지에서 찾은 곳
+#   현대약품 16건 · 루트로닉 13건 · 유바이오로직스 5건
+#   경보제약 2건 · 대원제약 2건 · 삼진제약 1건 · 에이비엘바이오 1건
+#
+# 그때 "발견" 으로 나왔지만 사이트를 닫은 곳(등록하지 않음)
+#   보령 · 에스티팜 · 인바디 · 한독 · 녹십자웰빙 · 동화약품
+#   셀트리온제약 · 유나이티드제약
+#   → 지금은 probe_ats2.py 가 이런 곳을 걸러냅니다
 #
 # 사용법: python scripts/probe_ats2.py --names scripts/names_pharma.txt
 
-알테오젠,alteogen
-에이비엘바이오,ablbio
-펩트론,peptron
-에스티팜,stpharm
-바이오니아,bioneer
-제이브이엠,jvm
+# ── 첫 탐지에서 못 찾은 곳 (이름 후보를 늘려 재시도) ──
+알테오젠,alteogen,alteogenhr
+펩트론,peptron,peptronhr
+바이오니아,bioneer,bioneerhr
+제이브이엠,jvm,jvmhr
 이수앱지스,isubio,isubiosciences
-삼진제약,samjinpharm
-대원제약,daewonpharm
-일양약품,ilyang
-보령,boryung
-HK이노엔,hkinnoen,hkinno
-동화약품,dowha,dong-wha
-유나이티드제약,kup,united
-환인제약,whanin
-부광약품,bukwang
-안국약품,ahnguk
-한독,handok
-신풍제약,shinpoong
-경보제약,kyongbo
-하나제약,hanapharm
+일양약품,ilyang,ilyangpharm
+HK이노엔,hkinnoen,hkinno,inno-n
+환인제약,whanin,whaninpharm
+부광약품,bukwang,bukwangpharm
+안국약품,ahnguk,ahngook
+신풍제약,shinpoong,shinpoongpharm
+하나제약,hanapharm,hana-pharm
 삼천당제약,scd,samchundang
-휴온스,huons
-대한약품,daihanpharm
-현대약품,hyundaipharm
-알피바이오,rpbio
-제넥신,genexine
-네이처셀,naturecell
-메지온,mezzion
-셀트리온제약,celltrionph
-바이오톡스텍,biotoxtech
-디엑스앤브이엑스,dxvx
-차바이오텍,chabio,chamc
-메디포스트,medipost
-녹십자웰빙,gcwb
-유바이오로직스,eubiologics
-아이센스,i-sens
-씨젠,seegene
-엔케이맥스,nkmax
+휴온스,huons,huonsgroup
+대한약품,daihanpharm,dhpharm
+알피바이오,rpbio,rphbio
+제넥신,genexine,genexinehr
+네이처셀,naturecell,naturecellbio
+메지온,mezzion,mezzionpharma
+바이오톡스텍,biotoxtech,btt
+디엑스앤브이엑스,dxvx,dxandvx
+메디포스트,medipost,mediposthr
+아이센스,isens,i-sens
+엔케이맥스,nkmax,nkmaxhr
 지놈앤컴퍼니,genomecom,genomeandcompany
-브릿지바이오,bridgebiorx
-오스코텍,oscotec
-큐리언트,qurient
-앱클론,abclon
-파멥신,pharmabcine
-레고켐,legochem
-인바디,inbody
-루트로닉,lutronic
-제이시스메디칼,jeisys
-클래시스,classys
+브릿지바이오,bridgebiorx,bridgebio
+오스코텍,oscotec,oscotechr
+큐리언트,qurient,qurienthr
+앱클론,abclon,abclonhr
+파멥신,pharmabcine,pmb
+제이시스메디칼,jeisys,jeisysmedical
+차바이오텍,chabio,chamc,chabiotech
+
+# ── 새로 추가한 후보 ──
+동구바이오제약,dongkoobio
+국제약품,kukje,kukjepharm
+종근당바이오,ckdbio
+대웅바이오,daewoongbio
+제일약품,jeilpharm
+동성제약,dongsung,dongsungpharm
+삼일제약,samil,samilpharm
+경동제약,kyongdong,kyongdongpharm
+한국콜마,kolmar,kolmarkorea
+코스맥스,cosmax,cosmaxhr
+보령바이오파마,bryungbio,boryungbio
+유유제약,yuyu,yuyupharma
+명문제약,myungmoon,mmpharm
+신신제약,shinshin,shinshinpharm
+일성신약,ilsung,ilsungpharm
+테라젠이텍스,theragen,theragenetex
+바이오플러스,bioplus,bioplushr
+나이벡,nibec,nibechr
+마크로젠,macrogen,macrogenhr
+디앤디파마텍,dndpharmatech,dnd
+에이프릴바이오,aprilbio,aprilbiohr
+와이바이오로직스,ybiologics,ybio
+큐라클,curacle,curaclehr
+셀비온,cellbion,cellbionhr
+보로노이,voronoibio,voronoi
+아리바이오,aribio,aribiohr
+지아이이노베이션,giinnovation,gi-innovation
+넥스트바이오메디컬,nextbiomedical,nbm
