@@ -88,8 +88,17 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-PAUSE = 0.25        # 후보 하나 두드릴 때마다 쉬는 시간
-TIMEOUT = 8         # 없는 주소가 대부분이라 짧게 끊습니다
+# 없는 주소가 대부분입니다. 오래 기다려봐야 어차피 실패합니다.
+#
+# 2026-09-15 로봇 33곳을 돌리는 데 53분이 걸렸습니다. 그중 42분이
+# 응답을 기다린 시간이었습니다(타임아웃 8초 × 없는 주소 수백 개).
+# 4초로 줄여도 살아 있는 주소는 그 안에 답합니다.
+TIMEOUT = 4
+
+# 두드리는 사이 쉬는 시간. 서버에 부담을 주지 않으려는 것인데,
+# 후보가 수천 개라 0.25초씩만 쉬어도 10분이 넘습니다.
+# 도메인이 제각각이라 한 서버에 몰리지 않습니다.
+PAUSE = 0.08
 
 # 흔한 한글 → 로마자. 영문이름을 안 적었을 때만 씁니다.
 ROMAN = {
@@ -127,16 +136,20 @@ def name_guesses(korean, english, extra):
 
     out = []
     for s in seeds:
+        # 실제로 맞았던 형태만 남깁니다.
+        #
+        # 후보 하나가 ATS 네 곳에 곱해지므로, 열 개를 여섯 개로 줄이면
+        # 두드리는 횟수가 40% 줄어듭니다. 2026-09-15 까지 찾은 회사를
+        # 보면 아래 여섯 가지 안에 다 들어갑니다.
+        #
+        # -hr, career, careers, corp 는 한 번도 맞은 적이 없어 뺐습니다.
+        # 특이한 주소를 쓰는 곳은 목록 파일에 별칭으로 적으세요.
         for c in (s,                    # neuromeka
                   s + "1",              # neuromeka1
                   s + "hr",             # classyshr
                   s + "_hr",            # pharmaresearch_hr
-                  s + "-hr",
                   s + "recruit",
-                  s + "recruiter",      # robotisrecruiter
-                  s + "career",
-                  s + "careers",
-                  s + "corp"):
+                  s + "recruiter"):     # robotisrecruiter
             if c not in out:
                 out.append(c)
     return out
@@ -156,6 +169,32 @@ def _get(url, timeout=TIMEOUT):
         return None, f"HTTP {e.code}"
     except Exception as e:
         return None, str(e)[:40]
+
+
+def _is_closed(sub):
+    """채용 사이트를 닫은 곳인지 봅니다.
+
+    리크루터는 회사가 계약을 끝내도 주소를 지우지 않습니다. 그래서 주소는
+    응답하는데 안에는 아무것도 없습니다. list.json 도 빈 목록을 200 으로
+    돌려주기 때문에 "찾았다" 로 잘못 세게 됩니다.
+
+    2026-09-12 전기전자 탐지에서 이런 곳이 열넷이었습니다. LX세미콘·대덕전자·
+    유진테크·파크시스템스처럼 예전에 쓰다가 그만둔 흔적만 남은 주소들입니다.
+    하나씩 열어 확인하느라 시간을 썼습니다.
+
+    닫힌 곳은 목록 화면을 열면 /appsite/company/error 로 넘깁니다.
+    그것만 보면 구분됩니다.
+    """
+    try:
+        req = urllib.request.Request(
+            f"https://{sub}.recruiter.co.kr/app/jobnotice/list",
+            headers={"User-Agent": UA, "Accept": "text/html"})
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+            return "/error" in r.geturl()
+    except Exception:
+        # 확인 자체가 안 되면 닫혔다고 단정하지 않습니다. 살아 있는데
+        # 일시적으로 응답이 늦은 것일 수 있습니다.
+        return False
 
 
 def _title(html):
@@ -208,6 +247,10 @@ def try_recruiter(sub):
             j = json.load(r)
         rows = j.get("list") or []
         live = [x for x in rows if x.get("submissionStatus") == "IN_SUBMISSION"]
+        # 공고가 하나도 없으면 사이트를 닫았을 수 있습니다. 그때만 확인합니다.
+        # 공고가 있으면 살아 있는 것이 확실하니 요청을 아낍니다.
+        if not rows and _is_closed(sub):
+            return None
         return {"ats": "recruiter", "code": sub, "n": len(live),
                 "url": f"https://{sub}.recruiter.co.kr/career/home", "title": ""}
     except Exception:
@@ -228,6 +271,8 @@ def try_recruiter(sub):
             j = json.load(r)
         rows = j.get("list") or []
         live = [x for x in rows if str(x.get("receiptState") or "").strip() == "접수중"]
+        if not rows and _is_closed(sub):
+            return None
         return {"ats": "recruiter_v1", "code": sub, "n": len(live),
                 "url": f"https://{sub}.recruiter.co.kr/app/jobnotice/list", "title": ""}
     except Exception:
@@ -257,7 +302,9 @@ def try_ninehire(sub):
 
 def try_workday(sub):
     """서버 번호가 회사마다 달라 흔한 것 몇 개를 봅니다."""
-    for wd in ("wd1", "wd3", "wd5", "wd102", "wd103"):
+    # 서버 번호를 다 훑으면 후보 하나에 다섯 번씩 걸립니다.
+    # 국내 회사는 wd3 와 wd102 가 대부분이라 둘만 봅니다.
+    for wd in ("wd3", "wd102"):
         html, final = _get(f"https://{sub}.{wd}.myworkdayjobs.com/", timeout=6)
         if html:
             return {"ats": "workday", "code": f"{sub}.{wd}.myworkdayjobs.com/사이트이름",
@@ -270,10 +317,63 @@ def try_workday(sub):
 CHECKS = [try_greeting, try_recruiter, try_ninehire, try_workday]
 
 
+def _looks_same(korean, english, extra, title):
+    """찾은 사이트가 그 회사가 맞는지 제목으로 가늠합니다.
+
+    이름 후보를 만들어 두드리는 방식이라 다른 회사가 잡힐 수 있습니다.
+
+      2026-09-12  "저스템" 을 찾으려고 jusung → 주성엔지니어링이 잡힘
+      2026-09-15  "도구공간" 을 찾으려고 dogu → 사단법인 도구가 잡힘
+
+    둘 다 다른 회사입니다. 뒤엣것은 "도구" 두 글자가 겹쳐 통과했습니다.
+
+    제목을 주지 않는 ATS 도 있어서(리크루터는 빈 문자열) 그때는 판단하지
+    않고 통과시킵니다. 애매한 것을 버리기보다 CSV 에 적어 사람이 보게
+    합니다.
+    """
+    if not title:
+        return True          # 제목이 없으면 판단하지 않습니다
+    t = _norm(title)
+
+    # 네 글자 이상이 통째로 들어 있으면 같은 곳으로 봅니다.
+    for cand in [korean, english] + list(extra or []):
+        c = _norm(cand)
+        if len(c) >= 4 and c in t:
+            return True
+
+    # 두세 글자 짧은 이름은 제목 앞쪽에 있을 때만 인정합니다.
+    #
+    # "도구공간" 을 찾다가 "사단법인 도구" 가 잡힌 적이 있습니다. 여기서
+    # "도구" 는 제목 끝에 붙은 남의 이름 조각이었습니다.
+    #
+    # 반대로 "클로봇" 은 "클로봇 x 로아스 - 채용 홈페이지" 처럼 제목이
+    # 길어도 맨 앞에 옵니다. 회사 이름은 대개 제목 앞에 놓입니다.
+    #
+    # 그래서 길이가 아니라 위치로 봅니다. 앞 여섯 글자 안에 있으면
+    # 그 회사 이름으로 시작한다고 보고 인정합니다.
+    for cand in [korean, english] + list(extra or []):
+        c = _norm(cand)
+        if 2 <= len(c) <= 3 and c in t[:6]:
+            return True
+
+    # 제목이 영문 이름으로 시작하는 경우(WIRobotics 채용 같은).
+    for cand in [english] + list(extra or []):
+        c = _norm(cand)
+        if len(c) >= 4 and t.startswith(c):
+            return True
+
+    return False
+
+
 def probe(korean, english, extra):
-    """한 회사를 모든 ATS 에서 찾아봅니다. 처음 찾은 것을 돌려줍니다."""
+    """한 회사를 모든 ATS 에서 찾아봅니다. 처음 찾은 것을 돌려줍니다.
+
+    바깥이 후보 이름, 안쪽이 ATS 입니다. 회사 하나가 쓰는 ATS 는 하나뿐이니
+    맞는 이름을 먼저 찾는 편이 빠릅니다.
+    """
     subs = name_guesses(korean, english, extra)
     tried = 0
+    doubt = None             # 이름이 안 맞아 보이는 것. 다 못 찾으면 이거라도 보고합니다.
     for sub in subs:
         for check in CHECKS:
             tried += 1
@@ -282,11 +382,20 @@ def probe(korean, english, extra):
             except Exception:
                 hit = None
             time.sleep(PAUSE)
-            if hit:
-                hit["name"] = korean
+            if not hit:
+                continue
+            hit["name"] = korean
+            hit["tried"] = tried
+            if _looks_same(korean, english, extra, hit.get("title", "")):
                 hit["status"] = "발견"
-                hit["tried"] = tried
                 return hit
+            # 이름이 달라 보입니다. 바로 버리지 않고 기억만 해둡니다.
+            if doubt is None:
+                hit["status"] = "확인필요"
+                hit["note"] = "사이트 제목이 회사명과 다릅니다. 다른 회사일 수 있습니다"
+                doubt = hit
+    if doubt:
+        return doubt
     return {"name": korean, "status": "못찾음", "ats": "", "code": "",
             "n": "", "url": "", "title": "", "tried": tried,
             "note": f"후보 {len(subs)}개 확인"}
@@ -336,31 +445,39 @@ def main():
         rows = rows[:args.limit]
 
     print(f"{len(rows)}개사를 확인합니다. 회사당 20초쯤 걸립니다.\n")
-    out, found = [], 0
+    out, found, doubt = [], 0, 0
     for i, (ko, en, extra) in enumerate(rows, 1):
         r = probe(ko, en, extra)
         out.append(r)
+        n = r["n"]
         if r["status"] == "발견":
             found += 1
-            n = r["n"]
             print(f"  [{i}/{len(rows)}] {ko} → {r['ats']} "
                   f"({r['code']}) {n if n != '' else '?'}건")
             if r.get("title"):
                 print(f"          {r['title']}")
+        elif r["status"] == "확인필요":
+            doubt += 1
+            print(f"  [{i}/{len(rows)}] {ko} → ? {r['ats']} ({r['code']}) "
+                  f"{n if n != '' else '?'}건")
+            print(f"          제목이 다릅니다: {r.get('title', '')}")
         else:
             print(f"  [{i}/{len(rows)}] {ko} → 못찾음")
 
     cols = ["name", "status", "ats", "code", "n", "url", "title", "tried", "note"]
+    order = {"발견": 0, "확인필요": 1}
     with OUT.open("w", encoding="utf-8-sig", newline="") as fp:
         w = csv.DictWriter(fp, cols)
         w.writeheader()
-        for r in sorted(out, key=lambda x: (x["status"] != "발견", x["name"])):
+        for r in sorted(out, key=lambda x: (order.get(x["status"], 2), x["name"])):
             w.writerow({k: r.get(k, "") for k in cols})
 
-    print(f"\n{len(rows)}개사 중 {found}곳 발견")
+    print(f"\n{len(rows)}개사 중 {found}곳 발견"
+          + (f", {doubt}곳 확인필요" if doubt else ""))
     print(f"→ {OUT}")
     print("결과를 확인하고 src/data/companies.json 에 직접 옮겨 적으세요.")
-    print("이름이 비슷한 다른 회사가 잡혔을 수 있으니 title 칸을 보세요.")
+    print("'확인필요' 는 이름이 비슷한 다른 회사일 수 있습니다. "
+          "url 을 열어 보고 판단하세요.")
 
 
 if __name__ == "__main__":
