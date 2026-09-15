@@ -282,10 +282,18 @@ def check_pages():
 
     # 오늘 마감인 공고. 상세에서 "마감" 으로 뜨면 안 됩니다.
     # 2026-09-11 에 실제로 그런 적이 있습니다.
+    #
+    # 본문이 짧은 공고는 상세 페이지를 만들지 않습니다(job/[id].astro 참고).
+    # 삼성·현대모비스처럼 목록만 주고 본문을 안 주는 회사가 그렇습니다.
+    # 그런 공고를 열면 404 가 나는 것이 정상이므로 검사 대상에서 뺍니다.
     today = datetime.now(KST).strftime("%Y-%m-%d")
-    todays = [x for x in jobs if x.get("closesAt") == today]
+    todays = [x for x in jobs
+              if x.get("closesAt") == today
+              and len(str(x.get("description") or "").strip()) >= 50]
     if todays:
         pages.append((f"/job/{todays[0]['id']}/", "오늘 마감 공고"))
+    else:
+        ok("화면", "오늘 마감이면서 본문이 있는 공고가 없어 이 검사는 건너뜁니다")
 
     bad = 0
     for path, label in pages:
