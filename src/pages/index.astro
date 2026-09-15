@@ -53,9 +53,36 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   <div class="split">
   <div class="controls">
     <div class="wrap ctrl-in">
+      {/*
+        검색창.
+
+        타이핑하는 대로 목록이 걸러집니다. 그런데 모바일에서는 검색창
+        아래로 필터 칩이 쌓여 있어 목록과 건수가 화면 밖에 있습니다.
+        타이핑해도 아무 반응이 없어 보입니다.
+
+        그래서 검색창 안에 지금 몇 건인지를 띄웁니다. 글자를 칠 때마다
+        숫자가 바뀌니 걸러지고 있다는 것이 바로 보입니다.
+
+        검색 버튼을 다는 방법도 있지만, 그러면 누르기 전까지 아무 일도
+        일어나지 않아 단계가 하나 늘어납니다.
+      */}
       <div class="searchrow">
-        <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
-        <button class="sortbtn" id="sort" type="button">마감 임박순</button>
+        <div class="qwrap">
+          <input id="q" type="search" placeholder="직무, 기업, 근무지 검색" autocomplete="off" />
+          <span class="qn" id="qn" hidden></span>
+        </div>
+        {/*
+          정렬.
+
+          전에는 버튼 하나를 눌러 두 가지를 번갈아 바꿨습니다. 최신순이
+          늘면서 셋이 되니 그 방식이 불편해집니다. "기업별" 에서
+          "마감 임박순" 으로 가려면 두 번 눌러야 하고, 무엇이 있는지
+          눌러보기 전에는 알 수 없습니다.
+
+          select 는 세 가지가 한눈에 보이고, 모바일에서는 OS 가 익숙한
+          선택창을 띄워 줍니다.
+        */}
+
       </div>
       {industries().length > 1 && (
         <div class="fhead">산업</div>
@@ -107,7 +134,21 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         </button>
       </div>
     )}
-    <div class="count" id="count"><b>{deadlineN}</b>건 표시 중</div>
+    {/*
+      건수와 정렬을 한 줄에 둡니다.
+
+      정렬은 목록을 보면서 바꾸는 것이라 목록 가까이 있는 편이
+      자연스럽습니다. 전에는 검색창 옆에 있었는데, 모바일에서는
+      검색창과 세로로 쌓여 자리만 차지했습니다.
+    */}
+    <div class="countrow">
+      <div class="count" id="count"><b>{deadlineN}</b>건 표시 중</div>
+      <select class="sortbtn" id="sort" aria-label="정렬 기준">
+        <option value="dday">마감 임박순</option>
+        <option value="posted">최신 등록순</option>
+        <option value="co">기업별</option>
+      </select>
+    </div>
     <div class="list" id="list">
       {jobs.map((j) => <JobCard job={j} />)}
       <div class="empty" id="empty" hidden>
@@ -353,6 +394,50 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    * 흰 바탕에 흰 입력창이라 묻혔습니다.
    */
   .searchrow #q { border-color: #C9D0CB; background: #fff; }
+
+  /*
+   * 검색창 안의 건수.
+   *
+   * 입력칸 오른쪽 끝에 겹쳐 놓습니다. 글자가 길어져도 숫자를 가리지
+   * 않도록 입력칸 오른쪽에 그만큼 여백을 둡니다.
+   */
+  .qwrap { position: relative; flex: 1; min-width: 0; display: flex; }
+  .qwrap #q { width: 100%; padding-right: 64px; }
+  .qn {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 12px; color: var(--steel);
+    pointer-events: none;      /* 눌러도 입력칸이 눌리게 */
+    background: #fff; padding-left: 6px;
+  }
+
+  /* 건수와 정렬을 양끝으로 벌립니다. */
+  .countrow {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .countrow .count { margin-bottom: 0; }
+
+  /*
+   * 정렬 드롭다운.
+   *
+   * .sortbtn 스타일(전역 CSS)을 그대로 물려받되, select 는 브라우저마다
+   * 기본 화살표와 안쪽 여백이 달라 버튼과 높이가 어긋납니다.
+   * appearance 를 끄고 화살표를 직접 그려 맞춥니다.
+   */
+  select.sortbtn {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 30px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--ink-2) 50%),
+      linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+    background-position:
+      calc(100% - 16px) calc(50% + 1px),
+      calc(100% - 11px) calc(50% + 1px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
+  select.sortbtn:focus-visible { outline: 2px solid var(--steel); outline-offset: 1px; }
   .controls { border-bottom: 1px solid #C9D0CB; }
 
   /* ── 마감 임박 ─────────────────────────────────
@@ -397,7 +482,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       padding: 0 16px; max-width: none; margin: 0; width: 100%;
     }
     .searchrow { flex-direction: column; align-items: stretch; gap: 8px; }
-    .searchrow .sortbtn { width: 100%; }
+    /* 정렬은 이제 목록 위 countrow 에 있습니다. 검색창 줄에는 없습니다. */
 
     /* 칩을 세로 목록으로. 기업이 126개라 가로 나열은 한계입니다. */
     /*
@@ -621,6 +706,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
+  const qn = document.getElementById('qn');
   const total = cards.length;
 
   /*
@@ -704,6 +790,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
           : `${state.tab} 공고 <b>${shown}</b>건`)
       : '조건에 맞는 자리 없음';
 
+    /*
+     * 검색창 안의 건수.
+     *
+     * 모바일에서는 검색창 아래로 필터 칩이 쌓여 있어 목록이 화면 밖에
+     * 있습니다. 타이핑해도 반응이 없어 보입니다. 검색창 안에서 숫자가
+     * 바뀌면 걸러지고 있다는 것이 바로 보입니다.
+     *
+     * 검색어를 쳤을 때만 띄웁니다. 늘 떠 있으면 아래 건수 표시와
+     * 겹쳐 보여 오히려 어수선합니다.
+     */
+    if (qn) {
+      const typing = !!state.q.trim();
+      qn.hidden = !typing;
+      if (typing) qn.textContent = shown ? `${shown}건` : '0건';
+    }
+
     // 이 탭에서 0건이어도 반대 탭에는 있을 수 있습니다.
     // 42dot 처럼 상시채용만 하는 회사를 "마감 있는 공고" 탭에서 고르면 빈 화면이 됩니다.
     // 그대로 두면 공고가 없는 줄 알고 떠납니다.
@@ -745,13 +847,33 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   }
 
   function sortCards() {
-    // 상시채용은 data-dday 가 모두 같은 값이라 원래 순서(최근 게시순)가 유지됩니다.
-    const arr = [...cards].sort((a, b) =>
-      state.sort === 'dday'
+    /*
+     * 정렬 세 가지.
+     *
+     *   dday    마감 임박순. 상시채용은 data-dday 가 모두 같은 값이라
+     *           원래 순서(최근 게시순)가 유지됩니다.
+     *   posted  최신 등록순. 상시채용이 전체의 3분의 2라 마감일로는
+     *           줄을 세울 수 없습니다. 어제 새로 올라온 것을 보려면
+     *           이 정렬이 필요합니다.
+     *   co      기업별.
+     *
+     * 게시일이 없는 공고가 300건쯤 됩니다(시프트업·SOOP 등 목록에
+     * 날짜를 주지 않는 회사). 최신순에서는 맨 뒤로 보냅니다. 빈 문자열은
+     * 어떤 날짜보다 작으므로 내림차순에서 자연히 뒤로 갑니다.
+     */
+    const byPosted = (a, b) => {
+      const x = a.dataset.posted || '';
+      const y = b.dataset.posted || '';
+      if (x === y) return a.dataset.dday - b.dataset.dday;
+      return y.localeCompare(x);          // 최신이 위
+    };
+    const arr = [...cards].sort((a, b) => {
+      if (state.sort === 'dday') return a.dataset.dday - b.dataset.dday;
+      if (state.sort === 'posted') return byPosted(a, b);
+      return a.dataset.co === b.dataset.co
         ? a.dataset.dday - b.dataset.dday
-        : a.dataset.co === b.dataset.co
-          ? a.dataset.dday - b.dataset.dday
-          : a.dataset.co.localeCompare(b.dataset.co, 'ko'));
+        : a.dataset.co.localeCompare(b.dataset.co, 'ko');
+    });
     arr.forEach((c) => list.insertBefore(c, empty));
   }
 
@@ -958,10 +1080,17 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       o.setAttribute('aria-selected', String(o.dataset.tab === tab));
     });
     // 상시채용은 마감일이 없어 "마감 임박순" 이 뜻을 잃습니다.
-    const sortBtn = document.getElementById('sort');
+    /*
+     * 상시채용 탭에서는 마감 임박순이 의미가 없습니다. 마감일이 없어
+     * 전부 같은 값이라 줄이 서지 않습니다.
+     *
+     * 전에는 기업별로 바꿨는데, 최신 등록순이 더 낫습니다. 새로 올라온
+     * 것을 먼저 보여주는 편이 구직자에게 쓸모 있습니다.
+     */
+    const sortSel = document.getElementById('sort');
     if (tab === '상시채용' && state.sort === 'dday') {
-      state.sort = 'co';
-      if (sortBtn) sortBtn.textContent = '기업별';
+      state.sort = 'posted';
+      if (sortSel) sortSel.value = 'posted';
       sortCards();
     }
   }
@@ -975,9 +1104,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     }
     apply();
   });
-  document.getElementById('sort').addEventListener('click', (e) => {
-    state.sort = state.sort === 'dday' ? 'co' : 'dday';
-    e.target.textContent = state.sort === 'dday' ? '마감 임박순' : '기업별';
+  document.getElementById('sort').addEventListener('change', (e) => {
+    state.sort = e.target.value;
     sortCards();
   });
 
