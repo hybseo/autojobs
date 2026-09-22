@@ -2586,6 +2586,63 @@
    ],
    "enabled": true,
    "note": "GC녹십자 가족사 통합 채용(SAP SuccessFactors). GC녹십자·GC녹십자MS·GC녹십자웰빙·GC녹십자EM·GCLabs 등 공고가 함께 오고, 회사명은 공고마다 '회사' 칸 값으로 들어갑니다. recruit.gccorp.com 목록은 보안 토큰이 있어야 열리는 API라 쓰지 않고, 상세가 열리는 careers.gcbiopharma.com 에서 직접 읽습니다. 마감일은 목록에 없고 상세 본문의 '공고마감일' 에서 읽습니다. 2026-09-22 확인 40건"
+  },
+  {
+   "name": "에스디바이오센서",
+   "slug": "sdbiosensor",
+   "ats": "recruiter",
+   "code": "sdbiosensor",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "진단기기. 리크루터 신버전. 2026-09-22 확인 접수중 9건"
+  },
+  {
+   "name": "휴온스그룹",
+   "slug": "huons",
+   "ats": "recruiter",
+   "code": "huonsgroup",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "휴온스·휴온스바이오파마 등 그룹 통합 채용. 리크루터 신버전. 계열사명은 제목에 붙어 옵니다. 2026-09-22 확인 접수중 15건"
+  },
+  {
+   "name": "광동제약",
+   "slug": "kwangdong",
+   "ats": "recruiter_v1",
+   "code": "kwangdong",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "리크루터 구버전(/app/jobnotice/list). 광동생활건강 공고도 함께 옵니다. 2026-09-22 확인 전체 22건 중 접수중 2건"
+  },
+  {
+   "name": "보령",
+   "slug": "boryung",
+   "ats": "ninehire",
+   "code": "boryung,d2059b40-cce3-11ef-b36c-f5b6ebfabdc3",
+   "domain": "recruit.boryung.co.kr",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "나인하이어(자체 도메인 recruit.boryung.co.kr). 예전 리크루터 주소는 닫혔습니다. 2026-09-22 확인 진행중 36건"
+  },
+  {
+   "name": "일동제약",
+   "slug": "ildong",
+   "ats": "ninehire",
+   "code": "ildong,ab5b6a80-2214-11ef-950a-65a32c77a0c3",
+   "domain": "careers.ildong.com",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "일동제약그룹 통합(나인하이어, 자체 도메인). 2026-09-22 기준 하반기 공채 27건은 서류접수가 끝나 disabled 상태라 제외되고 진행중 3건만 옵니다. 공채가 열리면 자동으로 늘어납니다"
   }
  ]
 }
