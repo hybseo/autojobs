@@ -304,7 +304,25 @@ def check_pages():
                 fail("화면", f"{label} {path} → HTTP {status}")
                 bad += 1
                 continue
-            if len(html) < 500:
+            # 내용이 제대로 있는지 봅니다. 파일 종류마다 기준이 다릅니다.
+            #
+            # 처음에는 모든 주소에 "500자 이상" 을 적용했습니다. 빈 화면을
+            # 잡으려던 것인데, robots.txt 는 원래 네 줄짜리 짧은 파일입니다.
+            # 69자가 정상인데 "내용이 69자뿐" 이라며 실패로 처리했고,
+            # 2026-09-16 부터 며칠 동안 거짓 실패 메일이 매일 왔습니다.
+            #
+            # 그래서 텍스트 파일은 길이 대신 꼭 있어야 할 줄이 있는지 봅니다.
+            if path == "/robots.txt":
+                if "Sitemap:" not in html:
+                    fail("화면", f"robots.txt 에 Sitemap 줄이 없습니다")
+                    bad += 1
+                    continue
+            elif path == "/sitemap.xml":
+                if "<urlset" not in html:
+                    fail("화면", f"sitemap.xml 형식이 아닙니다 (urlset 없음)")
+                    bad += 1
+                    continue
+            elif len(html) < 500:
                 fail("화면", f"{label} {path} → 내용이 {len(html)}자뿐입니다")
                 bad += 1
                 continue
