@@ -2575,6 +2575,17 @@
     ]
    },
    "note": "현대그룹 통합 채용(careerlink). 계열사 8곳 공고가 한 번에 옵니다. code 의 grp: 뒤는 그룹 번호(grpCoNo)입니다. 현대무벡스 자체 번호(CO202308020183)로 부르면 0건이니 헷갈리지 마세요. 건설·호텔·연구원은 사이트 산업과 맞지 않아 affiliates 로 두 곳만 담습니다. 본문이 이미지 한 장이라 원문으로 보냅니다. 2026-09-21 확인 두 곳 합계 7건"
+  },
+  {
+   "name": "GC녹십자",
+   "slug": "gc",
+   "ats": "successfactors",
+   "code": "careers.gcbiopharma.com",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "GC녹십자 가족사 통합 채용(SAP SuccessFactors). GC녹십자·GC녹십자MS·GC녹십자웰빙·GC녹십자EM·GCLabs 등 공고가 함께 오고, 회사명은 공고마다 '회사' 칸 값으로 들어갑니다. recruit.gccorp.com 목록은 보안 토큰이 있어야 열리는 API라 쓰지 않고, 상세가 열리는 careers.gcbiopharma.com 에서 직접 읽습니다. 마감일은 목록에 없고 상세 본문의 '공고마감일' 에서 읽습니다. 2026-09-22 확인 40건"
   }
  ]
 }
