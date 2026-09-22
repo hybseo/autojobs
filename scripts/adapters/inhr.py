@@ -69,6 +69,22 @@ import urllib.error
 import urllib.request
 
 API = "https://api.inhr.co.kr/v1/recruit/jd/list"
+
+# 그룹 통합 채용. 계열사 공고를 한 번에 줍니다.
+#
+# 현대그룹이 이걸 씁니다. hyundaimovex.careerlink.kr 처럼 계열사마다
+# 주소가 따로 있지만, 어느 주소로 들어가도 그룹 전체 공고가 보입니다.
+# 그 목록은 회사 번호(coNo)가 아니라 그룹 번호(grpCoNo)로 부릅니다.
+#
+#   coNo      CO202308020183   현대무벡스 자체 번호. 이걸로 부르면 0건
+#   grpCoNo   CO202308020182   현대그룹 번호. 이걸로 불러야 전체가 옴
+#
+# 두 번호가 끝자리 하나 차이라 헷갈리기 쉽습니다. 그룹 번호는 페이지
+# __NEXT_DATA__ 안의 "grpCoNo" 값입니다. 2026-09-21 에 회사 번호로
+# 불렀다가 빈 목록을 받은 적이 있습니다.
+#
+# 요청 본문에 grpCoNo 가 없으면 400 (code E001) 입니다.
+API_GROUP = "https://api.inhr.co.kr/v1/recruit/afco/jd/list"
 SITE = "https://{}.careerlink.kr/jobs/{}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -80,10 +96,10 @@ CAREER = {"경력": "경력", "신입": "신입", "무관": "무관",
           "신입/경력": "신입/경력", "경력무관": "무관", "인턴": "무관"}
 
 
-def _post(body):
+def _post(body, url=None):
     """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
     req = urllib.request.Request(
-        API, method="POST", data=json.dumps(body).encode(),
+        url or API, method="POST", data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json",
                  "Accept": "application/json",
                  "User-Agent": UA})
@@ -137,7 +153,23 @@ def strip_html(s):
 
 
 def list_open(code):
-    """공고 목록. probe 용으로 밖에서도 씁니다."""
+    """공고 목록. probe 용으로 밖에서도 씁니다.
+
+    code 가 "grp:" 로 시작하면 그룹 통합 채용으로 봅니다.
+        grp:CO202308020182   현대그룹 전체
+    """
+    if str(code or "").strip().startswith("grp:"):
+        grp = str(code).strip()[4:].split(",")[0].strip()
+        j = _post({"grpCoNo": grp}, url=API_GROUP)
+        if str(j.get("code")) != "0000":
+            print(f"  ! inhr(grp {grp}): 응답이 성공이 아닙니다. {j.get('message')}")
+            return []
+        rows = ((j.get("data") or {}).get("rcrtList")) or []
+        if not rows:
+            print(f"  ! inhr(grp {grp}): 공고 목록이 비어 있습니다. "
+                  f"회사 번호가 아니라 그룹 번호(grpCoNo)인지 확인하세요.")
+        return rows
+
     co, _ = _split_code(code)
     j = _post({"coNo": co, "pageNo": 1, "pageSize": 200})
 
@@ -156,15 +188,33 @@ def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
     slug = company["slug"]
-    co, site = _split_code(company["code"])
+    group = str(company["code"]).strip().startswith("grp:")
+    if group:
+        co, site = "", ""
+    else:
+        co, site = _split_code(company["code"])
 
     rows = list_open(company["code"])
+
+    # 그룹이면 affiliates 에 적은 계열사만 담습니다.
+    #
+    # 현대그룹은 엘리베이터·물류자동화뿐 아니라 건설(현대아산)·호텔·
+    # 연구원 공고도 같이 옵니다. 사이트가 다루는 산업에 맞는 계열사만
+    # 고릅니다. SK·대웅과 같은 방식입니다. affiliates 가 없으면 전부 담습니다.
+    want = [a.strip() for a in (company.get("affiliates") or []) if a.strip()]
+    if group and want:
+        before = len(rows)
+        rows = [x for x in rows if (x.get("coNm") or "").strip() in want]
+        print(f"      · 계열사 {len(want)}곳만 담습니다 ({before}건 중 {len(rows)}건)")
 
     jobs = []
     for x in rows:
         no = (x.get("rcrtNo") or "").strip()
         if not no:
             continue
+        # 그룹 공고는 계열사마다 careerlink 주소가 다릅니다. 응답에 들어 있습니다.
+        if group:
+            site = (x.get("subDmn") or "").strip()
 
         raw = x.get("rcrtCntn") or ""
         text = strip_html(raw)
@@ -195,7 +245,8 @@ def fetch(company):
             "sourceTitle": "",
             # 사이트 이름이 없으면 주소를 만들 수 없습니다. 그때는 목록으로 보냅니다.
             "sourceUrl": (SITE.format(site, no) if site
-                          else f"https://{co}.careerlink.kr/jobs"),
+                          else (f"https://{co}.careerlink.kr/jobs" if co
+                                else "https://careers.hyundaigroup.com")),
             "description": raw if not image_only else "",
         })
 
