@@ -85,6 +85,13 @@ LINK = re.compile(r'<a[^>]+class="[^"]*jobTitle-link[^"]*"[^>]*href="([^"]+)"[^>
 PAIR = re.compile(
     r'<span[^>]+class="[^"]*section-label[^"]*"[^>]*>(.*?)</span>\s*'
     r'<span[^>]+class="[^"]*section-field[^"]*"[^>]*>(.*?)</span>', re.S | re.I)
+# 회사마다 값을 담는 태그가 다릅니다.
+#   LS전선    <span class="section-label">회사</span><span class="section-field">LS전선</span>
+#   GC녹십자   <span class="section-label">회사</span> <div>GC녹십자EM</div>
+# 위 규칙은 LS전선 모양만 읽어서, GC녹십자는 회사·경력·게시일이 다 비었습니다.
+PAIR_DIV = re.compile(
+    r'<span[^>]+class="[^"]*section-label[^"]*"[^>]*>(.*?)</span>\s*'
+    r'<div[^>]*>(.*?)</div>', re.S | re.I)
 # 상세 본문.
 BODY = re.compile(r'<div[^>]+class="[^"]*jobdescription[^"]*"[^>]*>(.*?)</div>\s*</div>',
                   re.S | re.I)
@@ -95,7 +102,19 @@ JOBNO = re.compile(r'/(\d{4,})/?\s*$')
 LABEL_CORP = ("회사", "법인", "company", "회사명")
 LABEL_DEPT = ("부서", "직군", "department", "job function")
 LABEL_LOC = ("지역", "근무지", "location", "근무지역")
-LABEL_EMP = ("직원유형", "고용형태", "employment type", "employee type")
+LABEL_EMP = ("직원유형", "고용형태", "근무유형", "employment type", "employee type")
+LABEL_CAREER = ("경력구분", "경력", "career")
+LABEL_POSTED = ("게시일", "posted date", "date posted")
+
+# 상세 본문 안의 마감일. GC녹십자는 본문 맨 앞에 "공고마감일 2026/09/27" 이 있습니다.
+CLOSE = re.compile(r"(?:공고\s*)?마감일\s*[:：]?\s*(\d{4})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
+# LS전선은 "모집기간 2026. 10. 18(일) 23:59까지" 처럼 적습니다.
+# "모집기간 2026.09.01 ~ 2026.09.30" 처럼 범위로 적으면 뒤의 날짜를 읽습니다.
+# "모집기간 상시" 처럼 날짜가 없으면 아무것도 읽지 않습니다(상시채용).
+CLOSE_RANGE = re.compile(
+    r"모집\s*기간[^0-9]{0,10}"
+    r"(?:\d{4}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{1,2}[^~\n]{0,20}~\s*)?"
+    r"(\d{4})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})")
 
 
 def _get(url):
@@ -141,6 +160,44 @@ def _field(label, raw):
     if lab and v.startswith(lab):
         v = v[len(lab):].strip()
     return v
+
+
+def _ymd(v):
+    """'2026. 9. 22.' / '2026-09-22' → '2026-09-22'. 못 읽으면 빈 문자열."""
+    m = re.search(r"(\d{4})\s*[./-]\s*(\d{1,2})\s*[./-]\s*(\d{1,2})", str(v or ""))
+    if not m:
+        return ""
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+
+
+def _close(text):
+    """본문의 '공고마감일 2026/09/27' → '2026-09-27'. 없으면 빈 문자열."""
+    m = CLOSE.search(text or "") or CLOSE_RANGE.search(text or "")
+    if not m:
+        return ""
+    return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+
+
+def _inner_by_class(page, cls):
+    """class 이름으로 요소를 찾아 그 안쪽 HTML 을 돌려줍니다.
+
+    BODY 규칙은 LS전선 페이지 모양(</div></div> 로 끝남)에 맞춰져 있어
+    GC녹십자 상세에서는 아무것도 못 찾았습니다. 여기서는 같은 이름의
+    태그가 몇 번 열리고 닫히는지 세어 짝이 맞는 닫는 태그까지 자릅니다.
+    <style> 안에 같은 글자가 있어도 속지 않도록 태그 안의 class 만 봅니다.
+    """
+    m = re.search(r'<(div|span|section)\b[^>]*\bclass="[^"]*\b' + re.escape(cls)
+                  + r'\b[^"]*"[^>]*>', page, re.I)
+    if not m:
+        return ""
+    tag = m.group(1).lower()
+    start = m.end()
+    depth = 1
+    for t in re.finditer(r"<(/?)" + tag + r"\b[^>]*>", page[start:], re.I):
+        depth += -1 if t.group(1) else 1
+        if depth == 0:
+            return page[start:start + t.start()]
+    return page[start:]
 
 
 def _career(title):
@@ -205,9 +262,11 @@ def list_open(code):
             seen.add(jid)
 
             info = {}
-            for lab, val in PAIR.findall(chunk):
+            for lab, val in PAIR.findall(chunk) + PAIR_DIV.findall(chunk):
                 key = _text(lab).lower()
-                info[key] = _field(lab, val)
+                # 데스크톱·모바일이 겹쳐 같은 칸이 두 번 나옵니다. 처음 것을 씁니다.
+                if key not in info:
+                    info[key] = _field(lab, val)
 
             def pick(names):
                 for n in names:
@@ -221,8 +280,12 @@ def list_open(code):
                 "title": title,
                 "corp": pick(LABEL_CORP),
                 "dept": pick(LABEL_DEPT),
-                "location": pick(LABEL_LOC),
+                # 근무지가 "KR" 처럼 나라 코드뿐이면 정보가 아니라 비웁니다.
+                "location": ("" if pick(LABEL_LOC).strip().upper() in ("KR", "KOREA", "KOR")
+                             else pick(LABEL_LOC)),
                 "employment": pick(LABEL_EMP),
+                "career": pick(LABEL_CAREER),
+                "posted": pick(LABEL_POSTED),
             })
             added += 1
 
@@ -245,8 +308,9 @@ def fetch(company):
     for x in rows:
         raw = ""
         try:
-            m = BODY.search(_get(x["url"]))
-            raw = m.group(1) if m else ""
+            page = _get(x["url"])
+            m = BODY.search(page)
+            raw = m.group(1) if m else _inner_by_class(page, "jobdescription")
         except Exception:
             raw = ""
         time.sleep(0.3)
@@ -269,10 +333,12 @@ def fetch(company):
             "companySlug": slug,
             "title": title,
             "location": x["location"],
-            "career": _career(x["title"]),
-            # 게시일·마감일을 주지 않습니다. 비우면 상시채용으로 표시됩니다.
-            "postedAt": "",
-            "closesAt": "",
+            # 경력 칸이 있으면 그 값을, 없으면 제목에서 읽습니다.
+            "career": _career(x.get("career") or x["title"]),
+            # 게시일은 목록 칸에서, 마감일은 본문의 "공고마감일" 에서 읽습니다.
+            # 둘 다 없으면 비웁니다(상시채용으로 표시). LS전선은 둘 다 없습니다.
+            "postedAt": _ymd(x.get("posted")),
+            "closesAt": _close(text),
             "dday": None,
             "multiRole": image_only,
             "sourceTitle": "",
