@@ -1185,13 +1185,13 @@
   {
    "name": "가온전선",
    "slug": "gaoncable",
-   "ats": "recruiter",
+   "ats": "recruiter_v1",
    "code": "gaoncable",
    "industry": [
     "전기전자"
    ],
-   "enabled": false,
-   "note": "전력선·통신케이블. LS 계열. 코스피 6조. 리크루터 구버전(appsite)이라 우리 API 가 HTTP 400. 서버가 HTML 을 완성해 보내는 방식. 2026-09-04 확인 시점 접수중 공고 0건(전부 마감)이라 구버전 어댑터를 만들 근거가 약함. 효성·미래컴퍼니·탑엔지니어링·고려아연도 같은 구버전 문제. 이런 곳이 더 쌓이면 그때 만들 것"
+   "enabled": true,
+   "note": "전력선·통신케이블. LS 계열. 리크루터 구버전(/app/jobnotice/list)이라 신버전 API 는 400 입니다. 2026-09-04 에는 접수중이 0건이라 비활성했는데, recruiter_v1 어댑터가 생겼고 2026-09-22 확인 전체 22건 중 접수중 2건이라 되살립니다"
   },
   {
    "name": "덕산네오룩스",
@@ -2672,6 +2672,178 @@
    ],
    "enabled": true,
    "note": "전자가격표시기(ESL)·전원부품. 그리팅. 2026-09-22 확인 10건"
+  },
+  {
+   "name": "해성그룹",
+   "slug": "haesung",
+   "ats": "select_in",
+   "code": "haesunggroup",
+   "industry": [
+    "반도체",
+    "전기전자"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "해성디에스",
+    "계양전기"
+   ],
+   "affiliateIndustry": {
+    "해성디에스": [
+     "반도체",
+     "전기전자"
+    ],
+    "계양전기": [
+     "전기전자"
+    ]
+   },
+   "note": "해성그룹 통합 채용(Select IN). 해성디에스가 주력. 한국제지 등은 사이트 산업과 맞지 않아 affiliates 로 두 곳만 담습니다. 계열사는 제목 앞 대괄호로만 구분됩니다. 상세가 폼 전송이라 개별 주소가 없어 목록으로 보냅니다. 2026-09-22 확인 진행중 2건"
+  },
+  {
+   "name": "한솔그룹",
+   "slug": "hansol",
+   "ats": "inhr",
+   "code": "grp:CO202503071791",
+   "industry": [
+    "전기전자",
+    "반도체",
+    "소재",
+    "IT"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "한솔테크닉스",
+    "한솔케미칼",
+    "한솔아이원스",
+    "한솔PNS IT부문"
+   ],
+   "affiliateIndustry": {
+    "한솔테크닉스": [
+     "전기전자"
+    ],
+    "한솔케미칼": [
+     "반도체",
+     "소재"
+    ],
+    "한솔아이원스": [
+     "반도체"
+    ],
+    "한솔PNS IT부문": [
+     "IT"
+    ]
+   },
+   "note": "한솔그룹 통합 채용(careerlink). 계열사 21곳. code 의 grp: 뒤는 그룹 번호입니다. 제지·물류·포장은 산업이 맞지 않아 네 곳만 담습니다. 한솔테크닉스 홈페이지도 같은 공고를 보여주지만 원본은 여기입니다. 2026-09-22 확인 전체 13건 중 해당 7건"
+  },
+  {
+   "name": "쿠쿠",
+   "slug": "cuckoo",
+   "ats": "cuckoo",
+   "code": "HM010",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "밥솥·정수기. 쿠쿠전자와 쿠쿠홈시스가 한 사이트를 씁니다. 계열사 구분 칸이 없어 제목에서 읽습니다. 접수 상태 칸이 없어 마감일로 거릅니다. code 는 화면 메뉴 번호입니다. 2026-09-22 확인 열 건 모두 마감이라 0건"
+  },
+  {
+   "name": "토스",
+   "slug": "toss",
+   "ats": "greenhouse",
+   "code": "url:https://api-public.toss.im/api/v3/ipd-eggnog/career",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "비바리퍼블리카. Greenhouse 를 자체 서버로 감싸 씁니다. boards-api.greenhouse.io 로는 열리지 않아 code 에 url: 로 주소를 적습니다. /jobs 는 근무지별로 갈려 467건이라 묶음 주소(job-groups)를 씁니다. 본문을 주지 않아 원문으로 보냅니다. 토스뱅크·토스증권 공고가 제목에 섞여 옵니다. 2026-09-22 확인 275건"
+  },
+  {
+   "name": "당근",
+   "slug": "daangn",
+   "ats": "greenhouse",
+   "code": "daangn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "당근마켓. Greenhouse 공개 주소. 본문이 함께 옵니다. 2026-09-22 확인 47건"
+  },
+  {
+   "name": "컬리",
+   "slug": "kurly",
+   "ats": "greeting",
+   "code": "kurly",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "마켓컬리. 그리팅. 2026-09-22 확인"
+  },
+  {
+   "name": "여기어때",
+   "slug": "goodchoice",
+   "ats": "greeting",
+   "code": "gccompany",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "여기어때컴퍼니. 그리팅(약칭이 회사명과 달라 gccompany). 2026-09-22 확인"
+  },
+  {
+   "name": "오늘의집",
+   "slug": "bucketplace",
+   "ats": "greeting",
+   "code": "bucketplace",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "버킷플레이스. 그리팅. bucketplace.com/careers 는 겉면이고 속은 그리팅입니다. 2026-09-22 확인"
+  },
+  {
+   "name": "무신사",
+   "slug": "musinsa",
+   "ats": "greeting",
+   "code": "musinsa",
+   "domain": "www.musinsacareers.com",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "그리팅을 자체 도메인(musinsacareers.com)으로 씁니다. 클로봇과 같은 방식이라 domain 을 적습니다. 2026-09-22 확인"
+  },
+  {
+   "name": "야놀자",
+   "slug": "yanolja",
+   "ats": "workday",
+   "code": "yanolja.wd102.myworkdayjobs.com/ko-KR/External_Yanolja",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "Workday. 2026-09-22 기준 진행중 공고 0건. 열리면 자동으로 들어옵니다"
+  },
+  {
+   "name": "메가존클라우드",
+   "slug": "megazone",
+   "ats": "ninehire",
+   "code": "megazone,f3b6f7b0-94a2-11ec-990c-a70e6ab23542",
+   "domain": "career.megazone.com",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "클라우드 관리(MSP). 나인하이어를 자체 도메인(career.megazone.com)으로 씁니다. 메가존소프트·메가존클라우드 등 얼라이언스 공고가 함께 옵니다. 2026-09-22 확인 전체 262건 중 진행중 97건"
+  },
+  {
+   "name": "한국신용데이터",
+   "slug": "kcd",
+   "ats": "greeting",
+   "code": "kcd",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "캐시노트 운영. 그리팅. kcd.co.kr/recruit 는 겉면이고 속은 그리팅입니다. 2026-09-22 확인 10건"
   }
  ]
 }
