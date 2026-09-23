@@ -54,6 +54,7 @@ import re
 import html
 import urllib.error
 import urllib.request
+from datetime import datetime, timedelta, timezone
 
 LIST_URL = ("https://recruit.hd.com/api/v1/jobda/getRecruitNoticeList"
             "?isPost=true&LANG=KR")
@@ -70,8 +71,13 @@ CAREER = {"경력": "경력", "신입": "신입", "신입/경력": "신입/경�
 
 def _get(url):
     # 헤더가 부족하면 500 을 돌려줍니다. 브라우저가 보내는 것에 맞춥니다.
-    # 실제로 Accept/Referer 만으로는 Internal Server Error 가 났습니다.
+    #
+    # 핵심은 X-User-Role 입니다. 이게 없으면 서버가 관리자 요청으로 보고
+    # "관리자 권한이 존재하지 않습니다" 로 막습니다. 2026-09-01 에 이것 때문에
+    # 막혀 이 회사를 비활성화했었고, 2026-09-22 에 화면이 보내는 요청을
+    # 들여다보고 찾았습니다. 값은 FRONT 로 고정입니다(로그인과 무관).
     req = urllib.request.Request(url, headers={
+        "X-User-Role": "FRONT",
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
         "User-Agent": UA,
@@ -131,11 +137,28 @@ def _areas(row):
     return out[0] if len(out) == 1 else f"{out[0]} 외 {len(out) - 1}곳"
 
 
+def _today():
+    return datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+
+
 def list_open(affiliates=()):
-    """게시중인 공고 목록. probe 용으로 밖에서도 씁니다."""
+    """접수중인 공고 목록. probe 용으로 밖에서도 씁니다."""
     j = _get(LIST_URL)
     rows = j.get("data") or []
     rows = [x for x in rows if x.get("isPost") is not False]
+
+    # 지난 공고를 걸러냅니다.
+    #
+    # 이 API 는 isPost=true 로 불러도 2024년 공고까지 전부 돌려줍니다.
+    # isInProgress 칸도 지난 공고에 true 로 붙어 있어 믿을 수 없습니다.
+    # 2026-09-22 기준 받은 564건 중 접수중은 28건이었고, 마감일로 거른
+    # 결과가 화면의 28건과 일치했습니다.
+    today = _today()
+    before = len(rows)
+    rows = [x for x in rows if _date(x.get("receiveEndDatetime")) >= today]
+    if before and not rows:
+        print(f"      ! HD현대: 받은 {before}건이 모두 마감일이 지났습니다. "
+              f"오늘({today}) 기준으로 접수중인 공고가 없습니다.")
 
     if not affiliates:
         return rows
