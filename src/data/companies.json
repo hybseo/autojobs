@@ -394,7 +394,7 @@
    "name": "LG그룹",
    "slug": "lg-careers",
    "ats": "lg",
-   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD",
+   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD,LGC,LGU,BIZ,HIM,LGEB",
    "affiliateIndustry": {
     "LG전자": [
      "자동차부품",
@@ -422,6 +422,21 @@
     "LG디스플레이": [
      "전기전자",
      "반도체"
+    ],
+    "LG화학": [
+     "소재"
+    ],
+    "LG유플러스": [
+     "IT"
+    ],
+    "비즈테크아이": [
+     "IT"
+    ],
+    "하이엠솔루텍": [
+     "전기전자"
+    ],
+    "LG-Eni BioRefining": [
+     "소재"
     ]
    },
    "industry": [
@@ -429,10 +444,11 @@
     "전기전자",
     "로봇",
     "IT",
-    "반도체"
+    "반도체",
+    "소재"
    ],
    "enabled": true,
-   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것"
+   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것 / 2026-09-22: 그룹 전체 게시중 80건인데 코드 7개만 받아 47건을 놓치고 있었습니다. 사이트 산업에 맞는 다섯 곳을 더했습니다(LGC 화학, LGU 유플러스, BIZ 비즈테크아이, HIM 하이엠솔루텍, LGEB LG-Eni BioRefining)"
   },
   {
    "name": "스트라드비전",
@@ -2791,13 +2807,13 @@
   {
    "name": "오늘의집",
    "slug": "bucketplace",
-   "ats": "greeting",
+   "ats": "bucketplace",
    "code": "bucketplace",
    "industry": [
     "IT"
    ],
    "enabled": true,
-   "note": "버킷플레이스. 그리팅. bucketplace.com/careers 는 겉면이고 속은 그리팅입니다. 2026-09-22 확인"
+   "note": "버킷플레이스. 그리팅을 쓰지만 목록 페이지(/ko)를 닫아 두어 그리팅 어댑터로는 404 가 납니다(2026-09-22 수집 실패). 목록은 홈페이지(bucketplace.com/careers)에만 있고 개별 공고만 그리팅으로 열려 전용 어댑터를 씁니다. 2026-09-22 확인 67건"
   },
   {
    "name": "무신사",
@@ -2842,8 +2858,52 @@
    "industry": [
     "IT"
    ],
+   "enabled": false,
+   "note": "캐시노트 운영. 그리팅을 쓰지만 목록 페이지(/ko)가 404 라 그리팅 어댑터로는 받지 못합니다(2026-09-22 수집 실패). 목록은 kcd.co.kr/recruit 가 Contentful 에서 불러오는데 접근 값이 헤더에 있어 아직 방법을 못 찾았습니다. 10건 규모라 잠시 꺼 둡니다"
+  },
+  {
+   "name": "세아제강",
+   "slug": "seah",
+   "ats": "recruiter",
+   "code": "seahsteel",
+   "industry": [
+    "소재"
+   ],
    "enabled": true,
-   "note": "캐시노트 운영. 그리팅. kcd.co.kr/recruit 는 겉면이고 속은 그리팅입니다. 2026-09-22 확인 10건"
+   "note": "강관·철강. 리크루터 신버전. 세아베스틸은 다른 사이트를 쓰는 것으로 보여 포함되지 않습니다. 2026-09-22 확인 전체 8건 중 접수중 2건"
+  },
+  {
+   "name": "코오롱그룹",
+   "slug": "kolon",
+   "ats": "kolon",
+   "code": "",
+   "industry": [
+    "소재",
+    "제약바이오",
+    "IT"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "코오롱인더스트리",
+    "코오롱생명과학",
+    "코오롱제약",
+    "코오롱베니트"
+   ],
+   "affiliateIndustry": {
+    "코오롱인더스트리": [
+     "소재"
+    ],
+    "코오롱생명과학": [
+     "제약바이오"
+    ],
+    "코오롱제약": [
+     "제약바이오"
+    ],
+    "코오롱베니트": [
+     "IT"
+    ]
+   },
+   "note": "코오롱그룹 통합 채용(dream.kolon.com). 건설·패션·모빌리티도 함께 오므로 affiliates 로 네 곳만 담습니다. 상세가 폼 전송이라 개별 주소가 없어 목록으로 보냅니다. 2026-09-22 확인 전체 14건 중 해당 7건"
   }
  ]
 }
