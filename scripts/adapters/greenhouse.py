@@ -39,6 +39,21 @@ import urllib.request
 
 API = "https://boards-api.greenhouse.io/v1/boards/{}/jobs?content=true"
 
+# 회사가 Greenhouse 를 자기 서버로 감싸 두는 경우가 있습니다.
+#
+# 토스가 그렇습니다. boards-api.greenhouse.io 로는 열리지 않고
+# api-public.toss.im 을 거쳐야 합니다. 그때는 code 를 이렇게 적습니다.
+#
+#   "code": "url:https://api-public.toss.im/api/v3/ipd-eggnog/career"
+#
+# 감싼 주소는 응답 모양도 조금 다릅니다.
+#   {"jobs": [...]}      공개 주소
+#   {"success": [...]}   토스
+#
+# 그리고 /jobs 는 같은 공고가 근무지별로 갈려 있습니다(토스 467건).
+# /job-groups 가 그것을 묶어 화면과 같은 수(275건)로 줍니다.
+URL_PREFIX = "url:"
+
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
@@ -75,10 +90,48 @@ def _is_korea(job):
     return bool(KOREA.search(_location(job)))
 
 
+def _rows(data):
+    """응답에서 공고 목록만 꺼냅니다. 감싼 주소는 키 이름이 다릅니다."""
+    if isinstance(data, list):
+        return data
+    if isinstance(data, dict):
+        for key in ("jobs", "success", "data", "results"):
+            v = data.get(key)
+            if isinstance(v, list):
+                return v
+    return []
+
+
+def _wrapped(base):
+    """감싼 주소에서 목록을 받습니다. 묶음 주소를 먼저 씁니다."""
+    base = base.rstrip("/")
+    try:
+        groups = _rows(_get(base + "/job-groups"))
+    except Exception:
+        groups = []
+    out = []
+    for g in groups:
+        if not isinstance(g, dict):
+            continue
+        p = g.get("primary_job")
+        if isinstance(p, dict):
+            p = dict(p)
+            if not p.get("title"):
+                p["title"] = g.get("title")
+            out.append(p)
+    if out:
+        return out
+    # 묶음 주소가 없으면 그냥 목록을 씁니다.
+    return _rows(_get(base + "/jobs"))
+
+
 def list_open(code, overseas=False):
     """공개된 공고 목록. probe 용으로 밖에서도 씁니다."""
-    j = _get(API.format(urllib.parse.quote(code)))
-    rows = j.get("jobs") or []
+    code = str(code or "").strip()
+    if code.lower().startswith(URL_PREFIX):
+        rows = _wrapped(code[len(URL_PREFIX):].strip())
+    else:
+        rows = _rows(_get(API.format(urllib.parse.quote(code))))
     if overseas:
         return rows
     kept = [x for x in rows if _is_korea(x)]
@@ -99,8 +152,14 @@ def fetch(company):
 
     rows = list_open(code, overseas=bool(company.get("overseas")))
 
+    # id 에 code 를 쓰는데 url: 형태는 주소가 통째로 들어가 버립니다.
+    # 그때는 회사 slug 를 씁니다.
+    tag = slug if str(code).lower().startswith(URL_PREFIX) else code
+
     jobs = []
     for x in rows:
+        if not isinstance(x, dict):
+            continue
         jid = x.get("id")
         if not jid:
             continue
@@ -110,7 +169,7 @@ def fetch(company):
         image_only = len(text) < 50 and "<img" in body.lower()
 
         jobs.append({
-            "id": f"greenhouse-{code}-{jid}",
+            "id": f"greenhouse-{tag}-{jid}",
             "unit": "공고",
             "company": name, "companySlug": slug,
             "title": x.get("title") or "",
