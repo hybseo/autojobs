@@ -58,10 +58,16 @@ companies.json 의 affiliates 에 적은 계열사만 담습니다. 비워 두�
 """
 import hashlib
 import html
+import http.cookiejar
 import re
 import time
 import urllib.error
 import urllib.request
+
+# 첫 요청에서 받은 쿠키(세션)를 다음 요청에 실어 보냅니다.
+# 서버가 세션을 만든 뒤에야 전체 화면을 주는 경우가 있습니다.
+_OPENER = urllib.request.build_opener(
+    urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 
 BASE = "https://{}.select-in.co.kr"
 PATH = "/recruit/apply/recruitMain"
@@ -81,16 +87,31 @@ DATE = re.compile(r"(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})")
 
 
 def _get(url):
-    """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    """일시적 실패만 몇 초 쉬었다 다시 시도합니다.
+
+    이 서버는 요청 모양을 보고 다른 답을 줍니다.
+    주소창으로 들어가면 5만 자짜리 전체 화면을, 자바스크립트가 부르면
+    1킬로바이트짜리 껍데기를 돌려줍니다. 2026-09-22 수집에서 껍데기를
+    받아 0건이 났습니다.
+
+    브라우저가 페이지를 열 때 함께 보내는 표시(Sec-Fetch-*)를 붙여
+    같은 모양으로 요청합니다. 쿠키도 받아 두 번째 요청에 실어 보냅니다.
+    """
     req = urllib.request.Request(url, headers={
         "User-Agent": UA,
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "ko-KR,ko;q=0.9",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Cache-Control": "max-age=0",
     })
     last = None
     for i in range(3):
         try:
-            with urllib.request.urlopen(req, timeout=25) as r:
+            with _OPENER.open(req, timeout=25) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError:
             raise
@@ -151,6 +172,11 @@ def list_open(code):
                            "주소의 앞자리(예: haesunggroup)를 적으세요.")
     url = BASE.format(sub) + PATH
     page = _get(url)
+
+    # 껍데기를 받으면 쿠키가 생긴 뒤 한 번 더 두드립니다.
+    if len(page) < 3000:
+        time.sleep(1)
+        page = _get(url)
 
     if len(page) < 3000:
         # 껍데기만 받은 경우입니다. 파싱해봐야 0건이라 원인을 남깁니다.
