@@ -52,13 +52,38 @@ export const isAlways = (j) => {
   return (e - s) / day > ALWAYS_DAYS;
 };
 
-/** 아직 지원할 수 있는 공고. 상시채용은 마감이 없으므로 항상 포함됩니다. */
-export const openJobs = () =>
-  JOBS.filter((j) => !j.closesAt || parseDate(j.closesAt) >= TODAY);
+/*
+ * 회사가 채용 사이트에서 내린 공고.
+ *
+ * goneAt 은 수집기가 "어제까지 있었는데 오늘 사라졌다" 고 표시한 날짜입니다.
+ * 페이지는 60일 남기지만(아래 STALE_DAYS 주석 참고) 목록에는 넣지 않습니다.
+ * 지원할 수 없는 자리이기 때문입니다.
+ */
+export const isGone = (j) => Boolean(j.goneAt);
 
-/** 마감된 공고. 기업 페이지 아카이브에 씁니다. 상시채용은 마감되지 않습니다. */
+/*
+ * 아직 지원할 수 있는 공고.
+ *
+ * 두 가지를 모두 봅니다.
+ *   1) 마감일이 지나지 않았는가
+ *   2) 회사가 내리지 않았는가(goneAt)
+ *
+ * 예전에는 마감일만 봤습니다. 그래서 마감일이 없는 상시채용 공고는 회사가
+ * 내려도 목록에 남았습니다. 2026-09-28 기준 282건이 그런 상태였고, 그중에는
+ * 18일 전에 사라진 망고부스트 공고처럼 원문이 이미 404 인 것도 있었습니다.
+ * 구직자가 눌러도 지원할 수 없는 자리라 목록에서 뺍니다.
+ */
+export const openJobs = () =>
+  JOBS.filter((j) => !isGone(j) && (!j.closesAt || parseDate(j.closesAt) >= TODAY));
+
+/*
+ * 마감된 공고. 기업 페이지 아카이브에 씁니다.
+ *
+ * 마감일이 지난 것과 회사가 내린 것을 모두 담습니다. 상시채용은 마감일이
+ * 없지만 회사가 내리면 여기로 옵니다.
+ */
 export const closedJobs = () =>
-  JOBS.filter((j) => j.closesAt && parseDate(j.closesAt) < TODAY);
+  JOBS.filter((j) => isGone(j) || (j.closesAt && parseDate(j.closesAt) < TODAY));
 
 /*
  * 마감 공고 보관 기간.
