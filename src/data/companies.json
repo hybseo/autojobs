@@ -1697,12 +1697,13 @@
    "name": "카카오게임즈",
    "slug": "recruit-kakaogames-com",
    "ats": "greeting",
-   "code": "recruit.kakaogames.com",
+   "code": "kakaogames",
    "industry": [
     "IT"
    ],
    "enabled": true,
-   "note": "모바일·PC게임 퍼블리싱"
+   "note": "모바일·PC게임 퍼블리싱. 그리팅을 자체 도메인(recruit.kakaogames.com)으로 씁니다. 예전에는 code 에 도메인을 적어 두어 recruit.kakaogames.com.career.greetinghr.com 이라는 없는 주소를 만들었고, 그 탓에 SSL 오류로 계속 실패했습니다(2026-09-28 원인 확인). 자체 도메인은 domain 칸에 적어야 합니다",
+   "domain": "recruit.kakaogames.com"
   },
   {
    "name": "코나아이",
@@ -2904,6 +2905,28 @@
     ]
    },
    "note": "코오롱그룹 통합 채용(dream.kolon.com). 건설·패션·모빌리티도 함께 오므로 affiliates 로 네 곳만 담습니다. 상세가 폼 전송이라 개별 주소가 없어 목록으로 보냅니다. 이 어댑터는 code 를 쓰지 않지만 fetch_jobs.py 가 빈 값을 허용하지 않아 회사 이름을 적어 둡니다. 2026-09-22 확인 전체 14건 중 해당 7건"
+  },
+  {
+   "name": "카카오",
+   "slug": "kakao",
+   "ats": "kakao",
+   "code": "kakao",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "카카오",
+    "카카오모빌리티",
+    "카카오페이",
+    "카카오헬스케어",
+    "카카오페이손해보험",
+    "카카오엔터프라이즈",
+    "카카오뱅크",
+    "카카오스타일",
+    "카카오엔터테인먼트"
+   ],
+   "note": "카카오 공동체 통합 채용(careers.kakao.com). API 가 직군별로 나뉘어 있어 테크·서비스비즈·스태프·디자인 넷을 각각 불러 합칩니다. 그냥 부르면 테크 35건만 오고 나머지를 놓칩니다. company=ALL 을 빼면 본사 공고만 옵니다. 카카오게임즈는 자체 사이트로 따로 수집하므로 affiliates 에서 뺐습니다. 2026-09-28 확인 전체 72건(카카오 26·모빌리티 21·페이 18·게임즈 3·헬스케어 2·페이손보 2)"
   }
  ]
 }
