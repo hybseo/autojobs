@@ -39,6 +39,7 @@ CoAsia SEMI·NEXELL·CM 등으로 나뉩니다. 전부 반도체·전자 계열�
 모두 담습니다. companies.json 의 affiliates 를 적으면 그곳만 담습니다.
 """
 import html
+import json
 import re
 import time
 import urllib.error
@@ -75,7 +76,7 @@ def _post(page):
             "Referer": LIST_PAGE,
         })
     last = None
-    for i in range(3):
+    for i in range(2):
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
                 return r.read().decode("utf-8", "replace")
@@ -83,9 +84,34 @@ def _post(page):
             raise
         except Exception as e:
             last = e
-            if i < 2:
-                time.sleep(2 + i * 2)
+            if i < 1:
+                time.sleep(3)
     raise last
+
+
+def _unwrap(body):
+    """응답에서 목록 HTML 만 꺼냅니다.
+
+    이 서버는 HTML 을 JSON 에 담아 보냅니다.
+
+        {"success":true,"listHtml":"<li><a href=\\"/recruit_view.php?idx=33\\">..."}
+
+    그래서 따옴표가 \\" 로 감싸여 있고, 그대로 정규식을 걸면 href=" 가
+    하나도 맞지 않습니다. 2026-09-30 첫 수집에서 0건이 난 까닭입니다.
+    JSON 으로 풀어 listHtml 을 꺼내고, 실패하면 역슬래시만 걷어냅니다.
+    """
+    body = body or ""
+    try:
+        data = json.loads(body)
+        if isinstance(data, dict):
+            for key in ("listHtml", "html", "list", "data"):
+                v = data.get(key)
+                if isinstance(v, str) and v.strip():
+                    return v
+    except Exception:
+        pass
+    # JSON 이 아니면 감싼 따옴표만 풀어 줍니다.
+    return body.replace('\\"', '"').replace("\\/", "/")
 
 
 def _text(s):
@@ -133,9 +159,9 @@ def list_open(code=""):
     """공고 목록. probe 용으로 밖에서도 씁니다."""
     rows, seen = [], set()
     for page in range(1, MAX_PAGE + 1):
-        chunk_html = _post(page)
-        # 빈 쪽은 껍데기만 옵니다.
-        if len(chunk_html) < 300:
+        chunk_html = _unwrap(_post(page))
+        # 빈 쪽은 목록이 비어 옵니다.
+        if len(chunk_html) < 60:
             break
 
         got = 0

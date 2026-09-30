@@ -60,17 +60,19 @@ def _get(url):
         "Accept": "text/html,application/xhtml+xml",
         "Accept-Language": "ko-KR,ko;q=0.9",
     })
+    # 2026-09-30 수집에서 30초로는 모자라 시간 초과가 났습니다.
+    # 한 쪽이 73만 자나 되어 받는 데 오래 걸립니다.
     last = None
-    for i in range(3):
+    for i in range(2):
         try:
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=45) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError:
             raise
         except Exception as e:
             last = e
-            if i < 2:
-                time.sleep(2 + i * 2)
+            if i < 1:
+                time.sleep(3)
     raise last
 
 

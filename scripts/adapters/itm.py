@@ -2,8 +2,16 @@
 """
 아이티엠반도체(itmsemiconductor.com) 채용 수집기.
 
-목록  GET https://www.itmsemiconductor.com/kor/recruit/recruit_notice.php
-상세  GET https://www.itmsemiconductor.com/kor/recruit/recruit_notice.php?mode=view&idx={번호}
+목록  GET http://it-m.co.kr/home/sub.php?menukey=112
+상세  GET http://it-m.co.kr/home/sub.php?menukey=112&mode=view&idx={번호}
+
+주소를 조심하세요
+-----------------
+회사 이름은 ITM Semiconductor 인데 주소는 it-m.co.kr 입니다.
+2026-09-30 첫 수집에서 itmsemiconductor.com 으로 적었다가 "이름을 찾을 수
+없습니다" 로 실패했습니다. 그런 도메인은 없습니다.
+
+menukey=112 가 채용공고 목록입니다(111 은 복리후생, 109 는 인사제도).
 
 배터리 보호회로·모듈을 만드는 회사입니다. 자체 게시판을 씁니다.
 
@@ -35,9 +43,9 @@ import time
 import urllib.error
 import urllib.request
 
-BASE = "https://www.itmsemiconductor.com"
-LIST = BASE + "/kor/recruit/recruit_notice.php"
-VIEW = BASE + "/kor/recruit/recruit_notice.php?mode=view&idx={}"
+BASE = "http://it-m.co.kr"
+LIST = BASE + "/home/sub.php?menukey=112"
+VIEW = BASE + "/home/sub.php?menukey=112&mode=view&idx={}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
@@ -58,16 +66,16 @@ def _get(url):
         "Accept-Language": "ko-KR,ko;q=0.9",
     })
     last = None
-    for i in range(3):
+    for i in range(2):
         try:
-            with urllib.request.urlopen(req, timeout=25) as r:
+            with urllib.request.urlopen(req, timeout=30) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError:
             raise
         except Exception as e:
             last = e
-            if i < 2:
-                time.sleep(3 + i * 3)
+            if i < 1:
+                time.sleep(3)
     raise last
 
 
@@ -102,17 +110,19 @@ def list_open(code=""):
     page = _get(LIST)
 
     rows, seen = [], set()
-    for chunk in ROW.findall(page):
+    for i, chunk in enumerate(ROW.findall(page)):
         m = LINK.search(chunk)
-        if not m:
-            continue
-        no = m.group(2)
+        # 링크에 번호가 없는 게시판도 있어, 없으면 줄 순서로 번호를 만듭니다.
+        no = m.group(2) if m else ""
+        if not no:
+            cells0 = [_text(c) for c in TD.findall(chunk)]
+            no = next((c for c in cells0 if c.isdigit()), "") or f"r{i}"
         if no in seen:
             continue
 
         # 제목은 링크 글자입니다. m.group(0) 은 href 까지 통째로라
         # 그대로 쓰면 주소가 제목이 됩니다. 링크 안쪽만 꺼냅니다.
-        a = re.search(r'<a[^>]*idx=' + no + r'[^>]*>(.*?)</a>', chunk, re.S | re.I)
+        a = re.search(r"<a[^>]*>(.*?)</a>", chunk, re.S | re.I)
         title = _text(a.group(1)) if a else ""
         if not title:
             # 링크 글자가 비면 칸 중에서 가장 긴 글자를 제목으로 봅니다.

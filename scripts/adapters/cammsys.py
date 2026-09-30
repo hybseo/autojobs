@@ -58,17 +58,19 @@ def _get(url):
         "Accept": "text/html,application/xhtml+xml",
         "Accept-Language": "ko-KR,ko;q=0.9",
     })
+    # 2026-09-30 수집에서 25초로는 모자라 시간 초과가 났습니다.
+    # 국내 중견기업 사이트는 해외 서버에서 부를 때 느린 경우가 있습니다.
     last = None
-    for i in range(3):
+    for i in range(2):
         try:
-            with urllib.request.urlopen(req, timeout=25) as r:
+            with urllib.request.urlopen(req, timeout=30) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError:
             raise
         except Exception as e:
             last = e
-            if i < 2:
-                time.sleep(2 + i * 2)
+            if i < 1:
+                time.sleep(3)
     raise last
 
 
