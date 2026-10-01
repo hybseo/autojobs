@@ -289,7 +289,15 @@ def fetch(company):
         jobs.append({
             "id": f"greeting-{code}-{oid}",
             "unit": "공고",
-            "company": _affiliate(r.get("title"), want)[1] or name,
+            # 대괄호를 회사명으로 쓰는 건 affiliates 를 적은 그룹 사이트뿐입니다.
+            #
+            # 한화오션은 제목 앞 대괄호에 계열사가 아니라 부서를 적습니다
+            #   [경영지원] 법무 경력사원 채용
+            # 이것을 회사명으로 쓰면 "경영지원" 이 회사가 됩니다
+            # (2026-10-01 실제로 그렇게 올라갔습니다).
+            #
+            # affiliates 가 없으면 등록명을 그대로 씁니다.
+            "company": (_affiliate(r.get("title"), want)[1] or name) if want else name,
             "companySlug": slug,
             "title": r.get("title") or "",
             "location": _location(positions),
