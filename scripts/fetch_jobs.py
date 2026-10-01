@@ -12,6 +12,7 @@
 자세한 규약은 scripts/adapters/__init__.py 를 보세요.
 """
 import json
+import re
 import sys
 from pathlib import Path
 from datetime import date, datetime, timedelta, timezone
@@ -206,6 +207,95 @@ def dropped(job):
     return False
 
 
+# ─── 근무지 정리 ────────────────────────────────────────────────
+#
+# 회사가 채용 사이트의 "근무지" 칸에 지역 대신 회사 이름을 적어 두는 일이
+# 흔합니다. 2026-10-01 기준으로 이런 공고가 500건이 넘었습니다.
+#
+#   덴티움        근무지 "덴티움"              85건
+#   딥엑스        근무지 "㈜딥엑스"            62건
+#   무신사        근무지 "무신사 성수 오피스"   121건
+#
+# 화면에 "덴티움 · 근무지 덴티움" 으로 나와 아무 정보가 되지 못하고,
+# 검색에서도 같은 말이 두 번 걸립니다.
+#
+# 반대로 지역명이 회사 이름과 겹치는 경우도 있습니다.
+#
+#   데브캣의 근무지 "삼성"(삼성역 일대) 때문에 "삼성" 을 검색하면
+#   게임회사 공고가 나왔습니다.
+#
+# 그래서 저장하기 전에 한 번 정리합니다. 어댑터마다 고치지 않고 여기서
+# 처리하면 앞으로 추가되는 회사에도 그대로 적용됩니다.
+
+# 지역으로 읽히게 다듬을 표기. 왼쪽이 그대로 들어온 값입니다.
+LOC_RENAME = {
+    "삼성": "삼성역",
+}
+
+# 회사 이름 뒤에 흔히 붙는 꼬리말. 비교할 때 떼어냅니다.
+CO_TAIL = re.compile(r"(주식회사|\(주\)|㈜|\(유\)|Inc\.?|Co\.?,?\s*Ltd\.?)", re.I)
+
+
+def _co_key(name):
+    """회사 이름 비교용. 괄호·공백·법인 표기를 걷어냅니다."""
+    s = CO_TAIL.sub(" ", str(name or ""))
+    return re.sub(r"[\s·,\.\-()（）]", "", s).lower()
+
+
+# 회사 이름을 영문으로만 적어 둔 경우를 위해 몇 곳을 손으로 적어 둡니다.
+#
+#   니어스랩의 근무지가 "NEARTHLAB(서울)" 로 옵니다. 한글 회사명과 글자가
+#   달라 자동으로는 떼어지지 않습니다.
+#
+# 여기 없는 회사는 한글 이름만 비교합니다. 새로 눈에 띄면 추가하세요.
+CO_ALIAS = {
+    "니어스랩": ["NEARTHLAB", "Nearthlab"],
+    "무신사": ["MUSINSA"],
+    "토스": ["Toss", "TOSS"],
+    "당근": ["Karrot", "DAANGN"],
+    "컬리": ["Kurly", "KURLY"],
+}
+
+
+def clean_location(loc, company):
+    """근무지에서 회사 이름을 걷어냅니다.
+
+    세 가지를 합니다.
+      1) 근무지가 회사 이름과 같으면 비웁니다("덴티움" → "")
+      2) 근무지 안의 회사 이름만 떼어냅니다
+         ("무신사 성수 오피스" → "성수 오피스")
+      3) 지역으로 읽히게 다듬습니다("삼성" → "삼성역")
+
+    회사 이름을 떼고 남은 게 없으면 비웁니다. 지역이 남으면 그대로 씁니다.
+    없는 지역을 지어내지 않습니다.
+    """
+    loc = re.sub(r"\s+", " ", str(loc or "")).strip()
+    if not loc:
+        return ""
+
+    co_key = _co_key(company)
+    if co_key and _co_key(loc) == co_key:
+        return ""
+
+    # 근무지 안에 회사 이름이 통째로 들어 있으면 그 부분만 뺍니다.
+    co_name = str(company or "").strip()
+    for nm in [co_name] + CO_ALIAS.get(co_name, []):
+        if nm and len(nm) >= 2 and nm in loc:
+            loc = loc.replace(nm, " ")
+    # 법인 표기만 남는 경우를 정리합니다.
+    loc = CO_TAIL.sub(" ", loc)
+    loc = re.sub(r"\s+", " ", loc).strip(" ,·-")
+    # 회사명을 떼고 "(서울)" 처럼 괄호만 남으면 괄호를 벗깁니다.
+    m = re.fullmatch(r"[（(]\s*([^)）]+?)\s*[)）]", loc)
+    if m:
+        loc = m.group(1).strip()
+
+    if not loc or _co_key(loc) == co_key:
+        return ""
+
+    return LOC_RENAME.get(loc, loc)
+
+
 def load_companies(only_ats=None):
     data = json.loads(REGISTRY.read_text(encoding="utf-8"))
     out, slugs = [], set()
@@ -248,6 +338,17 @@ def main():
             got = [j for j in got if not dropped(j)]
             for j in cut:
                 print(f"      · 제외: {str(j.get('title') or '')[:40]}")
+        # 근무지 칸에 회사 이름이 들어온 것을 정리합니다.
+        fixed = 0
+        for j in got:
+            before = str(j.get("location") or "").strip()
+            after = clean_location(before, j.get("company") or c["name"])
+            if before != after:
+                j["location"] = after
+                fixed += 1
+        if fixed:
+            print(f"      · 근무지 정리 {fixed}건")
+
         jobs += got
         print(f"  {c['name']}: {len(got)}건")
 
