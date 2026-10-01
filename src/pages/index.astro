@@ -996,7 +996,26 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         ? a.dataset.dday - b.dataset.dday
         : a.dataset.co.localeCompare(b.dataset.co, 'ko');
     });
-    arr.forEach((c) => list.insertBefore(c, empty));
+    /*
+     * 거르는 중에는 보이는 카드만 줄 세웁니다.
+     *
+     * 3,300장을 전부 옮기면 2초가 걸립니다. 그런데 숨은 카드는 화면에
+     * 없으므로 순서가 보이지 않습니다. 검색어나 필터가 걸려 있으면
+     * 보이는 것만 옮깁니다. "삼성" 검색이면 12장이라 11ms 입니다.
+     *
+     * 조건이 없을 때(처음 화면, 정렬 바꾸기)는 전부 옮겨야 합니다.
+     * 그때는 2초가 걸리지만 타이핑 중이 아니라 체감이 다릅니다.
+     *
+     * 하나씩 옮기면 옮길 때마다 화면을 다시 계산하므로, 조각에 모아
+     * 한 번에 답니다.
+     */
+    const filtered =
+      state.q.trim() || state.co.size || state.ca.size || state.in.size || state.ro.size;
+    const moving = filtered ? arr.filter((c) => !c.hidden) : arr;
+
+    const frag = document.createDocumentFragment();
+    for (const c of moving) frag.appendChild(c);
+    list.insertBefore(frag, empty);
   }
 
   /**
@@ -1233,6 +1252,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     }
   }
 
+  let sortTimer = null;
   document.getElementById('q').addEventListener('input', (e) => {
     state.q = e.target.value;
     const q = state.q.trim().toLowerCase();
@@ -1241,14 +1261,21 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       if (!hitsIn(state.tab, q) && hitsIn(other, q)) switchTab(other);
     }
     /*
-     * 검색어가 바뀌면 줄 순서도 다시 잡습니다.
+     * 거르기는 글자마다, 줄 세우기는 타이핑이 멈춘 뒤에 합니다.
      *
-     * sortCards 가 검색 중에는 회사명이 맞는 공고를 앞으로 보냅니다.
-     * 여기서 부르지 않으면 그 규칙이 적용되지 않아, "삼성" 을 쳤을 때
-     * 근무지만 맞는 공고가 위에 남습니다.
+     * sortCards 는 카드 3,300개를 DOM 에서 전부 옮겨 답니다. 재 보니
+     * 1.7초가 걸립니다. 2026-10-01 에 이것을 글자마다 부르게 했더니
+     * 한 글자 칠 때마다 화면이 1~3초씩 멈췄습니다.
+     *
+     * 거르기(apply)는 2ms 라 글자마다 그대로 합니다. 목록이 즉시
+     * 줄어드는 반응은 유지되고, 순서만 조금 늦게 잡힙니다.
      */
-    sortCards();
     apply();
+    clearTimeout(sortTimer);
+    sortTimer = setTimeout(() => {
+      sortCards();
+      apply();
+    }, 250);
   });
   document.getElementById('sort').addEventListener('change', (e) => {
     state.sort = e.target.value;
