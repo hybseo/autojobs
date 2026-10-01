@@ -970,7 +970,26 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       if (x === y) return a.dataset.dday - b.dataset.dday;
       return y.localeCompare(x);          // 최신이 위
     };
+    /*
+     * 검색 중에는 회사명이 맞는 공고를 먼저 보여줍니다.
+     *
+     * 검색은 제목·회사·근무지·직무를 한 덩어리로 봅니다. 그래서 지역명이
+     * 회사명과 겹치면 엉뚱한 공고가 섞입니다. 2026-10-01 에 "삼성" 을
+     * 검색했더니 삼성 공고는 없고 데브캣(근무지 삼성역)과 HL디앤아이한라
+     * (제목이 "삼성전자 개보수공사 담당")만 나왔습니다.
+     *
+     * 근무지 검색은 "판교" 처럼 쓸모가 있어 없애지 않습니다. 대신 회사명이
+     * 맞는 공고를 위로 올려, 찾던 회사가 있으면 먼저 보이게 합니다.
+     */
+    const sq = state.q.trim().toLowerCase();
+    const coHit = (c) =>
+      sq && (c.dataset.co || '').toLowerCase().includes(sq) ? 0 : 1;
+
     const arr = [...cards].sort((a, b) => {
+      if (sq) {
+        const d = coHit(a) - coHit(b);
+        if (d) return d;
+      }
       if (state.sort === 'dday') return a.dataset.dday - b.dataset.dday;
       if (state.sort === 'posted') return byPosted(a, b);
       return a.dataset.co === b.dataset.co
@@ -1221,6 +1240,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
       if (!hitsIn(state.tab, q) && hitsIn(other, q)) switchTab(other);
     }
+    /*
+     * 검색어가 바뀌면 줄 순서도 다시 잡습니다.
+     *
+     * sortCards 가 검색 중에는 회사명이 맞는 공고를 앞으로 보냅니다.
+     * 여기서 부르지 않으면 그 규칙이 적용되지 않아, "삼성" 을 쳤을 때
+     * 근무지만 맞는 공고가 위에 남습니다.
+     */
+    sortCards();
     apply();
   });
   document.getElementById('sort').addEventListener('change', (e) => {
