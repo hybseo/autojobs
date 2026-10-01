@@ -218,6 +218,33 @@ def list_open(company, path=""):
     return kept
 
 
+# 제목 앞 대괄호에 계열사 이름이 붙는 그룹 사이트가 있습니다.
+#
+#   [동성케미컬] PU본부 폴리우레탄 기술개발자 모집
+#   [동성화인텍] LNG 보냉재 생산기술 경력 모집
+#
+# companies.json 에 affiliates 를 적으면 그곳 공고만 담고, 회사명도
+# 대괄호에서 읽습니다. 적지 않으면 전부 담고 회사명은 등록명을 씁니다.
+BRACKET = re.compile(r"^\s*[\[【]\s*([^\]】]+?)\s*[\]】]\s*")
+
+
+def _norm_co(s):
+    return re.sub(r"[\s()（）㈜.,·\-]|주식회사", "", str(s or "")).lower()
+
+
+def _affiliate(title, want):
+    """제목 앞 대괄호를 읽습니다. (담을지 여부, 회사명) 를 돌려줍니다."""
+    m = BRACKET.match(str(title or ""))
+    label = m.group(1).strip() if m else ""
+    if not want:
+        return True, label
+    key = _norm_co(label)
+    for w in want:
+        if key and (_norm_co(w) in key or key in _norm_co(w)):
+            return True, label
+    return False, label
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
@@ -226,6 +253,14 @@ def fetch(company):
     base = base_url(company)
 
     rows = list_open(company, company.get("path", ""))
+
+    # 계열사를 적어 두면 그곳 공고만 담습니다.
+    want = [a for a in (company.get("affiliates") or []) if str(a).strip()]
+    if want:
+        before = len(rows)
+        rows = [r for r in rows if _affiliate(r.get("title"), want)[0]]
+        if before != len(rows):
+            print(f"      · {name}: 계열사 거르기 {before}건 → {len(rows)}건")
 
     jobs = []
     for r in rows:
@@ -254,7 +289,8 @@ def fetch(company):
         jobs.append({
             "id": f"greeting-{code}-{oid}",
             "unit": "공고",
-            "company": name, "companySlug": slug,
+            "company": _affiliate(r.get("title"), want)[1] or name,
+            "companySlug": slug,
             "title": r.get("title") or "",
             "location": _location(positions),
             "career": _career_label(positions),
