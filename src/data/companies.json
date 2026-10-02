@@ -724,7 +724,10 @@
     "HD현대오일뱅크",
     "HD현대케미칼",
     "HD현대쉘베이스오일",
-    "HD현대오씨아이"
+    "HD현대오씨아이",
+    "HD현대로보틱스",
+    "현대로보틱스",
+    "HD현대인프라코어"
    ],
    "affiliateIndustry": {
     "HD현대일렉트릭": [
@@ -774,14 +777,21 @@
     ],
     "HD현대오씨아이": [
      "중공업·화학·소재"
+    ],
+    "HD현대로보틱스": [
+     "로봇"
+    ],
+    "현대로보틱스": [
+     "로봇"
     ]
    },
    "industry": [
     "전기전자",
-    "중공업·화학·소재"
+    "중공업·화학·소재",
+    "로봇"
    ],
    "enabled": true,
-   "note": "HD현대그룹 통합 채용. 2026-09-01 에 API 가 '관리자 권한이 존재하지 않습니다' 로 막혀 비활성했는데, 2026-09-22 에 원인을 찾아 되살렸습니다. 요청에 X-User-Role: FRONT 헤더가 있어야 합니다(로그인과 무관, 값 고정). API 가 2024년 공고까지 전부 주므로 어댑터가 마감일로 거릅니다. 조선(중공업·삼호·한국조선해양)·정유(오일뱅크)는 사이트 산업과 맞지 않아 affiliates 로 전기전자·기계장비 계열 6곳만 담습니다. 계열사 이름이 바뀌어 HD현대인프라코어·HD현대로보틱스는 빠지고 HD건설기계가 들어왔습니다. 그룹 공채는 조선까지 묶여 있어 함께 들어오고 '여러 직무 포함' 으로 표시됩니다. 2026-09-22 확인 전체 28건 중 해당 11건 / 2026-10-01: 중공업·방산 분류를 만들면서 조선 계열사 6곳을 다시 넣었습니다. 전에는 사이트가 조선을 다루지 않아 빼 두었습니다 / 2026-10-01: 정유·화학 계열(HD현대오일뱅크·케미칼 등)을 넣었습니다. 이들도 recruit.hd.com 통합 채용에 올라옵니다"
+   "note": "HD현대그룹 통합 채용. 2026-09-01 에 API 가 '관리자 권한이 존재하지 않습니다' 로 막혀 비활성했는데, 2026-09-22 에 원인을 찾아 되살렸습니다. 요청에 X-User-Role: FRONT 헤더가 있어야 합니다(로그인과 무관, 값 고정). API 가 2024년 공고까지 전부 주므로 어댑터가 마감일로 거릅니다. 조선(중공업·삼호·한국조선해양)·정유(오일뱅크)는 사이트 산업과 맞지 않아 affiliates 로 전기전자·기계장비 계열 6곳만 담습니다. 계열사 이름이 바뀌어 HD현대인프라코어·HD현대로보틱스는 빠지고 HD건설기계가 들어왔습니다. 그룹 공채는 조선까지 묶여 있어 함께 들어오고 '여러 직무 포함' 으로 표시됩니다. 2026-09-22 확인 전체 28건 중 해당 11건 / 2026-10-01: 중공업·방산 분류를 만들면서 조선 계열사 6곳을 다시 넣었습니다. 전에는 사이트가 조선을 다루지 않아 빼 두었습니다 / 2026-10-01: 정유·화학 계열(HD현대오일뱅크·케미칼 등)을 넣었습니다. 이들도 recruit.hd.com 통합 채용에 올라옵니다 / 2026-10-02: HD현대로보틱스(산업용 로봇)가 계열사 목록에 없어 공고가 걸러지고 있었습니다. recruit.hd.com 통합 채용에 올라옵니다"
   },
   {
    "name": "한화",
@@ -3709,6 +3719,166 @@
    ],
    "enabled": false,
    "note": "이차전지용 CNT 도전재·태양광 소재. 자체 채용 게시판이 없고 사람인·잡코리아로 받습니다"
+  },
+  {
+   "name": "고영테크놀러지",
+   "slug": "kohyoung",
+   "ats": "ninehire",
+   "code": "kohyoung,749ec670-0dbc-11ef-848d-39cfe15a1515",
+   "industry": [
+    "로봇",
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "3D 검사장비·의료로봇. 나인하이어를 자체 도메인(career.kohyoung.com)으로 씁니다. code 는 '서브도메인,companyId' 형식이고 companyId 는 화면 소스의 __NEXT_DATA__ 안 info.companyId 에 있습니다. 2026-10-02 확인 53건",
+   "domain": "career.kohyoung.com"
+  },
+  {
+   "name": "티로보틱스",
+   "slug": "tirobotics",
+   "ats": "none",
+   "code": "tirobotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "반도체·디스플레이 이송로봇, 이차전지 물류로봇. 자체 게시판(t-robotics.net/recruit/recruitList.do?menu=5&submenu=recruit)이 있는데 2026-10-02 확인 공고가 없고 사람인으로 받는 것으로 보입니다. 자체 공고가 올라오면 어댑터를 만들어 되살리세요"
+  },
+  {
+   "name": "에스피지",
+   "slug": "spg",
+   "ats": "none",
+   "code": "spg",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "로봇 감속기·모터. 자체 채용 페이지에 \"채용 공고는 사람인·잡코리아 등 채용 포털을 통해 게시됩니다\" 라고 안내합니다. 2026-10-02 확인 잡포털에 3건(로봇감속기 설계 등)"
+  },
+  {
+   "name": "리브스메드",
+   "slug": "livsmed",
+   "ats": "ninehire",
+   "code": "livsmed,1f502c80-81d1-11ee-9ff7-c7fcc0548156",
+   "industry": [
+    "로봇",
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "수술로봇·다관절 복강경 기구(아티센셜). 나인하이어를 자체 도메인(recruit.livsmed.com)으로 씁니다. 회사 홈페이지(livsmed.com)에는 채용 메뉴가 없어서 2026-10-02 에 '채용 사이트 없음' 으로 잘못 적었다가 바로잡았습니다. code 는 '서브도메인,companyId' 형식이고 companyId 는 화면 소스의 __NEXT_DATA__ 안에 있습니다. 확인 시점 33건",
+   "domain": "recruit.livsmed.com"
+  },
+  {
+   "name": "뷰런테크놀로지",
+   "slug": "vueron",
+   "ats": "greeting",
+   "code": "vueron",
+   "industry": [
+    "로봇",
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "라이다 기반 자율주행 인지 소프트웨어. 그리팅(vueron.career.greetinghr.com)을 씁니다. 회사 홈페이지 채용공고 링크가 이 주소로 갑니다"
+  },
+  {
+   "name": "에이모",
+   "slug": "aimmo",
+   "ats": "ninehire",
+   "code": "aimmo",
+   "industry": [
+    "로봇",
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 학습데이터 가공(자율주행 라벨링). 나인하이어(aimmo.ninehire.site)를 씁니다"
+  },
+  {
+   "name": "모빌테크",
+   "slug": "mobiltech",
+   "ats": "none",
+   "code": "mobiltech",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "라이다·디지털트윈. 채용 페이지(mobiltech.io/career)에 전형 절차만 있고 공고 목록 없이 recruit@mobiltech.io 로 받습니다"
+  },
+  {
+   "name": "로보아르테",
+   "slug": "roboarete",
+   "ats": "none",
+   "code": "roboarete",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "치킨 조리로봇(롸버트치킨). 홈페이지에 채용 메뉴가 없습니다"
+  },
+  {
+   "name": "파블로항공",
+   "slug": "pabloair",
+   "ats": "greeting",
+   "code": "pabloair",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "드론 군집비행·무인배송. 그리팅(pabloair.career.greetinghr.com)을 씁니다"
+  },
+  {
+   "name": "고피자",
+   "slug": "gopizza",
+   "ats": "none",
+   "code": "gopizza",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "피자 조리로봇·프랜차이즈. 홈페이지에 채용 메뉴가 없고 가맹문의만 있습니다"
+  },
+  {
+   "name": "에스비비테크",
+   "slug": "sbbtech",
+   "ats": "none",
+   "code": "sbbtech",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "로봇 감속기(하모닉 드라이브). 홈페이지 접속이 되지 않습니다(www.sbbtech.com). 주소를 다시 확인한 뒤 되살리세요"
+  },
+  {
+   "name": "하이젠알앤엠",
+   "slug": "higenrnm",
+   "ats": "none",
+   "code": "higenrnm",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "서보모터·협동로봇용 모터. 홈페이지가 higenrnm.com 이고 채용은 사람인으로 받습니다(hyzenmotors.com 은 연결되지 않습니다)"
+  },
+  {
+   "name": "알에스오토메이션",
+   "slug": "rsautomation",
+   "ats": "none",
+   "code": "rsautomation",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "로봇 모션제어·드라이브. 홈페이지(rsautomation.co.kr)에 채용 메뉴가 없습니다"
+  },
+  {
+   "name": "TPC메카트로닉스",
+   "slug": "tpcmecha",
+   "ats": "none",
+   "code": "tpcmecha",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": false,
+   "note": "공압기기·직교로봇·리니어모터. 홈페이지 RECRUIT 메뉴에 인재상과 인사제도만 있고 공고는 사람인으로 받습니다"
   }
  ]
 }
