@@ -126,15 +126,33 @@ def _get(url):
         "User-Agent": UA,
     })
     last = None
-    for i in range(3):
+    for i in range(4):
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
                 return json.load(r)
-        except urllib.error.HTTPError:
+        except urllib.error.HTTPError as e:
+            # 429(요청이 너무 많음)와 5xx 는 기다리면 풀립니다.
+            #
+            # 2026-10-02 에 나인하이어를 쓰는 곳이 한꺼번에 막혔습니다.
+            # 메가존 97·보령 48·로보티즈 29·클로봇 11 등 193건이 사라졌습니다.
+            # 그때는 HTTPError 를 그대로 던져 한 번도 다시 시도하지 않았습니다.
+            #
+            # 나인하이어는 같은 곳에서 짧은 시간에 여러 번 부르면 막습니다.
+            # 등록된 회사가 열 곳을 넘기면서 걸리기 시작했습니다. 그래서
+            # 넉넉히 기다립니다(30초, 60초, 120초). 서버가 Retry-After 로
+            # 기다릴 시간을 알려주면 그 값을 씁니다.
+            if e.code in (429, 500, 502, 503, 504) and i < 3:
+                try:
+                    hinted = int(e.headers.get("Retry-After") or 0)
+                except Exception:
+                    hinted = 0
+                time.sleep(min(max(hinted, 30 * (i + 1)), 150))
+                last = e
+                continue
             raise
         except Exception as e:
             last = e
-            if i < 2:
+            if i < 3:
                 time.sleep(2 + i * 2)
     raise last
 
@@ -200,7 +218,13 @@ def strip_html(s):
 
 
 def list_open(company, include_pool=False):
-    """진행중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다."""
+    """진행중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다.
+
+    부르기 전에 잠깐 쉽니다. 나인하이어를 쓰는 회사가 열 곳이 넘어
+    줄줄이 부르면 429 가 납니다. 한 곳당 5초면 전체로는 1분 남짓이고,
+    그 대신 193건이 통째로 사라지는 일을 막습니다.
+    """
+    time.sleep(5)
     _, cid = _split_code(company["code"])
     base = _base(company)
     q = urllib.parse.urlencode({"companyId": cid, "page": 1, "countPerPage": 100})
