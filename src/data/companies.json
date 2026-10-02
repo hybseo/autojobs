@@ -1068,10 +1068,11 @@
    "ats": "recruiter",
    "code": "koreazinc",
    "industry": [
-    "반도체"
+    "반도체",
+    "중공업·화학·소재"
    ],
-   "enabled": false,
-   "note": "리크루터를 쓰지만 자체 화면을 붙여 \"게시된 디자인\"이 없음. API로 수집 불가. 확인 시점 공고 0건"
+   "enabled": true,
+   "note": "리크루터를 쓰지만 자체 화면을 붙여 \"게시된 디자인\"이 없음. API로 수집 불가. 확인 시점 공고 0건 / 2026-10-02: careers.koreazinc.co.kr 는 겉면이고 지원은 koreazinc.recruiter.co.kr 로 받습니다. 리크루터로 등록해 되살립니다. 확인 시점 접수중 0건이지만 공고가 열리면 자동으로 들어옵니다"
   },
   {
    "name": "딥엑스",
@@ -3314,13 +3315,33 @@
   {
    "name": "동국제강",
    "slug": "dongkuk",
-   "ats": "recruiter",
+   "ats": "greeting",
    "code": "dongkuk",
    "industry": [
     "중공업·화학·소재"
    ],
-   "enabled": false,
-   "note": "철강. 홈페이지 인재채용이 dongkuk.recruiter.co.kr 로 연결됩니다. 신버전으로 잡히지 않으면 recruiter_v1 로 바꿔 보세요. 2026-09-30 확인 / 2026-10-01 비활성: 홈페이지 인재채용 링크를 보고 dongkuk.recruiter.co.kr 로 등록했는데 그 주소가 열리지 않고 수집도 HTTP 400 이 납니다. 실제 주소를 다시 확인한 뒤 되살리세요"
+   "enabled": true,
+   "note": "철강. 동국제강그룹 통합 채용이고 그리팅입니다(dongkuk.career.greetinghr.com). 2026-10-01 에 홈페이지 링크만 보고 리크루터로 등록했다가 HTTP 400 으로 실패했습니다. 동국씨엠(냉연) 공고도 같은 사이트에 올라옵니다. 확인 시점 4건(당진공장 생산직, 부산공장 인재풀 등)",
+   "affiliates": [
+    "동국제강",
+    "동국씨엠",
+    "페럼인프라",
+    "인터지스"
+   ],
+   "affiliateIndustry": {
+    "동국제강": [
+     "중공업·화학·소재"
+    ],
+    "동국씨엠": [
+     "중공업·화학·소재"
+    ],
+    "페럼인프라": [
+     "중공업·화학·소재"
+    ],
+    "인터지스": [
+     "물류"
+    ]
+   }
   },
   {
    "name": "풍산",
@@ -3399,15 +3420,55 @@
    "note": "선박 계측·환경설비. 자체 게시판(hanlaims.com/bbs/board.php?bo_table=hiring)에 공고가 한 건 있는데 2026-01 마감분입니다. 그누보드 게시판이라 어댑터를 만들 수 있지만 공고가 거의 없어 2026-10-01 현재 비활성으로 둡니다"
   },
   {
-   "name": "롯데케미칼",
-   "slug": "lottechem",
-   "ats": "recruiter",
-   "code": "lottechemical",
+   "name": "롯데그룹",
+   "slug": "lotte",
+   "ats": "lotte",
+   "code": "lotte",
    "industry": [
     "중공업·화학·소재"
    ],
-   "enabled": false,
-   "note": "석유화학. 리크루터 신버전(lottechemical.recruiter.co.kr). 회사 홈페이지의 채용공고 링크가 이 주소로 갑니다. 2026-10-01 확인 전체 17건 중 접수중 2건 / 2026-10-01 비활성: 브라우저로는 전체 17건(접수중 2건)이 보이는데 수집기에서는 HTTP 400 이 납니다. 리크루터 신버전 API 가 이 회사를 받지 않는 듯합니다. 구버전(recruiter_v1)인지 확인한 뒤 되살리세요"
+   "enabled": true,
+   "note": "롯데그룹 통합 채용(recruit.lotte.co.kr). 계열사 40곳이 한곳에 모이므로 화학·소재 계열만 affiliates 로 담습니다(유통·식품·호텔 제외). 개별 사이트(lottechemical.recruiter.co.kr)는 브라우저로는 보이는데 수집기에서 HTTP 400 이 나서, 그룹 사이트로 받는 편이 안정적입니다. 서버가 HTML 을 완성해 보내 요청 한 번이면 끝납니다. 2026-10-02 확인 전체 9건 중 화학 계열 2건",
+   "affiliates": [
+    "롯데케미칼",
+    "롯데정밀화학",
+    "롯데이네오스화학",
+    "롯데엠시시",
+    "롯데GS화학",
+    "롯데에너지머티리얼즈",
+    "롯데알미늄",
+    "롯데인프라셀",
+    "롯데패키징솔루션즈"
+   ],
+   "affiliateIndustry": {
+    "롯데케미칼": [
+     "중공업·화학·소재"
+    ],
+    "롯데정밀화학": [
+     "중공업·화학·소재"
+    ],
+    "롯데이네오스화학": [
+     "중공업·화학·소재"
+    ],
+    "롯데엠시시": [
+     "중공업·화학·소재"
+    ],
+    "롯데GS화학": [
+     "중공업·화학·소재"
+    ],
+    "롯데에너지머티리얼즈": [
+     "중공업·화학·소재"
+    ],
+    "롯데알미늄": [
+     "중공업·화학·소재"
+    ],
+    "롯데인프라셀": [
+     "중공업·화학·소재"
+    ],
+    "롯데패키징솔루션즈": [
+     "중공업·화학·소재"
+    ]
+   }
   },
   {
    "name": "에쓰오일",
@@ -3503,6 +3564,151 @@
     ]
    },
    "note": "이차전지 양극재. 자체 채용 사이트(ecoprorecruit.co.kr)에 계열사 공고가 모입니다. 목록 API 는 GET 입니다(POST 는 405). 값 없이 한 번 부르면 전체가 오고 쪽 나눔이 없습니다. 날짜가 202610052359 처럼 열두 자리로 와서 앞 여덟 자리만 씁니다. 2026-10-01 확인 10건(비엠 8·에이치엔 1·에코프로 1)"
+  },
+  {
+   "name": "성일하이텍",
+   "slug": "sungeelht",
+   "ats": "none",
+   "code": "sungeelht",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "이차전지 리사이클링. 자체 게시판(sungeelht.com/recruit/list/24)이 있는데 2026-10-02 확인 공고가 모두 \"종료\" 입니다. 공고가 올라오면 어댑터를 만들어 되살리세요"
+  },
+  {
+   "name": "천보",
+   "slug": "chunbo",
+   "ats": "none",
+   "code": "chunbo",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "이차전지 전해질 첨가제. 자체 채용 게시판이 없고 사람인·잡코리아로만 받습니다"
+  },
+  {
+   "name": "엔켐",
+   "slug": "enchem",
+   "ats": "none",
+   "code": "enchem",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "전해액. 자체 게시판(enchem.net/home/sub.php?menukey=649)이 비어 있습니다(Total 0). 잡포털로만 받습니다"
+  },
+  {
+   "name": "영풍",
+   "slug": "youngpoong",
+   "ats": "none",
+   "code": "youngpoong",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "아연 제련. 자체 채용정보 페이지(ypzinc.co.kr/site/main/content/recruit_info)가 있는데 2026-10-02 확인 0건이고, 실제 접수는 사람인·잡코리아로 받습니다"
+  },
+  {
+   "name": "대한제강",
+   "slug": "daehansteel",
+   "ats": "none",
+   "code": "daehansteel",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "철근. 자체 채용 페이지에 \"진행중인 채용공고가 없습니다\" 안내와 함께 채용포털로 안내합니다"
+  },
+  {
+   "name": "한국철강",
+   "slug": "kisco",
+   "ats": "none",
+   "code": "kisco",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "철근. 자체 게시판(kisco.co.kr/kor/index.php?pCode=careers)이 비어 있습니다"
+  },
+  {
+   "name": "고려제강",
+   "slug": "kiswire",
+   "ats": "none",
+   "code": "kiswire",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "와이어로프. 홈페이지가 자동 접근을 막습니다(BLOCK 응답). 사람이 열면 보이지만 수집기로는 받을 수 없습니다"
+  },
+  {
+   "name": "대주전자재료",
+   "slug": "daejoo",
+   "ats": "daejoo",
+   "code": "daejoo",
+   "industry": [
+    "중공업·화학·소재",
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "이차전지 실리콘 음극재·MLCC 페이스트. 자체 게시판(daejoo.co.kr/kr/career/recruit_list.php). 상태 칸이 '채용중'/'채용마감' 이라 그것으로 거릅니다. 칸 이름이 hits(조회수)인데 상태가 들어오므로 이름이 아니라 값을 봅니다. 날짜가 '채용시까지' 로 적히거나 비는 공고가 있어 그때는 상시채용으로 둡니다. 2026-10-02 확인 6건 중 채용중 1건"
+  },
+  {
+   "name": "솔브레인",
+   "slug": "soulbrain",
+   "ats": "soulbrain",
+   "code": "soulbrain",
+   "industry": [
+    "중공업·화학·소재",
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체·디스플레이 식각액, 이차전지 전해액. 자체 게시판(soulbrain.co.kr/m64.php). 접수 기간도 진행중/마감 표시도 없고 작성일만 있어, 1년이 지난 글은 담지 않습니다(2023년 글까지 쌓여 있습니다). 상세가 goView('10') 형태의 자바스크립트라 개별 주소가 없어 목록으로 보냅니다. 2026-10-02 확인 10건"
+  },
+  {
+   "name": "코스모신소재",
+   "slug": "cosmoamt",
+   "ats": "cosmoamt",
+   "code": "cosmoamt",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "이차전지 양극재·MLCC 이형필름. 워드프레스 게시판(cosmoamt.com/?page_id=11170). 칸 이름이 cosmo_title·cosmo_date 처럼 회사 고유라 그대로 찾습니다. 작성일만 있어 1년 지난 글은 제외합니다. 지원은 recruit.cosmoamt.com 에서 받지만 로그인을 요구해 목록을 읽을 수 없어 홈페이지 게시판만 봅니다. 2026-10-02 확인"
+  },
+  {
+   "name": "KG스틸",
+   "slug": "kgsteel",
+   "ats": "none",
+   "code": "kgsteel",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "냉연·도금강판. 채용을 사람인이 호스팅하는 주소(kgsteel.saramin.co.kr)로 받습니다. 도메인이 회사 이름처럼 보이지만 사람인이 운영하는 서비스라 수집 대상으로 삼지 않습니다. 채용공고가 상품인 회사의 데이터베이스를 긁는 것이라 이용약관과 데이터베이스권 문제가 걸립니다(잡코리아-사람인 판례). 회사가 자체 채용 사이트로 옮기면 그때 붙이세요"
+  },
+  {
+   "name": "KPX케미칼",
+   "slug": "kpxchemical",
+   "ats": "none",
+   "code": "kpxchemical",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "폴리우레탄 원료. 채용 사이트가 recruiter.im 이라는 서비스입니다(kpxchemical.recruiter.im). 화면이 자바스크립트로 그려지고 목록 API(api.recruiter.im/position/v1/jobda)가 x-api-key 를 요구해 HTTP 401 이 납니다. 열쇠 값을 찾지 못해 2026-10-02 현재 보류합니다. recruiter.im 을 쓰는 회사가 더 있으면 공용 어댑터를 만들 가치가 있습니다. 확인 시점 접수중·접수전 공고 여러 건"
+  },
+  {
+   "name": "나노신소재",
+   "slug": "nanoamor",
+   "ats": "none",
+   "code": "nanoamor",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": false,
+   "note": "이차전지용 CNT 도전재·태양광 소재. 자체 채용 게시판이 없고 사람인·잡코리아로 받습니다"
   }
  ]
 }
