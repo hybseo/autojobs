@@ -73,7 +73,7 @@ def _get(url):
     last = None
     for i in range(2):
         try:
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=50) as r:
                 return r.read().decode("utf-8", "replace")
         except urllib.error.HTTPError:
             raise

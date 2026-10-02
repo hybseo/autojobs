@@ -53,12 +53,13 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-# 공고 한 묶음. 계열사 이름부터 상세 링크까지 한 덩어리로 집습니다.
-ITEM = re.compile(
-    r'<div[^>]*class="[^"]*\bcmp-name\b[^"]*"[^>]*>(.*?)</div>'      # 계열사
-    r'(.*?)'                                                          # 사이
-    r'href="[^"]*/detail/(\d+)"[^>]*>(.*?)</a>',                      # 번호·제목
-    re.S | re.I)
+# 상세 링크를 기준점으로 삼습니다.
+#
+# 2026-10-02 에 계열사 이름 → 링크 순서를 가정한 정규식을 썼다가 0건이
+# 났습니다(받은 HTML 17만 자). 화면에서 보이는 순서와 HTML 안의 순서가
+# 달랐습니다. 그래서 링크를 먼저 찾고, 그 앞뒤 일정 범위에서 계열사·제목·
+# 기간을 꺼내는 방식으로 바꿨습니다. 순서가 바뀌어도 걸립니다.
+LINK = re.compile(r'href="[^"]*/apply/announcement/detail/(\d+)"', re.I)
 KIND = re.compile(r'class="[^"]*\bico-bage-anncmtype\b[^"]*"[^>]*>(.*?)</span>', re.S | re.I)
 DATE_P = re.compile(r'class="[^"]*\bdate\b[^"]*"[^>]*>(.*?)</p>', re.S | re.I)
 DATE = re.compile(r"(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})")
@@ -91,6 +92,12 @@ def _text(s):
     return re.sub(r"\s+", " ", s).strip()
 
 
+def _field(chunk, cls):
+    """class 이름 하나로 그 안의 글자를 꺼냅니다. 태그 종류는 가리지 않습니다."""
+    m = re.search(r'class="[^"]*\b' + re.escape(cls) + r'\b[^"]*"[^>]*>(.*?)<', chunk, re.S | re.I)
+    return _text(m.group(1)) if m else ""
+
+
 def _dates(v):
     """'2026.09.22 ~ 2026.10.06' → 두 날짜."""
     got = DATE.findall(str(v or ""))
@@ -121,25 +128,40 @@ def list_open(code=""):
     """공고 목록. probe 용으로 밖에서도 씁니다."""
     page = _get(LIST)
 
+    # 공고 하나의 범위를 링크와 링크 사이로 끊습니다.
+    #
+    # 앞뒤로 넉넉히 1500자씩 보던 때는 옆 공고의 회사명과 기간을 가져왔습니다
+    # (2026-10-02, 네 건이 모두 "롯데케미칼" 로 찍혔습니다). 링크 위치를 모두
+    # 모은 뒤, 앞 링크 다음부터 다음 링크 전까지만 한 공고로 봅니다.
+    marks = [(m.start(), m.end(), m.group(1)) for m in LINK.finditer(page)]
+
     rows, seen = [], set()
-    for cmp_raw, middle, no, title_raw in ITEM.findall(page):
+    for idx, (st, en, no) in enumerate(marks):
         if no in seen:
             continue
-        company = _text(cmp_raw)
-        title = _text(title_raw)
+
+        prev_end = marks[idx - 1][1] if idx > 0 else 0
+        next_start = marks[idx + 1][0] if idx + 1 < len(marks) else len(page)
+        # 회사명·배지는 링크 앞에, 제목·기간은 링크 뒤에 옵니다.
+        lo = max(prev_end, st - 1200)
+        hi = min(next_start, en + 1200)
+        chunk = page[lo:hi]
+
+        company = _field(chunk, "cmp-name")
+        # 제목은 링크 바로 뒤 <a> 안에 있습니다.
+        tm = re.search(r">\s*([^<>]{4,120}?)\s*</a>", page[en:min(next_start, en + 600)], re.S)
+        title = _text(tm.group(1)) if tm else ""
+        if not title:
+            title = _field(chunk, "card-tit")
         if not company or not title:
             continue
+
         seen.add(no)
-
-        # 경력 구분과 기간은 같은 묶음 안에 있습니다.
-        k = KIND.search(middle) or KIND.search(cmp_raw)
-        kind = _text(k.group(1)) if k else ""
-
-        # 기간은 제목 뒤에 오므로 그 지점부터 조금 더 읽습니다.
-        pos = page.find(no)
-        tail = page[pos:pos + 1200] if pos >= 0 else ""
-        dm = DATE_P.search(tail)
-        start, end = _dates(_text(dm.group(1)) if dm else tail)
+        # 배지는 링크 앞, 기간은 링크 뒤에 옵니다. 각자 제 쪽에서만 찾습니다.
+        head = page[lo:st]
+        tail = page[en:hi]
+        kind = _field(head, "ico-bage-anncmtype")
+        start, end = _dates(_field(tail, "date") or tail)
 
         rows.append({
             "id": no,
