@@ -1075,14 +1075,14 @@
   {
    "name": "고려아연",
    "slug": "koreazinc",
-   "ats": "recruiter",
+   "ats": "recruiter_v1",
    "code": "koreazinc",
    "industry": [
     "반도체",
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "리크루터를 쓰지만 자체 화면을 붙여 \"게시된 디자인\"이 없음. API로 수집 불가. 확인 시점 공고 0건 / 2026-10-02: careers.koreazinc.co.kr 는 겉면이고 지원은 koreazinc.recruiter.co.kr 로 받습니다. 리크루터로 등록해 되살립니다. 확인 시점 접수중 0건이지만 공고가 열리면 자동으로 들어옵니다"
+   "note": "리크루터를 쓰지만 자체 화면을 붙여 \"게시된 디자인\"이 없음. API로 수집 불가. 확인 시점 공고 0건 / 2026-10-02: careers.koreazinc.co.kr 는 겉면이고 지원은 koreazinc.recruiter.co.kr 로 받습니다. 리크루터로 등록해 되살립니다. 확인 시점 접수중 0건이지만 공고가 열리면 자동으로 들어옵니다 / 2026-10-02: 신버전 API 가 HTTP 400 을 돌려줘 구버전(recruiter_v1)으로 바꿨습니다"
   },
   {
    "name": "딥엑스",
@@ -1816,13 +1816,13 @@
   {
    "name": "이지케어텍",
    "slug": "ezcaretech",
-   "ats": "recruiter",
+   "ats": "recruiter_v1",
    "code": "ezcaretech",
    "industry": [
     "IT"
    ],
    "enabled": true,
-   "note": "의료정보시스템 / 2026-10-01: 그리팅 목록(ezcaretech.career.greetinghr.com/ko)이 404 가 되어 확인해 보니 리크루터로 옮겼습니다. 홈페이지 채용공고 링크가 ezcaretech.recruiter.co.kr/career/jobs 를 가리킵니다"
+   "note": "의료정보시스템 / 2026-10-01: 그리팅 목록(ezcaretech.career.greetinghr.com/ko)이 404 가 되어 확인해 보니 리크루터로 옮겼습니다. 홈페이지 채용공고 링크가 ezcaretech.recruiter.co.kr/career/jobs 를 가리킵니다 / 2026-10-02: 신버전 API 가 HTTP 400 을 돌려줘 구버전(recruiter_v1)으로 바꿨습니다"
   },
   {
    "name": "카카오게임즈",
@@ -3684,8 +3684,8 @@
    "industry": [
     "중공업·화학·소재"
    ],
-   "enabled": true,
-   "note": "이차전지 양극재·MLCC 이형필름. 워드프레스 게시판(cosmoamt.com/?page_id=11170). 칸 이름이 cosmo_title·cosmo_date 처럼 회사 고유라 그대로 찾습니다. 작성일만 있어 1년 지난 글은 제외합니다. 지원은 recruit.cosmoamt.com 에서 받지만 로그인을 요구해 목록을 읽을 수 없어 홈페이지 게시판만 봅니다. 2026-10-02 확인"
+   "enabled": false,
+   "note": "이차전지 양극재·MLCC 이형필름. 게시판(cosmoamt.com/?page_id=11170)이 서버 HTML 에는 표가 없고 화면에서 자바스크립트로 그려집니다. 2026-10-02 갱신에서 0건이 나왔습니다. 목록을 가져오는 주소를 찾은 뒤 되살리세요"
   },
   {
    "name": "KG스틸",
