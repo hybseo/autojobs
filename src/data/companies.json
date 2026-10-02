@@ -1821,8 +1821,8 @@
    "industry": [
     "IT"
    ],
-   "enabled": true,
-   "note": "의료정보시스템 / 2026-10-01: 그리팅 목록(ezcaretech.career.greetinghr.com/ko)이 404 가 되어 확인해 보니 리크루터로 옮겼습니다. 홈페이지 채용공고 링크가 ezcaretech.recruiter.co.kr/career/jobs 를 가리킵니다 / 2026-10-02: 신버전 API 가 HTTP 400 을 돌려줘 구버전(recruiter_v1)으로 바꿨습니다"
+   "enabled": false,
+   "note": "의료정보시스템 / 2026-10-01: 그리팅 목록(ezcaretech.career.greetinghr.com/ko)이 404 가 되어 확인해 보니 리크루터로 옮겼습니다. 홈페이지 채용공고 링크가 ezcaretech.recruiter.co.kr/career/jobs 를 가리킵니다 / 2026-10-02: 신버전 API 가 HTTP 400 을 돌려줘 구버전(recruiter_v1)으로 바꿨습니다 / 2026-10-02 비활성: ezcaretech.recruiter.co.kr 이 DNS 에서 찾아지지 않습니다. 회사 홈페이지의 채용공고 링크가 가리키는 주소인데 실제로는 열리지 않습니다"
   },
   {
    "name": "카카오게임즈",
@@ -3437,8 +3437,8 @@
    "industry": [
     "중공업·화학·소재"
    ],
-   "enabled": true,
-   "note": "롯데그룹 통합 채용(recruit.lotte.co.kr). 계열사 40곳이 한곳에 모이므로 화학·소재 계열만 affiliates 로 담습니다(유통·식품·호텔 제외). 개별 사이트(lottechemical.recruiter.co.kr)는 브라우저로는 보이는데 수집기에서 HTTP 400 이 나서, 그룹 사이트로 받는 편이 안정적입니다. 서버가 HTML 을 완성해 보내 요청 한 번이면 끝납니다. 2026-10-02 확인 전체 9건 중 화학 계열 2건",
+   "enabled": false,
+   "note": "롯데그룹 통합 채용(recruit.lotte.co.kr). 2026-10-02 비활성: 사이트에 봇 차단(Incapsula)이 걸려 있습니다. 사람이 브라우저로 열면 공고가 보이지만 수집기에는 검사 화면만 내려와 공고 링크가 하나도 없습니다(받은 HTML 18만 자). 화학 계열사 9곳이 걸려 있어 아깝지만 지금 방법으로는 받을 수 없습니다",
    "affiliates": [
     "롯데케미칼",
     "롯데정밀화학",
@@ -3673,8 +3673,8 @@
     "중공업·화학·소재",
     "반도체"
    ],
-   "enabled": true,
-   "note": "반도체·디스플레이 식각액, 이차전지 전해액. 자체 게시판(soulbrain.co.kr/m64.php). 접수 기간도 진행중/마감 표시도 없고 작성일만 있어, 1년이 지난 글은 담지 않습니다(2023년 글까지 쌓여 있습니다). 상세가 goView('10') 형태의 자바스크립트라 개별 주소가 없어 목록으로 보냅니다. 2026-10-02 확인 10건"
+   "enabled": false,
+   "note": "반도체·디스플레이 식각액, 이차전지 전해액. 자체 게시판(soulbrain.co.kr/m64.php). 접수 기간도 진행중/마감 표시도 없고 작성일만 있어, 1년이 지난 글은 담지 않습니다(2023년 글까지 쌓여 있습니다). 상세가 goView('10') 형태의 자바스크립트라 개별 주소가 없어 목록으로 보냅니다. 2026-10-02 확인 10건 / 2026-10-02 비활성: 서버가 보내는 HTML 에는 표가 없고 화면에서 자바스크립트가 그립니다(목록 0건). 목록을 가져오는 주소를 찾은 뒤 되살리세요"
   },
   {
    "name": "코스모신소재",
@@ -3777,20 +3777,20 @@
     "로봇",
     "자동차부품"
    ],
-   "enabled": true,
-   "note": "라이다 기반 자율주행 인지 소프트웨어. 그리팅(vueron.career.greetinghr.com)을 씁니다. 회사 홈페이지 채용공고 링크가 이 주소로 갑니다"
+   "enabled": false,
+   "note": "라이다 기반 자율주행 인지 소프트웨어. 그리팅(vueron.career.greetinghr.com)을 씁니다. 회사 홈페이지 채용공고 링크가 이 주소로 갑니다 / 2026-10-02 비활성: 회사 홈페이지의 채용공고 링크가 vueron.career.greetinghr.com 을 가리키는데 그 주소의 목록이 404 입니다(링크가 오래된 것으로 보입니다). 실제 채용 주소를 다시 확인한 뒤 되살리세요"
   },
   {
    "name": "에이모",
    "slug": "aimmo",
    "ats": "ninehire",
-   "code": "aimmo",
+   "code": "aimmo,f43b86a0-ade2-11ee-b714-2f19d5e1af8b",
    "industry": [
     "로봇",
     "IT"
    ],
    "enabled": true,
-   "note": "AI 학습데이터 가공(자율주행 라벨링). 나인하이어(aimmo.ninehire.site)를 씁니다"
+   "note": "AI 학습데이터 가공(자율주행 라벨링). 나인하이어(aimmo.ninehire.site). code 는 '하위도메인,companyId' 형식입니다. 2026-10-02 에 companyId 를 빠뜨려 실패했습니다"
   },
   {
    "name": "모빌테크",
@@ -3822,8 +3822,8 @@
    "industry": [
     "로봇"
    ],
-   "enabled": true,
-   "note": "드론 군집비행·무인배송. 그리팅(pabloair.career.greetinghr.com)을 씁니다"
+   "enabled": false,
+   "note": "드론 군집비행·무인배송. 그리팅(pabloair.career.greetinghr.com)을 씁니다 / 2026-10-02 비활성: 회사 홈페이지의 채용공고 링크가 pabloair.career.greetinghr.com 을 가리키는데 그 주소의 목록이 404 입니다. 실제 채용 주소를 다시 확인한 뒤 되살리세요"
   },
   {
    "name": "고피자",
