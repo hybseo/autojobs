@@ -3883,6 +3883,1964 @@
    ],
    "enabled": false,
    "note": "공압기기·직교로봇·리니어모터. 홈페이지 RECRUIT 메뉴에 인재상과 인사제도만 있고 공고는 사람인으로 받습니다"
+  },
+  {
+   "name": "매그나칩반도체",
+   "slug": "magnachip",
+   "ats": "greeting",
+   "code": "magnachip",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "아날로그·전력 반도체 설계/제조. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "모빌린트",
+   "slug": "mobilinthire",
+   "ats": "greeting",
+   "code": "mobilinthire",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "차량·엣지용 AI 반도체(NPU). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 26건."
+  },
+  {
+   "name": "HRS코리아",
+   "slug": "hirose",
+   "ats": "greeting",
+   "code": "hirose",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "전자 커넥터(히로세 한국법인). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "윌로그",
+   "slug": "willog",
+   "ats": "greeting",
+   "code": "willog",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "IoT 센서 로거. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 9건."
+  },
+  {
+   "name": "브이디로보틱스",
+   "slug": "vdrobotics",
+   "ats": "greeting",
+   "code": "vdrobotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "서빙·서비스 로봇. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "에이로봇",
+   "slug": "arobot4all",
+   "ats": "greeting",
+   "code": "arobot4all",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "로봇 전장설계. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "올릭스",
+   "slug": "olixpharma",
+   "ats": "greeting",
+   "code": "olixpharma",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "RNAi(siRNA) 신약. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "엠아이텍",
+   "slug": "mitech",
+   "ats": "greeting",
+   "code": "mitech",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "의료기기(스텐트). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "덱스레보",
+   "slug": "dexlevo",
+   "ats": "greeting",
+   "code": "dexlevo",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "미용의료 필러. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "에어퍼스트",
+   "slug": "airfirst",
+   "ats": "greeting",
+   "code": "airfirst",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "산업용 가스 온사이트 공급. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 17건."
+  },
+  {
+   "name": "영케미칼",
+   "slug": "youngchemical",
+   "ats": "greeting",
+   "code": "youngchemical",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "화학소재·정밀화학. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "coopnc",
+   "slug": "coopnc",
+   "ats": "greeting",
+   "code": "coopnc",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 2건. 쿠프엔씨. 철강·소재 유통 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "NICE그룹",
+   "slug": "nice",
+   "ats": "greeting",
+   "code": "nice",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "결제·신용정보 IT. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
+  },
+  {
+   "name": "아이지에이웍스",
+   "slug": "igaworks",
+   "ats": "greeting",
+   "code": "igaworks",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 데이터·애드테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "안랩클라우드메이트",
+   "slug": "ahnlabcloudmate",
+   "ats": "greeting",
+   "code": "ahnlabcloudmate",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "클라우드 MSP (안랩 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "코리아포트원",
+   "slug": "portone",
+   "ats": "greeting",
+   "code": "portone",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "결제 인프라(PG). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 9건."
+  },
+  {
+   "name": "링커리어",
+   "slug": "linkareer",
+   "ats": "greeting",
+   "code": "linkareer",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "채용·커리어 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "인터엑스",
+   "slug": "interxlab",
+   "ats": "greeting",
+   "code": "interxlab",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "제조 AI·스마트팩토리. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 52건."
+  },
+  {
+   "name": "컨트롤나인",
+   "slug": "ctrl9",
+   "ats": "greeting",
+   "code": "ctrl9",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임·소프트웨어 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "마이클",
+   "slug": "mycle",
+   "ats": "greeting",
+   "code": "mycle",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "자동차 구독 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 20건."
+  },
+  {
+   "name": "위버스마인드",
+   "slug": "weavers",
+   "ats": "greeting",
+   "code": "weavers",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 영어학습 서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 18건."
+  },
+  {
+   "name": "teamdoeat",
+   "slug": "teamdoeat",
+   "ats": "greeting",
+   "code": "teamdoeat",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 3건. 두잇으로 추정. 회사명·업종 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "모비두",
+   "slug": "mobidoo",
+   "ats": "greeting",
+   "code": "mobidoo",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "라이브커머스 솔루션. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "제우스",
+   "slug": "zeus-recruit",
+   "ats": "greeting",
+   "code": "zeus-recruit",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체·디스플레이 공정장비. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "알세미",
+   "slug": "alsemy",
+   "ats": "greeting",
+   "code": "alsemy",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 소자 모델링 소프트웨어. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "비츠로밀텍",
+   "slug": "vitzromt",
+   "ats": "greeting",
+   "code": "vitzromt",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "방산용 전지·전원장치. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "오알켐",
+   "slug": "bepartoforchem",
+   "ats": "greeting",
+   "code": "bepartoforchem",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "PCB 표면처리 화학소재. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "동원모빌리티",
+   "slug": "dwmic",
+   "ats": "greeting",
+   "code": "dwmic",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자동차 부품 제조. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "리보틱스",
+   "slug": "riibotics",
+   "ats": "greeting",
+   "code": "riibotics",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "자율주행 로봇 지게차. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 11건."
+  },
+  {
+   "name": "프로티나",
+   "slug": "proteina",
+   "ats": "greeting",
+   "code": "proteina",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "단백질 상호작용 신약·진단. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "씨어스테크놀로지",
+   "slug": "seers",
+   "ats": "greeting",
+   "code": "seers",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "웨어러블 심전도 의료기기. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 21건."
+  },
+  {
+   "name": "아그네스메디컬",
+   "slug": "agnes",
+   "ats": "greeting",
+   "code": "agnes",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "미용의료 레이저·RF. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "씨엠에스랩",
+   "slug": "cmslab",
+   "ats": "greeting",
+   "code": "cmslab",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "더마 화장품·의료기기. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "화성엔지니어링",
+   "slug": "hwasungenc",
+   "ats": "greeting",
+   "code": "hwasungenc",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "산업 플랜트 엔지니어링. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "NHN KCP",
+   "slug": "kcp",
+   "ats": "greeting",
+   "code": "kcp",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "전자결제 PG. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "버즈빌",
+   "slug": "buzzvil",
+   "ats": "greeting",
+   "code": "buzzvil",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 리워드 애드테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "타이드스퀘어",
+   "slug": "tidesquare",
+   "ats": "greeting",
+   "code": "tidesquare",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "여행 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "트래블월렛",
+   "slug": "travel-wallet",
+   "ats": "greeting",
+   "code": "travel-wallet",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "해외결제 핀테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "키즈노트",
+   "slug": "kidsnote",
+   "ats": "greeting",
+   "code": "kidsnote",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "보육 알림장 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "넥스트증권",
+   "slug": "nextsecurities",
+   "ats": "greeting",
+   "code": "nextsecurities",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "디지털 증권사. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 49건."
+  },
+  {
+   "name": "누아",
+   "slug": "nuua",
+   "ats": "greeting",
+   "code": "nuua",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "웹 백엔드·시스템 연동 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 21건."
+  },
+  {
+   "name": "딥오토",
+   "slug": "deepauto-ai",
+   "ats": "greeting",
+   "code": "deepauto-ai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "LLM·AutoML 연구개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "빅파이어게임즈",
+   "slug": "bigfiregames",
+   "ats": "greeting",
+   "code": "bigfiregames",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 16건."
+  },
+  {
+   "name": "피처링",
+   "slug": "featuring",
+   "ats": "greeting",
+   "code": "featuring",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "인플루언서 데이터 분석. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 14건."
+  },
+  {
+   "name": "bmsmile",
+   "slug": "bmsmile",
+   "ats": "greeting",
+   "code": "bmsmile",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 15건. 비엠스마일. 치과 관련 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "베케치오",
+   "slug": "vacatio",
+   "ats": "greeting",
+   "code": "vacatio",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "웹 서비스 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "아날로그AI",
+   "slug": "analogai",
+   "ats": "greeting",
+   "code": "analogai",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "아날로그·AI 반도체 팹리스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "휴롬",
+   "slug": "hurom",
+   "ats": "greeting",
+   "code": "hurom",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "생활가전(착즙기). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "samhwa",
+   "slug": "samhwa",
+   "ats": "greeting",
+   "code": "samhwa",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 5건. 주식회사 삼화. 전자부품 품목 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "로보에테크놀로지",
+   "slug": "roboe",
+   "ats": "greeting",
+   "code": "roboe",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "자율작업형 AI 로봇. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "엘앤씨바이오",
+   "slug": "lncbio",
+   "ats": "greeting",
+   "code": "lncbio",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "인체조직 이식재·재생의료. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "이모코그",
+   "slug": "emocog-hr",
+   "ats": "greeting",
+   "code": "emocog-hr",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "인지장애 디지털치료제. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 11건."
+  },
+  {
+   "name": "룰루랩",
+   "slug": "lululab",
+   "ats": "greeting",
+   "code": "lululab",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "AI 피부진단 기기. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 24건."
+  },
+  {
+   "name": "your-nexthanminesg",
+   "slug": "your-nexthanminesg",
+   "ats": "greeting",
+   "code": "your-nexthanminesg",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 6건. 한민·한민에코텍. 업종 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "케어랩스",
+   "slug": "carelabs",
+   "ats": "greeting",
+   "code": "carelabs",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "헬스케어 플랫폼(굿닥). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "로앤컴퍼니",
+   "slug": "lawcompany",
+   "ats": "greeting",
+   "code": "lawcompany",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "리걸테크(로톡). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
+  },
+  {
+   "name": "하이퍼리즘",
+   "slug": "hyperithm",
+   "ats": "greeting",
+   "code": "hyperithm",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "가상자산 운용. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "데이블",
+   "slug": "dable",
+   "ats": "greeting",
+   "code": "dable",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "콘텐츠 추천 애드테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "피에프씨티",
+   "slug": "pfct",
+   "ats": "greeting",
+   "code": "pfct",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "핀테크·대출(피플펀드). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 24건."
+  },
+  {
+   "name": "111퍼센트",
+   "slug": "111percent",
+   "ats": "greeting",
+   "code": "111percent",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 게임 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 19건."
+  },
+  {
+   "name": "디웨일",
+   "slug": "dwhale",
+   "ats": "greeting",
+   "code": "dwhale",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "B2B SaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "레디포스트",
+   "slug": "readypost",
+   "ats": "greeting",
+   "code": "readypost",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "프롭테크 서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "스퀴즈비츠",
+   "slug": "squeezebits",
+   "ats": "greeting",
+   "code": "squeezebits",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 모델 경량화. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "에임드",
+   "slug": "aimed",
+   "ats": "greeting",
+   "code": "aimed",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임·앱 마케팅. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 21건."
+  },
+  {
+   "name": "ppoint",
+   "slug": "ppoint",
+   "ats": "greeting",
+   "code": "ppoint",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 0건. 핀포인트. 사업 내용 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "오토닉스",
+   "slug": "autonics",
+   "ats": "greeting",
+   "code": "autonics",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "산업용 센서·제어·계측기기. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "한화첨단소재",
+   "slug": "hwam-recruit",
+   "ats": "greeting",
+   "code": "hwam-recruit",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자동차 경량 복합소재. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "hanjinpl",
+   "slug": "hanjinpl",
+   "ats": "greeting",
+   "code": "hanjinpl",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 6건. 한진피엘. 자동차 내외장 부품인지 물류인지 불명 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "roai",
+   "slug": "roai",
+   "ats": "greeting",
+   "code": "roai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 7건. 로아이. AI 로보틱스 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "xyz",
+   "slug": "xyz",
+   "ats": "greeting",
+   "code": "xyz",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 5건. XYZ. 서비스 로봇 추정, 회사 실체 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "알보젠코리아",
+   "slug": "alvogenkorea",
+   "ats": "greeting",
+   "code": "alvogenkorea",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "제네릭·전문의약품. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "파마리서치바이오",
+   "slug": "pr-bio-hr",
+   "ats": "greeting",
+   "code": "pr-bio_hr",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "재생의학 바이오의약품 (파마리서치 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "퍼슨",
+   "slug": "firson",
+   "ats": "greeting",
+   "code": "firson",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "의약품·의료기기 제조. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "세나클소프트",
+   "slug": "cenacle",
+   "ats": "greeting",
+   "code": "cenacle",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "클라우드 EMR 의료 소프트웨어. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "세아특수강",
+   "slug": "seahsp",
+   "ats": "greeting",
+   "code": "seahsp",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "특수강 선재·CHQ wire. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "보령LNG터미널",
+   "slug": "boryeonglng",
+   "ats": "greeting",
+   "code": "boryeonglng",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "LNG 터미널 운영. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "geowell",
+   "slug": "geowell",
+   "ats": "greeting",
+   "code": "geowell",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 5건. 대금지오웰. 기계·건설장비 부품 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "직방",
+   "slug": "zigbang",
+   "ats": "greeting",
+   "code": "zigbang",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "프롭테크·스마트홈. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "에코마케팅",
+   "slug": "echomarketing",
+   "ats": "greeting",
+   "code": "echomarketing",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "디지털 마케팅·커머스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "힐링페이퍼",
+   "slug": "healingpaper",
+   "ats": "greeting",
+   "code": "healingpaper",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "미용의료 플랫폼(강남언니). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 30건."
+  },
+  {
+   "name": "람다256",
+   "slug": "lambda256",
+   "ats": "greeting",
+   "code": "lambda256",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "블록체인 플랫폼(루니버스). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "파운트",
+   "slug": "fount",
+   "ats": "greeting",
+   "code": "fount",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "로보어드바이저. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "오렌지스퀘어",
+   "slug": "orangesquare",
+   "ats": "greeting",
+   "code": "orangesquare",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "커머스·웹 서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "부동산플래닛",
+   "slug": "planet",
+   "ats": "greeting",
+   "code": "planet",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "부동산 빅데이터 프롭테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "스페이스애드",
+   "slug": "spaceadd",
+   "ats": "greeting",
+   "code": "spaceadd",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "광고 솔루션. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "딥세일즈",
+   "slug": "deepsales",
+   "ats": "greeting",
+   "code": "deepsales",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "B2B 세일즈 데이터 SaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "케이씨인더스트리얼",
+   "slug": "kcindustrial",
+   "ats": "greeting",
+   "code": "kcindustrial",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 특수가스·배관 플랜트. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "리베스트",
+   "slug": "libest",
+   "ats": "greeting",
+   "code": "libest",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "플렉시블 리튬이온 배터리. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "지엠비코리아",
+   "slug": "gmbkorea",
+   "ats": "greeting",
+   "code": "gmbkorea",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자동차 펌프·구동계 부품. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "범진아이엔디",
+   "slug": "bumjin",
+   "ats": "greeting",
+   "code": "bumjin",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "금형 설계·사출 부품. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "connecteve",
+   "slug": "connecteve",
+   "ats": "greeting",
+   "code": "connecteve",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 9건. 커넥티브. 로봇제어 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "유영제약",
+   "slug": "yypharm",
+   "ats": "greeting",
+   "code": "yypharm",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "완제의약품. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 13건."
+  },
+  {
+   "name": "스카이랩스",
+   "slug": "skylabs",
+   "ats": "greeting",
+   "code": "skylabs",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "반지형 심혈관 모니터링. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "컨텍",
+   "slug": "contec",
+   "ats": "greeting",
+   "code": "contec",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "위성 지상국·우주 데이터. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "에스아이에이",
+   "slug": "sianalytics",
+   "ats": "greeting",
+   "code": "sianalytics",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "위성영상 분석 AI. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 11건."
+  },
+  {
+   "name": "뤼튼테크놀로지스",
+   "slug": "wrtn",
+   "ats": "greeting",
+   "code": "wrtn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "생성형 AI 서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 32건."
+  },
+  {
+   "name": "올거나이즈",
+   "slug": "allganize",
+   "ats": "greeting",
+   "code": "allganize",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "기업용 LLM 솔루션. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 11건."
+  },
+  {
+   "name": "엔키화이트햇",
+   "slug": "enki",
+   "ats": "greeting",
+   "code": "enki",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "사이버보안. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 27건."
+  },
+  {
+   "name": "넛지헬스케어",
+   "slug": "cashwalk12",
+   "ats": "greeting",
+   "code": "cashwalk12",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "걸음 리워드 헬스케어(캐시워크). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 37건."
+  },
+  {
+   "name": "비에이치에스엔",
+   "slug": "bhsn",
+   "ats": "greeting",
+   "code": "bhsn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "리걸테크 AI SaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "스토어링크",
+   "slug": "storelink",
+   "ats": "greeting",
+   "code": "storelink",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "이커머스 데이터 마케팅. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "gna",
+   "slug": "gna",
+   "ats": "greeting",
+   "code": "gna",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 10건. 플레이오 운영사로 추정. 회사명·업종 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "넥스트그라운드",
+   "slug": "nextground",
+   "ats": "greeting",
+   "code": "nextground",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "프롭테크(집품). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "브이더블유에스에이아이",
+   "slug": "vwsai",
+   "ats": "greeting",
+   "code": "vwsai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "부실채권 AI 핀테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "gravitylabs",
+   "slug": "gravitylabs",
+   "ats": "greeting",
+   "code": "gravitylabs",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 10건. 그래비티랩스. 사업 내용 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "allosta",
+   "slug": "allosta",
+   "ats": "greeting",
+   "code": "allosta",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 8건. 알로스타. 바이오·진단 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "케이씨파츠텍",
+   "slug": "kcpartstech1",
+   "ats": "greeting",
+   "code": "kcpartstech1",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체 장비 부품. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 16건."
+  },
+  {
+   "name": "슈프리마",
+   "slug": "hr-suprema",
+   "ats": "greeting",
+   "code": "hr-suprema",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "생체인식 모듈·보안단말. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 27건."
+  },
+  {
+   "name": "코스모스랩",
+   "slug": "cosmoslab",
+   "ats": "greeting",
+   "code": "cosmoslab",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "아연브로민 차세대 전지. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "오토앤",
+   "slug": "auton",
+   "ats": "greeting",
+   "code": "auton",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "자동차 애프터마켓·커넥티드. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "알티올",
+   "slug": "altiall",
+   "ats": "greeting",
+   "code": "altiall",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "물류자동화 시스템. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "메디픽셀",
+   "slug": "medipixel",
+   "ats": "greeting",
+   "code": "medipixel",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "의료영상 AI·중재시술. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "라덱셀",
+   "slug": "radexel-hr",
+   "ats": "greeting",
+   "code": "radexel-hr",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "의료기기 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "이노스페이스",
+   "slug": "innospace",
+   "ats": "greeting",
+   "code": "innospace",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "소형 우주 발사체. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 40건."
+  },
+  {
+   "name": "카카오페이",
+   "slug": "kakaopay",
+   "ats": "greeting",
+   "code": "kakaopay",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "간편결제·금융 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 31건."
+  },
+  {
+   "name": "카카오모빌리티",
+   "slug": "kakaomobility",
+   "ats": "greeting",
+   "code": "kakaomobility",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모빌리티 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 23건."
+  },
+  {
+   "name": "폴라리스오피스",
+   "slug": "polarisofficerecruit",
+   "ats": "greeting",
+   "code": "polarisofficerecruit",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "오피스 소프트웨어·AI. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "모레",
+   "slug": "moreh",
+   "ats": "greeting",
+   "code": "moreh",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 반도체 인프라 소프트웨어. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "메디스트림",
+   "slug": "medistream",
+   "ats": "greeting",
+   "code": "medistream",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "의료인 커뮤니티 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 20건."
+  },
+  {
+   "name": "링크알파",
+   "slug": "linqalpha",
+   "ats": "greeting",
+   "code": "linqalpha",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 금융 리서치 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 21건."
+  },
+  {
+   "name": "카테노이드",
+   "slug": "catenoid",
+   "ats": "greeting",
+   "code": "catenoid",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "동영상 스트리밍 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "테크빌교육",
+   "slug": "tekville",
+   "ats": "greeting",
+   "code": "tekville",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "에듀테크(티처빌). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "두꺼비세상",
+   "slug": "duse",
+   "ats": "greeting",
+   "code": "duse",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "부동산 중개 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "피티비더블유에이",
+   "slug": "ptbwa",
+   "ats": "greeting",
+   "code": "ptbwa",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 애드테크 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "에피드게임즈",
+   "slug": "epidgames",
+   "ats": "greeting",
+   "code": "epidgames",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "모바일 게임 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 24건."
+  },
+  {
+   "name": "스플랩",
+   "slug": "umoh",
+   "ats": "greeting",
+   "code": "umoh",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "이벤트·커뮤니티 SaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "캐럿",
+   "slug": "carat",
+   "ats": "greeting",
+   "code": "carat",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "lulumedic",
+   "slug": "lulumedic",
+   "ats": "greeting",
+   "code": "lulumedic",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 3건. 룰루메딕. 의료기기 추정, 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "에스티엠",
+   "slug": "stm-recruitment",
+   "ats": "greeting",
+   "code": "stm-recruitment",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체·2차전지 타겟재 소재. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "휴비츠",
+   "slug": "huvitz",
+   "ats": "greeting",
+   "code": "huvitz",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "광학 계측·안광학기기. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "에타일렉트로닉스",
+   "slug": "etaelec",
+   "ats": "greeting",
+   "code": "etaelec",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "무선전력전송 전력전자. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "아이나비시스템즈",
+   "slug": "inavisys",
+   "ats": "greeting",
+   "code": "inavisys",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "차량용 내비게이션 소프트웨어. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "리얼월드",
+   "slug": "realworld",
+   "ats": "greeting",
+   "code": "realworld",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "로봇용 피지컬 AI 모델. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 46건."
+  },
+  {
+   "name": "에이블랩스",
+   "slug": "ablelabs",
+   "ats": "greeting",
+   "code": "ablelabs",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "실험실 자동화 로봇. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "롯데바이오로직스",
+   "slug": "lottebiologics",
+   "ats": "greeting",
+   "code": "lottebiologics",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "바이오의약품 CDMO. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "종근당건강",
+   "slug": "ckdhc",
+   "ats": "greeting",
+   "code": "ckdhc",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "건강기능식품 (종근당 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "제이앤피메디",
+   "slug": "jnpmedi",
+   "ats": "greeting",
+   "code": "jnpmedi",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "임상 데이터 관리·CRO. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 22건."
+  },
+  {
+   "name": "카바크랩",
+   "slug": "cavaclab",
+   "ats": "greeting",
+   "code": "cavaclab",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "동물용 백신. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "조광페인트",
+   "slug": "chokwang",
+   "ats": "greeting",
+   "code": "chokwang",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "도료·페인트. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "CNCITY에너지",
+   "slug": "cncityenergy",
+   "ats": "greeting",
+   "code": "cncityenergy",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "도시가스·에너지. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "상지해운",
+   "slug": "sangjiship",
+   "ats": "greeting",
+   "code": "sangjiship",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "해상운송. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "SK쉴더스",
+   "slug": "skshieldus",
+   "ats": "greeting",
+   "code": "skshieldus",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "정보보안·물리보안. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 37건."
+  },
+  {
+   "name": "메가스터디교육",
+   "slug": "megastudyedu",
+   "ats": "greeting",
+   "code": "megastudyedu",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "온라인 교육 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 14건."
+  },
+  {
+   "name": "이노그리드",
+   "slug": "innogridhr",
+   "ats": "greeting",
+   "code": "innogridhr",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "클라우드 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 18건."
+  },
+  {
+   "name": "티오리",
+   "slug": "theori",
+   "ats": "greeting",
+   "code": "theori",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "공격형 보안 리서치. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "젭",
+   "slug": "zep",
+   "ats": "greeting",
+   "code": "zep",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "메타버스 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "모두닥",
+   "slug": "modoodoc",
+   "ats": "greeting",
+   "code": "modoodoc",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "병원 검색 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 10건."
+  },
+  {
+   "name": "짐싸",
+   "slug": "zimssa",
+   "ats": "greeting",
+   "code": "zimssa",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "이사 중개 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "뒤끝",
+   "slug": "thebackend",
+   "ats": "greeting",
+   "code": "thebackend",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "게임 백엔드 BaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "어크로스비",
+   "slug": "acrossb",
+   "ats": "greeting",
+   "code": "acrossb",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "플랫폼 서비스 개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 7건."
+  },
+  {
+   "name": "단비교육",
+   "slug": "danbiedu",
+   "ats": "greeting",
+   "code": "danbiedu",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "교육 콘텐츠·플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 13건."
+  },
+  {
+   "name": "오픈닥터",
+   "slug": "opn",
+   "ats": "greeting",
+   "code": "opn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "중개 서비스 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "트립비토즈",
+   "slug": "tripbtoz",
+   "ats": "greeting",
+   "code": "tripbtoz",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "여행 숙박 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 8건."
+  },
+  {
+   "name": "포비즈",
+   "slug": "forbiz",
+   "ats": "greeting",
+   "code": "forbiz",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "이커머스 플랫폼. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "더즌",
+   "slug": "dozn",
+   "ats": "greeting",
+   "code": "dozn",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "결제·금융 솔루션. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "시오닉AI",
+   "slug": "sionicai",
+   "ats": "greeting",
+   "code": "sionicai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "LLM·AI 솔루션. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
+  },
+  {
+   "name": "삼신",
+   "slug": "samsin-rhabo",
+   "ats": "greeting",
+   "code": "samsin-rhabo",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "난자냉동·생식의학. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "에임시스템",
+   "slug": "aim",
+   "ats": "greeting",
+   "code": "aim",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "반도체·디스플레이 공장자동화/MES. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 3건."
+  },
+  {
+   "name": "에이스웍스코리아",
+   "slug": "aceworks",
+   "ats": "greeting",
+   "code": "aceworks",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "상용차 자율주행·전동화. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 16건."
+  },
+  {
+   "name": "대동애그테크",
+   "slug": "daedongagtech",
+   "ats": "greeting",
+   "code": "daedongagtech",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "농기계 자동화·로봇 (대동 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "긴트",
+   "slug": "gintlab",
+   "ats": "greeting",
+   "code": "gintlab",
+   "industry": [
+    "로봇"
+   ],
+   "enabled": true,
+   "note": "농기계 자율주행 전동화 키트. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
+  },
+  {
+   "name": "보로노이",
+   "slug": "voronoi",
+   "ats": "greeting",
+   "code": "voronoi",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "표적항암 저분자 신약. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "바텍네트웍스",
+   "slug": "vatechnetworks",
+   "ats": "greeting",
+   "code": "vatechnetworks",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "치과 영상 의료기기 (바텍 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 60건."
+  },
+  {
+   "name": "씨알에스큐브",
+   "slug": "crscube",
+   "ats": "greeting",
+   "code": "crscube",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "임상시험 EDC SaaS. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 1건."
+  },
+  {
+   "name": "그린케미칼",
+   "slug": "korgc",
+   "ats": "greeting",
+   "code": "korgc",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "정밀화학. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 5건."
+  },
+  {
+   "name": "한국미쓰이물산",
+   "slug": "mitsui",
+   "ats": "greeting",
+   "code": "mitsui",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "소재·전자부품 종합상사. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "리에나",
+   "slug": "rena",
+   "ats": "greeting",
+   "code": "rena",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "자원순환 고부가 소재. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "GS ITM",
+   "slug": "gsitm",
+   "ats": "greeting",
+   "code": "gsitm",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "SI·IT 서비스 (GS 계열). 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 12건."
+  },
+  {
+   "name": "웹케시그룹",
+   "slug": "webcashgroup",
+   "ats": "greeting",
+   "code": "webcashgroup",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "기업 금융 소프트웨어. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 0건(현재 접수중 공고 없음. 채용을 시작하면 자동으로 들어옵니다)."
+  },
+  {
+   "name": "KB데이타시스템",
+   "slug": "kbds",
+   "ats": "greeting",
+   "code": "kbds",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "금융 IT·클라우드. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 6건."
+  },
+  {
+   "name": "핀다",
+   "slug": "finda",
+   "ats": "greeting",
+   "code": "finda",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "대출 비교 핀테크. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 18건."
+  },
+  {
+   "name": "원프레딕트",
+   "slug": "onepredict",
+   "ats": "greeting",
+   "code": "onepredict",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "산업설비 예측진단. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 18건."
+  },
+  {
+   "name": "슈퍼센트",
+   "slug": "supercent",
+   "ats": "greeting",
+   "code": "supercent",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "하이퍼캐주얼 모바일 게임. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 23건."
+  },
+  {
+   "name": "마상소프트",
+   "slug": "masangsoft",
+   "ats": "greeting",
+   "code": "masangsoft",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "온라인 게임 개발·서비스. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 17건."
+  },
+  {
+   "name": "캐탈라이즈",
+   "slug": "catalyze",
+   "ats": "greeting",
+   "code": "catalyze",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "블록체인 사업개발. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 2건."
+  },
+  {
+   "name": "teamcookie",
+   "slug": "teamcookie",
+   "ats": "greeting",
+   "code": "teamcookie",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 그리팅 전수조사에서 발견. 테넌트 생존 확인, sitemap 공고 1건. 팀쿠키. 사업 내용 확인 필요 회사명과 업종을 확인한 뒤 enabled 를 true 로 바꾸고 name·industry 를 고치세요."
+  },
+  {
+   "name": "에너자이",
+   "slug": "enerzai",
+   "ats": "greeting",
+   "code": "enerzai",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "AI 모델 경량화·컴파일러. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 4건."
+  },
+  {
+   "name": "끌리메",
+   "slug": "cclime",
+   "ats": "greeting",
+   "code": "cclime",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "미용의료 브랜드. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
   }
  ]
 }
