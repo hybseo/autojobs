@@ -537,7 +537,10 @@
     "SK어스온",
     "SK earthon",
     "SK E&S",
-    "SK이엔에스"
+    "SK이엔에스",
+    "SK주식회사 C&C",
+    "SK C&C",
+    "SK(주) C&C"
    ],
    "affiliateIndustry": {
     "SK on": [
@@ -660,6 +663,15 @@
     ],
     "SK이엔에스": [
      "중공업·화학·소재"
+    ],
+    "SK주식회사 C&C": [
+     "IT"
+    ],
+    "SK C&C": [
+     "IT"
+    ],
+    "SK(주) C&C": [
+     "IT"
     ]
    },
    "industry": [
@@ -668,7 +680,7 @@
     "전기전자"
    ],
    "enabled": true,
-   "note": "SK그룹 통합 채용. affiliates 에 적은 계열사만 담습니다.\n회사명이 한글과 영문 둘 다로 옵니다(SK실트론 / SK siltron). 표에 한쪽만 넣으면 나머지가 매칭되지 않아 그룹 기본 industry 로 잘못 분류됩니다. 2026-09-11 실제로 SK siltron 공고가 그렇게 샜습니다. 새 계열사를 넣을 때는 화면 표기와 수집 데이터를 모두 확인하세요.\n화면에서 확인할 때 목록이 한 번에 다 오지 않으니 검색창을 쓰세요. / 2026-09-30: SK매직(현 SK인텔릭스)이 이 통합 채용에 올라오는데 affiliates 에 없어 빠지고 있었습니다. 한글·영문 두 표기를 모두 넣었습니다 / 2026-10-01: 정유·화학 계열(SK이노베이션·에너지·지오센트릭·엔무브)이 affiliates 에 없어 공고가 걸러지고 있었습니다. 회사명이 영문으로도 오므로(SK innovation) 두 표기를 모두 넣습니다"
+   "note": "SK그룹 통합 채용. affiliates 에 적은 계열사만 담습니다.\n회사명이 한글과 영문 둘 다로 옵니다(SK실트론 / SK siltron). 표에 한쪽만 넣으면 나머지가 매칭되지 않아 그룹 기본 industry 로 잘못 분류됩니다. 2026-09-11 실제로 SK siltron 공고가 그렇게 샜습니다. 새 계열사를 넣을 때는 화면 표기와 수집 데이터를 모두 확인하세요.\n화면에서 확인할 때 목록이 한 번에 다 오지 않으니 검색창을 쓰세요. / 2026-09-30: SK매직(현 SK인텔릭스)이 이 통합 채용에 올라오는데 affiliates 에 없어 빠지고 있었습니다. 한글·영문 두 표기를 모두 넣었습니다 / 2026-10-01: 정유·화학 계열(SK이노베이션·에너지·지오센트릭·엔무브)이 affiliates 에 없어 공고가 걸러지고 있었습니다. 회사명이 영문으로도 오므로(SK innovation) 두 표기를 모두 넣습니다 / 2026-10-06: SK주식회사 C&C 를 affiliates 에 넣었습니다. Workday 에도 sk.wd3.myworkdayjobs.com/SKCC_EX_CAREER 사이트가 있지만 sitemap 이 500 을 내 공고를 확인할 수 없어 별도 등록은 하지 않았습니다. 이름 필터만 넓혀, 그룹 포털에 C&C 공고가 올라오면 IT 로 담기게 했습니다."
   },
   {
    "name": "트위니",
@@ -3349,7 +3361,7 @@
      "중공업·화학·소재"
     ],
     "인터지스": [
-     "물류"
+     "중공업·화학·소재"
     ]
    }
   },
@@ -5841,6 +5853,358 @@
    ],
    "enabled": true,
    "note": "미용의료 브랜드. 2026-10-06 그리팅 전수조사로 추가. sitemap 기준 공고 15건."
+  },
+  {
+   "name": "알피니온메디칼",
+   "slug": "alpinion",
+   "ats": "workday",
+   "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Alpinion",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "초음파 진단기기. 일진그룹 계열. 2026-10-06 일진 Workday 테넌트(iljini)의 robots.txt 에 채용 사이트가 Alpinion·Diamond·Electric·Holdings·Hysolus·Development 여섯 개로 적혀 있는 것을 발견했습니다. 그때까지 Electric·Hysolus 둘만 등록돼 있었습니다. siteMap.xml 기준 공고 8건."
+  },
+  {
+   "name": "일진다이아몬드",
+   "slug": "iljin-diamond",
+   "ats": "workday",
+   "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Diamond",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "공업용 다이아몬드·PCBN 절삭공구 소재. 일진그룹 계열. 같은 테넌트의 Diamond 사이트. siteMap.xml 기준 공고 11건."
+  },
+  {
+   "name": "일진홀딩스",
+   "slug": "iljin-holdings",
+   "ats": "workday",
+   "code": "iljini.wd102.myworkdayjobs.com/ko-KR/Holdings",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "일진그룹 지주회사. 같은 테넌트의 Holdings 사이트. siteMap.xml 기준 공고 12건. 지주사라 그룹 공통 직무가 섞여 올 수 있습니다. 첫 갱신 뒤 제목을 보고 분류가 맞는지 확인하세요. 소재·전기가 주력이라 중공업·화학·소재로 잡아 두었습니다."
+  },
+  {
+   "name": "산하정보기술",
+   "slug": "sanha-it",
+   "ats": "workday",
+   "code": "yanolja.wd102.myworkdayjobs.com/ko-KR/External_Sanha",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "호텔·숙박 IT 시스템(PMS·CMS) 유지보수. 야놀자 계열. 야놀자 Workday 테넌트의 robots.txt 에 External_Yanolja·External_Sanha·External_Dable 세 개가 적혀 있었고 야놀자만 등록돼 있었습니다. siteMap.xml 기준 공고 5건. External_Dable(데이블)은 공고 0건이고 데이블은 이미 그리팅으로 등록돼 있어 넣지 않았습니다(중복 방지)."
+  },
+  {
+   "name": "동화기업",
+   "slug": "dongwha",
+   "ats": "workday",
+   "code": "dongwha.wd3.myworkdayjobs.com/ko-KR/DongwhaCareers",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "목재 보드·화학 소재. 코스닥. Workday. 2026-10-06 조사: 테넌트 robots.txt 에 채용 사이트가 DongwhaCareers·DongwhaElectrolyteCareers 둘로 적혀 있고, siteMap.xml 기준 공고 12건입니다. 근무지가 여의도·남동·가좌로 모두 국내입니다."
+  },
+  {
+   "name": "동화일렉트로라이트",
+   "slug": "dongwha-electrolyte",
+   "ats": "workday",
+   "code": "dongwha.wd3.myworkdayjobs.com/ko-KR/DongwhaElectrolyteCareers",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2차전지 전해액. 동화기업 계열이고 같은 Workday 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 3건(북성·여의도)."
+  },
+  {
+   "name": "삼양사",
+   "slug": "samyang",
+   "ats": "workday",
+   "code": "samyang.wd3.myworkdayjobs.com/ko-KR/Samyang",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "스페셜티 케미컬·식품소재. 삼양그룹. Workday. siteMap.xml 기준 공고 7건이지만 제목에 POOL(인재풀)이 붙은 것이 섞여 있어 실제 접수중은 더 적을 수 있습니다. 인재풀은 수집기가 걸러냅니다."
+  },
+  {
+   "name": "삼양KCI",
+   "slug": "samyang-kci",
+   "ats": "workday",
+   "code": "samyang.wd3.myworkdayjobs.com/ko-KR/SAMYANG_KCI",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "계면활성제·화장품 원료. 삼양그룹 계열이고 같은 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 1건."
+  },
+  {
+   "name": "어플라이드 머티어리얼즈 코리아",
+   "slug": "amat-korea",
+   "ats": "workday",
+   "code": "amat.wd1.myworkdayjobs.com/en-US/External",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 반도체 장비. 2026-10-06 직접 확인: 전 세계 2,000건 중 한국 87건. 근무지 표기가 'Hwaseong-Lucestar(KOR)' 'Pyeongtaek-Mokok(KOR)' 라 지명으로는 걸러낼 수 없어, 이 조사 때문에 어댑터를 Country 조건 방식으로 고쳤습니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "KLA 코리아",
+   "slug": "kla-korea",
+   "ats": "workday",
+   "code": "kla.wd1.myworkdayjobs.com/en-US/Search",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 반도체 계측·검사 장비(이천·청주). 2026-10-06 확인 시점에는 전 세계 1,072건 중 한국 조건이 없어 한국 공고 0건이었습니다. 열리면 들어옵니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "인테그리스 코리아",
+   "slug": "entegris-korea",
+   "ats": "workday",
+   "code": "entegris.wd1.myworkdayjobs.com/ko-KR/EntegrisCareers",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 반도체 소재·부품(수원). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "Qnity Electronics",
+   "slug": "qnity",
+   "ats": "workday",
+   "code": "qnity.wd503.myworkdayjobs.com/en-US/Jobs",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 반도체·전자소재(천안 공장). 듀폰 전자소재 부문이 분리된 회사입니다. 한글 사명을 확인하지 못해 영문 그대로 적었습니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "발레오",
+   "slug": "valeo-korea",
+   "ats": "workday",
+   "code": "valeo.wd3.myworkdayjobs.com/ko-KR/valeo_jobs",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 자동차 전장·열관리 부품. 사이트 이름이 전부 소문자 valeo_jobs 입니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "쿠퍼스탠다드",
+   "slug": "cooperstandard",
+   "ats": "workday",
+   "code": "cooperstandard.wd1.myworkdayjobs.com/en-US/CooperStandard",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 자동차 실링·고무 부품(수원). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "GM 한국사업장",
+   "slug": "gm-korea",
+   "ats": "workday",
+   "code": "generalmotors.wd5.myworkdayjobs.com/en-US/Careers_GM",
+   "industry": [
+    "자동차부품"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 완성차 제조(인천 부평·창원). 완성차지만 사이트에 완성차 분류가 없어 자동차부품으로 넣었습니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "에어리퀴드 코리아",
+   "slug": "airliquide-korea",
+   "ats": "workday",
+   "code": "airliquidehr.wd3.myworkdayjobs.com/en-US/AirLiquideExternalCareer",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 산업용 가스·수소(대산·천안). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "머티리온 코리아",
+   "slug": "materion-korea",
+   "ats": "workday",
+   "code": "materion.wd5.myworkdayjobs.com/en-US/Materion",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 첨단 금속·소재 가공(당진). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "듀폰 코리아",
+   "slug": "dupont-korea",
+   "ats": "workday",
+   "code": "dupont.wd5.myworkdayjobs.com/en-US/Jobs",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 화학·전자재료. 같은 Allow 목록에 Jobs_Swiss 가 있어 혼동하지 마세요. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "3M 코리아",
+   "slug": "3m-korea",
+   "ats": "workday",
+   "code": "3m.wd1.myworkdayjobs.com/ko-KR/Search",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 산업용 소재·연마재. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "보잉 코리아",
+   "slug": "boeing-korea",
+   "ats": "workday",
+   "code": "boeing.wd1.myworkdayjobs.com/en-US/EXTERNAL_CAREERS",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 항공·방산(서울). 사이트 이름이 전부 대문자입니다. 같은 테넌트에 EXTERNAL_RECALL 등 유사 이름이 많아 주의. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "BD 코리아",
+   "slug": "bd-korea",
+   "ats": "workday",
+   "code": "bdx.wd1.myworkdayjobs.com/en-KR/EXTERNAL_CAREER_SITE_KOREA_REPUBLIC_OF",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 의료기기. 국가별 사이트를 따로 두는 회사이고 이것이 한국 전용 사이트입니다. 사이트 이름이 전부 대문자입니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "다나허 코리아",
+   "slug": "danaher-korea",
+   "ats": "workday",
+   "code": "danaher.wd1.myworkdayjobs.com/en-US/DanaherJobs",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 진단·생명과학 장비(대전 등). 검색에서는 소문자 danaherjobs 로 보였지만 robots.txt 에는 DanaherJobs 로 적혀 있어 그쪽을 썼습니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "필립스 코리아",
+   "slug": "philips-korea",
+   "ats": "workday",
+   "code": "philips.wd3.myworkdayjobs.com/en-US/jobs-and-careers",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 의료기기(서울). 사이트 이름이 소문자에 하이픈입니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "레스메드 코리아",
+   "slug": "resmed-korea",
+   "ats": "workday",
+   "code": "resmed.wd3.myworkdayjobs.com/en-US/ResMed_External_Careers",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 수면·호흡 의료기기(서울·대전). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "알콘 코리아",
+   "slug": "alcon-korea",
+   "ats": "workday",
+   "code": "alcon.wd5.myworkdayjobs.com/en-US/careers_alcon",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 안과 의료기기. 사이트 이름이 전부 소문자입니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "GSK 코리아",
+   "slug": "gsk-korea",
+   "ats": "workday",
+   "code": "gsk.wd5.myworkdayjobs.com/ko-KR/GSKCareers",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 제약. 같은 테넌트의 ViiV_Careers 는 별도 사이트입니다. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "MSD 코리아",
+   "slug": "msd-korea",
+   "ats": "workday",
+   "code": "msd.wd5.myworkdayjobs.com/en-US/SearchJobs",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 제약. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "화이자 코리아",
+   "slug": "pfizer-korea",
+   "ats": "workday",
+   "code": "pfizer.wd1.myworkdayjobs.com/en-US/PfizerCareers",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 제약. 같은 테넌트에 Canada_Only_External 등 유사 이름이 있어 주의. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "비아트리스 코리아",
+   "slug": "viatris-korea",
+   "ats": "workday",
+   "code": "viatris.wd5.myworkdayjobs.com/en-US/External",
+   "industry": [
+    "제약바이오"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 제약. 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "어드밴텍 코리아",
+   "slug": "advantech-korea",
+   "ats": "workday",
+   "code": "advantech.wd3.myworkdayjobs.com/ko-KR/External",
+   "industry": [
+    "전기전자"
+   ],
+   "enabled": true,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 산업용 컴퓨터·임베디드 보드(서울). 전 세계 공고 중 한국만 담깁니다(어댑터가 응답의 Country 조건에서 한국 id 를 꺼내 서버에 걸어 요청합니다). 한국 공고가 없으면 요청 한 번으로 0건 처리되고, 열리면 자동으로 들어옵니다."
+  },
+  {
+   "name": "hcmportal-wd5",
+   "slug": "hcmportal-wd5",
+   "ats": "workday",
+   "code": "hcmportal.wd5.myworkdayjobs.com/en-US/Search",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 인천 공항 물류 직무(Air Operations)가 올라오는 테넌트입니다. UPS 로 추정되지만 회사명을 확정하지 못해 추측으로 적지 않았습니다. robots 는 /Search/ 를 허용합니다. 회사명을 확인하면 name 을 고치고 enabled 를 true 로 바꾸세요."
+  },
+  {
+   "name": "otis-wd5",
+   "slug": "otis-wd5",
+   "ats": "workday",
+   "code": "otis.wd5.myworkdayjobs.com/en-US/REC_Ext_Gateway",
+   "industry": [
+    "IT"
+   ],
+   "enabled": false,
+   "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 오티스엘리베이터코리아(승강기)로 보이지만 robots.txt 를 두 번 시도해도 422 오류가 나서 수집 허용 여부를 확인하지 못했습니다. 확인 전에는 켜지 않습니다."
   }
  ]
 }

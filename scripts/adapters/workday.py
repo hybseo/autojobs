@@ -23,12 +23,43 @@ Workday 는 전 세계 공고를 한 사이트에 올립니다. 그대로 받으
 쏟아지고 대부분 해외입니다. 국내 구직자용 사이트이므로 한국 근무지만
 남깁니다. 해외까지 원하면 companies.json 에 "overseas": true 를 넣으세요.
 
-만들 때의 한계
---------------
-이 어댑터는 Workday 공개 문서와 알려진 응답 구조에 맞춰 작성했습니다.
-실제 응답으로 검증하지 못한 상태로 처음 올라갑니다. 그래서 필드 이름이
-다를 경우 조용히 0건이 되지 않도록, 무엇을 못 찾았는지 화면에 남깁니다.
-첫 실행 로그를 반드시 확인하세요.
+한국을 거르는 방법을 바꿨습니다 (2026-10-06)
+--------------------------------------------
+예전에는 공고를 전부 받아 근무지 글자에서 지명을 찾아 걸렀습니다.
+두 가지가 문제였습니다.
+
+1. 지명으로는 못 걸러냅니다
+   어플라이드 머티어리얼즈의 한국 근무지 표기는 'Hwaseong-Lucestar(KOR)',
+   'Pyeongtaek-Mokok(KOR)' 입니다. 'korea' 도 '화성' 도 들어 있지 않아
+   한국 공고 87건이 전부 해외로 걸러집니다. 공장 이름을 지명 자리에 쓰는
+   회사는 지명 목록을 아무리 늘려도 따라갈 수 없습니다.
+
+2. 전부 받는 것이 너무 비쌉니다
+   어플라이드는 전 세계 공고가 2,000건, KLA 는 1,072건입니다. 20건씩
+   받으면 회사 하나에 요청이 100번입니다. 갱신이 끝나지 않습니다.
+
+그래서 서버에 "한국만 주세요" 라고 요청합니다. 목록 API 는 응답에
+facets(검색 조건) 목록을 함께 주고, 그 안에 나라별 항목과 id 가 있습니다.
+
+    "facets": [{"facetParameter": "Country",
+                "values": [{"id": "7a5a...28da",
+                            "descriptor": "Korea, Republic of",
+                            "count": 87}, ...]}]
+
+이 id 를 appliedFacets 에 넣어 다시 부르면 한국 공고만 옵니다.
+어플라이드는 요청이 100번에서 5번으로 줄고, 근무지 표기와 무관하게
+정확합니다.
+
+id 를 코드에 적어두지 않습니다
+    나라 id 는 테넌트마다 같아 보이지만 확인한 바가 없습니다. 그래서 첫
+    응답의 facets 에서 그 테넌트가 알려준 값을 그대로 꺼내 씁니다.
+    추측한 값을 넣지 않습니다.
+
+facets 에 한국이 없으면
+    그 회사는 지금 한국 공고가 없다는 뜻입니다(2026-10-06 KLA 가 그랬습니다).
+    조건 없이 전부 받아 예전 방식으로 거르는 쪽으로 넘어가되, 전 세계
+    공고가 SAFE_TOTAL 보다 많으면 요청을 쏟지 않고 멈추고 로그에 남깁니다.
+    일진·야놀자·동화기업처럼 한국 기업 테넌트는 공고가 적어 이 길로 갑니다.
 """
 import json
 import re
@@ -43,6 +74,18 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 PAGE = 20          # Workday 는 한 번에 20건씩 줍니다
 MAX_PAGES = 25     # 안전장치. 500건이면 충분합니다
+
+# 한국 조건을 못 찾았을 때, 전부 받아도 되는 전 세계 공고 수의 한도.
+#
+# 400건이면 요청 20번입니다. 그 이상이면 받지 않고 멈춥니다. 외국계
+# 대형 테넌트(어플라이드 2,000건·KLA 1,072건)를 조건 없이 받으면 요청이
+# 100번씩 들어가 갱신 전체가 제한 시간에 걸립니다. 한국 공고가 없어서
+# 조건이 안 나온 것이므로, 멈춰도 잃는 것이 없습니다.
+SAFE_TOTAL = 400
+
+# facets 의 나라 항목에서 한국을 찾는 말.
+# 'Korea, Republic of', 'South Korea', '대한민국' 모두 걸립니다.
+KOREA_NAME = re.compile(r"korea|대한민국|한국", re.I)
 
 # en-EN, ko-KR, de-DE 같은 언어 코드. 사이트 이름이 아닙니다.
 LANG = re.compile(r"[a-z]{2}-[A-Za-z]{2}")
@@ -115,15 +158,36 @@ def _date(s):
     return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
 
 
-def list_open(code, overseas=False):
-    """접수중 공고 목록. probe 용으로 밖에서도 씁니다."""
-    host, tenant, site = _parts(code)
-    base = f"https://{host}/wday/cxs/{tenant}/{site}"
+def _korea_facet(j):
+    """첫 응답의 facets 에서 한국을 고르는 조건을 찾습니다.
 
+    (조건이름, id, 표기, 건수) 를 돌려주고, 없으면 None 입니다.
+    나라 조건(Country 등)을 먼저 보고, 없으면 다른 조건에서도 찾습니다.
+    회사마다 조건 이름이 Country 일 수도, locationCountry 일 수도 있어
+    이름을 하나로 못 박습니다.
+    """
+    facets = j.get("facets") or []
+
+    def pick(only_country):
+        for f in facets:
+            param = str(f.get("facetParameter") or "")
+            if only_country and not re.search(r"country", param, re.I):
+                continue
+            for v in (f.get("values") or []):
+                desc = str(v.get("descriptor") or "")
+                if v.get("id") and KOREA_NAME.search(desc):
+                    return param, v["id"], desc, v.get("count")
+        return None
+
+    return pick(True) or pick(False)
+
+
+def _page_through(base, facets, label):
+    """조건을 걸어 공고를 끝까지 받습니다."""
     out, offset = [], 0
     for _ in range(MAX_PAGES):
         j = _post(f"{base}/jobs", {
-            "appliedFacets": {}, "limit": PAGE,
+            "appliedFacets": facets, "limit": PAGE,
             "offset": offset, "searchText": ""})
         posts = j.get("jobPostings") or []
         if not posts:
@@ -133,17 +197,67 @@ def list_open(code, overseas=False):
         if offset >= (j.get("total") or 0):
             break
         time.sleep(0.4)
+    else:
+        print(f"      ! {label}: {MAX_PAGES * PAGE}건에서 멈췄습니다. "
+              f"더 있을 수 있으니 MAX_PAGES 를 확인하세요.")
+    return out
 
-    if not overseas:
-        before = out
-        out = [x for x in out if KOREA.search(
-            f"{x.get('locationsText','')} {x.get('title','')}")]
-        # 받아온 건 있는데 전부 걸러졌다면 지명 목록이 부족한 것입니다.
-        # 무엇이 왔는지 남겨야 다음에 고칠 수 있습니다.
-        if before and not out:
-            seen = sorted({(x.get("locationsText") or "?") for x in before})[:6]
-            print(f"      ! 한국 근무지로 인식된 공고가 없습니다. "
-                  f"받은 근무지 표기: {seen}")
+
+def list_open(code, overseas=False):
+    """접수중 공고 목록. probe 용으로 밖에서도 씁니다."""
+    host, tenant, site = _parts(code)
+    base = f"https://{host}/wday/cxs/{tenant}/{site}"
+    label = f"workday({tenant}/{site})"
+
+    # 첫 한 번은 조건 없이 불러 전체 건수와 검색 조건 목록을 받습니다.
+    first = _post(f"{base}/jobs", {
+        "appliedFacets": {}, "limit": PAGE, "offset": 0, "searchText": ""})
+    total = first.get("total") or 0
+
+    if overseas:
+        return _page_through(base, {}, label)
+
+    found = _korea_facet(first)
+
+    def by_facet():
+        param, fid, desc, cnt = found
+        print(f"      · {label}: 전체 {total}건 중 한국 조건 적용"
+              f"({param}={desc}, {cnt}건)")
+        # 서버가 이미 한국만 걸러 주므로 근무지 글자로 다시 거르지 않습니다.
+        # 'Hwaseong-Lucestar(KOR)' 처럼 지명이 없는 표기를 떨어뜨리지 않기
+        # 위해서입니다.
+        return _page_through(base, {param: [fid]}, label)
+
+    # 공고가 많은 테넌트(외국계 대형)는 조건을 걸어야만 받을 수 있습니다.
+    if total > SAFE_TOTAL:
+        if found:
+            return by_facet()
+        print(f"      · {label}: 전체 {total}건인데 한국 조건이 없습니다. "
+              f"지금 한국 공고가 없는 것으로 보고 넘어갑니다"
+              f"(전부 받으면 요청이 {-(-total // PAGE)}번이라 받지 않습니다).")
+        return []
+
+    # 공고가 적은 테넌트는 예전 방식을 그대로 둡니다.
+    #
+    # 일진·야놀자·동화기업처럼 한국 기업 테넌트가 여기 해당합니다. 이들은
+    # 이미 잘 수집되고 있고, 나라 정보가 비어 있는 공고가 조건 때문에
+    # 빠지는 일을 피하려고 건드리지 않습니다. 요청도 어차피 몇 번뿐입니다.
+    out = _page_through(base, {}, label)
+    before = out
+    out = [x for x in out if KOREA.search(
+        f"{x.get('locationsText','')} {x.get('title','')}")]
+
+    # 다 걸러졌는데 한국 조건은 있는 경우. 근무지 표기가 지명이 아니라
+    # 공장 이름인 작은 테넌트입니다. 조건을 걸어 다시 받습니다.
+    if before and not out and found:
+        print(f"      · {label}: 근무지 글자로는 한국을 찾지 못해 "
+              f"한국 조건으로 다시 받습니다.")
+        return by_facet()
+
+    if before and not out:
+        seen = sorted({(x.get("locationsText") or "?") for x in before})[:6]
+        print(f"      ! 한국 근무지로 인식된 공고가 없습니다. "
+              f"받은 근무지 표기: {seen}")
     return out
 
 
