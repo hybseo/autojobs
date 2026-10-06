@@ -83,6 +83,20 @@ KEEP_DAYS = 60
 #   "사라진 공고" 로 보관(goneAt)에 들어가 60일간 유지됩니다.
 STALE_DAYS = 7
 
+# 어댑터와 약속한 표시.
+#
+# 어댑터가 이 글자로 시작하는 오류를 내면 '실패' 가 아니라 '차단 중' 으로
+# 셉니다. 둘을 나누는 이유는 손쓸 방법이 다르기 때문입니다.
+#   실패    우리가 고칠 수 있는 것. 주소가 바뀌었거나 화면 구조가 변했거나
+#           네트워크 사고. 로그에 ! 로 찍고 실패 수에 넣어 눈에 띄게 합니다.
+#   차단 중 상대가 막은 것. 우리가 고칠 것이 없습니다. 로그에 · 로 한 줄만
+#           찍습니다. 매 회차 계속 시도하므로 상대가 풀면 저절로 복구됩니다.
+#
+# 2026-10-06 현재 나인하이어 아홉 곳이 여기 해당합니다(Vercel Attack Mode).
+# 자세한 내용은 scripts/adapters/ninehire.py 머리말에 적어 두었습니다.
+# 같은 글자가 양쪽 파일에 적혀 있어야 합니다.
+BLOCKED = "[차단] "
+
 
 def load_previous():
     """지난 회차의 jobs.json 을 읽습니다. 없거나 깨졌으면 빈 목록입니다."""
@@ -422,13 +436,21 @@ def main():
     previous = load_previous()
     today = datetime.now(KST).date()
 
-    jobs, failed, carried = [], [], 0
+    jobs, failed, blocked, carried = [], [], [], 0
     for c in companies:
         try:
             got = adapters.load(c["ats"]).fetch(c)
         except Exception as e:
-            print(f"  ! {c['name']}: {e}")
-            failed.append(c["name"])
+            msg = str(e)
+            if msg.startswith(BLOCKED):
+                # 상대가 방화벽으로 막은 경우입니다. 고칠 것이 없으니
+                # 실패로 세지 않고 한 줄만 남깁니다. 다음 회차에도 계속
+                # 시도하므로, 막은 쪽이 풀면 저절로 다시 들어옵니다.
+                print(f"  · {c['name']}: {msg[len(BLOCKED):].strip()}")
+                blocked.append(c["name"])
+            else:
+                print(f"  ! {c['name']}: {msg}")
+                failed.append(c["name"])
             # 못 받았다는 것은 공고가 내려갔다는 뜻이 아닙니다.
             # 지난 회차 공고를 그대로 두고 다음 회차에 다시 확인합니다.
             old = carry_over(previous, c, today)
@@ -468,7 +490,10 @@ def main():
 
     print(f"\n총 {len(jobs)}건"
           + (f" · 실패 {len(failed)}개사 {failed}" if failed else "")
-          + (f"\n  · 그중 {carried}건은 수집 실패한 회사의 지난 회차 공고입니다"
+          + (f"\n  · 차단 중 {len(blocked)}개사 {blocked}"
+             f"\n    상대가 막은 것이라 손쓸 것이 없습니다. 매 회차 계속"
+             f" 시도하므로 풀리면 저절로 다시 들어옵니다." if blocked else "")
+          + (f"\n  · 그중 {carried}건은 수집하지 못한 회사의 지난 회차 공고입니다"
              f" (최대 {STALE_DAYS}일 유지)" if carried else ""))
 
     if dry:

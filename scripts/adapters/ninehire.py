@@ -29,6 +29,18 @@ companyId 찾는 법
     2. 개발자도구 Network 에서 /_backend/ 로 시작하는 요청을 찾습니다
     3. 주소의 companyId 값이 그것입니다
 
+companyId 를 추측해서 넣지 마세요
+---------------------------------
+위 3단계로 실제 요청에서 확인한 값만 적습니다. 다른 회사 값의 모양을
+보고 만들어 넣으면 안 됩니다. 2026-10-02 에 고영테크놀러지 값을
+추측으로 넣었다가 한참 엉뚱한 곳을 뒤졌습니다.
+
+확인이 안 되면 추측값을 적는 대신 이렇게 두세요.
+    "enabled": false,
+    "note": "companyId 확인 못 함"
+공고 0건으로 조용히 넘어가는 것보다 낫습니다. 이 규칙은 companyId 만이
+아니라 다른 어댑터의 식별자·설정값에도 똑같이 적용됩니다.
+
 경로에 주의하세요
 -----------------
 공고 목록인데 경로가 recruitment 가 아니라 identity-access 입니다.
@@ -83,65 +95,49 @@ import urllib.request
 
 API = "/_backend/identity-access/homepage/recruitments"
 
-# 수집기 꼬리표는 그대로 둡니다.
+# 왜 429 가 나는가 — 2026-10-06 확정
 #
-# 2026-10-02 부터 나인하이어를 쓰는 아홉 곳이 전부 429(요청이 너무 많음)로
-# 막혔습니다. 재시도를 넣고 회사마다 5초를 쉬어도 그대로였고, 그 날 첫
-# 나인하이어 회사(리가켐바이오)부터 바로 429 가 났습니다. 요청이 쌓여서가
-# 아니라 우리를 알아보고 막는다는 뜻입니다.
+# 2026-10-02 부터 나인하이어를 쓰는 아홉 곳이 전부 429 로 막혔습니다.
+# 그날 첫 나인하이어 회사부터 바로 429 였습니다.
 #
-# robots.txt 에 대해 (2026-10-06 정정)
+# 원인은 나인하이어 앱이 아니라 호스팅 플랫폼입니다. 429 응답을 찍어보니
+#   Server=Vercel
+#   본문이 JSON 이 아니라 HTML (Vercel Security Checkpoint 페이지)
+# 였고, 같은 회차에서 꼬리표 UA 와 평범한 크롬 UA 를 반씩 나눠 보낸
+# 결과가 양쪽 똑같이 429 였습니다. UA 는 원인이 아닙니다.
 #
-# 처음에는 "나인하이어가 네이버·구글·빙·GPTBot 만 허용하고 우리를 막았다"
-# 고 읽었습니다. 틀렸습니다. 실제 내용은 이렇습니다.
-#   User-agent: *  에 Disallow 가 /admin /api /ws /internal /private
-#   /health /status /metrics /uploads /files /test /search /login /signin
-#   /signup /account /mypage, 그리고 /*?*page= /*?*sort= /*?*filter=
-#   /*?*utm_ /*?*gclid= /*?*fbclid=
-#   그 아래 Yeti·GPTBot·Googlebot·Bingbot 에 Allow: / 가 따로 붙어 있음
+# 나인하이어는 Vercel 에 올라가 있고 Vercel Firewall 의 Attack Mode
+# (공격 차단 모드)가 켜져 있습니다. Vercel 문서 그대로입니다.
+#   "브라우저가 일으킨 트래픽은 API 호출까지 지원됩니다. 다만 독립 API,
+#    다른 백엔드 프레임워크, 인식되지 않은 자동화 서비스는 챌린지를
+#    통과하지 못해 차단될 수 있습니다."
+# 통과하는 것은 Vercel 이 인정한 봇(구글·빙·네이버 Yeti 등)뿐입니다.
+# robots.txt 에 하필 그 넷만 Allow 로 적혀 있던 이유도 같은 설정입니다.
 #
-# 즉 "넷만 허용" 이 아니라 "모두 허용, 단 위 경로는 제외" 이고 검색봇에만
-# 예외를 더 열어준 것입니다. 우리가 쓰는 /_backend 는 Disallow 목록에
-# 아예 없습니다. 걸리는 건 주소에 붙은 page= 하나뿐이고, 그건 같은 목록이
-# 여러 주소로 색인되는 것을 막는 흔한 SEO 규칙입니다. 수집을 막는 조항이
-# 아닙니다.
+# 그래서 이것들은 전부 원인이 아니었습니다. 다시 손대지 마세요.
+#   요청 간격·재시도    회사당 요청은 원래 1회뿐입니다(전체 9회/회차)
+#   User-Agent 문자열   양쪽 묶음이 똑같이 막혔습니다
+#   Origin·Sec-Fetch-*  근거 없는 추측이었고 되돌렸습니다
+#   companyId 오타      시점이 겹친 우연이었습니다
 #
-# 그래서 "상대가 명시적으로 막아놨다" 는 전제가 사라졌습니다. 다만 꼬리표는
-# 그대로 둡니다. 숨길 이유가 없고, 나인하이어가 로그를 보고 판단하려면
-# 우리가 누군지 적혀 있는 편이 낫습니다. 429 의 진짜 원인은 아래
-# _why_blocked() 가 찍어주는 응답으로 확인합니다.
+# 챌린지는 자바스크립트를 실행해야 풀립니다. 헤드리스 브라우저를 쓰면
+# 기술적으로는 통과하지만, 상대가 켜 둔 보안 장치를 일부러 뚫는 일이라
+# 하지 않습니다. 정상 경로는 나인하이어(support@ninehire.com)나 고객사를
+# 통해 Vercel Firewall Custom Rule 에 우리 UA 를 Allow 로 넣는 것입니다.
 #
-# 막혀 있는 동안 공고가 사라지지는 않습니다. fetch_jobs.py 가 수집에
-# 실패한 회사의 지난 공고를 최대 7일간 그대로 들고 갑니다.
+# 그때까지는 '차단 중' 으로 둡니다. 비활성(enabled:false)이 아닙니다.
+# 매 회차 계속 시도하되 실패로 세지 않고 로그도 한 줄만 남깁니다.
+# 방화벽이 풀리거나 예외가 들어가는 순간 아무 작업 없이 저절로
+# 공고가 다시 들어옵니다. 손댈 파일이 없습니다.
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
 
-# ── UA 비교 시험 (2026-10-06, 한 회차만 쓰고 지울 것) ──────────────
+# fetch_jobs.py 와 약속한 표시.
 #
-# 429 가 꼬리표(UA) 때문인지를 갱신 한 번으로 가립니다.
-#
-# 왜 이런 시험이 필요한가
-#   깃허브 Actions 는 실행마다 IP 가 바뀝니다. IP 를 막은 것이라면
-#   다음 실행에서 풀렸어야 하는데 나흘째 열 번 넘게 전부 막혔습니다.
-#   매번 바뀌는 IP 가 아니라 매번 똑같은 것을 보고 막는다는 뜻이고,
-#   우리 요청에서 매번 같은 것은 UA 문자열과 urllib 의 요청 모양새뿐입니다.
-#
-# 어떻게 가리는가
-#   아홉 곳을 둘로 나눠 한쪽은 꼬리표 UA, 한쪽은 평범한 크롬 UA 로
-#   부릅니다. 묶음마다 큰 회사·작은 회사·자체 도메인 회사를 섞어
-#   다른 변수가 끼지 않게 했습니다.
-#     평범한 UA  megazone(97건) robotisrecruiter(29건) ligachembio(소수) kohyoung(자체 도메인)
-#     꼬리표 UA  boryung(48건) clobotroas(11건) ildong(소수) livsmed(자체 도메인) aimmo
-#
-# 결과 읽는 법
-#   한쪽만 통과 → UA 가 원인. 통과한 UA 하나만 남기고 이 묶음을 지우세요.
-#   양쪽 다 막힘 → UA 는 범인이 아님. 로그에 찍힌 429 응답으로 넘어갑니다.
-#   양쪽 다 통과 → 차단이 저절로 풀린 것. 이 묶음을 지우고 꼬리표 UA 로 통일.
-UA_PLAIN = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-            "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
-
-PLAIN_UA_SUBS = {"megazone", "robotisrecruiter", "ligachembio", "kohyoung"}
+# 이 글자로 시작하는 오류를 내면 fetch_jobs.py 가 '실패' 가 아니라
+# '차단 중' 으로 처리합니다. 양쪽 파일에 같은 글자가 적혀 있어야 합니다.
+BLOCKED = "[차단] "
 
 # 이력서만 받아두는 창구. 실제 자리가 아닙니다.
 POOL = re.compile(
@@ -214,11 +210,24 @@ def _why_blocked(e):
         pass
 
 
-def _get(url, ua=UA):
+def _is_vercel_challenge(e):
+    """Vercel Attack Mode 가 막은 것인지 봅니다.
+
+    판단 기준은 429 와 Server 헤더 두 가지입니다. 본문까지 보지 않는
+    이유는, 본문을 읽어버리면 혹시 재시도할 때 쓸 수 없기 때문입니다.
+    """
+    try:
+        server = str((e.headers or {}).get("Server") or "")
+    except Exception:
+        server = ""
+    return e.code == 429 and server.strip().lower().startswith("vercel")
+
+
+def _get(url):
     """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
     # 헤더는 평범하게 둡니다.
     #
-    # 어제는 Origin 과 Sec-Fetch-* 를 넣어 브라우저처럼 보이게 했습니다.
+    # 한때 Origin 과 Sec-Fetch-* 를 넣어 브라우저처럼 보이게 했습니다.
     # 근거가 없는 추측이었고, GET 에 Origin 이 붙는 것은 오히려 흔치
     # 않아 방화벽이 더 수상하게 볼 수 있습니다. 그래서 되돌렸습니다.
     # Referer 도 /recruit 로 박아뒀는데 그 주소는 회사마다 달라서
@@ -227,7 +236,7 @@ def _get(url, ua=UA):
     req = urllib.request.Request(url, headers={
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-        "User-Agent": ua,
+        "User-Agent": UA,
         "Referer": f"https://{host}/" if host else "",
     })
     last = None
@@ -237,13 +246,21 @@ def _get(url, ua=UA):
             with urllib.request.urlopen(req, timeout=25) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
-            # 429 가 나면 응답에 적힌 단서를 먼저 찍습니다.
+            # Vercel Attack Mode 는 기다려도 재시도해도 풀리지 않습니다.
+            # 자바스크립트 챌린지라 파이썬으로는 통과할 수 없습니다.
+            # 그래서 즉시 '차단 중' 으로 알리고 끝냅니다. 두드리지 않습니다.
+            if _is_vercel_challenge(e):
+                raise RuntimeError(
+                    BLOCKED + "Vercel Attack Mode 에 막혔습니다. "
+                    "나인하이어가 방화벽 예외를 넣으면 저절로 다시 들어옵니다."
+                ) from None
+
+            # 그 밖의 429 는 정체를 모르니 응답에 적힌 단서를 찍습니다.
             if e.code == 429:
                 _why_blocked(e)
-            # 5xx 와 429 는 기다리면 풀릴 때가 있습니다. 다만 지금의
-            # 429 는 첫 요청부터 나고 30·60·120초를 기다려도 그대로였으니
-            # 재시도는 두 번만 합니다. 아홉 곳이 각자 길게 기다리면 갱신
-            # 시간만 30분 늘어나고(한 번은 60분 제한에 걸려 중단됐습니다),
+            # 5xx 와 429 는 기다리면 풀릴 때가 있습니다. 다만 재시도는
+            # 두 번까지입니다. 아홉 곳이 각자 길게 기다리면 갱신 시간만
+            # 30분 늘어나고(한 번은 60분 제한에 걸려 중단됐습니다),
             # 상대 서버를 계속 두드리는 셈이 됩니다.
             # 공고는 fetch_jobs.py 가 지난 회차 것을 들고 가 지켜줍니다.
             if e.code in (429, 500, 502, 503, 504) and i < TRIES - 1:
@@ -325,23 +342,15 @@ def strip_html(s):
 def list_open(company, include_pool=False):
     """진행중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다.
 
-    부르기 전에 잠깐 쉽니다. 나인하이어를 쓰는 회사가 열 곳이 넘어
-    줄줄이 부르면 429 가 납니다. 한 곳당 5초면 전체로는 1분 남짓이고,
-    그 대신 193건이 통째로 사라지는 일을 막습니다.
+    부르기 전에 잠깐 쉽니다. 요청 자체는 회사당 1회뿐이라 속도가 문제는
+    아니지만(위 설명 참고), 한 플랫폼을 연달아 부르지 않는 쪽이 예의라
+    5초는 그대로 둡니다. 아홉 곳이면 45초로 전체 갱신에서 무시할 수준입니다.
     """
     time.sleep(5)
-    sub, cid = _split_code(company["code"])
+    _, cid = _split_code(company["code"])
     base = _base(company)
-
-    # UA 비교 시험. 어느 쪽으로 불렀는지 요청 전에 찍습니다. 요청이
-    # 실패하면 여기서 함수가 끝나버리므로, 나중에 찍으면 막힌 쪽이
-    # 어느 UA 였는지 알 수 없습니다.
-    plain = sub in PLAIN_UA_SUBS
-    print(f"  · ninehire({company['slug']}): "
-          f"{'평범한 UA' if plain else '꼬리표 UA'} 로 요청")
-
     q = urllib.parse.urlencode({"companyId": cid, "page": 1, "countPerPage": 100})
-    j = _get(f"{base}{API}?{q}", UA_PLAIN if plain else UA)
+    j = _get(f"{base}{API}?{q}")
 
     rows = j.get("results") or []
     if not rows:
