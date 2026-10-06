@@ -83,6 +83,25 @@ import urllib.request
 
 API = "/_backend/identity-access/homepage/recruitments"
 
+# 수집기 꼬리표는 그대로 둡니다.
+#
+# 2026-10-02 부터 나인하이어를 쓰는 아홉 곳이 전부 429(요청이 너무 많음)로
+# 막혔습니다. 재시도를 넣고 회사마다 5초를 쉬어도 그대로였고, 그 날 첫
+# 나인하이어 회사(리가켐바이오)부터 바로 429 가 났습니다. 요청이 쌓여서가
+# 아니라 우리를 알아보고 막는다는 뜻입니다.
+#
+# 2026-10-06 확인: 나인하이어 robots.txt 는 네이버(Yeti)·구글·빙·GPTBot
+# 네 곳만 이름을 적어 허용하고, 나머지에게는 /api 와 물음표가 붙은 주소를
+# 전부 막아 두었습니다. 우리가 쓰는 /_backend 도 그 안에 들어갑니다.
+# 우리 쪽은 바뀐 것이 없으니 나인하이어가 차단을 새로 건 것입니다.
+#
+# 꼬리표를 빼면 통과할 수도 있습니다. 하지만 그것은 막아 둔 것을 알고도
+# 신분을 숨겨 들어가는 일입니다. 사람인 호스팅형을 제외한 것과 같은
+# 기준으로, 여기서도 우리가 누군지 밝힌 채로 요청합니다. 나인하이어가
+# 허용하기로 마음먹는다면 이 꼬리표가 우리를 알아볼 표시가 됩니다.
+#
+# 막혀 있는 동안 공고가 사라지지는 않습니다. fetch_jobs.py 가 수집에
+# 실패한 회사의 지난 공고를 최대 7일간 그대로 들고 갑니다.
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
@@ -120,40 +139,49 @@ def _split_code(code):
 
 def _get(url):
     """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    # 브라우저가 보내는 헤더에 맞춥니다. 나인하이어는 헤더가 빈약하면
+    # 사람이 아니라고 보고 막는 것으로 보입니다.
+    host = url.split("/")[2] if "//" in url else ""
     req = urllib.request.Request(url, headers={
-        "Accept": "application/json",
-        "Accept-Language": "ko-KR,ko;q=0.9",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
         "User-Agent": UA,
+        "Referer": f"https://{host}/recruit" if host else "",
+        "Origin": f"https://{host}" if host else "",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
     })
     last = None
-    for i in range(4):
+    TRIES = 2
+    for i in range(TRIES):
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
-            # 429(요청이 너무 많음)와 5xx 는 기다리면 풀립니다.
+            # 429(요청이 너무 많음)와 5xx 는 기다리면 풀릴 때가 있습니다.
             #
-            # 2026-10-02 에 나인하이어를 쓰는 곳이 한꺼번에 막혔습니다.
-            # 메가존 97·보령 48·로보티즈 29·클로봇 11 등 193건이 사라졌습니다.
-            # 그때는 HTTPError 를 그대로 던져 한 번도 다시 시도하지 않았습니다.
+            # 다만 2026-10-02 부터의 429 는 기다려서 풀리는 종류가
+            # 아닙니다. 첫 요청부터 429 가 나고, 30·60·120초를 기다려도
+            # 그대로였습니다. 나인하이어가 차단을 걸어 둔 것입니다.
             #
-            # 나인하이어는 같은 곳에서 짧은 시간에 여러 번 부르면 막습니다.
-            # 등록된 회사가 열 곳을 넘기면서 걸리기 시작했습니다. 그래서
-            # 넉넉히 기다립니다(30초, 60초, 120초). 서버가 Retry-After 로
-            # 기다릴 시간을 알려주면 그 값을 씁니다.
-            if e.code in (429, 500, 502, 503, 504) and i < 3:
+            # 그래서 재시도를 두 번으로 줄였습니다. 아홉 곳이 각자 여러 번
+            # 길게 기다리면 갱신 시간만 30분 늘어나고(한 번은 60분 제한에
+            # 걸려 중단됐습니다), 상대 서버에 계속 두드리는 셈이 됩니다.
+            # 공고는 fetch_jobs.py 가 지난 회차 것을 들고 가 지켜줍니다.
+            if e.code in (429, 500, 502, 503, 504) and i < TRIES - 1:
                 try:
                     hinted = int(e.headers.get("Retry-After") or 0)
                 except Exception:
                     hinted = 0
-                time.sleep(min(max(hinted, 30 * (i + 1)), 150))
+                time.sleep(min(max(hinted, 10), 30))
                 last = e
                 continue
             raise
         except Exception as e:
             last = e
-            if i < 3:
-                time.sleep(2 + i * 2)
+            if i < TRIES - 1:
+                time.sleep(3)
     raise last
 
 
