@@ -484,9 +484,25 @@ export const searchAlias = (name) => NAME_ALIAS[name] || '';
  *
  * validThrough 는 마감일이 있을 때만 넣습니다. 빈 값으로 넣으면
  * "T23:59:59+09:00" 같은 깨진 날짜가 나가 구조화 데이터 오류가 됩니다.
+ *
+ * datePosted 는 필수입니다 (2026-10-06)
+ * -------------------------------------
+ * 구글 Search Console 이 "'datePosted' 입력란이 누락되었습니다" 를 심각한
+ * 문제로 보고했습니다. 당시 351건이 postedAt 이 비어 있었습니다. 게시일을
+ * 아예 주지 않는 채용 시스템이 있기 때문입니다(시프트업·SOOP·네오위즈,
+ * 그리팅 일부, LS전선).
+ *
+ * 그래서 순서를 둡니다.
+ *   1. postedAt     소스가 준 실제 게시일
+ *   2. firstSeenAt  우리 데이터에 처음 나타난 날 (fetch_jobs.py 가 붙입니다.
+ *                   한 번 정하면 바뀌지 않습니다)
+ *   3. 둘 다 없으면 스키마를 넣지 않습니다. 빈 값으로 보내면 오류가 되고,
+ *      안 보내면 그냥 카드 대상이 아닌 것이 됩니다. 빈 값보다 낫습니다.
  */
 export const jobPostingSchema = (j, pageUrl) => {
   if (!j.description || j.description.trim().length < 50) return null;
+  const datePosted = (j.postedAt || '').trim() || (j.firstSeenAt || '').trim();
+  if (!datePosted) return null;
   const employmentType =
     j.career === '신입' ? 'FULL_TIME' : j.career === '무관' ? 'OTHER' : 'FULL_TIME';
   return {
@@ -495,7 +511,7 @@ export const jobPostingSchema = (j, pageUrl) => {
     title: j.title,
     description: j.description,
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
-    datePosted: j.postedAt,
+    datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
     employmentType,
     hiringOrganization: {

@@ -58,10 +58,13 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 #   goneAt      회사가 공고를 내려서 보관 중인 것 (최대 60일)
 #   staleSince  우리가 못 받아서 지난 회차 것을 들고 가는 것 (최대 7일)
 #               fetch_jobs.py 의 carry_over() 가 붙입니다.
+#   firstSeenAt 우리 데이터에 처음 나타난 날. 모든 공고에 붙지만, 지난
+#               회차 파일로 돌릴 때를 대비해 필수가 아니라 선택으로 둡니다.
+#               fetch_jobs.py 의 stamp_first_seen() 이 붙입니다.
 REQUIRED = {"id", "unit", "company", "companySlug", "title", "location",
             "career", "postedAt", "closesAt", "dday", "multiRole",
             "sourceTitle", "sourceUrl", "description"}
-OPTIONAL = {"goneAt", "staleSince"}
+OPTIONAL = {"goneAt", "staleSince", "firstSeenAt"}
 
 # 한 회사가 이보다 많이 올리면 중복 수집을 의심합니다.
 #

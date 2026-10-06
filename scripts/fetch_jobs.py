@@ -109,6 +109,71 @@ def load_previous():
         return []
 
 
+def load_first_seen_seed():
+    """공고별 '처음 나타난 날' 씨앗 파일. 없으면 빈 사전입니다."""
+    if not SEED.exists():
+        return {}
+    try:
+        return json.loads(SEED.read_text(encoding="utf-8")).get("firstSeen") or {}
+    except Exception as e:
+        print(f"  ! {SEED.name} 을 읽지 못했습니다: {e}")
+        return {}
+
+
+def stamp_first_seen(jobs, previous, seed, today_s):
+    """공고마다 firstSeenAt(우리 데이터에 처음 나타난 날)을 붙입니다.
+
+    왜 필요한가
+    -----------
+    구글 JobPosting 구조화 데이터는 datePosted(게시일)를 필수로 요구합니다.
+    그런데 게시일을 아예 주지 않는 채용 시스템이 있습니다.
+      시프트업·SOOP·네오위즈   소스에 날짜 자체가 없음
+      그리팅 일부            회사가 openDate 를 비워둠(null)
+      LS전선(SF)            화면에 마감일만 있고 게시일이 없음
+    2026-10-06 기준 그런 공고가 351건이었고, 구글 Search Console 이
+    "'datePosted' 입력란이 누락되었습니다" 를 심각한 문제로 보고했습니다.
+    그 공고들은 채용 카드(리치 결과)에서 빠집니다.
+
+    그래서 소스에 게시일이 없을 때는 '우리가 처음 본 날' 을 씁니다.
+    서치잡 입장에서는 그 날이 사이트에 올라온 날입니다.
+
+    반드시 한 번만 정하고 다시 바꾸지 않습니다
+    ------------------------------------------
+    갱신은 하루 두 번 돕니다. 매 회차 그날 날짜를 넣으면 1년 된 상시채용
+    공고가 매일 "오늘 올라온 공고" 가 됩니다. 구글에 사실과 다른 것을
+    알리는 일이고, 날짜 정보 자체가 쓸모없어집니다. 그래서 순서를 둡니다.
+
+      1. 지난 회차 jobs.json 에 값이 있으면 그것 (한 번 정한 값을 그대로)
+      2. 씨앗 파일(first-seen.json) 에 있으면 그것
+      3. 둘 다 없으면 오늘 (= 이번에 처음 나타난 공고)
+
+    씨앗 파일은 어디서 왔나
+    -----------------------
+    2026-10-06 에 저장소의 공고갱신 커밋 165개(2026-08-24 프로젝트 시작
+    이후 전부)를 훑어, 각 공고가 처음 등장한 회차의 날짜를 뽑아 만들었습니다.
+    그래서 당시 올라와 있던 5,781건이 추정이 아닌 실제 기록을 받았습니다.
+    게시일이 없던 351건 중 324건이 과거 날짜를, 27건이 오늘 날짜를
+    받았고 그 27건은 실제로 그날 처음 나타난 공고였습니다.
+    """
+    prev = {j.get("id"): (j.get("firstSeenAt") or "").strip() for j in previous}
+    fresh = carried = seeded = 0
+    for j in jobs:
+        jid = j.get("id")
+        v = prev.get(jid) or seed.get(jid) or ""
+        if v:
+            carried += 1 if jid in prev and prev.get(jid) else 0
+            seeded += 1 if not (jid in prev and prev.get(jid)) else 0
+        else:
+            v = today_s
+            fresh += 1
+        j["firstSeenAt"] = v
+    if fresh:
+        print(f"  · 이번에 처음 나타난 공고 {fresh}건에 오늘 날짜를 적었습니다")
+    if seeded:
+        print(f"  · 씨앗 파일에서 {seeded}건의 최초 등장일을 가져왔습니다")
+    return jobs
+
+
 def carry_over(previous, company, today):
     """수집에 실패한 회사의 지난 공고를 STALE_DAYS 일간 그대로 돌려줍니다.
 
@@ -275,6 +340,8 @@ import adapters  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
 OUT = ROOT / "src" / "data" / "jobs.json"
+# 공고별 '처음 나타난 날' 씨앗 파일. stamp_first_seen() 설명을 보세요.
+SEED = ROOT / "src" / "data" / "first-seen.json"
 
 # ── 2026-08-24 브라우저 확인 기준 접수중 건수 ──────────────
 # 한국타이어 16 · HL그룹 13 · 한온시스템 7 · 유라 5 · 현대트랜시스 4
@@ -506,6 +573,10 @@ def main():
         raise SystemExit("수집 결과가 0건입니다. 기존 파일을 보존하고 중단합니다.")
 
     jobs = keep_recently_closed(jobs)
+
+    # 보관 공고까지 합친 다음에 날짜를 찍습니다. 보관 공고도 상세 페이지가
+    # 남아 구조화 데이터가 들어가므로 firstSeenAt 이 있어야 합니다.
+    jobs = stamp_first_seen(jobs, previous, load_first_seen_seed(), today.isoformat())
 
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},

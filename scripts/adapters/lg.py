@@ -159,6 +159,16 @@ def fetch(company):
             continue
 
         body = ""
+        # 게시일은 상세 응답에만 있습니다 (2026-10-06 확인).
+        #
+        # 목록 API 응답에는 마감일(recEndDateTime)만 있고 게시일이 없어
+        # postedAt 을 빈 값으로 두었는데, 그 때문에 LG 계열 125건이 구글
+        # JobPosting 구조화 데이터에서 datePosted 누락으로 걸렸습니다.
+        #
+        # 상세 응답에는 recStartDate(접수 시작일)가 있습니다.
+        #   data.jobNoticesDetail.jobNoticesDetail.recStartDate = "2026.10.09 09:00"
+        # 본문을 받으려고 어차피 상세를 부르고 있어 요청이 늘지 않습니다.
+        posted = ""
         try:
             d = _post("retrieveJobNoticesDetail", {"jobNoticeId": nid})
             det = (d.get("data") or {}).get("jobNoticesDetail") or {}
@@ -168,6 +178,7 @@ def fetch(company):
                 det.get("qualForAppInfo"),
                 det.get("recProcessInfo"),
                 det.get("otherInfo")]))
+            posted = _date(det.get("recStartDate"))
         except Exception:
             body = ""
 
@@ -184,7 +195,7 @@ def fetch(company):
             "title": x.get("jobNoticeName") or "",
             "location": "",
             "career": _career(x),
-            "postedAt": "",
+            "postedAt": posted,
             "closesAt": _date(x.get("recEndDateTime")),
             "dday": x.get("recDateDiff"),
             "multiRole": image_only,
