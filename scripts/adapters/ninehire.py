@@ -90,21 +90,58 @@ API = "/_backend/identity-access/homepage/recruitments"
 # 나인하이어 회사(리가켐바이오)부터 바로 429 가 났습니다. 요청이 쌓여서가
 # 아니라 우리를 알아보고 막는다는 뜻입니다.
 #
-# 2026-10-06 확인: 나인하이어 robots.txt 는 네이버(Yeti)·구글·빙·GPTBot
-# 네 곳만 이름을 적어 허용하고, 나머지에게는 /api 와 물음표가 붙은 주소를
-# 전부 막아 두었습니다. 우리가 쓰는 /_backend 도 그 안에 들어갑니다.
-# 우리 쪽은 바뀐 것이 없으니 나인하이어가 차단을 새로 건 것입니다.
+# robots.txt 에 대해 (2026-10-06 정정)
 #
-# 꼬리표를 빼면 통과할 수도 있습니다. 하지만 그것은 막아 둔 것을 알고도
-# 신분을 숨겨 들어가는 일입니다. 사람인 호스팅형을 제외한 것과 같은
-# 기준으로, 여기서도 우리가 누군지 밝힌 채로 요청합니다. 나인하이어가
-# 허용하기로 마음먹는다면 이 꼬리표가 우리를 알아볼 표시가 됩니다.
+# 처음에는 "나인하이어가 네이버·구글·빙·GPTBot 만 허용하고 우리를 막았다"
+# 고 읽었습니다. 틀렸습니다. 실제 내용은 이렇습니다.
+#   User-agent: *  에 Disallow 가 /admin /api /ws /internal /private
+#   /health /status /metrics /uploads /files /test /search /login /signin
+#   /signup /account /mypage, 그리고 /*?*page= /*?*sort= /*?*filter=
+#   /*?*utm_ /*?*gclid= /*?*fbclid=
+#   그 아래 Yeti·GPTBot·Googlebot·Bingbot 에 Allow: / 가 따로 붙어 있음
+#
+# 즉 "넷만 허용" 이 아니라 "모두 허용, 단 위 경로는 제외" 이고 검색봇에만
+# 예외를 더 열어준 것입니다. 우리가 쓰는 /_backend 는 Disallow 목록에
+# 아예 없습니다. 걸리는 건 주소에 붙은 page= 하나뿐이고, 그건 같은 목록이
+# 여러 주소로 색인되는 것을 막는 흔한 SEO 규칙입니다. 수집을 막는 조항이
+# 아닙니다.
+#
+# 그래서 "상대가 명시적으로 막아놨다" 는 전제가 사라졌습니다. 다만 꼬리표는
+# 그대로 둡니다. 숨길 이유가 없고, 나인하이어가 로그를 보고 판단하려면
+# 우리가 누군지 적혀 있는 편이 낫습니다. 429 의 진짜 원인은 아래
+# _why_blocked() 가 찍어주는 응답으로 확인합니다.
 #
 # 막혀 있는 동안 공고가 사라지지는 않습니다. fetch_jobs.py 가 수집에
 # 실패한 회사의 지난 공고를 최대 7일간 그대로 들고 갑니다.
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
       "(+https://searchjob.co.kr job aggregator)")
+
+# ── UA 비교 시험 (2026-10-06, 한 회차만 쓰고 지울 것) ──────────────
+#
+# 429 가 꼬리표(UA) 때문인지를 갱신 한 번으로 가립니다.
+#
+# 왜 이런 시험이 필요한가
+#   깃허브 Actions 는 실행마다 IP 가 바뀝니다. IP 를 막은 것이라면
+#   다음 실행에서 풀렸어야 하는데 나흘째 열 번 넘게 전부 막혔습니다.
+#   매번 바뀌는 IP 가 아니라 매번 똑같은 것을 보고 막는다는 뜻이고,
+#   우리 요청에서 매번 같은 것은 UA 문자열과 urllib 의 요청 모양새뿐입니다.
+#
+# 어떻게 가리는가
+#   아홉 곳을 둘로 나눠 한쪽은 꼬리표 UA, 한쪽은 평범한 크롬 UA 로
+#   부릅니다. 묶음마다 큰 회사·작은 회사·자체 도메인 회사를 섞어
+#   다른 변수가 끼지 않게 했습니다.
+#     평범한 UA  megazone(97건) robotisrecruiter(29건) ligachembio(소수) kohyoung(자체 도메인)
+#     꼬리표 UA  boryung(48건) clobotroas(11건) ildong(소수) livsmed(자체 도메인) aimmo
+#
+# 결과 읽는 법
+#   한쪽만 통과 → UA 가 원인. 통과한 UA 하나만 남기고 이 묶음을 지우세요.
+#   양쪽 다 막힘 → UA 는 범인이 아님. 로그에 찍힌 429 응답으로 넘어갑니다.
+#   양쪽 다 통과 → 차단이 저절로 풀린 것. 이 묶음을 지우고 꼬리표 UA 로 통일.
+UA_PLAIN = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+
+PLAIN_UA_SUBS = {"megazone", "robotisrecruiter", "ligachembio", "kohyoung"}
 
 # 이력서만 받아두는 창구. 실제 자리가 아닙니다.
 POOL = re.compile(
@@ -137,20 +174,61 @@ def _split_code(code):
     return sub, cid
 
 
-def _get(url):
+def _why_blocked(e):
+    """429 가 나면 누가 막았는지 한 줄로 찍습니다.
+
+    왜 이걸 찍나
+    ------------
+    이 어댑터는 회사당 요청을 딱 한 번 합니다. 아홉 곳을 5초 간격으로
+    부르니 전체 9회입니다. 그 정도를 "요청이 너무 많다" 고 막을 서버는
+    없습니다. 즉 429 는 속도 제한이 아니라 차단 응답으로 쓰인 것입니다.
+
+    누가 막았는지는 응답에 적혀 있습니다. 지금까지 우리는 그 응답을
+    버리고 "HTTP Error 429" 한 줄만 봤기 때문에 추측만 했습니다.
+      Server / cf-ray      클라우드플레어 등 앞단 방화벽이면 여기 표시됩니다
+      X-RateLimit-*        앱이 세는 한도면 남은 횟수가 적혀 있습니다
+      Retry-After          몇 초 뒤 풀리는지. 없으면 시간 문제가 아닙니다
+      본문                 "bot detected" 류인지, 한도 초과 안내인지
+    이 한 줄을 보고 나서 다음 손을 정합니다. 추측으로 헤더를 이리저리
+    바꾸는 일을 그만하기 위한 장치입니다.
+    """
+    try:
+        h = e.headers or {}
+        bits = []
+        for k in ("Server", "Retry-After", "cf-ray", "cf-mitigated",
+                  "x-amzn-waf-action", "X-RateLimit-Limit",
+                  "X-RateLimit-Remaining", "X-RateLimit-Reset"):
+            v = h.get(k)
+            if v:
+                bits.append(f"{k}={v}")
+        body = ""
+        try:
+            body = (e.read() or b"")[:200].decode("utf-8", "replace")
+            body = " ".join(body.split())
+        except Exception:
+            pass
+        print(f"      · 429 응답: {' · '.join(bits) or '알려주는 헤더 없음'}")
+        if body:
+            print(f"      · 429 본문: {body}")
+    except Exception:
+        pass
+
+
+def _get(url, ua=UA):
     """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
-    # 브라우저가 보내는 헤더에 맞춥니다. 나인하이어는 헤더가 빈약하면
-    # 사람이 아니라고 보고 막는 것으로 보입니다.
+    # 헤더는 평범하게 둡니다.
+    #
+    # 어제는 Origin 과 Sec-Fetch-* 를 넣어 브라우저처럼 보이게 했습니다.
+    # 근거가 없는 추측이었고, GET 에 Origin 이 붙는 것은 오히려 흔치
+    # 않아 방화벽이 더 수상하게 볼 수 있습니다. 그래서 되돌렸습니다.
+    # Referer 도 /recruit 로 박아뒀는데 그 주소는 회사마다 달라서
+    # 메가존에서는 404 입니다. 대문 주소로 바꿉니다.
     host = url.split("/")[2] if "//" in url else ""
     req = urllib.request.Request(url, headers={
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-        "User-Agent": UA,
-        "Referer": f"https://{host}/recruit" if host else "",
-        "Origin": f"https://{host}" if host else "",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-origin",
+        "User-Agent": ua,
+        "Referer": f"https://{host}/" if host else "",
     })
     last = None
     TRIES = 2
@@ -159,15 +237,14 @@ def _get(url):
             with urllib.request.urlopen(req, timeout=25) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
-            # 429(요청이 너무 많음)와 5xx 는 기다리면 풀릴 때가 있습니다.
-            #
-            # 다만 2026-10-02 부터의 429 는 기다려서 풀리는 종류가
-            # 아닙니다. 첫 요청부터 429 가 나고, 30·60·120초를 기다려도
-            # 그대로였습니다. 나인하이어가 차단을 걸어 둔 것입니다.
-            #
-            # 그래서 재시도를 두 번으로 줄였습니다. 아홉 곳이 각자 여러 번
-            # 길게 기다리면 갱신 시간만 30분 늘어나고(한 번은 60분 제한에
-            # 걸려 중단됐습니다), 상대 서버에 계속 두드리는 셈이 됩니다.
+            # 429 가 나면 응답에 적힌 단서를 먼저 찍습니다.
+            if e.code == 429:
+                _why_blocked(e)
+            # 5xx 와 429 는 기다리면 풀릴 때가 있습니다. 다만 지금의
+            # 429 는 첫 요청부터 나고 30·60·120초를 기다려도 그대로였으니
+            # 재시도는 두 번만 합니다. 아홉 곳이 각자 길게 기다리면 갱신
+            # 시간만 30분 늘어나고(한 번은 60분 제한에 걸려 중단됐습니다),
+            # 상대 서버를 계속 두드리는 셈이 됩니다.
             # 공고는 fetch_jobs.py 가 지난 회차 것을 들고 가 지켜줍니다.
             if e.code in (429, 500, 502, 503, 504) and i < TRIES - 1:
                 try:
@@ -253,10 +330,18 @@ def list_open(company, include_pool=False):
     그 대신 193건이 통째로 사라지는 일을 막습니다.
     """
     time.sleep(5)
-    _, cid = _split_code(company["code"])
+    sub, cid = _split_code(company["code"])
     base = _base(company)
+
+    # UA 비교 시험. 어느 쪽으로 불렀는지 요청 전에 찍습니다. 요청이
+    # 실패하면 여기서 함수가 끝나버리므로, 나중에 찍으면 막힌 쪽이
+    # 어느 UA 였는지 알 수 없습니다.
+    plain = sub in PLAIN_UA_SUBS
+    print(f"  · ninehire({company['slug']}): "
+          f"{'평범한 UA' if plain else '꼬리표 UA'} 로 요청")
+
     q = urllib.parse.urlencode({"companyId": cid, "page": 1, "countPerPage": 100})
-    j = _get(f"{base}{API}?{q}")
+    j = _get(f"{base}{API}?{q}", UA_PLAIN if plain else UA)
 
     rows = j.get("results") or []
     if not rows:
