@@ -48,6 +48,99 @@ def today_kst():
 #   셉니다. 상시채용 공고도 함께 보관되므로 데이터가 이전보다 늘어납니다.
 KEEP_DAYS = 60
 
+# 수집에 실패한 회사의 지난 공고를 그대로 들고 가는 기간.
+#
+# 왜 필요한가
+#   어댑터가 한 번 실패하면 그 회사 공고가 사이트에서 통째로
+#   사라졌습니다. 보관(goneAt)에도 들어가지 않습니다. 보관은
+#   "회사가 공고를 내렸다" 일 때 쓰는 장치인데, 실패는 공고가
+#   내려갔는지 아닌지를 아예 확인하지 못한 경우입니다.
+#
+#   실제로 지난 12회 실행 로그를 보면 실패 없는 회차가 한 번도
+#   없었습니다(회차당 2~13개사). 실패 사유는 대부분 그때그때
+#   다른 일시적 장애입니다.
+#     <urlopen error timed out>             한화 47건 · NC 92건
+#     SSL handshake failure                 니어스랩 55건 · 카카오게임즈
+#     Temporary failure in name resolution  엔젤로보틱스 15건
+#     HTTP Error 502 / 500                  성우하이텍 · 레인보우로보틱스
+#     HTTP Error 404 / 400                  오늘의집 73건 · 차바이오텍 18건
+#   같은 회사가 다음 회차에는 아무 일 없이 잡힙니다. 공고는 살아
+#   있는데 우리가 못 받은 것뿐입니다.
+#
+#   한 번이라도 실패한 적 있는 회사의 공고를 합치면 531건입니다.
+#   전체 3,300건의 16%가 네트워크 운에 따라 사라졌다 나타났다
+#   했습니다. 총 건수가 3,388건에서 3,202건으로 줄어든 것도
+#   기업을 15곳 더 늘린 회차에서 벌어진 일입니다.
+#
+# 7일로 잡은 근거
+#   일시적 장애는 다음 회차(반나절 뒤)면 대개 풀립니다. 7일이면
+#   14회 연속 실패해야 데이터가 빠지니 일시 장애는 다 덮습니다.
+#   반대로 회사가 채용 시스템을 아예 바꿔 영구 실패하는 경우에도
+#   유령 공고가 최대 1주일만 남습니다.
+#   들고 간 공고도 마감일 판정은 그대로 받습니다(lib.js). 마감일이
+#   지난 것은 7일을 기다리지 않고 알아서 화면에서 빠집니다.
+#   7일이 지나 들고 가기를 멈추면, 그 다음부터는 평소대로
+#   "사라진 공고" 로 보관(goneAt)에 들어가 60일간 유지됩니다.
+STALE_DAYS = 7
+
+
+def load_previous():
+    """지난 회차의 jobs.json 을 읽습니다. 없거나 깨졌으면 빈 목록입니다."""
+    if not OUT.exists():
+        return []
+    try:
+        return json.loads(OUT.read_text(encoding="utf-8")).get("jobs") or []
+    except Exception as e:
+        print(f"  ! 기존 jobs.json 을 읽지 못했습니다: {e}")
+        return []
+
+
+def carry_over(previous, company, today):
+    """수집에 실패한 회사의 지난 공고를 STALE_DAYS 일간 그대로 돌려줍니다.
+
+    보관(goneAt) 된 공고는 들고 가지 않습니다. 그것들은 이미
+    "내려간 공고" 로 판정이 끝난 것이고 keep_recently_closed 가
+    따로 챙깁니다. 여기서 들고 가는 것은 지난 회차에 멀쩡히
+    접수중이던 공고뿐입니다.
+    """
+    slug = company["slug"]
+    today_s = today.isoformat()
+
+    kept, too_old = [], 0
+    for j in previous:
+        if j.get("companySlug") != slug:
+            continue
+        if (j.get("goneAt") or "").strip():
+            continue
+
+        # 처음 실패한 날. 적혀 있으면 그대로 두고, 처음이면 오늘입니다.
+        since = (j.get("staleSince") or "").strip()
+        if not since:
+            since = today_s
+        try:
+            parsed = date.fromisoformat(since)
+            since = parsed.isoformat()
+            days = (today - parsed).days
+        except ValueError:
+            since, days = today_s, 0
+        if days < 0:                 # 시계 문제로 미래 날짜가 적힌 경우
+            since, days = today_s, 0
+
+        if days > STALE_DAYS:
+            too_old += 1
+            continue
+
+        j = dict(j)
+        j["staleSince"] = since
+        kept.append(j)
+
+    if kept:
+        print(f"      · 지난 회차 공고 {len(kept)}건을 그대로 둡니다 "
+              f"(수집 실패, 최대 {STALE_DAYS}일)")
+    if too_old:
+        print(f"      · {STALE_DAYS}일 넘게 수집되지 않아 {too_old}건을 뺍니다")
+    return kept
+
 
 def keep_recently_closed(fresh):
     """수집 결과에서 사라진 공고를 KEEP_DAYS 일간 데이터에 남깁니다.
@@ -324,13 +417,23 @@ def main():
     companies = load_companies(only_ats)
     print(f"대상 {len(companies)}개사" + (f" (ats={only_ats})" if only_ats else ""))
 
-    jobs, failed = [], []
+    # 수집에 실패한 회사의 공고를 그대로 들고 가기 위해 지난 회차를
+    # 미리 한 번만 읽어 둡니다. 회사마다 파일을 다시 읽으면 느립니다.
+    previous = load_previous()
+    today = datetime.now(KST).date()
+
+    jobs, failed, carried = [], [], 0
     for c in companies:
         try:
             got = adapters.load(c["ats"]).fetch(c)
         except Exception as e:
             print(f"  ! {c['name']}: {e}")
             failed.append(c["name"])
+            # 못 받았다는 것은 공고가 내려갔다는 뜻이 아닙니다.
+            # 지난 회차 공고를 그대로 두고 다음 회차에 다시 확인합니다.
+            old = carry_over(previous, c, today)
+            jobs += old
+            carried += len(old)
             continue
         # 지원할 자리가 아닌 공고를 뺍니다(채용박람회 안내, 설명회 등).
         cut = [j for j in got if dropped(j)]
@@ -363,7 +466,10 @@ def main():
             j["id"] = f"{j['id']}-{n}"
         seen.add(j["id"])
 
-    print(f"\n총 {len(jobs)}건" + (f" · 실패 {len(failed)}개사 {failed}" if failed else ""))
+    print(f"\n총 {len(jobs)}건"
+          + (f" · 실패 {len(failed)}개사 {failed}" if failed else "")
+          + (f"\n  · 그중 {carried}건은 수집 실패한 회사의 지난 회차 공고입니다"
+             f" (최대 {STALE_DAYS}일 유지)" if carried else ""))
 
     if dry:
         print("--dry-run 이라 파일을 쓰지 않았습니다.")
