@@ -52,11 +52,16 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(+https://searchjob.co.kr self-check)")
 
 # jobs.json 의 공고 하나가 가져야 할 칸.
-# goneAt 은 사라진 공고에만 붙으므로 따로 둡니다.
+#
+# goneAt 은 사라진 공고에만, staleSince 는 수집에 실패한 회사의 공고에만
+# 붙으므로 따로 둡니다.
+#   goneAt      회사가 공고를 내려서 보관 중인 것 (최대 60일)
+#   staleSince  우리가 못 받아서 지난 회차 것을 들고 가는 것 (최대 7일)
+#               fetch_jobs.py 의 carry_over() 가 붙입니다.
 REQUIRED = {"id", "unit", "company", "companySlug", "title", "location",
             "career", "postedAt", "closesAt", "dday", "multiRole",
             "sourceTitle", "sourceUrl", "description"}
-OPTIONAL = {"goneAt"}
+OPTIONAL = {"goneAt", "staleSince"}
 
 # 한 회사가 이보다 많이 올리면 중복 수집을 의심합니다.
 #
