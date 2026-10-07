@@ -95,6 +95,34 @@ load_companies() 가 name·slug·ats·code 네 칸을 모두 요구하고, 하�
 없습니다" 로 수집이 7초에 중단됐습니다. 다른 자체 사이트 어댑터
 (시프트업·SOOP·넷마블·다우기술 등)와 같이 slug 와 같은 값을 적습니다.
 
+깃허브 액션에서는 403 이 떨어집니다 (2026-10-07 확인)
+-----------------------------------------------------
+등록 첫 수집에서 "HTTP Error 403: Forbidden" 으로 실패했습니다.
+scripts/probe_block.py 로 실제 러너에서 헤더 조합 다섯 가지를 시험했고,
+결과는 전부 동일한 403 이었습니다.
+
+  A 꼬리표 있는 UA 만              403
+  B 꼬리표 뺀 UA 만                403
+  C 꼬리표 뺀 UA + 브라우저 헤더   403
+  D 꼬리표 있는 UA + 브라우저 헤더 403
+  E 헤더 없음                      403
+
+헤더와 무관하다는 뜻입니다. 우리 User-Agent 꼬리표 때문이 아닙니다.
+
+확인된 사실만 적습니다.
+- 응답을 돌려주는 것은 원본 서버가 아니라 CloudFront 입니다
+  (server=CloudFront, x-cache=Error from cloudfront, 본문이 CloudFront
+  자체 오류 페이지).
+- 러너에서 붙은 엣지는 ORD56(미국 시카고)입니다.
+- 한국에서 브라우저로 열면 정상이고, 그때 엣지는 ICN57(서울)입니다.
+
+바뀐 변수는 접속 위치뿐입니다. 그래서 지역 또는 아이피 기반 거부로
+보입니다. CloudFront 설정은 두나무만 볼 수 있으니 단정하지 않습니다.
+
+그래서 403 은 "실패" 가 아니라 "차단" 으로 올립니다. 우리가 고칠 수
+있는 게 없고, 두나무가 설정을 바꾸면 저절로 다시 들어옵니다. 매 회차
+요청 한 번만 쓰므로 비활성으로 내리지 않습니다.
+
 구조가 바뀌면 0건이 아니라 오류를 냅니다
 ---------------------------------------
 main_list_item 이 하나도 없으면 빈 리스트를 돌려주지 않고 예외를
@@ -106,6 +134,12 @@ import re
 import html
 import time
 import urllib.request
+import urllib.error
+
+# fetch_jobs.py 와 같은 표식입니다. 이걸 앞에 붙여 예외를 내면 로그에
+# "실패" 가 아니라 "차단" 으로 올라갑니다. 우리가 고칠 수 없는 것과
+# 우리 버그를 섞지 않기 위한 약속입니다.
+BLOCKED = "[차단] "
 
 LIST = "https://careers.dunamu.com/"
 DETAIL = "https://careers.dunamu.com/detail/{}"
@@ -137,8 +171,19 @@ BODY_FALLBACK = re.compile(
 
 def _get(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return r.read().decode("utf-8", "replace")
+    try:
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        # 403 은 CloudFront 가 엣지에서 거부하는 것입니다. 머리말의
+        # "깃허브 액션에서는 403 이 떨어집니다" 를 보세요. 헤더를
+        # 바꿔도 통과하지 않으니 재시도하지 않습니다.
+        if e.code == 403:
+            raise RuntimeError(
+                BLOCKED + "CloudFront 가 깃허브 액션 접속을 거부합니다(403). "
+                "두나무가 설정을 바꾸면 저절로 다시 들어옵니다."
+            ) from None
+        raise
 
 
 def _text(s):
@@ -212,8 +257,12 @@ def fetch(company):
         url = DETAIL.format(nid)
         try:
             page = _get(url)
-        except Exception:
-            # 한 건을 못 읽어도 나머지는 올립니다.
+        except Exception as e:
+            # 차단은 넘기지 않고 올립니다. 목록은 되는데 상세가 전부
+            # 막히면 조용히 0건이 되어, 공고가 사라진 것처럼 보입니다.
+            if str(e).startswith(BLOCKED):
+                raise
+            # 한 건을 못 읽는 것은 넘어갑니다. 나머지는 올립니다.
             continue
 
         m = TITLE.search(page)
