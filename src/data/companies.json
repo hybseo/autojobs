@@ -493,7 +493,8 @@
     "자동차부품"
    ],
    "enabled": true,
-   "note": "수소 저장용기. Workday 어댑터 첫 검증 대상"
+   "note": "수소 저장용기. Workday 어댑터 첫 검증 대상 / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "SK온",
@@ -2481,7 +2482,8 @@
     "전기전자"
    ],
    "enabled": true,
-   "note": "전선·중전기. 코스피. Workday ATS. 일진하이솔루스와 같은 테넌트(iljini)를 쓰고 사이트 이름만 Electric 으로 다릅니다. 2026-09-11 확인 14건"
+   "note": "전선·중전기. 코스피. Workday ATS. 일진하이솔루스와 같은 테넌트(iljini)를 쓰고 사이트 이름만 Electric 으로 다릅니다. 2026-09-11 확인 14건 / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "LIG D&A",
@@ -3101,7 +3103,8 @@
     "IT"
    ],
    "enabled": true,
-   "note": "Workday. 2026-09-22 기준 진행중 공고 0건. 열리면 자동으로 들어옵니다"
+   "note": "Workday. 2026-09-22 기준 진행중 공고 0건. 열리면 자동으로 들어옵니다 / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "메가존클라우드",
@@ -5863,7 +5866,8 @@
     "제약바이오"
    ],
    "enabled": true,
-   "note": "초음파 진단기기. 일진그룹 계열. 2026-10-06 일진 Workday 테넌트(iljini)의 robots.txt 에 채용 사이트가 Alpinion·Diamond·Electric·Holdings·Hysolus·Development 여섯 개로 적혀 있는 것을 발견했습니다. 그때까지 Electric·Hysolus 둘만 등록돼 있었습니다. siteMap.xml 기준 공고 8건."
+   "note": "초음파 진단기기. 일진그룹 계열. 2026-10-06 일진 Workday 테넌트(iljini)의 robots.txt 에 채용 사이트가 Alpinion·Diamond·Electric·Holdings·Hysolus·Development 여섯 개로 적혀 있는 것을 발견했습니다. 그때까지 Electric·Hysolus 둘만 등록돼 있었습니다. siteMap.xml 기준 공고 8건. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "일진다이아몬드",
@@ -5874,7 +5878,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "공업용 다이아몬드·PCBN 절삭공구 소재. 일진그룹 계열. 같은 테넌트의 Diamond 사이트. siteMap.xml 기준 공고 11건."
+   "note": "공업용 다이아몬드·PCBN 절삭공구 소재. 일진그룹 계열. 같은 테넌트의 Diamond 사이트. siteMap.xml 기준 공고 11건. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "일진홀딩스",
@@ -5885,7 +5890,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "일진그룹 지주회사. 같은 테넌트의 Holdings 사이트. siteMap.xml 기준 공고 12건. 지주사라 그룹 공통 직무가 섞여 올 수 있습니다. 첫 갱신 뒤 제목을 보고 분류가 맞는지 확인하세요. 소재·전기가 주력이라 중공업·화학·소재로 잡아 두었습니다."
+   "note": "일진그룹 지주회사. 같은 테넌트의 Holdings 사이트. siteMap.xml 기준 공고 12건. 지주사라 그룹 공통 직무가 섞여 올 수 있습니다. 첫 갱신 뒤 제목을 보고 분류가 맞는지 확인하세요. 소재·전기가 주력이라 중공업·화학·소재로 잡아 두었습니다. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "산하정보기술",
@@ -5896,7 +5902,8 @@
     "IT"
    ],
    "enabled": true,
-   "note": "호텔·숙박 IT 시스템(PMS·CMS) 유지보수. 야놀자 계열. 야놀자 Workday 테넌트의 robots.txt 에 External_Yanolja·External_Sanha·External_Dable 세 개가 적혀 있었고 야놀자만 등록돼 있었습니다. siteMap.xml 기준 공고 5건. External_Dable(데이블)은 공고 0건이고 데이블은 이미 그리팅으로 등록돼 있어 넣지 않았습니다(중복 방지)."
+   "note": "호텔·숙박 IT 시스템(PMS·CMS) 유지보수. 야놀자 계열. 야놀자 Workday 테넌트의 robots.txt 에 External_Yanolja·External_Sanha·External_Dable 세 개가 적혀 있었고 야놀자만 등록돼 있었습니다. siteMap.xml 기준 공고 5건. External_Dable(데이블)은 공고 0건이고 데이블은 이미 그리팅으로 등록돼 있어 넣지 않았습니다(중복 방지). / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "동화기업",
@@ -5907,7 +5914,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "목재 보드·화학 소재. 코스닥. Workday. 2026-10-06 조사: 테넌트 robots.txt 에 채용 사이트가 DongwhaCareers·DongwhaElectrolyteCareers 둘로 적혀 있고, siteMap.xml 기준 공고 12건입니다. 근무지가 여의도·남동·가좌로 모두 국내입니다."
+   "note": "목재 보드·화학 소재. 코스닥. Workday. 2026-10-06 조사: 테넌트 robots.txt 에 채용 사이트가 DongwhaCareers·DongwhaElectrolyteCareers 둘로 적혀 있고, siteMap.xml 기준 공고 12건입니다. 근무지가 여의도·남동·가좌로 모두 국내입니다. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "동화일렉트로라이트",
@@ -5918,7 +5926,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "2차전지 전해액. 동화기업 계열이고 같은 Workday 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 3건(북성·여의도)."
+   "note": "2차전지 전해액. 동화기업 계열이고 같은 Workday 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 3건(북성·여의도). / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "삼양사",
@@ -5929,7 +5938,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "스페셜티 케미컬·식품소재. 삼양그룹. Workday. siteMap.xml 기준 공고 7건이지만 제목에 POOL(인재풀)이 붙은 것이 섞여 있어 실제 접수중은 더 적을 수 있습니다. 인재풀은 수집기가 걸러냅니다."
+   "note": "스페셜티 케미컬·식품소재. 삼양그룹. Workday. siteMap.xml 기준 공고 7건이지만 제목에 POOL(인재풀)이 붙은 것이 섞여 있어 실제 접수중은 더 적을 수 있습니다. 인재풀은 수집기가 걸러냅니다. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "삼양KCI",
@@ -5940,7 +5950,8 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "계면활성제·화장품 원료. 삼양그룹 계열이고 같은 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 1건."
+   "note": "계면활성제·화장품 원료. 삼양그룹 계열이고 같은 테넌트의 별도 채용 사이트입니다. siteMap.xml 기준 공고 1건. / 2026-10-07: koreaOnly 를 켰습니다. 이 테넌트는 나라 조건이 없고 근무지가 '일진홀딩스_본사' 처럼 사내 명칭이라 지명으로 한국을 걸러낼 수 없습니다. 10-06 갱신에서 그 때문에 공고가 걸러졌습니다.",
+   "koreaOnly": true
   },
   {
    "name": "어플라이드 머티어리얼즈 코리아",
@@ -6205,6 +6216,138 @@
    ],
    "enabled": false,
    "note": "2026-10-06 외국계 Workday 조사로 추가. robots.txt 에 Allow 로 적힌 사이트만 넣었습니다. 오티스엘리베이터코리아(승강기)로 보이지만 robots.txt 를 두 번 시도해도 422 오류가 나서 수집 허용 여부를 확인하지 못했습니다. 확인 전에는 켜지 않습니다."
+  },
+  {
+   "name": "블루홀스튜디오",
+   "slug": "bluehole",
+   "ats": "greenhouse",
+   "code": "bluehole",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 게임 개발(TERA2·Project V). 크래프톤 자회사이고 Greenhouse 보드가 따로 있습니다. 공고 18건 전부 근무지가 Pangyo 입니다. 크래프톤 보드(krafton)와 제목을 맞춰봤고 겹치는 공고가 없습니다 — 크래프톤은 본사 조직, 이쪽은 [Bluehole Studio] 공고입니다."
+  },
+  {
+   "name": "PUBG STUDIOS",
+   "slug": "pubgcorporation",
+   "ats": "greenhouse",
+   "code": "pubgcorporation",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 배틀그라운드·팰월드 모바일 개발. 크래프톤 계열이고 보드가 따로 있습니다. 공고 16건 전부 Seoul. [PUBG STUDIOS]·[Palworld Mobile]·[BATTLEGROUNDS] 공고로 크래프톤 보드와 겹치지 않습니다."
+  },
+  {
+   "name": "팩토리얼에너지",
+   "slug": "factorialenergy",
+   "ats": "greenhouse",
+   "code": "factorialenergy",
+   "industry": [
+    "중공업·화학·소재"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 전고체·차세대 배터리 셀 개발. 미국 회사인데 전체 15건 중 14건이 'Cheonan, South Korea' 입니다. 사실상 천안 공장 채용입니다."
+  },
+  {
+   "name": "몰로코",
+   "slug": "moloco",
+   "ats": "greenhouse",
+   "code": "moloco",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 머신러닝 기반 모바일 광고 플랫폼. 한국인 창업·미국 본사이고 'Seoul, Korea' 8건."
+  },
+  {
+   "name": "마크비전",
+   "slug": "marqvision",
+   "ats": "greenhouse",
+   "code": "marqvision",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. AI 위조품·지식재산 침해 탐지. 'Seoul, Korea'·'Seoul, South Korea'·'Korea' 합쳐 7건."
+  },
+  {
+   "name": "퓨전월드와이드",
+   "slug": "fusionworldwide",
+   "ats": "greenhouse",
+   "code": "fusionworldwide",
+   "industry": [
+    "반도체"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 반도체·전자부품 오픈마켓 유통. 'Seoul, Republic of Korea' 2건."
+  },
+  {
+   "name": "UJET",
+   "slug": "ujet",
+   "ats": "greenhouse",
+   "code": "ujet",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 클라우드 컨택센터(CCaaS) SaaS. 'Seoul, Korea' 공고가 있습니다."
+  },
+  {
+   "name": "Otter.ai",
+   "slug": "otter",
+   "ats": "greenhouse",
+   "code": "otter",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. AI 음성 회의록 서비스. 'Seoul, KOR' 1건."
+  },
+  {
+   "name": "PingCAP",
+   "slug": "pingcap",
+   "ats": "greenhouse",
+   "code": "pingcap",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 분산 데이터베이스 TiDB. 'Remote - South Korea' 1건."
+  },
+  {
+   "name": "MinIO",
+   "slug": "minio",
+   "ats": "greenhouse",
+   "code": "minio",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-10-07 Greenhouse 전수조사로 추가. 공개 Job Board API 로 근무지 표기를 직접 받아 한국 공고를 확인했습니다. 오브젝트 스토리지 소프트웨어. 'Remote - South Korea' 1건."
+  },
+  {
+   "name": "두나무",
+   "slug": "dunamu",
+   "ats": "dunamu",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "domain": "careers.dunamu.com",
+   "note": "업비트·증권플러스. careers.dunamu.com 자체 채용 사이트를 HTML 로 직접 읽습니다. www.dunamu.com/careers/jobs 는 공고가 아니라 채용 소식 글 목록이라 쓰지 않습니다. 예전에 Greenhouse 를 썼으나 자체 시스템으로 옮겨 code 'dunamu' 는 404 가 납니다. 2026-10-07 확인 7건 중 인재풀 2건 제외 5건. 사이트에 게시일·마감일·근무지가 없어 전부 상시채용으로 올라갑니다."
+  },
+  {
+   "name": "Notion",
+   "slug": "notion",
+   "ats": "ashby",
+   "code": "notion",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "노션. Greenhouse 가 아니라 Ashby 를 씁니다(그래서 Greenhouse 전수조사에서 404). 공개 Job Board API 로 전체 133건 중 addressCountry 가 'South Korea' 인 서울 공고만 담습니다. 2026-10-07 확인 5건."
   }
  ]
 }

@@ -23,6 +23,10 @@ Workday 는 전 세계 공고를 한 사이트에 올립니다. 그대로 받으
 쏟아지고 대부분 해외입니다. 국내 구직자용 사이트이므로 한국 근무지만
 남깁니다. 해외까지 원하면 companies.json 에 "overseas": true 를 넣으세요.
 
+한국 회사가 자기 테넌트를 쓰는 경우에는 companies.json 에
+"koreaOnly": true 를 넣으세요. 근무지를 거르지 않고 전부 담습니다.
+자세한 이유는 list_open() 안의 설명을 보세요.
+
 한국을 거르는 방법을 바꿨습니다 (2026-10-06)
 --------------------------------------------
 예전에는 공고를 전부 받아 근무지 글자에서 지명을 찾아 걸렀습니다.
@@ -162,48 +166,100 @@ def _korea_facet(j):
     """첫 응답의 facets 에서 한국을 고르는 조건을 찾습니다.
 
     (조건이름, id, 표기, 건수) 를 돌려주고, 없으면 None 입니다.
-    나라 조건(Country 등)을 먼저 보고, 없으면 다른 조건에서도 찾습니다.
-    회사마다 조건 이름이 Country 일 수도, locationCountry 일 수도 있어
-    이름을 하나로 못 박습니다.
-    """
-    facets = j.get("facets") or []
 
-    def pick(only_country):
-        for f in facets:
+    조건 이름을 하나로 못 박습니다
+    -----------------------------
+    회사마다 다릅니다. 2026-10-07 확인: 어플라이드·KLA 는 'Country',
+    3M·GSK·화이자는 'Location_Country', 다나허는 'locationCountry' 입니다.
+    그래서 이름이 아니라 '한국' 이라고 적힌 값을 찾습니다.
+
+    한 단계 더 안쪽까지 봅니다 (2026-10-07 수정)
+    --------------------------------------------
+    처음에는 겉 단계만 봤습니다. 그래서 인테그리스·발레오·GM·에어리퀴드·
+    보잉·다나허·필립스·MSD 여덟 곳이 "한국 조건이 없다" 로 0건이 됐습니다.
+    실제로는 나라 목록이 한 단계 안쪽에 들어 있었습니다.
+
+        facets
+          └ locationMainGroup
+              └ values[0]  descriptor="Country"  facetParameter="locationCountry"
+                  └ values[]  ← 여기에 45개 나라가 있고 '대한민국' 이 들어 있음
+
+    다나허는 이 안쪽에 대한민국 22건이 있는데도 0건으로 처리됐습니다.
+    그래서 values 안의 values 까지 재귀로 내려갑니다. 안쪽 값을 쓸 때는
+    바깥 이름이 아니라 그 항목이 들고 있는 facetParameter 를 씁니다.
+
+    표기가 한글로 올 수도 있습니다
+    ------------------------------
+    같은 테넌트가 'Korea, Republic of' 로도, '대한민국' 으로도 줍니다.
+    KOREA_NAME 이 둘 다 받습니다.
+    """
+
+    def walk(facets, prefer_country, depth=0):
+        if depth > 3:
+            return None
+        for f in (facets or []):
             param = str(f.get("facetParameter") or "")
-            if only_country and not re.search(r"country", param, re.I):
+            if prefer_country and depth == 0 and not re.search(r"country|location", param, re.I):
                 continue
             for v in (f.get("values") or []):
                 desc = str(v.get("descriptor") or "")
                 if v.get("id") and KOREA_NAME.search(desc):
                     return param, v["id"], desc, v.get("count")
+                # 안쪽에 또 목록이 있으면 내려갑니다.
+                sub = v.get("values")
+                if sub:
+                    got = walk([{"facetParameter": v.get("facetParameter") or param,
+                                 "values": sub}], prefer_country, depth + 1)
+                    if got:
+                        return got
         return None
 
-    return pick(True) or pick(False)
+    facets = j.get("facets") or []
+    return walk(facets, True) or walk(facets, False)
 
 
 def _page_through(base, facets, label):
-    """조건을 걸어 공고를 끝까지 받습니다."""
-    out, offset = [], 0
+    """조건을 걸어 공고를 끝까지 받습니다.
+
+    전체 건수는 첫 응답만 믿습니다 (2026-10-07 수정)
+    -----------------------------------------------
+    Workday 는 첫 쪽에만 total 을 제대로 주고 2쪽부터 total: 0 을 줍니다.
+    어플라이드에서 직접 확인한 응답입니다.
+
+        offset 0   → total 82, 20건
+        offset 20  → total 0,  20건   ← 여기서 "40 >= 0" 이 참이 되어 중단
+        offset 80  → total 0,  2건    (82건의 마지막)
+        offset 100 → total 82, 20건   ← 끝을 넘겨도 또 줍니다(중복)
+
+    그래서 매 쪽의 total 로 끝을 판단하면 40건에서 멈춥니다. 실제로
+    어플라이드 87건이 40건으로, KLA 54건이 40건으로 잘렸습니다.
+    첫 응답의 total 을 기억해 그 수에 닿을 때까지만 받고, 끝을 넘겨
+    받아온 중복은 잘라냅니다.
+    """
+    out, offset, total = [], 0, None
     for _ in range(MAX_PAGES):
         j = _post(f"{base}/jobs", {
             "appliedFacets": facets, "limit": PAGE,
             "offset": offset, "searchText": ""})
+        if total is None:
+            total = j.get("total") or 0
         posts = j.get("jobPostings") or []
         if not posts:
             break
         out += posts
         offset += PAGE
-        if offset >= (j.get("total") or 0):
+        if total and offset >= total:
             break
         time.sleep(0.4)
     else:
-        print(f"      ! {label}: {MAX_PAGES * PAGE}건에서 멈췄습니다. "
-              f"더 있을 수 있으니 MAX_PAGES 를 확인하세요.")
-    return out
+        if total and total > MAX_PAGES * PAGE:
+            print(f"      ! {label}: {MAX_PAGES * PAGE}건에서 멈췄습니다"
+                  f"(전체 {total}건). MAX_PAGES 를 확인하세요.")
+    # 끝을 넘겨 다시 받아온 중복을 잘라냅니다.
+    return out[:total] if total else out
 
 
-def list_open(code, overseas=False):
+def list_open(code, overseas=False, korea_only=False):
     """접수중 공고 목록. probe 용으로 밖에서도 씁니다."""
     host, tenant, site = _parts(code)
     base = f"https://{host}/wday/cxs/{tenant}/{site}"
@@ -215,6 +271,25 @@ def list_open(code, overseas=False):
     total = first.get("total") or 0
 
     if overseas:
+        return _page_through(base, {}, label)
+
+    # 한국 회사 전용 테넌트는 근무지를 거르지 않습니다 (2026-10-07).
+    #
+    # 일진·야놀자·동화·삼양처럼 한국 회사가 자기 테넌트를 쓰는 경우입니다.
+    # 근무지 표기가 지명이 아니라 사내 명칭이라 지명으로는 못 걸러냅니다.
+    #   일진홀딩스_본사 · 디앤코_본사 · 일진다이아몬드_음성공장
+    #   (SanhaIT) Headquarters · (Yanolja) Headquarters (MDM Tower)
+    # 그리고 이 테넌트들은 나라 조건 자체가 없어 조건을 걸 수도 없습니다.
+    # 그래서 2026-10-06 갱신에서 일진홀딩스 12건·산하정보기술 5건·
+    # 동화일렉트로라이트 3건이 전부 걸러져 0건이 됐고, 일진다이아몬드는
+    # 11건 중 '서울사무소' 가 들어간 5건만 남았습니다.
+    #
+    # 한국 회사 테넌트라는 것은 사람이 확인해 companies.json 에
+    # "koreaOnly": true 로 적습니다. 어댑터가 추측하지 않습니다.
+    # 해외 공고가 섞여 올 수는 있지만, 전부 잃는 것보다 낫습니다.
+    if korea_only:
+        print(f"      · {label}: 한국 회사 테넌트라 근무지를 거르지 않습니다"
+              f"(전체 {total}건)")
         return _page_through(base, {}, label)
 
     found = _korea_facet(first)
@@ -269,7 +344,8 @@ def fetch(company):
     host, tenant, site = _parts(code)
     base = f"https://{host}/wday/cxs/{tenant}/{site}"
 
-    rows = list_open(code, overseas=bool(company.get("overseas")))
+    rows = list_open(code, overseas=bool(company.get("overseas")),
+                     korea_only=bool(company.get("koreaOnly")))
 
     # 구조가 다르면 조용히 0건이 됩니다. 그러면 원인을 알 수 없습니다.
     if not rows:
