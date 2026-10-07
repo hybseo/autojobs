@@ -42,6 +42,8 @@ B·C 는 꼬리표만 뺀 것입니다. B·C 는 되고 D 는 안 되면 꼬리�
 그건 사칭이고, 통과한다 해도 쓰면 안 되는 방법입니다. 시험 목록에
 올려두면 언젠가 쓰게 됩니다.
 """
+import html
+import re
 import sys
 import urllib.request
 import urllib.error
@@ -56,7 +58,9 @@ FULL = {
     "Accept": ("text/html,application/xhtml+xml,application/xml;q=0.9,"
                "image/avif,image/webp,image/apng,*/*;q=0.8"),
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
-    # gzip 만 적습니다. br 을 적으면 파이썬이 풀지 못해 본문이 깨집니다.
+    # br(brotli)은 적지 않습니다. 파이썬 기본 설치에 해제기가 없습니다.
+    # gzip·deflate 도 urllib 이 알아서 풀어주지 않으므로 _body() 에서
+    # 직접 풉니다. 2026-10-07 에 이걸 빠뜨려 C·D 응답이 깨져 나왔습니다.
     "Accept-Encoding": "gzip, deflate",
     "Upgrade-Insecure-Requests": "1",
     "Sec-Fetch-Dest": "document",
@@ -94,20 +98,65 @@ def _show_headers(h):
     return " · ".join(out) or "표시 헤더 없음"
 
 
+def _body(raw, enc):
+    """압축된 응답을 풉니다.
+
+    urllib 은 Accept-Encoding 을 보내도 응답을 풀어주지 않습니다.
+    requests 와 다릅니다. 안 풀면 본문이 깨진 글자로 나와 오류
+    이유를 읽을 수 없습니다.
+    """
+    enc = (enc or "").lower()
+    try:
+        if "gzip" in enc:
+            import gzip
+            return gzip.decompress(raw)
+        if "deflate" in enc:
+            import zlib
+            try:
+                return zlib.decompress(raw)
+            except zlib.error:
+                return zlib.decompress(raw, -zlib.MAX_WBITS)
+    except Exception:
+        # 잘린 조각은 못 풉니다. 원본을 돌려주고 판단은 사람이 합니다.
+        return raw
+    return raw
+
+
+def _reason(raw):
+    """오류 페이지에서 사람이 읽을 문장만 꺼냅니다.
+
+    2026-10-07 에 본문을 200자에서 자르는 바람에 CloudFront 가 적어준
+    거부 이유 문장을 놓쳤습니다. 받은 것은 HTML 머리말뿐이었습니다.
+
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" ...
+        <HTML><HEAD><META HTTP-EQUIV="Content-Type" ... <TITLE>ERROR
+
+    정작 중요한 문장은 그 뒤에 있습니다. "어느 나라에서 와서 막았다"
+    인지 "설정이 요청을 처리하지 않는다" 인지에 따라 뜻이 다릅니다.
+    태그를 떼고 글자만 남겨 앞부분을 보여줍니다.
+    """
+    s = raw.decode("utf-8", "replace")
+    s = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", s, flags=re.S | re.I)
+    s = re.sub(r"<[^>]+>", " ", s)
+    s = html.unescape(s)
+    return re.sub(r"\s+", " ", s).strip()[:500]
+
+
 def try_one(url, headers):
     req = urllib.request.Request(url, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=20) as r:
-            body = r.read(400)
+            body = r.read(2000)
             return r.status, _show_headers(r.headers), len(body), ""
     except urllib.error.HTTPError as e:
-        body = b""
+        raw = b""
         try:
-            body = e.read(400)
+            # 압축을 풀려면 끝까지 받아야 합니다. 오류 페이지는 작습니다.
+            raw = e.read()[:60000]
         except Exception:
             pass
-        text = body.decode("utf-8", "replace").replace("\n", " ")[:200]
-        return e.code, _show_headers(e.headers), len(body), text
+        body = _body(raw, e.headers.get("content-encoding"))
+        return e.code, _show_headers(e.headers), len(raw), _reason(body)
     except Exception as e:
         return 0, "", 0, f"{type(e).__name__}: {e}"
 
