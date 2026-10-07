@@ -499,9 +499,37 @@ export const searchAlias = (name) => NAME_ALIAS[name] || '';
  *   3. 둘 다 없으면 스키마를 넣지 않습니다. 빈 값으로 보내면 오류가 되고,
  *      안 보내면 그냥 카드 대상이 아닌 것이 됩니다. 빈 값보다 낫습니다.
  */
+
+/*
+ * 구글에 보낼 게시일을 고릅니다.
+ *
+ * 미래 날짜를 걸러내는 이유 (2026-10-07)
+ * --------------------------------------
+ * LG 는 게시일로 쓸 값이 접수 시작일(recStartDate)뿐인데, 접수가 아직
+ * 시작되지 않은 공고를 미리 올려둡니다. 실제로 수집일이 10-07 인데
+ * "[LG전자] R&D 석/박사 해외 유학생 채용" 의 게시일이 10-09 로
+ * 들어왔습니다.
+ *
+ * 공고가 지금 화면에 보이고 있다면 게시는 이미 된 것입니다. 그런데
+ * datePosted 를 모레로 적으면 "아직 게시되지 않은 공고" 라는 뜻이 되어
+ * 구조화 데이터가 사실과 달라집니다. 그런 경우에는 우리가 처음 본 날로
+ * 되돌립니다. 그게 확인된 사실입니다.
+ *
+ * 마감일(validThrough)은 미래여야 정상이므로 손대지 않습니다.
+ *
+ * 비교 기준은 TODAY 가 아니라 COLLECTED_AT 입니다. TODAY 는 검증용으로
+ * 바꿀 수 있는 값이고, 여기서 묻는 것은 "수집한 날 기준으로 이미 게시된
+ * 공고인가" 입니다.
+ */
+const pickDatePosted = (j) => {
+  const posted = (j.postedAt || '').trim();
+  if (posted && posted <= COLLECTED_AT) return posted;
+  return (j.firstSeenAt || '').trim();
+};
+
 export const jobPostingSchema = (j, pageUrl) => {
   if (!j.description || j.description.trim().length < 50) return null;
-  const datePosted = (j.postedAt || '').trim() || (j.firstSeenAt || '').trim();
+  const datePosted = pickDatePosted(j);
   if (!datePosted) return null;
   const employmentType =
     j.career === '신입' ? 'FULL_TIME' : j.career === '무관' ? 'OTHER' : 'FULL_TIME';
