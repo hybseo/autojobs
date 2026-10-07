@@ -1,0 +1,34 @@
+name: 접속 진단
+
+# 자동 실행하지 않습니다. Actions 탭에서 직접 눌러 돌립니다.
+#
+# 수집이 "403 Forbidden" 처럼 막힐 때, 원인이 우리 헤더 때문인지
+# 아이피 차단인지 가려냅니다. 몇 초면 끝납니다.
+#
+# 공고갱신은 한 시간이 넘게 걸립니다. 추측으로 어댑터를 고쳐 공고갱신을
+# 돌려 보고 또 실패하는 일을 막으려고 만들었습니다.
+#
+# 공고 데이터를 건드리지 않습니다. 저장소에 아무것도 커밋하지 않습니다.
+# 로그만 봅니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: '진단할 주소 (여러 개는 공백으로 구분. 비우면 두나무)'
+        type: string
+        required: false
+        default: 'https://careers.dunamu.com/ https://careers.dunamu.com/detail/624'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+
+      - name: 진단 실행
+        run: python scripts/probe_block.py ${{ inputs.urls }}
