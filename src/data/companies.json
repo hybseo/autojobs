@@ -6337,7 +6337,7 @@
    ],
    "enabled": true,
    "domain": "careers.dunamu.com",
-   "note": "업비트·증권플러스. careers.dunamu.com 자체 채용 사이트를 HTML 로 직접 읽습니다. www.dunamu.com/careers/jobs 는 공고가 아니라 채용 소식 글 목록이라 쓰지 않습니다. 예전에 Greenhouse 를 썼으나 자체 시스템으로 옮겨 code 'dunamu' 는 404 가 납니다. 2026-10-07 확인 7건 중 인재풀 2건 제외 5건. 사이트에 게시일·마감일·근무지가 없어 전부 상시채용으로 올라갑니다."
+   "note": "업비트·증권플러스. careers.dunamu.com 자체 채용 사이트를 HTML 로 직접 읽습니다. www.dunamu.com/careers/jobs 는 공고가 아니라 채용 소식 글 목록이라 쓰지 않습니다. 예전에 Greenhouse 를 썼으나 자체 시스템으로 옮겨 code 'dunamu' 는 404 가 납니다. 2026-10-07 브라우저 확인 7건 중 인재풀 2건 제외 5건. 게시일·마감일·근무지가 사이트에 없어 전부 상시채용입니다. 다만 깃허브 액션에서는 CloudFront 가 403 으로 거부합니다. probe_block.py 로 헤더 조합 5가지를 시험했고 전부 동일한 403 이라 헤더 문제가 아닙니다. 러너는 미국 엣지(ORD56), 한국 브라우저는 서울 엣지(ICN57)로 정상이라 지역/아이피 거부로 보입니다. 차단으로 올려 매 회차 재시도하므로 두나무가 설정을 바꾸면 저절로 들어옵니다."
   },
   {
    "name": "Notion",
