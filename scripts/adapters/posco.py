@@ -156,6 +156,38 @@ def list_open(code=""):
     return rows
 
 
+
+def _short_field(field):
+    """모집분야를 제목 뒤에 붙일 만한 길이로 줄입니다.
+
+    왜 필요한가 (2026-10-10)
+    ------------------------
+    RECU_FIELD 는 보통 "구매/계약" 처럼 짧습니다. 그래서 제목 뒤에
+    붙이면 어떤 자리인지 한눈에 보여 도움이 됐습니다.
+
+    그런데 한 공고가 수십 개 직무를 한꺼번에 뽑는 경우가 있습니다.
+    포스코이앤씨 공고(707000)가 그랬습니다. 모집분야가 쉼표로 이어져
+    제목이 223자가 됐고, 목록에서 카드 하나가 화면을 가득 메웠습니다.
+
+        포스코이앤씨 경력직 / PJT전문직 채용 · 기술직-건축 기계,기술직-건축
+        전기,기술직-건축 건축,특수직-변호사(국내),특수직-노무사,세무회계,
+        포스코이앤씨-플랜트-원자력-영업, ... (계속)
+
+    앞의 두 개만 보이고 나머지는 숫자로 접습니다. 구직자가 "여러 직무를
+    한꺼번에 뽑는 공고구나" 를 알면 충분하고, 자세한 목록은 원문에 있습니다.
+
+    자르지 않고 그대로 두면 안 되는 이유는 목록 화면이 망가지기 때문이고,
+    아예 떼어버리면 안 되는 이유는 직무 한두 개짜리 공고가 훨씬 많아서
+    그쪽 정보가 사라지기 때문입니다.
+    """
+    f = (field or "").strip()
+    if not f:
+        return ""
+    parts = [x.strip() for x in f.split(",") if x.strip()]
+    if len(parts) <= 2:
+        return ", ".join(parts)
+    return f"{parts[0]}, {parts[1]} 외 {len(parts) - 2}개"
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
@@ -177,7 +209,7 @@ def fetch(company):
         if not no or not title:
             continue
 
-        field = _text(x.get("RECU_FIELD"))
+        field = _short_field(_text(x.get("RECU_FIELD")))
         # 직무가 제목에 없으면 뒤에 붙입니다. 어떤 자리인지 보이게 합니다.
         if field and field not in title:
             title = f"{title} · {field}"
