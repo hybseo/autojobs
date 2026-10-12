@@ -3,7 +3,34 @@
 포스코그룹(recruit.posco.com) 채용 수집기.
 
 목록  GET https://recruit.posco.com/h22a01-recruit/H22A1000/list?{파라미터}
-상세  https://recruit.posco.com/h22a01-front/H22A1010.html?noticeId={공고번호}
+상세  https://recruit.posco.com/h22a01-front/H22A1001.html?id={공고번호}
+
+상세 주소를 지어내서 1년 가까이 전부 404 였습니다 (2026-10-12)
+----------------------------------------------------------------
+전에는 이렇게 적혀 있었습니다.
+
+    H22A1010.html?noticeId={공고번호}
+
+그럴듯해 보이지만 **확인하지 않고 지어낸 주소**였습니다. H22A1010.html
+이라는 화면은 포스코 사이트에 아예 없습니다. 그래서 우리 사이트에서
+포스코 공고를 누르면 전부 포스코 서버의 404 페이지로 갔습니다.
+
+포스코 공고는 목록에 본문이 없어 description 이 빈 값입니다. 그래서
+우리 상세 페이지를 만들지 않고 원문으로 바로 보냅니다. 즉 이 주소가
+틀리면 포스코 공고는 하나도 열리지 않습니다. 사용자가 "클릭하면 404"
+라고 알려주기 전까지 아무도 몰랐습니다.
+
+맞는 주소는 목록 화면(H22A1000.html)이 줄을 그리는 자바스크립트에서
+찾았습니다.
+
+    "<td><a href='H22A1001.html?id=" + list[i].HR_AFTC_MRG_ADOP_NTIC_ID + "' ...
+
+1000 이 목록, 1001 이 상세입니다. 공고번호 5건(707002·707004·715000·
+719000·721001)으로 확인했습니다. 새 주소는 전부 200, 옛 주소는 전부
+404 였습니다.
+
+교훈: 주소 형식은 눈으로 확인한 것만 적습니다. 규칙을 유추해서
+채우면 이렇게 조용히 망가집니다.
 
 포스코·포스코DX·포스코퓨처엠·포스코인터내셔널 등 계열사 40곳 안팎의
 공고가 한곳에 모여 옵니다. 2026-10-01 확인 16건이었습니다.
@@ -64,7 +91,7 @@ import urllib.request
 BASE = "https://recruit.posco.com"
 LIST_API = BASE + "/h22a01-recruit/H22A1000/list"
 LIST_PAGE = BASE + "/h22a01-front/H22A1000.html"
-VIEW = BASE + "/h22a01-front/H22A1010.html?noticeId={}"
+VIEW = BASE + "/h22a01-front/H22A1001.html?id={}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
