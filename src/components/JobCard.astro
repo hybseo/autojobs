@@ -1,5 +1,5 @@
 ---
-import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias } from '../lib.js';
+import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias, hasDetail } from '../lib.js';
 const { job, href } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
@@ -33,7 +33,9 @@ const roleList = rolesOf(job);
 const roleCodes = roleList.join('|');
 const roleNames = roleList.map(roleName).join(' ');
 // 본문이 있는 포지션 단위 공고만 자체 상세 페이지를 가집니다.
-const link = href ?? (job.description ? `/job/${job.id}/` : job.sourceUrl);
+// 판정은 lib.js 의 hasDetail 하나로 합니다. 여기서 직접 비교하면
+// 페이지 생성 조건과 어긋나 404 가 납니다(2026-10-10 컴투스 사례).
+const link = href ?? (hasDetail(job) ? `/job/${job.id}/` : job.sourceUrl);
 const external = link === job.sourceUrl;
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
