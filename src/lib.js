@@ -527,8 +527,30 @@ const pickDatePosted = (j) => {
   return (j.firstSeenAt || '').trim();
 };
 
+/*
+ * 이 공고가 자체 상세 페이지를 가지는가.
+ *
+ * 왜 함수로 빼는가 (2026-10-10)
+ * -----------------------------
+ * 같은 규칙이 네 군데에 흩어져 있었고 그중 셋이 서로 달랐습니다.
+ *
+ *   JobCard.astro      본문이 "빈 값만 아니면" 내부 링크
+ *   job/[id].astro     본문이 "50자 이상" 일 때만 페이지 생성
+ *   job/[id].astro     관련 공고 링크도 "빈 값만 아니면" 내부 링크
+ *   lib.js 스키마       "50자 미만이면" 스키마 없음
+ *
+ * 그래서 본문이 1~49자인 공고는 링크는 걸리는데 페이지가 없어 404 가
+ * 납니다. 2026-10-10 기준 컴투스 공고 1건이 실제로 그랬습니다
+ * (본문이 '<p><br></p>' 11자).
+ *
+ * 숫자를 고칠 일이 생겨도 이제 이 한 줄만 고치면 네 곳이 같이 바뀝니다.
+ */
+export const DETAIL_MIN = 50;
+export const hasDetail = (j) =>
+  !!j.description && j.description.trim().length >= DETAIL_MIN;
+
 export const jobPostingSchema = (j, pageUrl) => {
-  if (!j.description || j.description.trim().length < 50) return null;
+  if (!hasDetail(j)) return null;
   const datePosted = pickDatePosted(j);
   if (!datePosted) return null;
   const employmentType =
