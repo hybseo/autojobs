@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
-  industriesOf, industrySlug, rolesOf, roleName,
+  industriesOf, industrySlug, rolesOf, roleName, hasDetail,
 } from '../../lib.js';
 
 /*
@@ -23,7 +23,7 @@ import {
  */
 export function getStaticPaths() {
   return JOBS
-    .filter((j) => j.description && j.description.trim().length >= 50)
+    .filter(hasDetail)
     .map((j) => ({ params: { id: j.id }, props: { job: j } }));
 }
 
@@ -150,8 +150,8 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
         <ul class="archive">
           {sameRole.map((j) => (
             <li>
-              <a href={j.description ? `/job/${j.id}/` : j.sourceUrl}
-                 {...(j.description ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
               <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
             </li>
           ))}
@@ -168,8 +168,8 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
         <ul class="archive">
           {sameCo.map((j) => (
             <li>
-              <a href={j.description ? `/job/${j.id}/` : j.sourceUrl}
-                 {...(j.description ? {} : { target: '_blank', rel: 'noopener' })}>{j.title}</a>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.title}</a>
               <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
             </li>
           ))}
@@ -183,8 +183,8 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
         <ul class="archive">
           {sameInd.map((j) => (
             <li>
-              <a href={j.description ? `/job/${j.id}/` : j.sourceUrl}
-                 {...(j.description ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
               <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
             </li>
           ))}
