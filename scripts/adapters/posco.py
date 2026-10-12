@@ -70,10 +70,12 @@ GET 입니다. POST 가 아닙니다
     HR_AFTC_MRG_ADOP_NTIC_ID     707002
     TOT_CNT                      16          전체 건수
 
-게시일이 없습니다
------------------
-목록에 접수 시작일이 없습니다. 지어내지 않고 비웁니다. 마감일은 있어서
-사이트가 마감 임박순으로 줄을 세울 수 있습니다.
+게시일은 상세에서 따로 읽습니다 (2026-10-12)
+--------------------------------------------
+목록에는 마감일만 있고 접수 시작일이 없습니다. 전에는 지어내지 않고
+비워 뒀는데, 상세 API 에 들어 있는 것을 찾아 채우게 했습니다.
+_posted_at 을 보세요. 공고가 10여 건뿐이라 요청이 늘어도 전체 갱신
+시간에는 영향이 없습니다.
 
 계열사 거르기
 -------------
@@ -91,6 +93,8 @@ import urllib.request
 BASE = "https://recruit.posco.com"
 LIST_API = BASE + "/h22a01-recruit/H22A1000/list"
 LIST_PAGE = BASE + "/h22a01-front/H22A1000.html"
+# 공고 한 건의 상세. 접수 시작일이 여기에만 있습니다(_posted_at 참고).
+FIND_API = BASE + "/h22a01-recruit/H22A1000/find"
 VIEW = BASE + "/h22a01-front/H22A1001.html?id={}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -101,8 +105,12 @@ DATE = re.compile(r"(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})")
 
 
 def _get(params):
-    """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
-    url = LIST_API + "?" + urllib.parse.urlencode(params)
+    """목록을 받습니다. 일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    return _req(LIST_API + "?" + urllib.parse.urlencode(params))
+
+
+def _req(url):
+    """주소 하나를 불러 JSON 으로 돌려줍니다."""
     req = urllib.request.Request(url, headers={
         "User-Agent": UA,
         # 이 헤더가 없으면 목록 JSON 대신 화면 HTML 이 옵니다.
@@ -134,6 +142,45 @@ def _text(s):
 def _date(v):
     m = DATE.search(str(v or ""))
     return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else ""
+
+
+def _posted_at(no):
+    """공고 한 건의 접수 시작일을 상세에서 읽어옵니다.
+
+    목록에는 접수 시작일이 없고 마감일만 있습니다. 상세를 한 번 더
+    불러야 합니다. 2026-10-12 에 추가했습니다.
+
+    상세 화면(H22A1001.html)의 HTML 에는 날짜가 없습니다. 화면이 뜬 뒤
+    자바스크립트가 이 API 를 불러 채웁니다. 그래서 화면 HTML 을 긁는
+    방법으로는 안 되고 API 를 직접 불러야 합니다.
+
+        ACTIVE_DATE   2026-09-16(수) 15:00 ~ 2026-10-14(수) 23:59
+
+    앞쪽이 접수 시작, 뒤쪽이 마감입니다. 공고 11건으로 형식이 일정한
+    것을 확인했습니다.
+
+    없는 공고번호를 넣으면 빈 값이 옵니다. 그때는 빈 문자열을
+    돌려줍니다. 날짜를 지어내지 않습니다.
+
+    실패해도 수집 전체를 멈추지 않습니다. 접수 시작일은 있으면 좋은
+    정보이지, 없다고 공고를 버릴 이유는 아닙니다.
+    """
+    # 공고 수가 10여 건이라 전체 갱신 시간에 거의 영향이 없습니다.
+    # 연달아 두드리지 않는 쪽이 예의라 짧게 쉽니다.
+    time.sleep(0.3)
+    try:
+        j = _req(FIND_API + "?" + urllib.parse.urlencode({
+            "GCS_COMP_CODE": "",
+            "HR_AFTC_MRG_ADOP_NTIC_ID": no,
+            "CURURL": "",
+        }))
+    except Exception as e:
+        print(f"      · 포스코 {no}: 접수 시작일을 못 읽었습니다({type(e).__name__}). 비웁니다.")
+        return ""
+
+    # "시작 ~ 마감" 중 앞쪽만 씁니다. 물결이 없으면 통째로 넘겨도
+    # _date 가 맨 앞 날짜를 집으므로 결과는 같습니다.
+    return _date(str(j.get("ACTIVE_DATE") or "").split("~")[0])
 
 
 def _career(row):
@@ -250,8 +297,8 @@ def fetch(company):
             # 목록에 근무지가 없습니다. 지어내지 않습니다.
             "location": "",
             "career": _career(x),
-            # 목록에 접수 시작일이 없습니다.
-            "postedAt": "",
+            # 목록에는 없어서 상세를 한 번 더 읽습니다.
+            "postedAt": _posted_at(no),
             "closesAt": _date(x.get("END_ACTIVE_DATE")),
             "dday": None,
             "multiRole": False,

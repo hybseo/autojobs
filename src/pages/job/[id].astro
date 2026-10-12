@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
-  industriesOf, industrySlug, rolesOf, roleName, hasDetail,
+  industriesOf, industrySlug, rolesOf, roleName, hasDetail, lazyImages,
 } from '../../lib.js';
 
 /*
@@ -133,7 +133,7 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
     )}
 
     <div class="section-h">직무 상세</div>
-    <div class="prose" set:html={job.description} />
+    <div class="prose" set:html={lazyImages(job.description)} />
 
     {!closed && (
       <div class="prose">
