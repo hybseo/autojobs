@@ -1,0 +1,214 @@
+---
+import Base from '../../layouts/Base.astro';
+import {
+  JOBS, jobPostingSchema, daysLeft, byCompany,
+  openJobs, isRecentlyClosed, KEEP_DAYS,
+  industriesOf, industrySlug, rolesOf, roleName, hasDetail,
+} from '../../lib.js';
+
+/*
+ * 공고 상세.
+ *
+ * 마감된 공고도 90일간 페이지를 남깁니다.
+ *
+ * 예전에는 마감되면 데이터에서 빠지면서 페이지도 사라져 404 가 됐습니다.
+ * 구글은 색인한 주소를 한동안 계속 방문하므로 404 가 쌓였습니다.
+ * 실제로 색인 32개 중 14개가 404 였고, 전부 마감된 공고였습니다.
+ *
+ * 검색으로 들어온 사람을 빈손으로 돌려보내지 않고, 마감 사실을 알린 뒤
+ * 같은 기업·같은 산업의 진행중 공고로 안내합니다.
+ *
+ * 다만 데이터에 남아 있는 동안만 가능합니다. 수집기가 마감 공고를
+ * jobs.json 에서 지우면 이 페이지도 만들 수 없습니다.
+ */
+export function getStaticPaths() {
+  return JOBS
+    .filter(hasDetail)
+    .map((j) => ({ params: { id: j.id }, props: { job: j } }));
+}
+
+const { job } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const pageUrl = `${site}/job/${job.id}/`;
+const d = daysLeft(job);
+/*
+ * 마감 판정.
+ *
+ * d < 0 이어야 합니다. d <= 0 으로 두면 오늘 마감인 공고가 마감으로
+ * 처리됩니다. daysLeft 는 마감일이 오늘이면 0 을 돌려주기 때문입니다.
+ *
+ * 실제로 그런 적이 있습니다. 목록에는 "오늘 마감" 으로 멀쩡히 떠 있는데
+ * 눌러 들어가면 "이 공고는 마감되었습니다" 가 뜨고 지원 버튼이 사라졌습니다.
+ * 아직 접수가 열려 있는 자리인데 구직자를 돌려보낸 것입니다.
+ *
+ * lib.js 의 openJobs 는 parseDate(closesAt) >= TODAY 로 오늘 마감을
+ * 진행중으로 봅니다. 이 파일도 같은 기준이어야 합니다.
+ */
+const closed = d < 0 && !!job.closesAt;
+const co = byCompany(job.companySlug);
+
+// 마감된 공고는 구조화 데이터를 넣지 않습니다.
+// 지원할 수 없는 자리를 채용공고로 알리면 잘못된 정보가 됩니다.
+const schema = closed ? null : jobPostingSchema(job, pageUrl);
+
+const title = closed
+  ? `[마감] ${job.company} ${job.title} | SEARCHJOB`
+  : `${job.company} ${job.title} 채용 | SEARCHJOB`;
+const desc = closed
+  ? `${job.company} ${job.title} 공고는 ${job.closesAt} 마감되었습니다. ${co.name}의 다른 진행중 공고를 확인하세요.`
+  : `${job.company} ${job.title}. ${job.career}${job.location ? ' · ' + job.location : ''}. ${job.closesAt} 마감.`;
+
+// 마감 화면에서 안내할 대체 공고
+const inds = industriesOf(job);
+const roleCodes = rolesOf(job);
+
+/*
+ * 관련 공고.
+ *
+ * 전에는 마감된 공고에만 보여줬습니다. 진행중일 때는 지원 버튼에
+ * 집중하게 하려던 것인데, 두 가지가 아쉬웠습니다.
+ *
+ * 1) 검색엔진에게 막다른 길이 됩니다.
+ *    구글은 링크를 타고 다니며 페이지를 찾습니다. 공고 상세에서
+ *    나갈 데가 없으면 거기서 멈춥니다. 2026-09-15 서치콘솔에
+ *    "발견됨 - 색인이 생성되지 않음" 이 306건 쌓여 있었습니다.
+ *
+ * 2) 구직자도 아쉽습니다.
+ *    이 공고가 안 맞으면 그냥 뒤로 갑니다. 같은 직무 다른 공고를
+ *    보여주면 한 번 더 볼 이유가 생깁니다.
+ *
+ * 마감된 공고에는 조금 더 보여줍니다. 지원할 수 없는 자리에 온
+ * 사람에게는 대안이 본문보다 쓸모 있습니다.
+ */
+const LIMIT = closed ? 8 : 5;
+
+const sameCo = openJobs()
+  .filter((j) => j.companySlug === job.companySlug && j.id !== job.id)
+  .slice(0, LIMIT);
+
+/*
+ * 같은 직무.
+ *
+ * 구직자에게 가장 쓸모 있습니다. "이 회사 다른 자리" 보다
+ * "다른 회사 같은 자리" 를 찾는 경우가 많습니다.
+ *
+ * 같은 회사 공고는 빼고 뽑습니다. 바로 위에 이미 나오니까요.
+ */
+const sameRole = roleCodes.length
+  ? openJobs()
+      .filter((j) => j.id !== job.id
+        && j.companySlug !== job.companySlug
+        && rolesOf(j).some((c) => roleCodes.includes(c)))
+      .slice(0, LIMIT)
+  : [];
+
+const sameInd = inds.length
+  ? openJobs()
+      .filter((j) => j.companySlug !== job.companySlug
+        && industriesOf(j).some((x) => inds.includes(x)))
+      .slice(0, LIMIT)
+  : [];
+const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href={`/company/${job.companySlug}/`}>{job.company}</a></div>
+      <h1>{job.title}</h1>
+      <div class="meta">
+        {job.location && <>{job.location} · </>}{job.career} ·
+        {closed
+          ? <> <b class="done">마감</b> · {job.closesAt} 마감</>
+          : <> <b>{d > 0 ? `D-${d}` : '오늘 마감'}</b> · {job.closesAt} 마감</>}
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {closed && (
+      <div class="closed-note">
+        <b>이 공고는 마감되었습니다.</b>
+        <span>{job.closesAt} 접수 마감 · 아래에서 진행중인 공고를 확인하세요.</span>
+      </div>
+    )}
+
+    <div class="section-h">직무 상세</div>
+    <div class="prose" set:html={job.description} />
+
+    {!closed && (
+      <div class="prose">
+        <a class="cta" href={job.sourceUrl} target="_blank" rel="noopener nofollow">원문 공고에서 지원하기</a>
+      </div>
+    )}
+
+    {sameRole.length > 0 && (
+      <>
+        <div class="section-h">
+          같은 직무 진행중 공고
+          <span class="gn">{roleCodes.map(roleName).join(' · ')}</span>
+        </div>
+        <ul class="archive">
+          {sameRole.map((j) => (
+            <li>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
+              <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
+            </li>
+          ))}
+        </ul>
+        <p style="margin:10px 0 0">
+          <a class="back" href={`/role/${roleCodes[0]}/`}>{roleName(roleCodes[0])} 채용 전체 보기 →</a>
+        </p>
+      </>
+    )}
+
+    {sameCo.length > 0 && (
+      <>
+        <div class="section-h">{co.name} 진행중 공고 <span class="gn">{sameCo.length}</span></div>
+        <ul class="archive">
+          {sameCo.map((j) => (
+            <li>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.title}</a>
+              <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    {sameInd.length > 0 && (
+      <>
+        <div class="section-h">{inds[0]} 진행중 공고</div>
+        <ul class="archive">
+          {sameInd.map((j) => (
+            <li>
+              <a href={hasDetail(j) ? `/job/${j.id}/` : j.sourceUrl}
+                 {...(hasDetail(j) ? {} : { target: '_blank', rel: 'noopener' })}>{j.company} · {j.title}</a>
+              <time>{j.closesAt ? `${md(j.closesAt)} 마감` : '상시'}</time>
+            </li>
+          ))}
+        </ul>
+        <p style="margin:10px 0 0">
+          <a class="back" href={`/industry/${industrySlug(inds[0])}/`}>{inds[0]} 채용 전체 보기 →</a>
+        </p>
+      </>
+    )}
+
+    <p style="margin:28px 0 56px">
+      <a class="back" href={`/company/${job.companySlug}/`}>← {co.name} 채용 전체 보기</a>
+    </p>
+  </main>
+</Base>
+
+<style is:global>
+  /* 마감 안내. 눈에 띄되 경고처럼 보이지는 않게 둡니다. */
+  .closed-note {
+    display: flex; flex-direction: column; gap: 4px;
+    margin: 22px 0 4px; padding: 14px 16px;
+    background: #F4F6F5; border-left: 4px solid #8A9198; border-radius: 3px;
+  }
+  .closed-note b { font-size: 15px; color: #16181C; }
+  .closed-note span { font-size: 13.5px; color: #5A6068; }
+  .mast .meta b.done { color: #B9C0C6; }
+</style>
