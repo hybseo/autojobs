@@ -427,13 +427,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     --it:   #4A5A6B;
     --field: #F4F6F5;
   }
-  /* 주 산업(data-ind) 하나로만 칠합니다. data-in 은 여러 산업이 들어가
-     여러 선택자가 걸리고, 나중 선언이 이겨 엉뚱한 색이 붙습니다. */
-  .card[data-ind="자동차부품"] { --c: var(--auto); }
-  .card[data-ind="반도체"]     { --c: var(--semi); }
-  .card[data-ind="전기전자"]   { --c: var(--elec); }
-  .card[data-ind="로봇"]       { --c: var(--robo); }
-  .card[data-ind="IT"]         { --c: var(--it); }
+  /* 주 산업 하나로만 칠합니다. data-in 에 여러 산업이 들어가면 여러
+     선택자가 걸리고, 나중 선언이 이겨 엉뚱한 색이 붙기 때문입니다.
+     (42dot 은 자동차부품인데 IT 색이 붙던 문제)
+
+     주 산업만 담은 data-ind 를 따로 내보내다가, 공고 5,151건이면 그
+     속성만 98KB 라서 없앴습니다(2026-10-14). data-in 의 맨 앞이 곧 주
+     산업이므로 ^= 로 앞부분만 봅니다.
+
+     전제: 산업 이름 7개 중 서로의 앞부분이 되는 것이 없습니다.
+     새 산업을 넣을 때 기존 이름으로 시작하는 이름이면 색이 잘못
+     칠해집니다. JobCard.astro 의 같은 주석도 함께 보세요. */
+  .card[data-in^="자동차부품"] { --c: var(--auto); }
+  .card[data-in^="반도체"]     { --c: var(--semi); }
+  .card[data-in^="전기전자"]   { --c: var(--elec); }
+  .card[data-in^="로봇"]       { --c: var(--robo); }
+  .card[data-in^="IT"]         { --c: var(--it); }
 
   /* 카드 왼쪽에 산업 색 띠. 지금 구조를 건드리지 않고 얹습니다. */
   .list .card {
@@ -789,6 +798,90 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   const cards = [...document.querySelectorAll('#list .card')];
 
   /*
+   * 검색용 글자를 카드에서 한 번만 만들어 둡니다 (2026-10-14)
+   * ---------------------------------------------------------
+   * 전에는 서버가 data-text 에 제목·회사명·근무지·직무명을 통째로 한 번
+   * 더 복사해 보냈습니다. 카드에 이미 글자로 있는 것을 중복으로 보낸
+   * 셈이라 483KB 였고, 그만큼 홈이 무거웠습니다.
+   *
+   * 지금은 카드 안의 글자를 직접 읽어 만듭니다. 서버는 화면에 없는 것
+   * (회사 별칭, 한글 직무명)만 data-x 로 보냅니다. 86KB 입니다.
+   *
+   * 카드 전체(textContent)를 읽으면 안 됩니다
+   * ------------------------------------------
+   * 카드에는 "오늘 마감", "10.02", "D-3" 같은 글자도 있습니다. 통째로
+   * 읽으면 "마감" 을 검색했을 때 전부 걸립니다.
+   *
+   * 칩(.facts .f)도 통째로 읽으면 안 됩니다. 근무지 말고 경력구분과
+   * "여러 직무 포함 가능"·"원문 사이트" 같은 안내 글자도 같은 .f 입니다.
+   * 예전 data-text 에는 근무지만 들어 있었으므로, 근무지 칩에만 붙인
+   * loc 표시를 보고 그것만 읽습니다.
+   *
+   * 읽는 곳과 예전 data-text 의 대응
+   *     .co          회사명
+   *     .ttl         제목
+   *     .facts .f.loc 근무지
+   *     .src         원공고 제목
+   *     data-x       회사 별칭 + 한글 직무명 (화면에 없는 것)
+   *
+   * 결과는 카드에 붙여 둡니다. 속성이 아니라 자바스크립트 속성(_q)이라
+   * HTML 이 다시 무거워지지 않습니다.
+   *
+   * 시작하자마자 전부 돌면 안 됩니다
+   * --------------------------------
+   * 처음에는 페이지가 뜨자마자 카드 5,155장을 전부 훑었습니다. 재 보니
+   * 첫 화면이 12,680ms → 13,764ms 로 1초 느려졌습니다. 크기를 줄이자고
+   * 한 일인데 화면이 느려지면 앞뒤가 안 맞습니다.
+   *
+   * 그래서 두 가지로 바꿨습니다.
+   *   - 필요할 때 그 카드만 만듭니다(qOf). 검색을 안 하면 아예 안 돕니다.
+   *   - 화면이 다 뜬 뒤 브라우저가 한가할 때 미리 만들어 둡니다. 그래서
+   *     처음 검색어를 칠 때도 기다리지 않습니다.
+   */
+  const qOf = (c) => {
+    if (c._q !== undefined) return c._q;
+    let s = '';
+    for (const el of c.querySelectorAll('.co, .ttl, .facts .f.loc, .src')) {
+      s += el.textContent + ' ';
+    }
+    c._q = (s + (c.dataset.x || '')).toLowerCase();
+    return c._q;
+  };
+  /*
+   * 미리 만들어 두는 일은 화면이 다 뜬 뒤에 합니다.
+   *
+   * 처음에는 requestIdleCallback 에 3초 제한을 걸었는데, 느린 기기에서는
+   * 페이지가 뜨는 데 13초가 걸려서 3초 제한이 로딩 도중에 터집니다.
+   * 그만큼 화면이 늦어졌습니다. load 를 기다린 뒤에 돌리면 첫 화면에
+   * 영향을 주지 않습니다.
+   *
+   * 미리 못 만들어도 검색은 됩니다. qOf 가 그때 그 카드만 만듭니다.
+   *
+   * 한 번에 다 돌지 않고 쪼갭니다
+   * ----------------------------
+   * 5,155장을 한 덩어리로 돌면 그동안 화면이 멎습니다. 스크롤 중에
+   * 걸리면 144ms 끊김으로 나타났습니다. 전에 content-visibility 로
+   * 스크롤이 멎는 사고가 있었던 자리라 그냥 두지 않습니다.
+   *
+   * 브라우저가 "지금 남은 여유"를 알려주면 그만큼만 돌고 다음으로
+   * 넘깁니다. 알려주지 않는 브라우저에서는 400장씩 끊어 돕니다.
+   */
+  let warmAt = 0;
+  const warm = (deadline) => {
+    const until = deadline && deadline.timeRemaining
+      ? () => deadline.timeRemaining() > 1
+      : (() => { const end = warmAt + 400; return () => warmAt < end; })();
+    while (warmAt < cards.length && until()) qOf(cards[warmAt++]);
+    if (warmAt < cards.length) later();
+  };
+  function later() {
+    if (window.requestIdleCallback) requestIdleCallback(warm);
+    else setTimeout(warm, 50);
+  }
+  if (document.readyState === 'complete') later();
+  else window.addEventListener('load', later, { once: true });
+
+  /*
    * 필터를 걸지 않았을 때 탭에 적을 전체 건수.
    *
    * 검색이나 필터를 걸면 탭 숫자가 그 조건의 건수로 바뀝니다. 필터를
@@ -824,7 +917,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
           || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
       && (skip === 'ro' || !state.ro.size
           || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
-      && (!q || c.dataset.text.includes(q));
+      && (!q || qOf(c).includes(q));
 
     for (const [id, key, get] of [
       ['fCo', 'co', (c) => [c.dataset.co]],
@@ -864,7 +957,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         (!state.ro.size ||
           (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
         c.dataset.op === state.tab &&
-        (!q || c.dataset.text.includes(q));
+        (!q || qOf(c).includes(q));
       c.hidden = !ok;
       if (ok) shown++;
     }
@@ -913,7 +1006,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
           (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
         (!state.ro.size ||
           (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
-        (!q2 || c.dataset.text.includes(q2));
+        (!q2 || qOf(c).includes(q2));
     }).length;
     /*
      * 탭 숫자 갱신.
@@ -1262,7 +1355,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
           || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
       && (!state.ro.size
           || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
-      && (!q || c.dataset.text.includes(q))).length;
+      && (!q || qOf(c).includes(q))).length;
   }
 
   function switchTab(tab) {
