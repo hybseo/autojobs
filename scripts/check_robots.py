@@ -59,9 +59,34 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 JOBS = ROOT / "src" / "data" / "jobs.json"
 COMPANIES = ROOT / "src" / "data" / "companies.json"
 
-# 우리가 누구인지 밝힙니다. robots.txt 판정도 이 이름으로 받습니다.
-# 검색로봇인 척하지 않습니다.
-UA = "searchjob.co.kr robots-check (+https://searchjob.co.kr)"
+# 판정에 쓰는 User-Agent
+# ----------------------
+# 반드시 수집기가 실제로 보내는 것과 같아야 합니다. robots.txt 는
+# User-Agent 별로 규칙이 갈리기 때문에, 다른 이름으로 물어보면 우리 요청과
+# 상관없는 답을 받습니다.
+#
+# 2026-10-15 에 이걸로 한 번 틀렸습니다. 점검용으로 따로 만든 이름
+# ("searchjob.co.kr robots-check …") 으로 돌려서 273건이 비허용으로 나왔는데,
+# 수집기는 그 이름을 쓰지 않으니 그 결과는 우리 요청에 적용되는 값이
+# 아니었습니다.
+#
+# 파이썬 robotparser 는 User-Agent 에서 첫 "/" 앞까지만 떼어 소문자로 바꾼 뒤,
+# robots.txt 의 User-agent 줄이 거기에 들어있는지로 판단합니다. 아래 둘은
+# 모두 "mozilla" 가 되어 같은 그룹에 걸립니다.
+#
+# 어댑터의 UA 를 바꾸면 여기도 같이 바꾸세요. 안 그러면 점검 결과가
+# 조용히 어긋납니다. (scripts/adapters/*.py 의 UA 상수)
+UA_LIST = [
+    # 어댑터 52개가 쓰는 것
+    ("브라우저형",
+     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+     "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
+     "(+https://searchjob.co.kr job aggregator)"),
+    # greeting.py 가 쓰는 것
+    ("수집기형", "Mozilla/5.0 (compatible; searchjob.co.kr job aggregator)"),
+]
+# robots.txt 를 받아올 때 쓸 이름 (받는 것 자체는 어느 쪽이든 같습니다)
+UA = UA_LIST[0][1]
 TIMEOUT = 15
 
 
@@ -126,10 +151,22 @@ def main():
             if info != "robots없음":
                 errors.append((host, n, info))
         else:
-            bad = [u for u in samples[host] if not parser.can_fetch(UA, u)]
+            # 수집기가 실제로 쓰는 User-Agent 전부로 재봅니다. 하나라도
+            # 막히면 막힌 것으로 봅니다.
+            bad = None
+            for label, ua in UA_LIST:
+                hit = [u for u in samples[host] if not parser.can_fetch(ua, u)]
+                if hit:
+                    bad = (label, hit[0])
+                    break
             if bad:
                 verdict = "비허용"
-                blocked.append((host, n, bad[0]))
+                # 받아온 robots.txt 를 같이 남깁니다. 판정만 적어두면
+                # 나중에 맞는지 확인할 방법이 없습니다. 2026-10-15 에
+                # 넥슨이 비허용으로 나왔는데 같은 robots.txt 를 손으로
+                # 돌리니 허용이 나왔고, 근거가 없어 어느 쪽이 맞는지
+                # 가릴 수 없었습니다.
+                blocked.append((host, n, bad[1], bad[0], info))
             else:
                 verdict = "허용"
         ats = ",".join(sorted(ats_seen[host])) or "?"
@@ -137,11 +174,17 @@ def main():
 
     print("\n" + "=" * 82)
     if blocked:
-        total = sum(n for _, n, _ in blocked)
+        total = sum(n for _, n, _, _, _ in blocked)
         print(f"\n비허용 {len(blocked)}곳 · 공고 {total:,}건 — 수집을 멈춰야 합니다\n")
-        for host, n, u in blocked:
-            print(f"  {n:>6}건  {host}")
+        for host, n, u, label, body in blocked:
+            print(f"  {n:>6}건  {host}   ({label} User-Agent 기준)")
             print(f"          막힌 주소 예: {u}")
+            print(f"          받아온 robots.txt:")
+            for line in body.strip().splitlines()[:25]:
+                print(f"            | {line}")
+            if len(body.strip().splitlines()) > 25:
+                print(f"            | … (이하 생략)")
+            print()
         print("\n  해당 기업을 companies.json 에서 enabled=false 로 바꾸고,")
         print("  메모에 날짜와 이유, 되살리는 조건을 남기세요.")
     else:
