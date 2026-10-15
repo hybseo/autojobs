@@ -1,11 +1,14 @@
-2026-10-15 11:04 기준
+2026-10-15 11:17 기준
 
-호스트 362개 점검 (공고 6,473건)
+수집이 허용되지 않는 곳 10곳 · 공고 104건 — 아래 '비허용' 항목을 보세요
+확인하지 못한 곳 3곳 (판정 아님)
+
+호스트 362개 점검 (공고 6,473건) · 파이썬 3.13.16
 
     공고  판정            ATS             호스트
 ----------------------------------------------------------------------------------
    287  허용            greenhouse      toss.im
-   180  비허용           nexon           careers.nexon.com
+   180  허용            nexon           careers.nexon.com
    171  허용            greenhouse      job-boards.greenhouse.io
    147  허용            lg              careers.lg.com
    135  허용            greeting        www.musinsacareers.com
@@ -168,7 +171,7 @@
     11  허용            greeting        spherecorp.career.greetinghr.com
     11  허용            greeting        i-screammedia.career.greetinghr.com
     11  허용            greeting        flitto.career.greetinghr.com
-    11  오류 URLError   posco           recruit.posco.com
+    11  비허용           posco           recruit.posco.com
     11  허용            greeting        emocog-hr.career.greetinghr.com
     11  허용            greeting        sianalytics.career.greetinghr.com
     11  허용            greeting        allganize.career.greetinghr.com
@@ -369,22 +372,22 @@
 
 ==================================================================================
 
-비허용 10곳 · 공고 273건 — 수집을 멈춰야 합니다
-
-     180건  careers.nexon.com   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://careers.nexon.com/recruit/10460
-          받아온 robots.txt:
-            | # https://www.robotstxt.org/robotstxt.html
-            | User-agent: *
-            | Disallow: /recruit?
-            | 
-            | Sitemap: https://careers.nexon.com/sitemap.xml
+비허용 10곳 · 공고 104건 — 수집을 멈춰야 합니다
 
       73건  bucketplace.career.greetinghr.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://bucketplace.career.greetinghr.com/ko/o/167227
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
+
+      11건  recruit.posco.com   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://recruit.posco.com/h22a01-front/H22A1001.html?id=698007
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | 
+            | User-agent: Yeti
+            | Allow: /
 
        5건  millie.career.greetinghr.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://millie.career.greetinghr.com/o/236906
@@ -468,8 +471,7 @@
   해당 기업을 companies.json 에서 enabled=false 로 바꾸고,
   메모에 날짜와 이유, 되살리는 조건을 남기세요.
 
-확인 실패 4곳 — 판정이 아닙니다. 다시 돌려보세요.
+확인 실패 3곳 — 판정이 아닙니다. 다시 돌려보세요.
       87건  careers.kakao.com                            HTTP 401
       36건  pharmaresearch_hr.career.greetinghr.com      오류 URLError
-      11건  recruit.posco.com                            오류 URLError
        6건  ecoprorecruit.co.kr                          HTTP 403
