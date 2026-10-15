@@ -847,6 +847,30 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     c._q = (s + (c.dataset.x || '')).toLowerCase();
     return c._q;
   };
+
+  /*
+   * 카드의 고정 정보를 한 번만 읽어 붙여둡니다 (2026-10-15)
+   * -------------------------------------------------------
+   * 거르기를 할 때마다 c.dataset.co · c.dataset.in.split('|') 같은 것을
+   * 다시 읽고 있었습니다. dataset 읽기는 보통 속성 읽기보다 훨씬 비쌉니다.
+   * 카드 5,200장을 한 바퀴 도는 데 그것만으로 10ms 가 들었고, 한 글자
+   * 칠 때마다 여러 바퀴를 돌았습니다.
+   *
+   * 값은 서버에서 찍혀 나온 뒤 바뀌지 않으므로 한 번 읽어 두면 됩니다.
+   */
+  const metaOf = (c) => {
+    let m = c._m;
+    if (m === undefined) {
+      m = c._m = {
+        co: c.dataset.co,
+        ca: c.dataset.career,
+        op: c.dataset.op,
+        ins: (c.dataset.in || '').split('|'),
+        ros: (c.dataset.role || '').split('|'),
+      };
+    }
+    return m;
+  };
   /*
    * 미리 만들어 두는 일은 화면이 다 뜬 뒤에 합니다.
    *
@@ -871,7 +895,11 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     const until = deadline && deadline.timeRemaining
       ? () => deadline.timeRemaining() > 1
       : (() => { const end = warmAt + 400; return () => warmAt < end; })();
-    while (warmAt < cards.length && until()) qOf(cards[warmAt++]);
+    while (warmAt < cards.length && until()) {
+      const c = cards[warmAt++];
+      qOf(c);
+      metaOf(c);
+    }
     if (warmAt < cards.length) later();
   };
   function later() {
@@ -908,30 +936,13 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    * 적용하면, 이미 고른 회사 말고는 전부 0이 되어 다른 회사를 고를 수
    * 없게 됩니다.
    */
-  function updateChipCounts(q) {
-    const pass = (c, skip) =>
-      c.dataset.op === state.tab
-      && (skip === 'co' || !state.co.size || state.co.has(c.dataset.co))
-      && (skip === 'ca' || !state.ca.size || state.ca.has(c.dataset.career))
-      && (skip === 'in' || !state.in.size
-          || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
-      && (skip === 'ro' || !state.ro.size
-          || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
-      && (!q || qOf(c).includes(q));
-
-    for (const [id, key, get] of [
-      ['fCo', 'co', (c) => [c.dataset.co]],
-      ['fCa', 'ca', (c) => [c.dataset.career]],
-      ['fIn', 'in', (c) => (c.dataset.in || '').split('|')],
-      ['fRo', 'ro', (c) => (c.dataset.role || '').split('|')],
+  function paintChipCounts(tallies) {
+    for (const [id, tallyMap] of [
+      ['fCo', tallies.co], ['fCa', tallies.ca],
+      ['fIn', tallies.in], ['fRo', tallies.ro],
     ]) {
       const box = document.getElementById(id);
       if (!box) continue;
-      const tallyMap = new Map();
-      for (const c of cards) {
-        if (!pass(c, key)) continue;
-        for (const v of get(c)) tallyMap.set(v, (tallyMap.get(v) || 0) + 1);
-      }
       for (const chip of box.querySelectorAll('.chip:not(.morebtn)')) {
         const n = tallyMap.get(chip.dataset.v) || 0;
         const el = chip.querySelector('.n');
@@ -943,26 +954,83 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     }
   }
 
-  function apply() {
-    const q = state.q.trim().toLowerCase();
-    let shown = 0;
+  /*
+   * 카드를 한 바퀴만 돌며 필요한 것을 모두 셉니다 (2026-10-15)
+   * -----------------------------------------------------------
+   * 전에는 한 글자 칠 때마다 5,200장을 여섯 바퀴에서 여덟 바퀴 돌았습니다.
+   *
+   *     hitsIn(지금 탭)      1바퀴
+   *     hitsIn(반대 탭)      1바퀴
+   *     보이기/숨기기        1바퀴
+   *     반대 탭 건수         1바퀴
+   *     칩 숫자              4바퀴   ← 기업·경력·산업·직무 각각
+   *
+   * 재 보니 한 글자에 75ms, 첫 글자는 360ms 였습니다. 50ms 만 넘어도
+   * 끊기는 느낌이 나는데 한참 넘었습니다.
+   *
+   * 한 바퀴로 줄일 수 있는 이유
+   *   칩 숫자는 "자기 조건만 빼고 통과하는 카드" 를 셉니다. 그래서 조건
+   *   네 개 중 몇 개가 틀렸는지만 알면 됩니다.
+   *     전부 맞음        → 네 칩 모두에 셉니다
+   *     하나만 틀림      → 그 틀린 칩에만 셉니다
+   *     둘 이상 틀림     → 어느 칩에도 안 셉니다
+   *   따로 네 바퀴 돌 필요가 없습니다.
+   *
+   * 결과는 전과 완전히 같아야 합니다. 30개 시나리오로 전후를 비교해
+   * 확인했습니다.
+   */
+  function scan(q) {
+    const tab = state.tab;
+    const other = tab === '마감 있음' ? '상시채용' : '마감 있음';
+    const hasCo = state.co.size, hasCa = state.ca.size;
+    const hasIn = state.in.size, hasRo = state.ro.size;
+    const co = new Map(), ca = new Map(), ins = new Map(), ros = new Map();
+    const bump = (m, k) => m.set(k, (m.get(k) || 0) + 1);
+    let shown = 0, inOther = 0;
+
     for (const c of cards) {
-      const ok =
-        (!state.co.size || state.co.has(c.dataset.co)) &&
-        (!state.ca.size || state.ca.has(c.dataset.career)) &&
-        // 한 공고가 여러 산업에 걸칩니다. 하나라도 고른 산업에 들면 보여줍니다.
-        (!state.in.size ||
-          (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
-        // 직무도 한 공고에 여러 개 붙습니다. 하나라도 맞으면 보여줍니다.
-        (!state.ro.size ||
-          (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
-        c.dataset.op === state.tab &&
-        (!q || qOf(c).includes(q));
+      // 검색어부터 봅니다. 여기서 걸리면 아무 데도 세지 않습니다.
+      if (q && !qOf(c).includes(q)) { c.hidden = true; continue; }
+      const m = metaOf(c);
+
+      let bad = 0, only = '';
+      if (hasCo && !state.co.has(m.co)) { bad++; only = 'co'; }
+      if (hasCa && !state.ca.has(m.ca)) { bad++; only = 'ca'; }
+      if (hasIn && !m.ins.some((v) => state.in.has(v))) { bad++; only = 'in'; }
+      if (hasRo && !m.ros.some((v) => state.ro.has(v))) { bad++; only = 'ro'; }
+
+      const all = bad === 0;
+      const isTab = m.op === tab;
+      const ok = isTab && all;
       c.hidden = !ok;
       if (ok) shown++;
+      else if (all && m.op === other) inOther++;
+
+      if (isTab) {
+        // "하나만 틀림" 일 때만 그 칩에 셉니다. bad 를 같이 보지 않고
+        // only 만 보면, 둘 이상 틀린 카드도 마지막에 틀린 칩에 잘못
+        // 들어갑니다. 30개 시나리오 비교에서 이걸로 한 번 걸렸습니다.
+        const one = bad === 1;
+        if (all || (one && only === 'co')) bump(co, m.co);
+        if (all || (one && only === 'ca')) bump(ca, m.ca);
+        if (all || (one && only === 'in')) for (const v of m.ins) bump(ins, v);
+        if (all || (one && only === 'ro')) for (const v of m.ros) bump(ros, v);
+      }
     }
+    return { shown, inOther, other, tallies: { co, ca, in: ins, ro: ros } };
+  }
+
+  function apply() {
+    const q = state.q.trim().toLowerCase();
+    /*
+     * 보이기/숨기기 · 반대 탭 건수 · 칩 숫자를 scan 한 번으로 모두 받습니다.
+     * 조건은 전과 같습니다. 한 공고가 여러 산업·직무에 걸치므로 하나라도
+     * 맞으면 보여주는 것도 그대로입니다(scan 안의 some).
+     */
+    const r = scan(q);
+    const shown = r.shown;
     empty.hidden = shown > 0;
-    updateChipCounts(q);
+    paintChipCounts(r.tallies);
     // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
     const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
     /*
@@ -996,18 +1064,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     // 이 탭에서 0건이어도 반대 탭에는 있을 수 있습니다.
     // 42dot 처럼 상시채용만 하는 회사를 "마감 있는 공고" 탭에서 고르면 빈 화면이 됩니다.
     // 그대로 두면 공고가 없는 줄 알고 떠납니다.
-    const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
-    const inOther = cards.filter((c) => {
-      const q2 = state.q.trim().toLowerCase();
-      return c.dataset.op === other &&
-        (!state.co.size || state.co.has(c.dataset.co)) &&
-        (!state.ca.size || state.ca.has(c.dataset.career)) &&
-        (!state.in.size ||
-          (c.dataset.in || '').split('|').some((v) => state.in.has(v))) &&
-        (!state.ro.size ||
-          (c.dataset.role || '').split('|').some((v) => state.ro.has(v))) &&
-        (!q2 || qOf(c).includes(q2));
-    }).length;
+    const other = r.other;
+    const inOther = r.inOther;
     /*
      * 탭 숫자 갱신.
      *
@@ -1074,6 +1132,9 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         ? `${other} 탭에 ${inOther}건이 있습니다.`
         : '검색어를 줄이거나 필터를 해제해 보세요.';
     }
+    // 검색창 쪽에서 "지금 탭은 0건인데 반대 탭에는 있나" 를 판단하는 데
+    // 씁니다. 전에는 그걸 위해 카드를 두 바퀴 더 돌았습니다.
+    return { shown, inOther, other };
   }
 
   function sortCards() {
@@ -1345,19 +1406,11 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    *
    * 지금 탭에 결과가 없고 반대 탭에 있으면 그쪽으로 옮깁니다.
    * 탭 상태와 화면이 어긋나지 않으면서 원하는 결과를 보여줍니다.
+   *
+   * 판단은 검색창 쪽에서 apply 가 돌려준 값으로 합니다. 전에는 여기에
+   * hitsIn 이라는 함수가 있어서 카드를 두 바퀴 더 돌았는데, 같은 값을
+   * apply 가 이미 세고 있어서 없앴습니다. (2026-10-15)
    */
-  function hitsIn(tab, q) {
-    return cards.filter((c) =>
-      c.dataset.op === tab
-      && (!state.co.size || state.co.has(c.dataset.co))
-      && (!state.ca.size || state.ca.has(c.dataset.career))
-      && (!state.in.size
-          || (c.dataset.in || '').split('|').some((v) => state.in.has(v)))
-      && (!state.ro.size
-          || (c.dataset.role || '').split('|').some((v) => state.ro.has(v)))
-      && (!q || qOf(c).includes(q))).length;
-  }
-
   function switchTab(tab) {
     state.tab = tab;
     document.querySelectorAll('.tabs .tab').forEach((o) => {
@@ -1383,10 +1436,6 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   document.getElementById('q').addEventListener('input', (e) => {
     state.q = e.target.value;
     const q = state.q.trim().toLowerCase();
-    if (q) {
-      const other = state.tab === '마감 있음' ? '상시채용' : '마감 있음';
-      if (!hitsIn(state.tab, q) && hitsIn(other, q)) switchTab(other);
-    }
     /*
      * 거르기는 글자마다, 줄 세우기는 타이핑이 멈춘 뒤에 합니다.
      *
@@ -1397,7 +1446,18 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
      * 거르기(apply)는 2ms 라 글자마다 그대로 합니다. 목록이 즉시
      * 줄어드는 반응은 유지되고, 순서만 조금 늦게 잡힙니다.
      */
-    apply();
+    /*
+     * 지금 탭이 0건인데 반대 탭에 있으면 그쪽으로 옮겨 줍니다.
+     *
+     * 전에는 그걸 판단하려고 카드를 두 바퀴 더 돌았습니다(hitsIn). 지금은
+     * apply 가 세어서 돌려주므로 따로 돌지 않습니다. 옮길 때만 한 번 더
+     * 거릅니다. 화면은 한 번에 그려지므로 중간이 보이지는 않습니다.
+     */
+    const r = apply();
+    if (q && r.shown === 0 && r.inOther > 0) {
+      switchTab(r.other);
+      apply();
+    }
     clearTimeout(sortTimer);
     sortTimer = setTimeout(() => {
       sortCards();
