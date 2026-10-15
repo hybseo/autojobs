@@ -1,0 +1,94 @@
+name: 수집처 robots.txt 점검
+
+# 언제 도는가
+#   1) 버튼으로 직접 (Actions → 수집처 robots.txt 점검 → Run workflow)
+#   2) 매주 월요일 KST 09:23
+#
+# 왜 필요한가
+#   나인하이어(9개사)가 2026-10-02 새벽에 갑자기 막혔습니다. robots.txt 에
+#   "Disallow: /*?*page=" 가 있었고 우리가 쓰던 주소가 정확히 그 모양이었습니다.
+#   우회하지 않기로 하고 9개사를 비활성으로 돌렸습니다.
+#
+#   그때 더 큰 문제가 드러났습니다. 나머지 수집처는 한 번도 확인한 적이
+#   없었다는 것입니다. 그리팅 한 곳에만 3,600건 넘게 달려 있어서, 거기가
+#   같은 결정을 하면 우리는 모르는 채로 계속 긁게 됩니다.
+#
+#   robots.txt 는 사이트가 언제든 바꿉니다. 한 번 보고 끝낼 일이 아니라
+#   가끔 다시 봐야 하는 일이라 주기적으로 돌게 했습니다.
+#
+# 왜 여기서 도는가
+#   공고 수집이 일어나는 바로 그 자리입니다. 같은 네트워크에서 같은 주소를
+#   확인해야 결과가 실제와 맞습니다.
+#
+# 결과를 어디서 보나
+#   scripts/robots_report.txt 에 저장하고 바뀐 게 있으면 커밋합니다.
+#   Actions 로그를 열지 않아도 저장소에서 바로 볼 수 있고, 커밋 기록이
+#   남아 "언제부터 막혔는지" 를 나중에 되짚을 수 있습니다.
+#
+# 비허용이 나오면
+#   이 워크플로가 실패(빨간색)로 끝납니다. 보고서를 열어 어느 호스트에
+#   공고가 몇 건 걸려 있는지 보고, 해당 기업을 companies.json 에서
+#   enabled=false 로 바꾸세요. 메모에 날짜와 이유, 되살리는 조건을 남기면
+#   나중에 왜 껐는지 알 수 있습니다.
+#
+#   스크립트는 아무것도 자동으로 끄지 않습니다. 어느 기업을 뺄지는
+#   사람이 판단할 일이라 보고만 합니다.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC 월 00:23 = KST 월 09:23
+    - cron: '23 0 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  robots:
+    runs-on: ubuntu-latest
+    # 호스트가 300개가 넘습니다. 응답이 없는 곳은 건당 최대 15초까지
+    # 기다리므로 넉넉히 둡니다.
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 비허용이 있으면 스크립트가 1 로 끝납니다. 여기서 바로 멈추면
+      # 보고서를 저장하지 못하므로, 끝 상태만 받아두고 계속 갑니다.
+      - name: 점검
+        id: run
+        run: |
+          set +e
+          python scripts/check_robots.py | tee scripts/robots_report.txt
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: 보고서 저장
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 맨 위에 언제 돌린 것인지 적어둡니다.
+          printf '%s 기준\n\n%s\n' \
+            "$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" \
+            "$(cat scripts/robots_report.txt)" > scripts/robots_report.txt
+
+          git add scripts/robots_report.txt
+          git diff --cached --quiet && { echo "바뀐 내용이 없습니다."; exit 0; }
+
+          git commit -m "robots.txt 점검 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+          for i in 1 2 3; do
+            # 공고갱신이 먼저 올렸을 수 있습니다. 받아서 얹고 다시 밉니다.
+            git pull --rebase --quiet && git push && { echo "저장했습니다."; exit 0; }
+            sleep 10
+          done
+          echo "저장에 실패했습니다. 보고서는 위 로그에 그대로 있습니다."
+          exit 1
+
+      - name: 비허용이 있으면 실패로 표시
+        if: steps.run.outputs.code != '0'
+        run: |
+          echo "수집이 허용되지 않는 곳이 있습니다. scripts/robots_report.txt 를 보세요."
+          exit 1

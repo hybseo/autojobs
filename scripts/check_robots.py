@@ -62,7 +62,7 @@ COMPANIES = ROOT / "src" / "data" / "companies.json"
 # 우리가 누구인지 밝힙니다. robots.txt 판정도 이 이름으로 받습니다.
 # 검색로봇인 척하지 않습니다.
 UA = "searchjob.co.kr robots-check (+https://searchjob.co.kr)"
-TIMEOUT = 20
+TIMEOUT = 15
 
 
 def fetch_robots(host):
