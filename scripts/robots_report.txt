@@ -1,4 +1,4 @@
-2026-10-15 10:53 기준
+2026-10-15 11:04 기준
 
 호스트 362개 점검 (공고 6,473건)
 
@@ -371,26 +371,99 @@
 
 비허용 10곳 · 공고 273건 — 수집을 멈춰야 합니다
 
-     180건  careers.nexon.com
+     180건  careers.nexon.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://careers.nexon.com/recruit/10460
-      73건  bucketplace.career.greetinghr.com
+          받아온 robots.txt:
+            | # https://www.robotstxt.org/robotstxt.html
+            | User-agent: *
+            | Disallow: /recruit?
+            | 
+            | Sitemap: https://careers.nexon.com/sitemap.xml
+
+      73건  bucketplace.career.greetinghr.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://bucketplace.career.greetinghr.com/ko/o/167227
-       5건  millie.career.greetinghr.com
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+
+       5건  millie.career.greetinghr.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://millie.career.greetinghr.com/o/236906
-       3건  koreazinc.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+
+       3건  koreazinc.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://koreazinc.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269068
-       3건  medytox.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       3건  medytox.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://medytox.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269096
-       3건  jwholdings.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       3건  jwholdings.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://jwholdings.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269218
-       3건  recruit.cuckoo.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       3건  recruit.cuckoo.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://recruit.cuckoo.co.kr/recruit/BASE/RecruitPost/view.do?hmCode=HM010&seq=238
-       1건  motionncontrol.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+
+       1건  motionncontrol.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://motionncontrol.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=268503
-       1건  hyosung.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       1건  hyosung.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://hyosung.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=268872
-       1건  kwangdong.recruiter.co.kr
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       1건  kwangdong.recruiter.co.kr   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://kwangdong.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=268634
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
 
   해당 기업을 companies.json 에서 enabled=false 로 바꾸고,
   메모에 날짜와 이유, 되살리는 조건을 남기세요.
