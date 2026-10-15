@@ -36,6 +36,12 @@ name: 수집처 robots.txt 점검
 
 on:
   workflow_dispatch:
+  # 점검 코드를 고쳐 올리면 바로 돌려서 결과를 봅니다. 사람이 Actions
+  # 탭에 들어가 버튼을 누를 필요가 없습니다.
+  push:
+    paths:
+      - 'scripts/check_robots.py'
+      - '.github/workflows/robots.yml'
   schedule:
     # UTC 월 00:23 = KST 월 09:23
     - cron: '23 0 * * 1'
@@ -54,7 +60,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          # 3.13 이상이어야 합니다. 3.12 의 robots 해석기는 규칙 끝의
+          # 물음표를 떼어버립니다. 넥슨의 "Disallow: /recruit?" 가
+          # "Disallow: /recruit" 가 되어, 멀쩡한 /recruit/10460 까지
+          # 막힌 것으로 계산했습니다. 공고 180건이 그렇게 오탐으로
+          # 잡혔습니다. 표준(RFC 9309)상 물음표는 글자 그대로입니다.
+          # (2026-10-15)
+          python-version: '3.13'
 
       # 비허용이 있으면 스크립트가 1 로 끝납니다. 여기서 바로 멈추면
       # 보고서를 저장하지 못하므로, 끝 상태만 받아두고 계속 갑니다.
@@ -87,8 +99,16 @@ jobs:
           echo "저장에 실패했습니다. 보고서는 위 로그에 그대로 있습니다."
           exit 1
 
-      - name: 비허용이 있으면 실패로 표시
-        if: steps.run.outputs.code != '0'
+      # 비허용을 찾아도 워크플로는 성공으로 끝냅니다.
+      #
+      # 처음에는 실패(빨간 X)로 끝내게 했는데, 그게 "점검이 고장났다" 로
+      # 읽혀서 두 번이나 헛걸음을 만들었습니다. 이 워크플로가 할 일은
+      # 보고서를 만드는 것이고, 찾은 내용은 보고서 맨 위에 적힙니다.
+      # 빨간 X 는 점검 자체가 못 돌았을 때만 뜨는 편이 맞습니다.
+      - name: 결과 한 줄 요약
         run: |
-          echo "수집이 허용되지 않는 곳이 있습니다. scripts/robots_report.txt 를 보세요."
-          exit 1
+          if [ "${{ steps.run.outputs.code }}" != "0" ]; then
+            echo "수집이 허용되지 않는 곳을 찾았습니다. scripts/robots_report.txt 를 보세요."
+          else
+            echo "모두 허용입니다."
+          fi

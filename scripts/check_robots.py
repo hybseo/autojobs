@@ -50,6 +50,7 @@ import collections
 import json
 import pathlib
 import sys
+import time
 import urllib.error
 import urllib.request
 from urllib.parse import urlparse
@@ -90,8 +91,7 @@ UA = UA_LIST[0][1]
 TIMEOUT = 15
 
 
-def fetch_robots(host):
-    """robots.txt 를 받아 (파서, 상태) 를 돌려줍니다."""
+def _fetch_once(host):
     url = f"https://{host}/robots.txt"
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     try:
@@ -108,6 +108,20 @@ def fetch_robots(host):
     p = RobotFileParser()
     p.parse(body.splitlines())
     return p, body
+
+
+def fetch_robots(host):
+    """robots.txt 를 받아 (파서, 받아온 내용 또는 상태) 를 돌려줍니다.
+
+    한 번 실패하면 잠깐 쉬었다 한 번 더 해봅니다. 일시적인 끊김이나
+    순간적인 거절 때문에 "확인 실패" 로 남는 호스트를 줄이기 위해서입니다.
+    robots.txt 가 없는 것(404)은 확정된 답이므로 다시 시도하지 않습니다.
+    """
+    parser, info = _fetch_once(host)
+    if parser is not None or info == "robots없음":
+        return parser, info
+    time.sleep(2)
+    return _fetch_once(host)
 
 
 def main():
@@ -138,10 +152,20 @@ def main():
         if a:
             ats_seen[host].add(a)
 
+    # 파이썬 3.13 미만은 robots 규칙을 잘못 읽습니다. 규칙 끝의 물음표를
+    # 떼어버려서, 넥슨의 "Disallow: /recruit?" 를 "Disallow: /recruit" 로
+    # 보고 멀쩡한 공고 180건을 막힌 것으로 판정했습니다. 틀린 답을 내놓느니
+    # 돌지 않는 편이 낫습니다. (2026-10-15)
+    if sys.version_info < (3, 13):
+        print(f"파이썬 {sys.version.split()[0]} 에서는 돌릴 수 없습니다.\n"
+              f"3.13 이상이 필요합니다. 그 아래 버전은 robots 규칙 끝의\n"
+              f"물음표를 떼어버려 멀쩡한 주소를 막힌 것으로 판정합니다.")
+        return 2
+
     targets = [(h, n) for h, n in counts.most_common() if n >= args.min]
-    print(f"호스트 {len(targets)}개 점검 (공고 {sum(n for _, n in targets):,}건)\n")
-    print(f"{'공고':>6}  {'판정':<14}{'ATS':<16}호스트")
-    print("-" * 82)
+    rows = []
+    rows.append(f"{'공고':>6}  {'판정':<14}{'ATS':<16}호스트")
+    rows.append("-" * 82)
 
     blocked, errors = [], []
     for host, n in targets:
@@ -170,7 +194,22 @@ def main():
             else:
                 verdict = "허용"
         ats = ",".join(sorted(ats_seen[host])) or "?"
-        print(f"{n:>6}  {verdict:<14}{ats:<16}{host}")
+        rows.append(f"{n:>6}  {verdict:<14}{ats:<16}{host}")
+
+    # 결론을 맨 위에 적습니다. 호스트가 360개라 끝까지 내려가야 결과를
+    # 알 수 있으면 아무도 안 봅니다.
+    blocked_n = sum(n for _, n, _, _, _ in blocked)
+    if blocked:
+        head = (f"수집이 허용되지 않는 곳 {len(blocked)}곳 · 공고 {blocked_n:,}건 "
+                f"— 아래 '비허용' 항목을 보세요")
+    else:
+        head = "모두 허용입니다. 멈춰야 할 곳이 없습니다"
+    if errors:
+        head += f"\n확인하지 못한 곳 {len(errors)}곳 (판정 아님)"
+    print(head)
+    print(f"\n호스트 {len(targets)}개 점검 (공고 {sum(n for _, n in targets):,}건) "
+          f"· 파이썬 {sys.version.split()[0]}\n")
+    print("\n".join(rows))
 
     print("\n" + "=" * 82)
     if blocked:
