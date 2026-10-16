@@ -40,6 +40,13 @@ export async function GET({ site }) {
 
   const urls = [
     { loc: `${base}/`, pri: '1.0', freq: 'daily', mod: today },
+    /*
+     * 소개 페이지. 내용이 거의 바뀌지 않으니 monthly 로 두고 우선순위도
+     * 낮춥니다. 공고 페이지의 크롤링 몫을 가져가면 안 됩니다.
+     * 다만 사이트가 무엇을 하는 곳인지 글로 적힌 유일한 페이지라
+     * 사이트맵에는 넣습니다. (2026-10-16)
+     */
+    { loc: `${base}/about/`, pri: '0.5', freq: 'monthly', mod: today },
     // 산업 페이지가 산업 키워드 검색을 받습니다. 메인 다음으로 중요합니다.
     ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily', mod: today })),
     // 직무 페이지. "회로설계 채용", "임베디드 개발자 채용" 같은 검색을 받습니다.

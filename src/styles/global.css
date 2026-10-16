@@ -24,6 +24,15 @@ a{color:inherit}
 .mast h1 em{font-style:normal;font-family:var(--mono);font-weight:600;color:#7FB3D0}
 .meta{margin-top:12px;font-family:var(--mono);font-size:12.5px;color:#8E969E}
 .meta b{color:#C8D2D9;font-weight:500}
+/* 제목 영역 안의 한 줄 소개.
+ *
+ * 어두운 배경이라 본문보다 밝게, 그러나 제목보다는 어둡게 둡니다.
+ * 글줄은 58자 안쪽으로 잡아 한 줄이 끝까지 늘어지지 않게 합니다.
+ * 자세한 내용은 index.astro 의 .lede 주석을 보세요. (2026-10-16) */
+.lede{margin-top:14px;font-size:14px;line-height:1.7;color:#AEBAC3;max-width:58ch}
+.lede a{color:#7FB3D0;text-decoration:none;white-space:nowrap;margin-left:4px}
+.lede a:hover{text-decoration:underline}
+@media(max-width:560px){.lede{font-size:13.5px;margin-top:12px}}
 
 .controls{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .ctrl-in{padding:14px 0 12px}
