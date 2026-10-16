@@ -598,6 +598,59 @@ export const hasDetail = (j) =>
  * 아무것도 바뀌지 않습니다. 이미지가 여러 개인 650여 건에서 효과가
  * 납니다. 한 공고에 22개까지 있습니다.
  */
+/*
+ * 공고 본문에서 남의 <script> 를 걷어냅니다. (2026-10-16)
+ *
+ * 왜 필요한가
+ * -----------
+ * 본문은 회사가 쓴 HTML 을 그대로 보여줍니다(job/[id].astro 의 set:html).
+ * 그래서 회사 페이지에 있던 <script> 태그까지 같이 들어옵니다.
+ * 2026-10-16 기준 상세페이지가 있는 5,137건 중 21건이 그랬고, 전부
+ * 네오위즈였습니다. 들어 있던 것은 이렇습니다.
+ *
+ *   <script src="/js/share-buttons.js"></script>
+ *
+ * 주소가 "/" 로 시작하는 상대 주소라, 우리 페이지에서는 네오위즈가 아니라
+ * searchjob.co.kr/js/share-buttons.js 를 찾습니다. 그런 파일은 없으니
+ * 404 가 납니다. 구글 서치콘솔에서 쫓던 404 중 일부가 이것이었습니다.
+ *
+ * 더 큰 문제는 구조화 데이터였습니다
+ * -----------------------------------
+ * 구조화 데이터는 <script type="application/ld+json"> 안에 JSON 으로
+ * 넣습니다. 그 JSON 안에 본문이 들어가는데, 본문에 </script> 가 있으면
+ * 브라우저가 거기서 블록이 끝난 줄 알고 JSON 을 잘라 버립니다.
+ *
+ *   PARSE FAIL: Unterminated string in JSON at position 2455
+ *
+ * 그래서 그 21건은 구글 채용정보에 노출되지 않았습니다. 서치콘솔이
+ * "파싱할 수 없는 구조화된 데이터 · 잘못된 값 유형" 으로 알려준 것이
+ * 이것입니다.
+ *
+ * 잘리는 문제 자체는 ldJson() 의 escape 로 막았습니다. 여기서 또 한 번
+ * 지우는 이유는 다릅니다. 남이 쓴 자바스크립트를 우리 페이지에서 실행할
+ * 이유가 없습니다.
+ *
+ * <style> <link> <iframe> 는 두는 이유
+ * ------------------------------------
+ * 같이 확인했더니 <link> 65건, <style> 19건, <iframe> 106건이 있었습니다.
+ * iframe 은 대부분 유튜브 회사 소개 영상이어서 지우면 내용이 사라집니다.
+ * style 19건은 전부 body·a·p 같은 공통 요소를 건드려서 위험하긴 한데,
+ * 지우면 회사가 꾸민 글꼴과 색이 함께 사라집니다. 2026-10-16 에
+ * script 만 지우기로 정했습니다. 문제가 생기면 그때 다시 봅니다.
+ *
+ * 닫는 태그가 없는 경우도 지웁니다
+ * ---------------------------------
+ * <script ...> 만 있고 </script> 가 없으면 브라우저는 그 뒤 본문 전체를
+ * 코드로 읽습니다. 쌍을 먼저 지우고, 남은 한쪽도 지웁니다.
+ */
+export const stripScripts = (htmlText) => {
+  if (!htmlText) return htmlText;
+  return htmlText
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<script\b[^>]*>/gi, '')
+    .replace(/<\/script\s*>/gi, '');
+};
+
 export const lazyImages = (htmlText) => {
   if (!htmlText) return htmlText;
   let n = 0;
@@ -614,6 +667,48 @@ export const lazyImages = (htmlText) => {
   });
 };
 
+/*
+ * 구조화 데이터를 <script> 안에 안전하게 넣습니다. (2026-10-16)
+ *
+ * 무슨 일이 있었나
+ * ----------------
+ * 그냥 JSON.stringify 한 값을 넣고 있었습니다. 그런데 JSON 은 "<" 를
+ * 특별하게 다루지 않습니다. 본문 안에 </script> 가 있으면 그 글자가
+ * 그대로 나가고, 브라우저는 거기서 <script> 블록이 끝났다고 봅니다.
+ * JSON 은 문장 중간에서 잘려 버립니다.
+ *
+ *   PARSE FAIL: Unterminated string in JSON at position 2455
+ *
+ * 구글은 이것을 "파싱할 수 없는 구조화된 데이터" 로 보고하고, 그 페이지는
+ * 채용정보 검색 결과에서 빠집니다. 2026-10-16 메일로 알려 왔습니다.
+ *
+ * 어떻게 막나
+ * -----------
+ * "<" ">" "&" 를 JSON 의 유니코드 표기로 바꿉니다. < 는 JSON 규격
+ * 그대로이고, 읽는 쪽에서 되돌리면 글자가 완전히 같습니다. 즉 구글이
+ * 받는 내용은 하나도 달라지지 않고, 블록이 끊기는 일만 없어집니다.
+ *
+ * U+2028 · U+2029 도 같이 바꿉니다. JSON 은 허용하지만 자바스크립트
+ * 문자열에서는 줄바꿈으로 취급되어, 엄격한 파서에서 사고가 납니다.
+ * s2w 공고 14건에 실제로 들어 있었습니다.
+ *
+ * 왜 Base.astro 가 아니라 여기 두는가
+ * ------------------------------------
+ * 구조화 데이터를 내는 페이지가 홈·산업·직무·기업·공고 다섯 종류입니다.
+ * 넣는 곳은 Base.astro 한 군데지만, 규칙은 데이터 쪽 규칙이라 다른
+ * 스키마 함수들과 함께 둡니다. 새 페이지를 만들어도 Base 를 쓰면
+ * 자동으로 적용됩니다.
+ */
+export const ldJson = (obj) =>
+  JSON.stringify(obj)
+    .replace(/</g, '\\u003C')
+    .replace(/>/g, '\\u003E')
+    .replace(/&/g, '\\u0026')
+    // U+2028 · U+2029 는 소스에 그대로 적으면 자바스크립트가 줄바꿈으로
+    // 읽어 파일 자체가 깨집니다. 그래서 문자 코드로 만들어 씁니다.
+    .replace(new RegExp(String.fromCharCode(0x2028), 'g'), '\\u2028')
+    .replace(new RegExp(String.fromCharCode(0x2029), 'g'), '\\u2029');
+
 export const jobPostingSchema = (j, pageUrl) => {
   if (!hasDetail(j)) return null;
   const datePosted = pickDatePosted(j);
@@ -624,7 +719,9 @@ export const jobPostingSchema = (j, pageUrl) => {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
     title: j.title,
-    description: j.description,
+    // 구글에 보내는 본문에서도 남의 <script> 는 빼고 보냅니다.
+    // 화면에 그리는 쪽(job/[id].astro)과 같은 내용이어야 합니다.
+    description: stripScripts(j.description),
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
     datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
