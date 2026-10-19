@@ -941,6 +941,28 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   const TOTAL_DEADLINE = cards.filter((c) => c.dataset.op === '마감 있음').length;
   const TOTAL_ALWAYS = cards.filter((c) => c.dataset.op === '상시채용').length;
   const state = { q: '', co: new Set(), ca: new Set(), in: new Set(), ro: new Set(), tab: '마감 있음', sort: 'dday' };
+
+  /*
+   * 칩 숫자를 탭 기준으로 셀 것인가. (2026-10-19)
+   * ------------------------------------------------------------------
+   * 처음 들어오면 "마감 있음" 목록이 보입니다. 하지만 그건 사용자가
+   * 그 탭을 고른 것이 아니라 그냥 기본값으로 그렇게 보이는 것입니다.
+   * 그래서 산업·직무·기업 칩의 숫자는 사이트 전체 건수를 보여줍니다.
+   *
+   * 사용자가 탭을 직접 누르면 그때부터 그 탭 기준으로 셉니다. 본인이
+   * 범위를 좁힌 것이므로 숫자도 따라가는 것이 맞습니다.
+   *
+   * 자동 탭 전환은 여기에 해당하지 않습니다
+   * ----------------------------------------
+   * 검색 결과가 지금 탭에 0건이고 반대 탭에 있으면 저절로 옮겨 갑니다.
+   * 그건 사용자가 고른 것이 아니라 시스템이 옮긴 것이라, 숫자 기준은
+   * 전체로 둡니다. 이걸 "누른 것" 으로 치면 검색어를 지웠을 때 숫자가
+   * 처음과 달라집니다. 2026-10-19 에 신고된 증상이 정확히 그것이었습니다.
+   *
+   * 그래서 이 값은 탭의 click 처리기에서만 켭니다. switchTab 안에서
+   * 켜면 자동 전환까지 같이 걸립니다. 옮기지 마세요.
+   */
+  let tabPicked = false;
   const list = document.getElementById('list');
   const empty = document.getElementById('empty');
   const count = document.getElementById('count');
@@ -1029,7 +1051,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       if (ok) shown++;
       else if (all && m.op === other) inOther++;
 
-      if (isTab) {
+      /*
+       * 칩 숫자에 이 카드를 셀 것인가.
+       *
+       * 탭을 직접 누르기 전에는 탭을 따지지 않습니다. 처음 화면의
+       * 숫자가 사이트 전체 건수여야 하기 때문입니다. 자세한 이유는
+       * 위 tabPicked 주석을 보세요. (2026-10-19)
+       */
+      if (!tabPicked || isTab) {
         // "하나만 틀림" 일 때만 그 칩에 셉니다. bad 를 같이 보지 않고
         // only 만 보면, 둘 이상 틀린 카드도 마지막에 틀린 칩에 잘못
         // 들어갑니다. 30개 시나리오 비교에서 이걸로 한 번 걸렸습니다.
@@ -1054,8 +1083,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     const shown = r.shown;
     empty.hidden = shown > 0;
     paintChipCounts(r.tallies);
-    // 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
-    const inTab = cards.filter((c) => c.dataset.op === state.tab).length;
+    /*
+     * 전체가 아니라 현재 탭 안의 건수와 견줍니다. 탭을 바꾸면 모수가 달라집니다.
+     *
+     * 전에는 여기서 카드 5,130장을 한 바퀴 더 돌며 셌습니다. 글자를 칠
+     * 때마다요. 그런데 이 값은 탭이 바뀔 때만 달라지고, 그 두 값은 이미
+     * 맨 위에서 한 번 세어 두었습니다. 그대로 씁니다. (2026-10-19)
+     */
+    const inTab = state.tab === '마감 있음' ? TOTAL_DEADLINE : TOTAL_ALWAYS;
     /*
      * "95건 표시 중 · 마감 있음 전체 414건" 은 두 숫자가 무슨 관계인지
      * 읽히지 않았습니다. 하나의 문장으로 바꿉니다.
@@ -1359,6 +1394,15 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   // 탭 전환. 필터·검색어는 그대로 두고 대상만 바꿉니다.
   document.querySelectorAll('.tabs .tab').forEach((t) => {
     t.addEventListener('click', () => {
+      /*
+       * 여기가 "사용자가 탭을 직접 골랐다" 를 표시하는 유일한 자리입니다.
+       * 이 뒤로 칩 숫자는 그 탭 기준으로 셉니다.
+       *
+       * 목록 끝 안내와 "반대 탭 N건 보기" 버튼도 결국 이 click 을 부르므로
+       * 같이 걸립니다. 그건 맞습니다 — 사용자가 눌러서 옮긴 것이니까요.
+       * 검색 중 자동 전환만 이 자리를 거치지 않습니다. (2026-10-19)
+       */
+      tabPicked = true;
       switchTab(t.dataset.tab);
       apply();
       layoutChips();
@@ -1406,6 +1450,12 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       document.querySelectorAll('.chip[aria-pressed="true"]').forEach((b) => {
         b.setAttribute('aria-pressed', 'false');
       });
+      /*
+       * 칩 숫자도 처음 상태(사이트 전체 건수)로 되돌립니다.
+       * 탭을 눌러 좁혀 놓은 뒤 전체 숫자로 돌아갈 길이 여기뿐입니다.
+       * 탭 자체는 그대로 둡니다 — 어디를 보고 있었는지 잃지 않게. (2026-10-19)
+       */
+      tabPicked = false;
       apply();
       layoutChips();
     });
@@ -1456,8 +1506,33 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   }
 
   let sortTimer = null;
+  /*
+   * 한 프레임에 한 번만 거릅니다. (2026-10-19)
+   * ------------------------------------------------------------------
+   * 한글은 한 글자를 만드는 동안 input 이 여러 번 납니다. "개" 하나에도
+   * ㄱ → 개 로 두 번, 받침이 붙으면 세 번입니다. 지금은 그때마다 전부
+   * 돌았습니다.
+   *
+   * 한 번 거르는 데 PC 에서 50~60ms 입니다(2026-10-19 실측). 폰은 3~6배라
+   * 150~360ms 입니다. 글자마다 그걸 하면 타이핑이 입력을 못 따라갑니다.
+   *
+   * requestAnimationFrame 으로 묶으면 화면을 한 번 그리는 동안 들어온
+   * 입력이 한 번으로 합쳐집니다. 고정된 지연을 두는 방식(예: 100ms 뒤에
+   * 실행)과 달리 쓸데없이 기다리지 않고, 앞 작업이 끝나기 전에는 다음
+   * 작업이 겹쳐 돌지도 않습니다.
+   *
+   * 거르는 기준은 state.q 를 그때 다시 읽습니다. 묶이는 동안 글자가 더
+   * 들어왔으면 마지막 값으로 한 번만 거릅니다.
+   */
+  let qFrame = 0;
   document.getElementById('q').addEventListener('input', (e) => {
     state.q = e.target.value;
+    if (qFrame) return;
+    qFrame = requestAnimationFrame(runFilter);
+  });
+
+  function runFilter() {
+    qFrame = 0;
     const q = state.q.trim().toLowerCase();
     /*
      * 거르기는 글자마다, 줄 세우기는 타이핑이 멈춘 뒤에 합니다.
@@ -1486,7 +1561,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       sortCards();
       apply();
     }, 250);
-  });
+  }
   document.getElementById('sort').addEventListener('change', (e) => {
     state.sort = e.target.value;
     sortCards();
