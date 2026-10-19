@@ -1,0 +1,71 @@
+# 브라우저·엣지 캐시 규칙 (2026-10-19)
+# =====================================================================
+# 왜 만들었나
+#   Cloudflare 가 아무 설정이 없으면 모든 파일에 이렇게 붙여 보냅니다.
+#
+#       Cache-Control: public, max-age=0, must-revalidate
+#
+#   "매번 서버에 다시 물어보라" 는 뜻입니다. 실제로 재 봤더니
+#   (2026-10-19, 실제 사이트):
+#
+#       홈을 세 번 불렀는데 매번 240,883 바이트를 통째로 다시 받음
+#       668ms → 301ms → 275ms
+#       브라우저 캐시에서 재사용한 파일: 0개
+#
+#   HTML 에는 ETag 도 Last-Modified 도 없어서 "안 바뀌었음(304)" 으로
+#   끝낼 수도 없습니다. 홈 → 공고 → 뒤로가기 하면 235KB 를 두 번 받습니다.
+#
+# 규칙이 겹치면 안 됩니다
+#   같은 헤더가 두 규칙에서 걸리면 값이 쉼표로 이어 붙습니다. 그래서
+#   /* 같은 전체 규칙을 쓰지 않고 폴더별로 따로 적었습니다. 새 폴더가
+#   생기면 여기에도 한 줄 추가해야 합니다. 빠뜨리면 그 폴더만 예전처럼
+#   매번 다시 받습니다(느려질 뿐, 틀린 내용이 나오지는 않습니다).
+
+# 빌드가 만든 CSS·JS.
+#
+# 파일 이름에 내용 지문이 들어 있습니다(_path_.DyB9zect.css). 내용이
+# 바뀌면 이름이 바뀌므로, 오래 캐시해도 옛날 것이 나올 일이 없습니다.
+# 1년은 이런 파일에 쓰는 표준 값입니다.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 공고 페이지들.
+#
+# 5분입니다. 공고는 하루 두 번 갱신되므로 5분 늦게 보이는 것은 사실상
+# 차이가 없습니다. 대신 뒤로가기와 재방문이 즉시 뜨고, 그때마다 받던
+# 235KB 가 사라집니다.
+#
+# 배포 직후 5분 동안은 이전 화면을 보는 사람이 있을 수 있습니다.
+# 그게 부담되면 300 을 60 으로 줄이세요. 효과는 작아지고 안전해집니다.
+/
+  Cache-Control: public, max-age=300
+# /about/ 는 그 자체가 한 페이지입니다. 하위 주소가 없으므로 * 를
+# 붙이지 않습니다. * 가 빈 문자열을 잡는지가 분명하지 않아서입니다.
+/about/
+  Cache-Control: public, max-age=300
+/preview/
+  Cache-Control: public, max-age=300
+/company/*
+  Cache-Control: public, max-age=300
+/industry/*
+  Cache-Control: public, max-age=300
+/job/*
+  Cache-Control: public, max-age=300
+/role/*
+  Cache-Control: public, max-age=300
+
+# 아이콘과 공유 그림. 이름에 지문이 없어 바꾸면 그만큼 늦게 반영됩니다.
+# 바꿀 일이 드물어 하루로 둡니다.
+/favicon.ico
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
+/og.png
+  Cache-Control: public, max-age=86400
+
+# robots.txt 와 sitemap.xml 은 검색엔진이 읽습니다.
+# 수집 로봇이 옛날 것을 들고 가면 곤란하니 짧게 둡니다.
+/robots.txt
+  Cache-Control: public, max-age=300
+/sitemap.xml
+  Cache-Control: public, max-age=300
