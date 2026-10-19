@@ -3,7 +3,14 @@
 Workday 수집기. 외국계 기업 한국법인이 많이 씁니다.
 
   목록  POST https://{회사}.{서버}.myworkdayjobs.com/wday/cxs/{회사}/{사이트}/jobs
-  상세  GET  https://{회사}.{서버}.myworkdayjobs.com/wday/cxs/{회사}/{사이트}/job/{경로}
+  상세  GET  https://{회사}.{서버}.myworkdayjobs.com/wday/cxs/{회사}/{사이트}{externalPath}
+
+상세 주소를 조심하세요. 목록이 돌려주는 externalPath 가 이미 "/job/" 으로
+시작합니다. 여기에 "/job" 을 또 붙이면 job 이 두 번 들어가고 워크데이가
+406 을 돌려줍니다. 실제로 그렇게 되어 있었고 2026-10-19 에 고쳤습니다.
+
+  목록 응답   externalPath = "/job/SingaporeSGP/FEP-Engineer_R2611165"
+  맞는 주소   .../wday/cxs/amat/External/job/SingaporeSGP/FEP-Engineer_R2611165
 
 채용 사이트가 화면을 그릴 때 쓰는 것과 같은 경로입니다. 인증은 필요 없습니다.
 
@@ -364,12 +371,41 @@ def fetch(company):
             continue
         jid = path.rstrip("/").split("/")[-1]
 
+        """상세를 받아 본문과 날짜를 채웁니다.
+
+        주소에 job 을 두 번 넣고 있었습니다 (2026-10-19)
+        --------------------------------------------------
+        externalPath 는 이미 "/job/..." 으로 시작합니다. 거기에 "/job" 을
+        한 번 더 붙여서 아래처럼 되어 있었습니다.
+
+            .../External/job/job/SingaporeSGP/FEP-Engineer_R2611165
+                         ^^^^^^^^
+
+        워크데이는 이 주소에 406 을 돌려줍니다. 그리고 바로 아래
+        except 가 그 오류를 삼켜 본문이 빈 문자열이 됐습니다. 로그도
+        남지 않아서, 25개사 335건이 제목만 있는 채로 몇 주를 지났습니다.
+
+        브라우저로 직접 확인한 결과입니다.
+
+            어플라이드    지금 406 → 고친 뒤 200, 본문 4,164자
+            일진전기      지금 406 → 고친 뒤 200, 본문 629자
+
+        요청 횟수는 달라지지 않습니다. 406 이 200 으로 바뀔 뿐입니다.
+
+        혹시 워크데이가 경로 형식을 바꾸더라도 job 이 두 번 들어가지
+        않도록, 앞에 "/job/" 이 없을 때만 붙입니다.
+        """
         body = ""
+        info = {}
         try:
-            d = _get(base + "/job" + path)
+            sub = path if path.startswith("/job/") else "/job" + path
+            d = _get(base + sub)
             info = d.get("jobPostingInfo") or {}
             body = info.get("jobDescription") or ""
-        except Exception:
+        except Exception as e:
+            # 전에는 여기서 아무 말 없이 넘어갔습니다. 그래서 전량 실패를
+            # 몇 주 동안 아무도 몰랐습니다. 이제는 남깁니다.
+            print(f"      · {name}: 상세를 못 받았습니다 ({jid}) — {e}")
             body = ""
         time.sleep(0.3)
 
@@ -384,9 +420,20 @@ def fetch(company):
             "location": x.get("locationsText") or "",
             # Workday 는 신입/경력을 구분해 주지 않습니다. 지어내지 않습니다.
             "career": "무관",
-            "postedAt": _date(x.get("postedOn") or x.get("startDate")),
-            # 마감일을 주지 않습니다. 상시채용으로 표시됩니다.
-            "closesAt": "",
+            # 게시일.
+            #
+            # 목록의 postedOn 은 "Posted Today" / "Posted 30+ Days Ago" 처럼
+            # 글로 옵니다. _date 가 YYYY-MM-DD 만 찾으므로 늘 빈 값이었고,
+            # 실제로 337건 전부 게시일이 없었습니다.
+            #
+            # 상세의 startDate 는 "2026-10-08" 형태로 옵니다. 그쪽을 먼저
+            # 봅니다. 상세를 못 받으면 예전처럼 목록 값으로 넘어갑니다.
+            "postedAt": _date(info.get("startDate")
+                              or x.get("postedOn") or x.get("startDate")),
+            # 마감일. 상세에 endDate 가 있으면 씁니다. 워크데이는 대개 주지
+            # 않아서 지금까지 빈 값이었고, 없으면 상시채용으로 표시됩니다.
+            # 2026-10-19 에 확인한 두 건은 모두 비어 있었습니다.
+            "closesAt": _date(info.get("endDate")),
             "dday": None,
             "multiRole": image_only,
             "sourceTitle": "",
