@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
-  industriesOf, industrySlug, rolesOf, roleName, hasDetail, lazyImages, stripScripts,
+  industriesOf, industrySlug, rolesOf, roleName, hasDetail, lazyImages, cleanBody,
 } from '../../lib.js';
 
 /*
@@ -133,10 +133,11 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
     )}
 
     <div class="section-h">직무 상세</div>
-    {/* 남의 <script> 를 먼저 걷어내고, 그 다음 이미지를 미룹니다.
-        순서가 중요합니다. 지울 태그 안의 <img> 까지 건드리지 않게 합니다.
-        왜 지우는지는 lib.js 의 stripScripts 주석을 보세요. (2026-10-16) */}
-    <div class="prose" set:html={lazyImages(stripScripts(job.description))} />
+    {/* cleanBody 가 남의 <script> 와 본문에 통째로 박힌 그림을 걷어냅니다.
+        그 다음 남은 이미지를 "보일 때 불러오기" 로 미룹니다.
+        왜 그러는지는 lib.js 의 stripScripts · stripDataImages 주석을
+        보세요. (2026-10-16, 2026-10-20) */}
+    <div class="prose" set:html={lazyImages(cleanBody(job.description))} />
 
     {!closed && (
       <div class="prose">

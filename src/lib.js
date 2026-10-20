@@ -546,8 +546,26 @@ const pickDatePosted = (j) => {
  * 숫자를 고칠 일이 생겨도 이제 이 한 줄만 고치면 네 곳이 같이 바뀝니다.
  */
 export const DETAIL_MIN = 50;
-export const hasDetail = (j) =>
-  !!j.description && j.description.trim().length >= DETAIL_MIN;
+/*
+ * 판정은 "다 치운 뒤에 남는 내용" 으로 합니다 (2026-10-20).
+ *
+ * 원래는 받아온 본문 길이를 그대로 재고 있었습니다. 그런데 본문에
+ * 그림이 통째로 박혀 있는 공고가 있어서(cleanBody 주석 참고), 읽을
+ * 글은 한 줄도 없는데 길이가 50만 자로 잡히는 일이 생깁니다. 그러면
+ * 상세 페이지를 만들어 놓고 빈 화면을 보여 주게 됩니다.
+ *
+ * 그래서 화면에 실제로 그릴 내용으로 잽니다. 2026-10-20 기준 이 변경으로
+ * 상세 페이지 유무가 바뀌는 공고는 0건입니다(전수 6,670건 확인). 앞으로
+ * 그림만 들어온 공고가 생기면 그때는 페이지를 만들지 않고 원문으로
+ * 보냅니다 — 빈 페이지보다 그게 맞습니다.
+ *
+ * cleanBody 는 이 줄보다 아래에 적혀 있습니다. 함수 몸통은 부를 때
+ * 실행되므로 순서는 문제되지 않습니다.
+ */
+export const hasDetail = (j) => {
+  const body = cleanBody(j.description);
+  return !!body && body.trim().length >= DETAIL_MIN;
+};
 
 /*
  * 공고 본문의 이미지를 "보일 때 불러오기" 로 바꿉니다 (2026-10-12)
@@ -651,6 +669,96 @@ export const stripScripts = (htmlText) => {
     .replace(/<\/script\s*>/gi, '');
 };
 
+/*
+ * 본문에 통째로 박힌 그림을 걷어냅니다. (2026-10-20)
+ *
+ * 무슨 일이 있었나
+ * ----------------
+ * 2026-10-19 15:00 공고갱신부터 배포가 멈췄습니다. 빌드가 이렇게
+ * 끝났습니다.
+ *
+ *   [page-size-guard] 가장 큰 페이지
+ *     1.  6,337KB  /job/slworld-130983/      ← 한도 3,994KB
+ *   → 가장 큰 페이지에 남은 여유 -2,241KB
+ *
+ * 에스엘 공고 하나 때문입니다. 본문이 3,073KB 인데 그중 2,652KB 가
+ * 그림 두 장이었습니다.
+ *
+ * 보통 그림은 주소만 들어옵니다(<img src="https://...">). 그러면 본문에
+ * 들어가는 건 주소 한 줄입니다. 그런데 어떤 채용 시스템은 그림 파일
+ * 자체를 글자로 바꿔서 본문 안에 적어 넣습니다.
+ *
+ *   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUh...">
+ *                                   └─ 이게 190만 자까지 이어집니다
+ *
+ * 그림 1장이 본문 190만 자가 됩니다. 게다가 페이지에는 본문이 두 번
+ * 들어갑니다 — 사람이 읽는 쪽과 구글에 보내는 구조화 데이터 쪽.
+ * 그래서 3MB 공고가 6.3MB 페이지가 됩니다.
+ *
+ * 얼마나 있나 (2026-10-20 전수 조사)
+ * -----------------------------------
+ *   박혀 있는 공고        41건 / 6,670건
+ *   박힌 그림 합계         6.27MB
+ *   가장 큰 것            에스엘 slworld-130983 (190만 자 1장)
+ *   회사                  에스엘·케이씨텍·세방전지·동아쏘시오·GC계열 등
+ *
+ * 걷어내면
+ * --------
+ *   에스엘      3,073KB → 421KB   (읽을 글자 48,699자 그대로 남음)
+ *   케이씨텍      313KB →  73KB
+ *   클래시스      549KB →   1KB   (읽을 글자 931자)
+ *   GC계열 20건    40KB →  0.3KB  (회사 로고였습니다)
+ *
+ * 상세 페이지가 없어지는 공고는 0건입니다. 41건 모두 그림을 빼도 읽을
+ * 내용이 남습니다. GC계열은 박힌 것이 로고라 빼는 쪽이 오히려 낫습니다.
+ *
+ * <img> 는 태그를 통째로 지웁니다
+ * -------------------------------
+ * 안쪽 글자만 비워 <img src=""> 로 남기면 브라우저가 지금 보고 있는
+ * 페이지 주소를 그림으로 또 받아 갑니다. 처음 만들 때 실제로 23건이
+ * 그렇게 남는 것을 확인하고 고쳤습니다.
+ *
+ * ";base64," 를 반드시 같이 봅니다
+ * --------------------------------
+ * 그냥 "data:" 로 찾으면 안 됩니다. 기술스택을 적은 공고 5건에
+ * "Data: PostgreSQL, MySQL..." 같은 영어 문장이 있습니다. 그것까지
+ * 지워 버립니다. 조사해 보고 알았습니다.
+ *
+ * 왜 수집할 때가 아니라 그릴 때 하는가
+ * -------------------------------------
+ * lazyImages 와 같은 이유입니다. 수집기를 고치면 공고갱신을 한 번
+ * 돌려야 반영되고 한 시간 반이 걸립니다. 여기서 고치면 이미 모아둔
+ * 것에 바로 적용됩니다.
+ *
+ * 그림이 안 보이게 됩니다
+ * -----------------------
+ * 에스엘 공고의 모집 포스터는 화면에서 사라집니다. 대신 글로 적힌
+ * 48,699자가 남고, 포스터는 "원문 사이트" 를 눌러 보면 됩니다.
+ * 6MB 를 받다가 멈추는 것보다 낫다고 보고 이렇게 정했습니다.
+ */
+const BASE64_DATA = /data:[a-z0-9.+-]*\/?[a-z0-9.+-]*;base64,/i;
+export const stripDataImages = (htmlText) => {
+  if (!htmlText) return htmlText;
+  return htmlText
+    // 그림 태그는 통째로.
+    .replace(/<img\b[^>]*>/gi, (tag) => (BASE64_DATA.test(tag) ? '' : tag))
+    .replace(/<source\b[^>]*>/gi, (tag) => (BASE64_DATA.test(tag) ? '' : tag))
+    // 그 밖의 자리(style 의 background-image 등)는 내용물만 비웁니다.
+    .replace(/data:[a-z0-9.+-]*\/?[a-z0-9.+-]*;base64,[A-Za-z0-9+/=\s]*/gi, '');
+};
+
+/*
+ * 본문을 손보는 순서를 한 군데로 모았습니다. (2026-10-20)
+ *
+ * 화면에 그리는 쪽과 구글에 보내는 쪽이 같은 내용이어야 합니다. 전에
+ * 같은 규칙이 네 군데에 흩어져 셋이 서로 달라서 404 가 났습니다
+ * (hasDetail 주석 참고). 또 그러지 않게 여기 하나만 둡니다.
+ *
+ * 순서가 중요합니다. <script> 를 먼저 지웁니다. 지울 태그 안에 들어
+ * 있는 <img> 를 따로 건드리지 않게 하기 위해서입니다.
+ */
+export const cleanBody = (htmlText) => stripDataImages(stripScripts(htmlText));
+
 export const lazyImages = (htmlText) => {
   if (!htmlText) return htmlText;
   let n = 0;
@@ -719,9 +827,9 @@ export const jobPostingSchema = (j, pageUrl) => {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
     title: j.title,
-    // 구글에 보내는 본문에서도 남의 <script> 는 빼고 보냅니다.
-    // 화면에 그리는 쪽(job/[id].astro)과 같은 내용이어야 합니다.
-    description: stripScripts(j.description),
+    // 화면에 그리는 쪽(job/[id].astro)과 반드시 같은 내용이어야 합니다.
+    // 둘 다 cleanBody 하나를 씁니다.
+    description: cleanBody(j.description),
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
     datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
