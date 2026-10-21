@@ -444,7 +444,60 @@ export const companies = () => {
   return [...m.values()].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
 };
 
-export const byCompany = (slug) => companies().find((c) => c.slug === slug);
+/*
+ * 페이지를 만들어 둘 회사 목록. (2026-10-21)
+ *
+ * 왜 companies() 와 따로 두는가
+ * -----------------------------
+ * companies() 는 "공고가 있는 회사" 입니다. 그래서 그 회사의 공고가
+ * 하나도 없는 날에는 목록에서 빠지고, /company/그회사/ 페이지도 같이
+ * 사라집니다. 다음 날 공고가 올라오면 페이지도 돌아옵니다.
+ *
+ * 문제는 그 사이입니다. 구글은 전에 수집해 둔 주소로 다시 오는데,
+ * 페이지가 없으니 404 를 받습니다. 2026-10-20 하루 치 기록에서
+ * 실제로 이런 404 가 잡혔습니다.
+ *
+ *   /company/daou-tech/   /company/ckd/   /company/apsystems/
+ *
+ * 그날 기준 등록된 425곳 중 48곳이 공고 0건이었습니다. 회사는 멀쩡히
+ * 살아 있고 지금 뽑는 자리가 없을 뿐인데, 검색엔진에는 "없는 주소" 로
+ * 보입니다. 한 번 그렇게 찍히면 다시 수집하러 오는 간격이 길어집니다.
+ *
+ * 그래서 등록돼 있고 끄지 않은 회사는 공고가 0건이어도 페이지를
+ * 남깁니다. 화면에는 "지금은 진행중인 공고가 없습니다" 가 나옵니다.
+ * 공고가 올라오면 그 자리가 저절로 채워집니다.
+ *
+ * companies() 는 왜 안 고쳤는가
+ * ------------------------------
+ * 홈의 "기업별로 보기" 목록과 소개 페이지의 기업 수가 그걸 씁니다.
+ * 거기까지 늘리면 방문자에게 빈 페이지로 가는 링크를 48개 보여주고,
+ * 기업 수도 실제 공고가 있는 곳보다 부풀려집니다. 사람이 보는 목록과
+ * 검색엔진에 열어두는 주소는 달라도 됩니다.
+ *
+ * enabled:false 는 넣지 않습니다
+ * -------------------------------
+ * 수집을 일부러 끈 회사입니다. 다시 켤 생각이 없는 곳까지 페이지를
+ * 남길 이유는 없습니다. 끈 회사의 주소가 검색엔진에 남아 있다면 그건
+ * 404 가 맞습니다.
+ */
+const REG_ENABLED = (registry.companies || [])
+  .filter((c) => c && c.slug && c.enabled !== false);
+
+export const companyPages = () => {
+  const list = companies();
+  const have = new Set(list.map((c) => c.slug));
+  const extra = REG_ENABLED
+    .filter((c) => !have.has(c.slug))
+    .map((c) => ({ slug: c.slug, name: c.name, jobs: [] }));
+  return [...list, ...extra].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+};
+
+/*
+ * 공고가 없는 회사도 이름을 찾을 수 있어야 합니다. 못 찾으면 기업
+ * 페이지가 제목을 만들다가 빌드가 멈춥니다.
+ */
+export const byCompany = (slug) =>
+  companyPages().find((c) => c.slug === slug);
 
 /*
  * 회사명 검색 별칭.

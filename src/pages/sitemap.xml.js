@@ -1,4 +1,4 @@
-import { companies, industries, roles, JOBS, COLLECTED_AT } from '../lib.js';
+import { companyPages, industries, roles, JOBS, COLLECTED_AT } from '../lib.js';
 
 // 마감 후 사이트맵에 남겨 두는 날 수. 아래 공고 상세 주석 참고.
 const GRACE_DAYS = 7;
@@ -51,7 +51,9 @@ export async function GET({ site }) {
     ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily', mod: today })),
     // 직무 페이지. "회로설계 채용", "임베디드 개발자 채용" 같은 검색을 받습니다.
     ...roles().map((r) => ({ loc: `${base}/role/${r.code}/`, pri: '0.9', freq: 'daily', mod: today })),
-    ...companies().map((c) => ({ loc: `${base}/company/${c.slug}/`, pri: '0.8', freq: 'daily', mod: today })),
+    // 공고가 0건인 회사도 페이지가 있으므로 여기에 넣습니다. 넣어야
+    // 구글이 다시 와서 "404 가 아니다" 를 확인합니다. (2026-10-21)
+    ...companyPages().map((c) => ({ loc: `${base}/company/${c.slug}/`, pri: '0.8', freq: 'daily', mod: today })),
     /*
      * 공고 상세.
      *

@@ -1,10 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import JobCard from '../../components/JobCard.astro';
-import { companies, byCompany, openJobs, closedJobs, daysLeft, parseDate, industriesOf, industrySlug } from '../../lib.js';
+import { companyPages, byCompany, openJobs, closedJobs, daysLeft, parseDate, industriesOf, industrySlug } from '../../lib.js';
 
+/*
+ * 공고가 0건인 회사도 페이지를 남깁니다. 왜 그런지는 lib.js 의
+ * companyPages 주석을 보세요. (2026-10-21)
+ */
 export function getStaticPaths() {
-  return companies().map((c) => ({ params: { slug: c.slug } }));
+  return companyPages().map((c) => ({ params: { slug: c.slug } }));
 }
 
 const { slug } = Astro.params;
@@ -72,7 +76,11 @@ const schema = {
     <div class="section-h">진행중인 채용</div>
     {open.length ? open.map((j) => <JobCard job={j} />) : (
       <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
-        지난 채용 이력을 보시면 이 회사가 어떤 직무를 주로 뽑는지 알 수 있습니다.</div>
+        {closed.length
+          ? '지난 채용 이력을 보시면 이 회사가 어떤 직무를 주로 뽑는지 알 수 있습니다.'
+          : <>{co.name} 공식 채용페이지를 하루 두 번 확인하고 있습니다. 새 공고가 올라오면 이 페이지에 바로 반영됩니다.
+            {inds.length > 0 && <> 그동안 <a href={`/industry/${industrySlug(inds[0])}/`}>{inds[0]} 채용공고</a>를 둘러보세요.</>}</>}
+      </div>
     )}
 
     {closed.length > 0 && (
