@@ -1,0 +1,52 @@
+# 없어진 옛 주소를 지금 주소로 넘겨보냅니다 (2026-10-21 작성, 2026-10-22 적용)
+# =====================================================================
+# 왜 만들었나
+#   2026-10-01 에 산업 분류를 합쳤습니다. 기계장비·소재·화학·물류가
+#   각각 1~57건뿐이라 페이지를 만들 크기가 아니었고, 들어가는 회사도
+#   서로 겹쳤습니다(포스코=철강+소재, 한화=방산+화학). 그래서 넷에
+#   조선·방산·철강·항공을 더해 '중공업·화학·소재'(heavy-chem) 한 칸으로
+#   묶었습니다. 자세한 사정은 lib.js 의 INDUSTRY_SLUG 주석에 있습니다.
+#
+#   문제는 합치기 전 주소가 이미 검색엔진에 들어가 있었다는 것입니다.
+#   구글은 전에 수집해 둔 주소로 계속 찾아오고, 페이지가 없으니 404 를
+#   받습니다. 2026-10-15 ~ 10-22 일주일 치 기록입니다.
+#
+#       /industry/materials/        5건
+#       /industry/chemical/         1건
+#       /industry/machinery/        1건
+#       /industry/heavy-defense/    1건
+#
+#   하루 한두 건이라 당장 손해는 없습니다. 다만 404 가 반복되면 구글이
+#   그 주소를 색인에서 빼면서 거기 쌓인 평가도 같이 버립니다. 넘겨보내면
+#   그 평가가 heavy-chem 으로 넘어갑니다.
+#
+# 301 인 이유
+#   "영구히 옮겼다" 는 뜻입니다. 검색엔진이 옛 주소의 평가를 새 주소로
+#   옮기고, 다음부터는 새 주소를 색인합니다. 302 는 "잠깐 옮겼다" 라
+#   평가가 안 넘어갑니다. 이 분류는 되돌릴 계획이 없으니 301 입니다.
+#
+# 주의 — 이 규칙이 실제 페이지보다 먼저입니다
+#   클라우드플레어는 "주소에 해당하는 파일이 있든 없든 넘겨보내기를
+#   먼저 따른다" 고 명시합니다. 그래서 나중에 '소재' 산업을 다시 살려
+#   /industry/materials/ 페이지를 만들어도, 이 줄이 남아 있으면 그
+#   페이지는 영영 안 보입니다. 되살릴 때는 해당 줄을 반드시 지우세요.
+#
+# finance(금융) 는 넣지 않았습니다
+#   lib.js 의 표에 슬러그는 있지만, 2026-10-01 합치기 안내에 금융은
+#   들어 있지 않고, 지금 companies.json 에서 금융 태그를 쓰는 회사도
+#   없으며, 일주일 치 기록에 요청도 없습니다. 어디로 보내는 게 맞는지
+#   확인이 안 돼서 추측으로 넣지 않고 비워 둡니다.
+#
+# 끝에 / 가 없는 형태도 같이 적습니다. 사람이 손으로 주소를 치거나
+# 오래된 링크에는 / 가 빠져 있는 경우가 있습니다.
+
+/industry/materials/      /industry/heavy-chem/   301
+/industry/materials       /industry/heavy-chem/   301
+/industry/chemical/       /industry/heavy-chem/   301
+/industry/chemical        /industry/heavy-chem/   301
+/industry/machinery/      /industry/heavy-chem/   301
+/industry/machinery       /industry/heavy-chem/   301
+/industry/logistics/      /industry/heavy-chem/   301
+/industry/logistics       /industry/heavy-chem/   301
+/industry/heavy-defense/  /industry/heavy-chem/   301
+/industry/heavy-defense   /industry/heavy-chem/   301
