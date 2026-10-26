@@ -1,337 +1,342 @@
-2026-10-19 14:01 기준
+2026-10-26 14:06 기준
 
-상대가 수집을 원하지 않는다고 밝힌 곳 11곳 · 공고 117건 (수집은 계속합니다 — 맨 위 주석의 2026-10-15 결정)
-확인하지 못한 곳 4곳 (판정 아님)
+상대가 수집을 원하지 않는다고 밝힌 곳 12곳 · 공고 123건 (수집은 계속합니다 — 맨 위 주석의 2026-10-15 결정)
+확인하지 못한 곳 3곳 (판정 아님)
 
-호스트 364개 점검 (공고 6,575건) · 파이썬 3.13.16
+호스트 363개 점검 (공고 6,982건) · 파이썬 3.13.16
 
     공고  판정            ATS             호스트
 ----------------------------------------------------------------------------------
-   286  허용            greenhouse      toss.im
-   181  허용            nexon           careers.nexon.com
-   173  허용            greenhouse      job-boards.greenhouse.io
-   150  허용            lg              careers.lg.com
-   144  허용            greeting        www.musinsacareers.com
-   114  허용            ashby           jobs.ashbyhq.com
-   107  허용            daewoong        career.daewoong.co.kr
-    88  허용            greeting        dentium.career.greetinghr.com
-    87  HTTP 401      kakao           careers.kakao.com
-    85  허용            nhn             careers.nhn.com
-    81  허용            greeting        kurly.career.greetinghr.com
-    77  허용            workday         amat.wd1.myworkdayjobs.com
-    73  비허용           greeting_link   bucketplace.career.greetinghr.com
-    67  허용            greeting        deepx.career.greetinghr.com
-    67  허용            recruiter       com2us.recruiter.co.kr
-    66  robots없음      nc              careers.ncsoft.com
-    64  허용            successfactors  careers.gcbiopharma.com
-    60  허용            greeting        career.nearthlab.com
-    59  허용            greeting        vatechnetworks.career.greetinghr.com
-    57  허용            greenhouse      about.daangn.com
-    57  허용            greeting        skshieldus.career.greetinghr.com
-    56  허용            shiftup         shiftup.co.kr
-    55  허용            workday         kla.wd1.myworkdayjobs.com
-    54  허용            greeting        interxlab.career.greetinghr.com
-    54  허용            greeting        nextsecurities.career.greetinghr.com
-    53  허용            workday         iljini.wd102.myworkdayjobs.com
+   282  허용            greenhouse      toss.im
+   185  허용            nexon           careers.nexon.com
+   179  허용            greenhouse      job-boards.greenhouse.io
+   165  허용            lg              careers.lg.com
+   153  허용            greeting        www.musinsacareers.com
+   118  허용            ashby           jobs.ashbyhq.com
+   111  허용            daewoong        career.daewoong.co.kr
+    97  허용            workday         amat.wd1.myworkdayjobs.com
+    94  HTTP 401      kakao           careers.kakao.com
+    93  허용            greeting        dentium.career.greetinghr.com
+    89  허용            nhn             careers.nhn.com
+    85  허용            greeting        kurly.career.greetinghr.com
+    76  허용            successfactors  careers.gcbiopharma.com
+    74  허용            workday         kla.wd1.myworkdayjobs.com
+    72  비허용           greeting_link   bucketplace.career.greetinghr.com
+    71  robots없음      nc              careers.ncsoft.com
+    69  허용            greeting        deepx.career.greetinghr.com
+    67  허용            greeting        skshieldus.career.greetinghr.com
+    63  허용            recruiter       com2us.recruiter.co.kr
+    62  허용            greeting        career.nearthlab.com
+    60  허용            greenhouse      about.daangn.com
+    60  허용            greeting        vatechnetworks.career.greetinghr.com
+    57  허용            shiftup         shiftup.co.kr
+    57  허용            greeting        nextsecurities.career.greetinghr.com
+    55  허용            greeting        interxlab.career.greetinghr.com
+    54  허용            workday         iljini.wd102.myworkdayjobs.com
     52  허용            greeting        career.hyundai-autoever.com
+    52  허용            greeting        supercent.career.greetinghr.com
+    51  허용            greeting        hecto.career.greetinghr.com
     49  허용            greeting        rebellions.career.greetinghr.com
-    49  허용            greeting        hecto.career.greetinghr.com
-    49  허용            greeting        supercent.career.greetinghr.com
+    49  허용            greeting        healingpaper.career.greetinghr.com
     48  허용            recruiter       webzen.recruiter.co.kr
+    48  허용            greeting        realworld.career.greetinghr.com
+    47  허용            hanwha          www.hanwhain.com
     47  허용            greeting        seojinsystem.career.greetinghr.com
-    45  허용            greeting        realworld.career.greetinghr.com
-    44  허용            greeting        estfamily.career.greetinghr.com
+    45  허용            greeting        estfamily.career.greetinghr.com
+    43  허용            greeting        kstd-lezhin.career.greetinghr.com
     43  허용            greeting        innospace.career.greetinghr.com
+    41  허용            greeting        oci.career.greetinghr.com
     41  허용            greeting        dno.career.greetinghr.com
-    41  허용            greeting        kstd-lezhin.career.greetinghr.com
-    40  허용            greeting        healingpaper.career.greetinghr.com
+    41  허용            greeting        gccompany.career.greetinghr.com
+    40  오류 URLError   greeting        pharmaresearch_hr.career.greetinghr.com
+    40  허용            greeting        wrtn.career.greetinghr.com
     38  허용            greeting        stradvision.career.greetinghr.com
-    38  오류 URLError   greeting        pharmaresearch_hr.career.greetinghr.com
-    37  허용            greeting        oci.career.greetinghr.com
+    38  robots없음      neowiz          www.neowiz.com
+    38  허용            greeting        cashwalk12.career.greetinghr.com
     37  허용            successfactors  careers.lscablebiz.com
-    37  허용            greeting        wrtn.career.greetinghr.com
-    37  허용            greeting        cashwalk12.career.greetinghr.com
     36  허용            greeting        makinarocks.career.greetinghr.com
-    36  robots없음      neowiz          www.neowiz.com
-    36  허용            greeting        gccompany.career.greetinghr.com
     35  허용            breezy          bear-robotics.breezy.hr
+    35  허용            greeting        xcena.career.greetinghr.com
     35  허용            greeting        classyshr.career.greetinghr.com
-    34  허용            hanwha          www.hanwhain.com
-    34  허용            greeting        xcena.career.greetinghr.com
+    34  허용            recruiter       eubiologics.recruiter.co.kr
     34  허용            greeting        kakaopay.career.greetinghr.com
     33  허용            greeting        autocrypt.career.greetinghr.com
     33  허용            recruiter       ahnlab.recruiter.co.kr
-    33  허용            recruiter       eubiologics.recruiter.co.kr
+    33  허용            greeting        wirobotics.career.greetinghr.com
+    32  robots없음      soop            recruit.sooplive.com
+    31  robots없음      doosan          career.doosan.com
+    31  허용            greeting        mangoboost.career.greetinghr.com
+    31  허용            recruiter       taekwang.recruiter.co.kr
+    31  robots없음      naver           recruit.navercorp.com
+    31  허용            netmarble       career.netmarble.com
     31  허용            recruiter       kolmar.recruiter.co.kr
     31  허용            greeting        cmesairobotics.career.greetinghr.com
-    31  허용            greeting        wirobotics.career.greetinghr.com
+    31  허용            greeting        seers.career.greetinghr.com
+    31  허용            greeting        hr-suprema.career.greetinghr.com
+    31  허용            workday         entegris.wd1.myworkdayjobs.com
     30  허용            greeting        solusadvancedmaterials.career.greetinghr.com
-    30  허용            netmarble       career.netmarble.com
     30  허용            recruiter       hyvision.recruiter.co.kr
     30  허용            greeting        mobilinthire.career.greetinghr.com
     29  허용            greeting        acryl.career.greetinghr.com
-    29  robots없음      soop            recruit.sooplive.com
-    29  허용            greeting        seers.career.greetinghr.com
+    29  허용            greeting        career.osstem.com
+    29  허용            greeting        lululab.career.greetinghr.com
     29  허용            greeting        enki.career.greetinghr.com
-    29  허용            workday         entegris.wd1.myworkdayjobs.com
-    28  허용            greeting        mangoboost.career.greetinghr.com
     28  허용            greeting        hyperaccel.career.greetinghr.com
+    28  허용            greeting        hugel.career.greetinghr.com
     27  허용            recruiter       hlcompany.recruiter.co.kr
-    27  robots없음      doosan          career.doosan.com
-    27  허용            greeting        lululab.career.greetinghr.com
-    27  허용            greeting        hr-suprema.career.greetinghr.com
-    26  허용            recruiter       taekwang.recruiter.co.kr
-    26  허용            greeting        hugel.career.greetinghr.com
+    27  허용            greeting        weavers.career.greetinghr.com
+    27  허용            greeting        kakaomobility.career.greetinghr.com
+    26  허용            greeting        dongsung.career.greetinghr.com
+    26  허용            greeting        pfct.career.greetinghr.com
+    26  허용            greeting        epidgames.career.greetinghr.com
     25  허용            greeting        ex-em.career.greetinghr.com
-    25  허용            greeting        pfct.career.greetinghr.com
-    25  허용            greeting        kakaomobility.career.greetinghr.com
+    25  허용            greeting        medistream.career.greetinghr.com
+    24  허용            recruiter       mobis.recruiter.co.kr
     24  허용            workable        apply.workable.com
-    24  허용            greeting        dongsung.career.greetinghr.com
-    24  허용            greeting        epidgames.career.greetinghr.com
-    23  허용            greeting        medistream.career.greetinghr.com
-    22  허용            recruiter       mobis.recruiter.co.kr
+    23  허용            greeting        linqalpha.career.greetinghr.com
+    23  허용            greeting        jnpmedi.career.greetinghr.com
     22  허용            greeting        careers.fadu.io
-    22  허용            greeting        weavers.career.greetinghr.com
-    22  허용            greeting        linqalpha.career.greetinghr.com
-    22  허용            greeting        jnpmedi.career.greetinghr.com
-    21  허용            greeting        enf-recruit.career.greetinghr.com
-    21  robots없음      naver           recruit.navercorp.com
-    21  허용            greeting        recruit-hanwhaocean.com
+    22  허용            greeting        duksangroup.career.greetinghr.com
+    22  허용            recruiter       wonik.recruiter.co.kr
+    22  허용            greeting        lutronic.career.greetinghr.com
+    21  허용            greeting        rideflux.career.greetinghr.com
+    21  허용            greeting        applydongasocio.career.greetinghr.com
+    21  허용            recruiter       huonsgroup.recruiter.co.kr
+    21  허용            greeting        nice.career.greetinghr.com
+    21  허용            greeting        nuua.career.greetinghr.com
     21  허용            greeting        aimed.career.greetinghr.com
-    20  허용            greeting        duksangroup.career.greetinghr.com
-    20  허용            greeting        nuua.career.greetinghr.com
+    21  허용            greeting        finda.career.greetinghr.com
+    21  허용            greeting        enf-recruit.career.greetinghr.com
+    20  허용            recruiter       cowayhr.recruiter.co.kr
+    20  허용            greeting        solum.career.greetinghr.com
+    20  허용            greeting        featuring.career.greetinghr.com
     20  허용            greeting        111percent.career.greetinghr.com
-    20  허용            greeting        finda.career.greetinghr.com
+    20  허용            greeting        kcpartstech1.career.greetinghr.com
     20  허용            greeting        onepredict.career.greetinghr.com
+    20  허용            workday         airliquidehr.wd3.myworkdayjobs.com
     20  허용            workday         danaher.wd1.myworkdayjobs.com
-    19  허용            greeting        rideflux.career.greetinghr.com
     19  허용            hd              recruit.hd.com
-    19  허용            recruiter       wonik.recruiter.co.kr
-    19  허용            greeting        applydongasocio.career.greetinghr.com
+    19  허용            greeting        jahwa.career.greetinghr.com
     19  허용            greeting        neubility.career.greetinghr.com
-    19  허용            greeting        lutronic.career.greetinghr.com
+    19  허용            greeting        hyundaipharm.career.greetinghr.com
     19  허용            greeting        bigfiregames.career.greetinghr.com
-    19  허용            greeting        featuring.career.greetinghr.com
-    19  허용            greeting        kcpartstech1.career.greetinghr.com
+    19  허용            greeting        echomarketing.career.greetinghr.com
     19  허용            greeting        innogridhr.career.greetinghr.com
     18  허용            greeting        kci.career.greetinghr.com
+    18  허용            greeting        phcgroup.career.greetinghr.com
     18  허용            greeting        crowdworks.career.greetinghr.com
-    18  허용            cha             recruit.chamc.co.kr
-    18  허용            recruiter       sdbiosensor.recruiter.co.kr
-    18  허용            recruiter       huonsgroup.recruiter.co.kr
+    18  허용            coasia          www.coasiacareers.com
     18  허용            workday         valeo.wd3.myworkdayjobs.com
-    18  허용            greeting        hyundaipharm.career.greetinghr.com
     17  허용            greeting        samkee.career.greetinghr.com
+    17  허용            sk              www.skcareers.com
     17  허용            greeting        konantec.career.greetinghr.com
-    17  허용            greeting        echomarketing.career.greetinghr.com
+    17  허용            greeting        buzzvil.career.greetinghr.com
+    17  허용            greeting        lawcompany.career.greetinghr.com
     17  허용            greeting        masangsoft.career.greetinghr.com
-    16  허용            greeting        phcgroup.career.greetinghr.com
+    16  허용            recruiter       hanonsystems.recruiter.co.kr
+    16  허용            recruiter       hankooktire.recruiter.co.kr
     16  허용            greeting        xiilab.career.greetinghr.com
-    16  허용            greeting        career.osstem.com
-    16  허용            recruiter       cowayhr.recruiter.co.kr
-    16  허용            greeting        solum.career.greetinghr.com
-    16  허용            coasia          www.coasiacareers.com
-    16  허용            greeting        nice.career.greetinghr.com
+    16  허용            recruiter       lx.recruiter.co.kr
+    16  허용            cha             recruit.chamc.co.kr
+    16  허용            greeting        danbiedu.career.greetinghr.com
     16  허용            greeting        sionicai.career.greetinghr.com
     16  허용            greeting        cclime.career.greetinghr.com
-    16  허용            workday         airliquidehr.wd3.myworkdayjobs.com
     15  허용            greeting        kccglass.career.greetinghr.com
-    15  허용            recruiter       lx.recruiter.co.kr
+    15  허용            greeting        recruit-hanwhaocean.com
     15  허용            greeting        mycle.career.greetinghr.com
-    15  허용            greeting        buzzvil.career.greetinghr.com
-    15  허용            greeting        lawcompany.career.greetinghr.com
     15  허용            greeting        skylabs.career.greetinghr.com
+    15  허용            greeting        storelink.career.greetinghr.com
+    15  허용            greeting        cosmoslab.career.greetinghr.com
     15  허용            greeting        ablelabs.career.greetinghr.com
-    15  허용            greeting        danbiedu.career.greetinghr.com
     15  허용            greeting        aceworks.career.greetinghr.com
     15  허용            greeting        gintlab.career.greetinghr.com
     15  허용            greeting        haatz.career.greetinghr.com
-    14  허용            recruiter       hankooktire.recruiter.co.kr
+    14  허용            greeting        proteina.career.greetinghr.com
     14  허용            greeting        kcp.career.greetinghr.com
-    13  허용            recruiter       hanonsystems.recruiter.co.kr
+    14  허용            greeting        yypharm.career.greetinghr.com
     13  허용            greeting        snstech.career.greetinghr.com
     13  허용            greeting        wisol.career.greetinghr.com
     13  허용            greeting        hanamts.career.greetinghr.com
+    13  허용            greeting        spherecorp.career.greetinghr.com
+    13  허용            greeting        flitto.career.greetinghr.com
     13  허용            recruiter       celltrion.recruiter.co.kr
-    13  robots없음      angel           www.angel-robotics.com
-    13  허용            greeting        airfirst.career.greetinghr.com
-    13  비허용           greeting        roboe.career.greetinghr.com
-    13  허용            greeting        yypharm.career.greetinghr.com
     13  허용            greeting        modoodoc.career.greetinghr.com
-    12  허용            sk              www.skcareers.com
-    12  허용            greeting        spherecorp.career.greetinghr.com
+    13  비허용           greeting        roboe.career.greetinghr.com
+    12  허용            recruiter       dbgroup.recruiter.co.kr
+    12  허용            greeting        i-screammedia.career.greetinghr.com
     12  허용            greeting        konai.career.greetinghr.com
-    12  허용            greeting        flitto.career.greetinghr.com
     12  허용            recruiter       golfzon.recruiter.co.kr
+    12  robots없음      angel           www.angel-robotics.com
+    12  허용            greeting        airfirst.career.greetinghr.com
     12  허용            greeting        riibotics.career.greetinghr.com
-    12  허용            greeting        storelink.career.greetinghr.com
+    12  허용            greeting        auton.career.greetinghr.com
     11  허용            greeting        euvsol.career.greetinghr.com
     11  허용            greeting        i3system.career.greetinghr.com
-    11  허용            greeting        i-screammedia.career.greetinghr.com
+    11  허용            greeting        mitech.career.greetinghr.com
     11  허용            greeting        emocog-hr.career.greetinghr.com
+    11  허용            greeting        zigbang.career.greetinghr.com
     11  허용            greeting        sianalytics.career.greetinghr.com
     11  허용            greeting        allganize.career.greetinghr.com
-    11  허용            greeting        auton.career.greetinghr.com
-    10  허용            recruiter       dbgroup.recruiter.co.kr
+    11  허용            workday         samyang.wd3.myworkdayjobs.com
+    10  허용            recruiter       yura.recruiter.co.kr
+    10  허용            recruiter       landf.recruiter.co.kr
     10  허용            greeting        thinkware.career.greetinghr.com
     10  허용            rainbow         rainbow-robotics.com
-    10  허용            greeting        mitech.career.greetinghr.com
+    10  허용            inhr            hansoliones.careerlink.kr
+    10  허용            greeting        igaworks.career.greetinghr.com
     10  허용            greeting        ahnlabcloudmate.career.greetinghr.com
-    10  허용            greeting        proteina.career.greetinghr.com
+    10  허용            greeting        travel-wallet.career.greetinghr.com
     10  허용            greeting        vacatio.career.greetinghr.com
     10  허용            greeting        analogai.career.greetinghr.com
     10  허용            greeting        orangesquare.career.greetinghr.com
     10  허용            greeting        vwsai.career.greetinghr.com
-    10  허용            workday         samyang.wd3.myworkdayjobs.com
+    10  허용            greeting        gsitm.career.greetinghr.com
     10  허용            greeting        hscatalysts.career.greetinghr.com
-     9  허용            recruiter       yura.recruiter.co.kr
+     9  허용            greeting        jusung.career.greetinghr.com
+     9  허용            greeting        vunohire.career.greetinghr.com
      9  허용            greeting        s2w.career.greetinghr.com
      9  허용            greeting        recruit.kakaogames.com
+     9  비허용           posco           recruit.posco.com
      9  허용            greeting        neuromeka1.career.greetinghr.com
-     9  허용            greeting        igaworks.career.greetinghr.com
      9  허용            greeting        mobidoo.career.greetinghr.com
-     9  허용            greeting        travel-wallet.career.greetinghr.com
      9  허용            greeting        hyperithm.career.greetinghr.com
-     9  허용            greeting        zigbang.career.greetinghr.com
-     9  허용            greeting        gsitm.career.greetinghr.com
+     9  허용            greeting        autonics.career.greetinghr.com
+     9  허용            workday         dongwha.wd3.myworkdayjobs.com
      9  허용            workday         bdx.wd1.myworkdayjobs.com
-     8  허용            greeting        jusung.career.greetinghr.com
-     8  비허용           posco           recruit.posco.com
-     8  오류 URLError   douzone         recruit.douzone.com
+     9  허용            workday         philips.wd3.myworkdayjobs.com
+     9  허용            greeting        contec.career.greetinghr.com
+     8  허용            recruiter       psk.recruiter.co.kr
      8  허용            hpsp            thehpsp.com
+     8  HTTP 403      ecopro          ecoprorecruit.co.kr
      8  허용            greeting        olixpharma.career.greetinghr.com
-     8  허용            greeting        autonics.career.greetinghr.com
+     8  허용            greeting        ctrl9.career.greetinghr.com
+     8  허용            greeting        nextground.career.greetinghr.com
      8  허용            greeting        polarisofficerecruit.career.greetinghr.com
      8  허용            greeting        moreh.career.greetinghr.com
      8  허용            greeting        opn.career.greetinghr.com
-     8  허용            workday         dongwha.wd3.myworkdayjobs.com
-     8  허용            workday         philips.wd3.myworkdayjobs.com
-     8  허용            greeting        contec.career.greetinghr.com
+     8  허용            workday         3m.wd1.myworkdayjobs.com
      8  허용            recruiter       hyundai-wia.recruiter.co.kr
+     7  허용            recruiter       thn.recruiter.co.kr
      7  허용            recruiter       sebang.recruiter.co.kr
      7  허용            recruiter       nexentire.recruiter.co.kr
      7  허용            recruiter       kpgroup.recruiter.co.kr
      7  허용            greeting        gaonchips.career.greetinghr.com
+     7  허용            greeting        hites.career.greetinghr.com
      7  허용            greeting        hlb-group.career.greetinghr.com
-     7  허용            recruiter       psk.recruiter.co.kr
      7  허용            recruiter       cmtx.recruiter.co.kr
+     7  허용            greeting        q-semi.career.greetinghr.com
      7  허용            greeting        tovis.career.greetinghr.com
      7  허용            greeting        lsmaterials-recruit.career.greetinghr.com
      7  허용            greeting        meatbox.career.greetinghr.com
-     7  허용            greeting        vunohire.career.greetinghr.com
      7  허용            recruiter       shinsegaeinc.recruiter.co.kr
+     7  허용            recruiter       hanmi.recruiter.co.kr
      7  허용            workday         yanolja.wd102.myworkdayjobs.com
-     7  HTTP 403      ecopro          ecoprorecruit.co.kr
+     7  허용            recruiter       hyundai-steel.recruiter.co.kr
      7  허용            greeting        portone.career.greetinghr.com
-     7  허용            greeting        ctrl9.career.greetinghr.com
      7  허용            greeting        deepauto-ai.career.greetinghr.com
+     7  허용            greeting        hurom.career.greetinghr.com
      7  허용            greeting        firson.career.greetinghr.com
      7  허용            greeting        planet.career.greetinghr.com
-     7  허용            greeting        nextground.career.greetinghr.com
+     7  허용            greeting        kbds.career.greetinghr.com
      7  허용            workday         alcon.wd5.myworkdayjobs.com
      7  허용            recruiter       glovis.recruiter.co.kr
      7  허용            greeting        huvitz.career.greetinghr.com
+     6  허용            greeting        twinny.career.greetinghr.com
      6  허용            recruiter       kc-group.recruiter.co.kr
-     6  허용            greeting        hites.career.greetinghr.com
      6  허용            greeting        axbis.career.greetinghr.com
      6  허용            greeting        kortek.career.greetinghr.com
-     6  허용            greeting        q-semi.career.greetinghr.com
-     6  허용            recruiter       hanmi.recruiter.co.kr
+     6  비허용           greeting_link   millie.career.greetinghr.com
      6  허용            yujin           yujinrobot.com
+     6  허용            greeting        dongkuk.career.greetinghr.com
+     6  허용            greeting        willog.career.greetinghr.com
      6  허용            greeting        arobot4all.career.greetinghr.com
      6  허용            greeting        dexlevo.career.greetinghr.com
+     6  허용            greeting        linkareer.career.greetinghr.com
      6  허용            greeting        cmslab.career.greetinghr.com
-     6  허용            greeting        hurom.career.greetinghr.com
      6  허용            greeting        carelabs.career.greetinghr.com
+     6  허용            greeting        alvogenkorea.career.greetinghr.com
+     6  허용            greeting        deepsales.career.greetinghr.com
      6  허용            greeting        libest.career.greetinghr.com
      6  허용            greeting        bumjin.career.greetinghr.com
      6  허용            greeting        altiall.career.greetinghr.com
      6  허용            greeting        duse.career.greetinghr.com
+     6  허용            greeting        sangjiship.career.greetinghr.com
      6  허용            greeting        theori.career.greetinghr.com
      6  허용            greeting        acrossb.career.greetinghr.com
      6  허용            greeting        rena.career.greetinghr.com
-     6  허용            greeting        kbds.career.greetinghr.com
-     6  허용            workday         3m.wd1.myworkdayjobs.com
+     6  허용            workday         gsk.wd5.myworkdayjobs.com
      6  허용            greeting        medipixel.career.greetinghr.com
-     5  허용            recruiter       lselectric.recruiter.co.kr
-     5  허용            greeting        twinny.career.greetinghr.com
-     5  허용            recruiter       landf.recruiter.co.kr
-     5  비허용           greeting_link   millie.career.greetinghr.com
+     5  허용            recruiter       slworld.recruiter.co.kr
+     5  허용            greeting        samhwapaint.career.greetinghr.com
      5  허용            recruiter       dkpharm.recruiter.co.kr
      5  허용            recruiter       ligdna.recruiter.co.kr
+     5  비허용           recruiter_v1    medytox.recruiter.co.kr
      5  허용            curexo          career.curexo.com
-     5  robots없음      kolon           dream.kolon.com
-     5  허용            greeting        willog.career.greetinghr.com
+     5  허용            inhr            hyundaielevator.careerlink.kr
      5  허용            greeting        vdrobotics.career.greetinghr.com
      5  허용            greeting        kidsnote.career.greetinghr.com
-     5  허용            greeting        alvogenkorea.career.greetinghr.com
-     5  허용            greeting        deepsales.career.greetinghr.com
-     5  허용            greeting        chokwang.career.greetinghr.com
+     5  허용            greeting        bhsn.career.greetinghr.com
      5  허용            greeting        zimssa.career.greetinghr.com
      5  허용            greeting        dozn.career.greetinghr.com
-     5  허용            workday         gsk.wd5.myworkdayjobs.com
-     4  허용            recruiter       thn.recruiter.co.kr
+     5  허용            greeting        korgc.career.greetinghr.com
+     4  허용            greeting        ket.career.greetinghr.com
+     4  허용            recruiter       dy.recruiter.co.kr
      4  허용            greeting        blue-dot.career.greetinghr.com
-     4  허용            samsung         www.samsungcareers.com
      4  허용            greeting        deepnoid.career.greetinghr.com
-     4  비허용           recruiter_v1    medytox.recruiter.co.kr
-     4  허용            inhr            hyundaielevator.careerlink.kr
+     4  허용            greeting        ecstel.career.greetinghr.com
+     4  비허용           recruiter_v1    jwholdings.recruiter.co.kr
      4  비허용           cuckoo          recruit.cuckoo.co.kr
-     4  허용            greeting        linkareer.career.greetinghr.com
+     4  robots없음      kolon           dream.kolon.com
+     4  허용            recruiter       hyundai-rotem.recruiter.co.kr
+     4  허용            greeting        cenacle.career.greetinghr.com
      4  허용            greeting        lambda256.career.greetinghr.com
      4  허용            greeting        spaceadd.career.greetinghr.com
-     4  허용            greeting        bhsn.career.greetinghr.com
      4  허용            greeting        radexel-hr.career.greetinghr.com
-     4  허용            greeting        sangjiship.career.greetinghr.com
+     4  허용            greeting        carat.career.greetinghr.com
+     4  허용            greeting        etaelec.career.greetinghr.com
      4  허용            greeting        thebackend.career.greetinghr.com
-     4  허용            greeting        korgc.career.greetinghr.com
+     4  허용            greeting        aim.career.greetinghr.com
      4  허용            greeting        enerzai.career.greetinghr.com
+     4  허용            workday         generalmotors.wd5.myworkdayjobs.com
      4  허용            workday         advantech.wd3.myworkdayjobs.com
-     4  허용            recruiter       slworld.recruiter.co.kr
+     3  허용            recruiter       hyundai-transys.recruiter.co.kr
+     3  허용            recruiter       sambomotors.recruiter.co.kr
      3  허용            greeting        surplusglobal.career.greetinghr.com
-     3  비허용           recruiter_v1    koreazinc.recruiter.co.kr
      3  허용            recruiter       hanamicron.recruiter.co.kr
+     3  허용            samsung         www.samsungcareers.com
      3  허용            greeting        micube.career.greetinghr.com
-     3  허용            greeting        ecstel.career.greetinghr.com
      3  허용            greeting        hancom.career.greetinghr.com
-     3  비허용           recruiter_v1    jwholdings.recruiter.co.kr
      3  허용            greeting        ablbio.career.greetinghr.com
      3  허용            recruiter       seahsteel.recruiter.co.kr
-     3  허용            recruiter       koreaaero.recruiter.co.kr
+     3  허용            greeting        youngchemical.career.greetinghr.com
+     3  허용            greeting        bepartoforchem.career.greetinghr.com
      3  허용            greeting        readypost.career.greetinghr.com
-     3  허용            greeting        boryeonglng.career.greetinghr.com
      3  허용            greeting        umoh.career.greetinghr.com
-     3  허용            greeting        carat.career.greetinghr.com
-     3  허용            greeting        etaelec.career.greetinghr.com
      3  허용            greeting        ckdhc.career.greetinghr.com
      3  허용            greeting        tripbtoz.career.greetinghr.com
      3  허용            greeting        forbiz.career.greetinghr.com
-     3  허용            greeting        aim.career.greetinghr.com
-     3  허용            greeting        dnautomotive.career.greetinghr.com
-     3  허용            greeting        jahwa.career.greetinghr.com
-     3  허용            recruiter       dy.recruiter.co.kr
+     3  허용            greeting        boryeonglng.career.greetinghr.com
+     3  비허용           greeting        dnautomotive.career.greetinghr.com
      3  허용            recruiter       tck.recruiter.co.kr
-     3  허용            greeting        samhwapaint.career.greetinghr.com
-     2  허용            recruiter       sambomotors.recruiter.co.kr
+     2  허용            recruiter       lsmtron.recruiter.co.kr
      2  허용            recruiter       hwaseung.recruiter.co.kr
-     2  허용            greeting        ket.career.greetinghr.com
+     2  비허용           recruiter_v1    koreazinc.recruiter.co.kr
      2  비허용           recruiter_v1    motionncontrol.recruiter.co.kr
      2  허용            recruiter       yuhan.recruiter.co.kr
-     2  허용            recruiter       kyongbo.recruiter.co.kr
+     2  허용            recruiter       daewonpharm.recruiter.co.kr
      2  허용            recruiter       samjinpharm.recruiter.co.kr
-     2  허용            inhr            hyundaimovex.careerlink.kr
+     2  비허용           recruiter_v1    kwangdong.recruiter.co.kr
      2  허용            inhr            hansolchemical.careerlink.kr
-     2  허용            recruiter       hyundai-rotem.recruiter.co.kr
-     2  허용            greeting        dongkuk.career.greetinghr.com
+     2  허용            recruiter       kukdo.recruiter.co.kr
+     2  허용            greeting        alsemy.career.greetinghr.com
      2  허용            greeting        lncbio.career.greetinghr.com
-     2  허용            greeting        cenacle.career.greetinghr.com
-     2  허용            greeting        megastudyedu.career.greetinghr.com
+     2  허용            greeting        dable.career.greetinghr.com
      2  허용            greeting        zep.career.greetinghr.com
      2  허용            greeting        voronoi.career.greetinghr.com
      2  허용            greeting        catalyze.career.greetinghr.com
-     2  허용            workday         generalmotors.wd5.myworkdayjobs.com
+     2  허용            workday         resmed.wd3.myworkdayjobs.com
      2  허용            recruiter       swhitech.recruiter.co.kr
-     1  허용            recruiter       lsat.recruiter.co.kr
+     1  허용            recruiter       lselectric.recruiter.co.kr
      1  허용            recruiter       kumhotire.recruiter.co.kr
      1  허용            greeting        unitushr.career.greetinghr.com
      1  허용            greeting        sapien-semicon.career.greetinghr.com
@@ -340,43 +345,37 @@
      1  허용            inhr            dongjin.careerlink.kr
      1  비허용           recruiter_v1    hyosung.recruiter.co.kr
      1  허용            angel           www.youtube.com
-     1  허용            recruiter       daewonpharm.recruiter.co.kr
+     1  허용            recruiter       kyongbo.recruiter.co.kr
      1  robots없음      sfa             recruit.sfa.co.kr
-     1  비허용           recruiter_v1    kwangdong.recruiter.co.kr
-     1  허용            recruiter       hyundai-steel.recruiter.co.kr
+     1  허용            inhr            hyundaimovex.careerlink.kr
+     1  허용            recruiter       sdbiosensor.recruiter.co.kr
+     1  허용            recruiter       koreaaero.recruiter.co.kr
      1  허용            poongsan        join.poongsan.co.kr
      1  robots없음      victek          www.victek.co.kr
-     1  허용            recruiter       s-oil.recruiter.co.kr
-     1  허용            recruiter       kukdo.recruiter.co.kr
      1  허용            daejoo          www.daejoo.co.kr
-     1  허용            greeting        youngchemical.career.greetinghr.com
-     1  허용            greeting        alsemy.career.greetinghr.com
-     1  허용            greeting        bepartoforchem.career.greetinghr.com
      1  허용            greeting        tidesquare.career.greetinghr.com
-     1  허용            greeting        dable.career.greetinghr.com
      1  허용            greeting        dwhale.career.greetinghr.com
      1  허용            greeting        seahsp.career.greetinghr.com
      1  허용            greeting        kcindustrial.career.greetinghr.com
      1  허용            greeting        cavaclab.career.greetinghr.com
+     1  허용            greeting        chokwang.career.greetinghr.com
+     1  허용            greeting        megastudyedu.career.greetinghr.com
      1  허용            greeting        samsin-rhabo.career.greetinghr.com
      1  허용            greeting        daedongagtech.career.greetinghr.com
      1  허용            workday         dupont.wd5.myworkdayjobs.com
-     1  허용            workday         resmed.wd3.myworkdayjobs.com
      1  허용            workday         pfizer.wd1.myworkdayjobs.com
-     1  허용            recruiter       lsmtron.recruiter.co.kr
      1  허용            greeting        selvasai.career.greetinghr.com
      1  허용            greeting        crscube.career.greetinghr.com
      1  허용            greeting        zeus-recruit.career.greetinghr.com
      1  허용            greeting        husteel.career.greetinghr.com
      1  허용            greeting        rnd.career.greetinghr.com
      1  허용            recruiter_v1    ezcaretech.career.greetinghr.com
-     1  허용            recruiter       hyundai-transys.recruiter.co.kr
 
 ==================================================================================
 
-비허용 11곳 · 공고 117건
+비허용 12곳 · 공고 123건
 
-      73건  bucketplace.career.greetinghr.com   (브라우저형 User-Agent 기준)
+      72건  bucketplace.career.greetinghr.com   (브라우저형 User-Agent 기준)
           막힌 주소 예: https://bucketplace.career.greetinghr.com/ko/o/167227
           받아온 robots.txt:
             | User-agent: *
@@ -388,8 +387,8 @@
             | User-agent: *
             | Disallow: /
 
-       8건  recruit.posco.com   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://recruit.posco.com/h22a01-front/H22A1001.html?id=698007
+       9건  recruit.posco.com   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://recruit.posco.com/h22a01-front/H22A1001.html?id=725000
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
@@ -397,14 +396,25 @@
             | User-agent: Yeti
             | Allow: /
 
-       5건  millie.career.greetinghr.com   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://millie.career.greetinghr.com/o/236906
+       6건  millie.career.greetinghr.com   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://millie.career.greetinghr.com/o/241230
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
 
-       4건  medytox.recruiter.co.kr   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://medytox.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269572
+       5건  medytox.recruiter.co.kr   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://medytox.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269836
+          받아온 robots.txt:
+            | User-agent: *
+            | Disallow: /
+            | Allow: /appsite/
+            | Allow: /bbs/appsite/
+            | User-agent: Googlebot
+            | User-agent: Yeti
+            | Allow: /
+
+       4건  jwholdings.recruiter.co.kr   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://jwholdings.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269798
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
@@ -420,19 +430,14 @@
             | User-agent: *
             | Disallow: /
 
-       3건  koreazinc.recruiter.co.kr   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://koreazinc.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269068
+       3건  dnautomotive.career.greetinghr.com   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://dnautomotive.career.greetinghr.com/ko/o/239742
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
-            | Allow: /appsite/
-            | Allow: /bbs/appsite/
-            | User-agent: Googlebot
-            | User-agent: Yeti
-            | Allow: /
 
-       3건  jwholdings.recruiter.co.kr   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://jwholdings.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269542
+       2건  koreazinc.recruiter.co.kr   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://koreazinc.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=201998
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
@@ -453,8 +458,8 @@
             | User-agent: Yeti
             | Allow: /
 
-       1건  hyosung.recruiter.co.kr   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://hyosung.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269427
+       2건  kwangdong.recruiter.co.kr   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://kwangdong.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269893
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
@@ -464,8 +469,8 @@
             | User-agent: Yeti
             | Allow: /
 
-       1건  kwangdong.recruiter.co.kr   (브라우저형 User-Agent 기준)
-          막힌 주소 예: https://kwangdong.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269432
+       1건  hyosung.recruiter.co.kr   (브라우저형 User-Agent 기준)
+          막힌 주소 예: https://hyosung.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=269427
           받아온 robots.txt:
             | User-agent: *
             | Disallow: /
@@ -479,9 +484,8 @@
   수집을 멈추지는 않습니다(2026-10-15 결정). 이 목록은 상대가
   무엇이라고 밝혀두었는지 기록해 두기 위한 것입니다.
 
- robots.txt 를 못 받은 곳 4곳 — 판정이 아닙니다.
+ robots.txt 를 못 받은 곳 3곳 — 판정이 아닙니다.
  그 파일을 못 받았다는 뜻일 뿐, 공고 수집과는 상관없습니다.
-      87건  careers.kakao.com                            HTTP 401
-      38건  pharmaresearch_hr.career.greetinghr.com      오류 URLError
-       8건  recruit.douzone.com                          오류 URLError
-       7건  ecoprorecruit.co.kr                          HTTP 403
+      94건  careers.kakao.com                            HTTP 401
+      40건  pharmaresearch_hr.career.greetinghr.com      오류 URLError
+       8건  ecoprorecruit.co.kr                          HTTP 403
