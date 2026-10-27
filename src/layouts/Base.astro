@@ -65,6 +65,26 @@ const url = canonical ?? (site + Astro.url.pathname);
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   {/*
+    방문 통계 (구글 애널리틱스 4). 2026-10-27 추가.
+
+    측정 ID 출처: 구글 애널리틱스 계정 "서치잡"(413542968) → 속성 "서치잡 웹사이트"
+    → 웹 스트림 "서치잡"(https://searchjob.co.kr, 스트림 ID 16210085678).
+    서치넷(searchnet.co.kr)·다정리와는 계정이 따로입니다. 데이터 공유 설정은 모두 끔.
+
+    아래 클라우드플레어 웹 애널리틱스(쿠키 없음)는 그대로 둡니다. 구글 쪽은
+    유입 경로·검색어·많이 본 기업 페이지처럼 더 자세한 것을 보려고 더했습니다.
+    구글 애널리틱스는 쿠키를 쓰므로 꼬리말에 한 줄로 알립니다.
+    끄려면 이 블록 두 개의 script 를 지우고 꼬리말 문장도 지우세요.
+  */}
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DGZ73M54LE"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DGZ73M54LE');
+  </script>
+
+  {/*
     구조화 데이터.
 
     JSON.stringify 를 그냥 쓰면 안 됩니다. 본문 안에 </script> 가 있는
@@ -139,6 +159,7 @@ const url = canonical ?? (site + Astro.url.pathname);
     <p style="margin-bottom:10px"><a href="/about/" class="back">SEARCHJOB 소개</a></p>
     <p>각 기업 공식 채용페이지에 공개된 공고만 모았습니다. 채용 플랫폼 전용 공고나 비공개 채용은 포함되지 않습니다.</p>
     <p style="margin-top:8px"><b>여러 직무 포함 가능</b> 표시는 공고 본문이 이미지로 게시되어 세부 직무를 원문에서 확인해야 하는 경우입니다.</p>
+    <p style="margin-top:8px">방문 통계를 위해 구글 애널리틱스(쿠키 사용)와 클라우드플레어 웹 애널리틱스를 씁니다. 회원가입이 없고 이름·연락처 같은 개인정보는 받지 않습니다.</p>
   </footer>
 
   <!-- Cloudflare Web Analytics. 쿠키를 쓰지 않아 동의 배너가 필요 없습니다.
