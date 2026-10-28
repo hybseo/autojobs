@@ -80,9 +80,54 @@ POOL = re.compile(r"인재\s*pool|talent\s*pool|인재\s*풀|프리랜서", re.I
 PLACE = re.compile(r"\[?근무\s*(?:장소|지)\]?\s*[:\]]?\s*([^\n<]{2,40})")
 
 # 상세 본문이 담긴 영역. 화면이 바뀌면 여기부터 확인하세요.
-BODY = re.compile(
-    r'<div[^>]+class="[^"]*jobDetail__content[^"]*"[^>]*>(.*?)</div>\s*</div>',
-    re.S | re.I)
+# 본문 단락 (2026-10-28 고침)
+#
+# 예전 식은 jobDetail__content 를 열고 </div></div> 까지 잘랐습니다.
+# 그런데 안쪽에 div 가 여러 겹이라 첫 닫는 짝에서 멈췄고, 회사 소개
+# 상용구만 담겼습니다. 네오위즈 22건이 전부 181자 아니면 445자였던
+# 이유입니다. 실제 페이지에는 2,928자가 있습니다.
+#
+# 본문은 jobDescription-item 이 단락마다 하나씩 있는 구조입니다.
+#   2026-10-28 확인 (3D 배경모델러 공고)
+#     1 담당 업무   144자
+#     2 자격 요건   224자
+#     3 우대 사항   170자
+#     4 고용 형태  1,547자 (전형·유의사항 포함)
+#
+# 그래서 여는 태그 위치만 찾고 다음 여는 태그까지를 한 단락으로 봅니다.
+# 닫는 태그를 세어 짝을 맞추려 하면 같은 문제가 되풀이됩니다.
+ITEM = re.compile(
+    r'<div[^>]*class="[^"]*\bjobDescription-item\b[^"]*"[^>]*>', re.I)
+
+# 마지막 단락 뒤에 붙는 영역. 여기서 끊습니다.
+TAIL = re.compile(
+    r'<footer\b'
+    r'|<div[^>]*class="[^"]*\b(?:jobDetail__apply|btn|relate|recommend)\b', re.I)
+
+SCRIPT = re.compile(r"<(script|style)\b[^>]*>[\s\S]*?</\1>", re.I)
+
+
+def _body(page):
+    """상세 HTML 에서 본문 단락들을 모아 돌려줍니다.
+
+    단락을 못 찾으면 빈 문자열입니다. 화면 구조가 바뀐 것이므로
+    엉뚱한 글을 본문으로 넣지 않고 원문 링크로 보냅니다.
+    """
+    page = SCRIPT.sub(" ", page or "")
+    starts = [m.end() for m in ITEM.finditer(page)]
+    if not starts:
+        return ""
+    parts = []
+    for i, s in enumerate(starts):
+        end = starts[i + 1] if i + 1 < len(starts) else len(page)
+        seg = page[s:end]
+        cut = TAIL.search(seg)
+        if cut:
+            seg = seg[:cut.start()]
+        seg = seg.strip()
+        if seg:
+            parts.append(seg)
+    return "\n".join(parts)
 
 
 def _get(url):
@@ -194,8 +239,7 @@ def fetch(company):
 
         raw = ""
         try:
-            m = BODY.search(_get(url))
-            raw = m.group(1) if m else ""
+            raw = _body(_get(url))
         except Exception:
             raw = ""
         time.sleep(0.3)

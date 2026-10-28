@@ -147,6 +147,73 @@ def _to_html(text):
     return "\n".join(out)
 
 
+def _sections(rec_list):
+    """직무별 모집 내용을 본문으로 엮습니다 (2026-10-28 추가).
+
+    왜 필요한가
+    -----------
+    예전에는 본문을 qualForAppInfo·recProcessInfo·otherInfo 세 칸으로
+    만들었습니다. 그런데 그 세 칸은 전부 안내문입니다.
+
+      qualForAppInfo  "해외여행 결격사유 없는 자, 병역필 또는 면제자"
+      recProcessInfo  대부분 비어 있습니다
+      otherInfo       "보훈대상자 우대, 허위기재 시 합격 취소"
+
+    실제 모집 내용은 recList 에 직무별로 따로 들어 있는데 쓰지 않고
+    있었습니다. LG유플러스 공고는 qualForAppInfo 에 아예
+    "지원자격은 상세내역 참고" 라고 적어 두었습니다. 그 상세내역이
+    recList 입니다.
+
+    recList 한 항목에 들어 있는 것 (2026-10-28 확인)
+      orgName        CTO
+      jobGroupName   제품시뮬레이션
+      locationName   서초R&D캠퍼스        ← 직무별 근무지
+      detailContext  직무 소개
+      mainTask       주요 업무
+      requiredItem   자격 요건
+      preferredItem  우대 사항
+
+    한 공고에 여러 직무가 들어 있습니다. LG에너지솔루션 Pack/BMS 공고는
+    7개, LG전자 R&D 해외유학생 공고는 6개입니다. 화면에서는 직무마다
+    접힌 칸으로 나뉘어 있습니다.
+
+    값은 평문이 아니라 HTML 로 옵니다. 그대로 이어 붙입니다.
+
+    majorCodeName 과 numbers 는 담지 않습니다
+    -----------------------------------------
+    majorCodeName 에 화면 조각(<div class="MuiBox-root ...">)이 그대로
+    들어오는 공고가 있고, numbers 는 "0" 이나 "-" 가 대부분이라
+    쓸 수 있는 값이 아닙니다.
+    """
+    out = []
+    for x in rec_list or []:
+        if not isinstance(x, dict):
+            continue
+        chunk = []
+        head = " ".join(w for w in (str(x.get("orgName") or "").strip(),
+                                    str(x.get("jobGroupName") or "").strip()) if w)
+        if head:
+            chunk.append("<h3>" + html.escape(head) + "</h3>")
+        loc = str(x.get("locationName") or "").strip()
+        if loc:
+            chunk.append("<p>근무지: " + html.escape(loc) + "</p>")
+        body_added = False
+        for label, key in (("직무 소개", "detailContext"),
+                           ("주요 업무", "mainTask"),
+                           ("자격 요건", "requiredItem"),
+                           ("우대 사항", "preferredItem")):
+            v = str(x.get(key) or "").strip()
+            # 태그만 있고 글이 없는 칸이 있습니다(<p>-</p> 같은 것).
+            if not v or len(strip_html(v)) < 2:
+                continue
+            chunk.append("<h4>" + label + "</h4>")
+            chunk.append(v)
+            body_added = True
+        if body_added:
+            out.append("\n".join(chunk))
+    return "\n".join(out)
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     slug = company["slug"]
@@ -169,16 +236,30 @@ def fetch(company):
         #   data.jobNoticesDetail.jobNoticesDetail.recStartDate = "2026.10.09 09:00"
         # 본문을 받으려고 어차피 상세를 부르고 있어 요청이 늘지 않습니다.
         posted = ""
+        place = ""
+        roles = 0
         try:
             d = _post("retrieveJobNoticesDetail", {"jobNoticeId": nid})
-            det = (d.get("data") or {}).get("jobNoticesDetail") or {}
-            det = det.get("jobNoticesDetail") or det
-            # 자격요건이 본문의 핵심입니다. 전형절차·기타는 보조입니다.
-            body = "\n".join(filter(None, [
-                det.get("qualForAppInfo"),
-                det.get("recProcessInfo"),
-                det.get("otherInfo")]))
+            outer = (d.get("data") or {}).get("jobNoticesDetail") or {}
+            det = outer.get("jobNoticesDetail") or outer
+            rec = outer.get("recList") or []
+            roles = len(rec)
+
+            # 모집 내용은 recList 에 직무별로 들어 있습니다. _sections 설명 참고.
+            body = _sections(rec)
+
+            # 공통 지원자격은 뒤에 붙입니다. 병역·해외여행 결격 같은 내용이라
+            # 길지 않고, 없는 공고도 있습니다. otherInfo 와 recProcessInfo 는
+            # 순수 안내문이라 담지 않습니다.
+            qual = str(det.get("qualForAppInfo") or "").strip()
+            if qual and len(strip_html(qual)) > 2:
+                qual = "<h4>공통 지원 자격</h4>\n" + qual
+                body = (body + "\n" + qual) if body else qual
+
             posted = _date(det.get("recStartDate"))
+            # 근무지가 상세에 있습니다. 예전에는 빈 값으로 두었습니다.
+            #   "서초R&D캠퍼스, 대전기술연구원(제2캠퍼스)"
+            place = str(det.get("workLocation") or "").strip()
         except Exception:
             body = ""
 
@@ -193,12 +274,16 @@ def fetch(company):
             "company": x.get("companyName") or company["name"],
             "companySlug": slug,
             "title": x.get("jobNoticeName") or "",
-            "location": "",
+            # 상세의 workLocation 입니다. 없으면 비워 둡니다. 지어내지 않습니다.
+            "location": place,
             "career": _career(x),
             "postedAt": posted,
             "closesAt": _date(x.get("recEndDateTime")),
             "dday": x.get("recDateDiff"),
-            "multiRole": image_only,
+            # 본문이 이미지뿐이라 직무를 모르는 경우와, recList 에 직무가
+            # 여럿 들어 있는 경우 둘 다 "여러 직무 포함 가능" 입니다.
+            # LG전자 R&D 해외유학생 공고는 한 건에 직무가 6개입니다.
+            "multiRole": image_only or roles > 1,
             "sourceTitle": "",
             "sourceUrl": SITE.format(nid),
             "description": _to_html(body) if not image_only else "",

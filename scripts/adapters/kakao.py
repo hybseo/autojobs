@@ -47,6 +47,7 @@ import json
 import re
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 BASE = "https://careers.kakao.com"
@@ -141,6 +142,44 @@ def list_open(code=""):
     return list(rows.values())
 
 
+DETAIL = BASE + "/public/api/job-detail?id={}"
+
+
+def _detail(real_id):
+    """공고 하나의 상세를 받습니다 (2026-10-28 추가).
+
+    왜 필요한가
+    -----------
+    목록에는 introduction 만 채워져 옵니다. 그래서 예전에는 그것만
+    썼습니다. 그런데 본사(P-) 공고는 introduction 이 팀 소개뿐이고
+    업무와 자격은 다른 칸에 들어 있습니다.
+
+      P-14559  introduction 616자(팀 소개) · workContentDesc 360자
+               · qualification 935자
+      P-13744  introduction 180자뿐 — 이대로는 요약을 쓸 수 없습니다
+
+    공동체(S-) 공고는 introduction 안에 "◆ 조직소개 ◆ 업무내용" 이
+    전부 들어 있어 예전 방식으로도 읽혔습니다. 그래서 본사 공고만
+    내용이 부족했고, 2026-10-28 기준 73건 중 27건이 그랬습니다.
+
+    상세에는 근무지(locationName)도 있습니다. 목록에는 없어서
+    비워 두던 값입니다. 본사 공고는 "판교" 가 들어 있고, 공동체
+    공고는 비어 있어 그때는 그대로 비웁니다.
+
+    robots.txt (2026-10-28 확인)
+      careers.kakao.com/robots.txt 는 HTTP 401 입니다. 규칙을 받지
+      못하는 것이지 금지가 아니며, 2026-10-28 에 허용으로 보기로
+      정했습니다. 목록 API 와 같은 호스트·같은 공개 경로입니다.
+
+    실패하면 빈 dict 를 돌려줍니다. 그 공고만 예전처럼 둡니다.
+    """
+    try:
+        d = _get(DETAIL.format(urllib.parse.quote(real_id)))
+        return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
@@ -166,7 +205,24 @@ def fetch(company):
         if x.get("closeFlag") is True:
             continue
 
-        body = str(x.get("introduction") or "")
+        # 상세에서 업무·자격·근무지를 받아 채웁니다. _detail 설명 참고.
+        d = _detail(rid)
+        place = _text(d.get("locationName"))
+        parts = []
+        for label, key in (("", "introduction"),
+                           ("업무 내용", "workContentDesc"),
+                           ("지원 자격", "qualification")):
+            v = str(d.get(key) or x.get(key) or "").strip()
+            # 태그만 있고 글이 없는 칸이 섞여 옵니다.
+            if not v or len(_text(v)) < 2:
+                continue
+            if label:
+                parts.append("<h4>" + label + "</h4>")
+            parts.append(v)
+        # 전형 안내(jobOfferProcessDesc)는 담지 않습니다. 안내문입니다.
+        body = "\n".join(parts)
+        if not parts:
+            body = str(x.get("introduction") or "")
 
         jobs.append({
             "id": f"kakao-{re.sub(r'[^A-Za-z0-9]', '', rid)[:20]}",
@@ -174,8 +230,8 @@ def fetch(company):
             "company": _text(x.get("companyName")) or name,
             "companySlug": slug,
             "title": title,
-            # 목록에 근무지가 없습니다. 지어내지 않습니다.
-            "location": "",
+            # 상세의 locationName 입니다. 공동체 공고는 비어 있어 그대로 둡니다.
+            "location": place,
             "career": _career(x),
             "postedAt": _date(x.get("regDate")),
             # 상시채용은 마감일이 비어 옵니다. 그대로 비웁니다.
@@ -186,4 +242,6 @@ def fetch(company):
             "sourceUrl": VIEW.format(rid),
             "description": body if len(_text(body)) >= 50 else "",
         })
+        # 공고마다 상세를 한 번 더 받으므로 쉬어 갑니다.
+        time.sleep(0.3)
     return jobs
