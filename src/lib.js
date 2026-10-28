@@ -1,5 +1,6 @@
 import raw from './data/jobs.json';
 import registry from './data/companies.json';
+import { TAGS, TAG_TOP } from './tags.js';
 
 export const COLLECTED_AT = raw.collectedAt;
 export const JOBS = raw.jobs;
@@ -355,52 +356,178 @@ export const byIndustry = (slug) => industries().find((i) => i.slug === slug);
  * 규칙을 고칠 때
  *   한 직무의 건수가 갑자기 튀면 너무 넓게 잡은 것입니다. 전체의 15% 를
  *   넘는 직무가 생기면 규칙을 좁히세요.
+ *
+ * 2026-10-28 손질
+ * --------------
+ * 위의 15% 규칙을 AI·머신러닝이 이미 넘고 있었습니다. 860건(16.2%)이었고
+ * 그중 529건이 본문에서 걸린 것이었습니다. 본문 앞 600자는 회사 소개문이라,
+ * 스트라드비전·라이드플럭스처럼 모든 공고 앞에 "AI 기반 …" 을 붙이는 회사는
+ * 공고가 통째로 AI 직무가 됐습니다. 사내 변리사 공고까지 AI 였습니다.
+ *
+ * 구간을 담당업무·자격요건으로 좁혀도 나아지지 않았습니다(860 → 874건).
+ * 자격요건에 "자율주행·로보틱스 분야 특허 경험" 처럼 분야가 적혀 있어
+ * 그것을 직무로 읽기 때문입니다.
+ *
+ * 원인은 \bAI\b 가 너무 넓은 것이었습니다. 뒤에 오는 말을 요구하도록
+ * 바꿨습니다(AI 엔지니어·AI 모델·AI 플랫폼 …). 그냥 "AI" 한 단어로는
+ * 걸리지 않습니다.
+ *
+ *   AI·머신러닝  860건(16.2%) → 356건(6.7%)
+ *   15% 넘는 직무 없음
+ *
+ * 영문 제목도 함께 넣었습니다. 영문으로만 쓴 공고가 1,357건인데 그중
+ * 457건이 분류되지 않고 있었습니다. Embedded·Developer·Product Manager·
+ * Designer 처럼 실제 제목에서 뽑은 말만 넣었고, 추측으로 넣지 않았습니다.
+ *
+ *   직무가 붙는 공고  3,680건(69.3%) → 4,061건(76.5%)
+ *
+ * 그래도 직무가 없는 공고는 기술 태그의 상위 분류로 분야를 보여줍니다
+ * (rolesOrFields 참고). 둘을 합치면 86.3% 입니다.
  */
 const ROLE_RULES = [
   ['backend',   '백엔드',        /백엔드|back-?end|서버\s*개발|서버\s*엔지니어|Spring|Node\.?js/i],
   ['frontend',  '프론트엔드',     /프론트|front-?end|웹\s*개발|퍼블리셔|React\b|Vue\b/i],
   ['mobile',    '모바일',        /\bAndroid\b|\biOS\b|모바일\s*앱|앱\s*개발|Flutter/i],
-  ['embedded',  '임베디드·펌웨어',  /임베디드|펌웨어|firmware|\bBSP\b|디바이스\s*드라이버|\bMCU\b/i],
-  ['sw',        '소프트웨어개발',   /\bSW\s*(개발|엔지니어)|소프트웨어\s*(개발|엔지니어)|Software\s*Engineer|개발자/i],
-  ['ai',        'AI·머신러닝',    /\bAI\b|인공지능|머신러닝|딥러닝|\bML\b|\bLLM\b|Perception|비전\s*알고리즘/i],
-  ['data',      '데이터',        /데이터\s*(분석|엔지니어|사이언|플랫폼)|빅데이터|\bDBA\b|Data\s*(Engineer|Scientist|Analyst)/i],
-  ['devops',    '인프라·DevOps', /\bDevOps\b|인프라|클라우드|\bSRE\b|쿠버네티스|시스템\s*엔지니어/i],
+  ['embedded',  '임베디드·펌웨어',  /임베디드|펌웨어|firmware|\bBSP\b|디바이스\s*드라이버|\bMCU\b|\bEmbedded\b/i],
+  ['sw',        '소프트웨어개발',   /\bSW\s*(개발|엔지니어)|소프트웨어\s*(개발|엔지니어)|Software\s*(Engineer|Development)|개발자|\bDeveloper\b|Platform\s*Engineer|Systems?\s*Engineer|Application\s*Engineer/i],
+  ['ai',        'AI·머신러닝',    /\bAI\s*(엔지니어|개발|모델|연구|플랫폼|서비스|알고리즘|기술|도입|전환|사업|에이전트|Engineer|Research|Platform|Scientist|Agent|Lab)|인공지능|머신러닝|딥러닝|\bML\s*(엔지니어|파이프라인|Ops)|\bLLM\b|Perception|비전\s*알고리즘|\bVSLAM\b|Deep\s*Learning|생성형\s*AI|\bAI\s*\/\s*ML\b/i],
+  ['data',      '데이터',        /데이터\s*(분석|엔지니어|사이언|플랫폼)|빅데이터|\bDBA\b|Data\s*(Engineer|Scientist|Analyst|Platform)/i],
+  ['devops',    '인프라·DevOps', /\bDevOps\b|인프라|클라우드|\bSRE\b|쿠버네티스|시스템\s*엔지니어|Infrastructure\s*Engineer/i],
   ['security',  '보안',          /보안|시큐리티|Security|취약점|모의해킹/i],
-  ['gamedev',   '게임개발',       /게임\s*(개발|클라이언트|서버|기획)|클라이언트\s*개발|Unity|언리얼/i],
+  ['gamedev',   '게임개발',       /게임\s*(개발|클라이언트|서버|기획)|클라이언트\s*개발|Unity|언리얼|\bRPG\b|Game\s*(Design|Client|Server)/i],
   ['circuit',   '회로·전장설계',   /회로\s*설계|아날로그\s*설계|전장\s*(설계|개발)|\bPCB\b|전력\s*변환|\bHW\s*개발|하드웨어\s*(설계|개발)/i],
   ['semi',      '반도체설계',      /반도체\s*설계|\bSoC\b|\bRTL\b|Verilog|물리\s*설계|\bDFT\b/i],
   ['process',   '반도체공정',      /반도체\s*공정|포토|식각|증착|\bCMP\b|수율|패키징|공정\s*(개발|기술)/i],
   ['mech',      '기구설계',       /기구\s*(설계|개발)|금형|구조\s*해석|\bCAE\b|선행\s*설계/i],
-  ['control',   '제어·로보틱스',   /제어\s*(개발|알고리즘)|로봇\s*제어|모션\s*제어|\bSLAM\b|로보틱스/i],
+  ['control',   '제어·로보틱스',   /제어\s*(개발|알고리즘)|로봇\s*제어|모션\s*제어|\bSLAM\b|로보틱스|Control\s*Algorithm/i],
   ['chem',      '화학·소재',      /소재\s*(개발|연구)|화학\s*합성|고분자|촉매|전해질/i],
   ['bio',       '바이오·신약',     /신약|후보물질|비임상|전임상|세포\s*배양|항체|\bCMC\b|제형/i],
   ['clinical',  '임상·인허가',     /임상|\bCRA\b|인허가|허가\s*담당|\bMSL\b|약물감시/i],
-  ['qa',        '품질·QA',       /\bQA\b|\bQC\b|품질\s*(관리|보증)|신뢰성|\bGMP\b|밸리데이션/i],
-  ['prod',      '생산·제조',      /생산\s*(관리|기술|직)|제조\s*(기술|관리)|설비\s*(엔지니어|관리|보전)|오퍼레이터|현장직|기계\s*보전/i],
+  ['qa',        '품질·QA',       /\bQA\b|\bQC\b|품질\s*(관리|보증)|신뢰성|\bGMP\b|밸리데이션|Quality\s*(Assurance|Engineer)/i],
+  ['prod',      '생산·제조',      /생산\s*(관리|기술|직)|제조\s*(기술|관리)|설비\s*(엔지니어|관리|보전)|오퍼레이터|현장직|기계\s*보전|Field\s*Service|\bTechnician\b/i],
   ['safety',    '안전·환경',      /안전\s*(관리|보건)|\bEHS\b|환경\s*안전|산업\s*안전/i],
-  ['sales',     '영업',          /영업|세일즈|\bSales\b|사업\s*개발/i],
-  ['marketing', '마케팅',        /마케팅|브랜드\s*매니저|홍보/i],
-  ['pm',        '기획·PM',       /서비스\s*기획|프로덕트|\bPM\b|\bPO\b|사업\s*기획|전략\s*기획/i],
-  ['design',    '디자인',        /디자인|\bUX\b|그래픽|아트|일러스트/i],
-  ['hr',        '경영지원',       /인사|\bHR\b|재무|회계|총무|법무|\bIR\b|구매\s*담당|재경|감사/i],
+  ['sales',     '영업',          /영업|세일즈|\bSales\b|사업\s*개발|Account\s*Manager|Business\s*Development/i],
+  ['marketing', '마케팅',        /마케팅|브랜드\s*매니저|홍보|\bMarketing\b|Brand\s*Manager/i],
+  ['pm',        '기획·PM',       /서비스\s*기획|프로덕트|\bPM\b|\bPO\b|사업\s*기획|전략\s*기획|Product\s*(Manager|Owner)|Program\s*Manager|Project\s*Manager/i],
+  ['design',    '디자인',        /디자인|\bUX\b|그래픽|아트|일러스트|\bDesigner\b|\bArtist\b|\bVFX\b/i],
+  ['hr',        '경영지원',       /인사|\bHR\b|재무|회계|총무|법무|\bIR\b|구매\s*담당|재경|감사|변리사|Procurement|Purchasing|\bSCM\b|Accounting/i],
   ['research',  '연구개발',       /연구원|연구소|\bR&D\b|연구\s*개발|선행\s*연구/i],
 ];
 
 const ROLE_NAME = Object.fromEntries(ROLE_RULES.map(([k, label]) => [k, label]));
 
 /** 공고 하나의 직무 코드들. 없으면 빈 배열입니다. */
+/*
+ * 본문에서 태그와 엔티티를 걷어내고 글자만 남깁니다.
+ * 직무 분류가 본문 앞부분을 볼 때 씁니다.
+ */
+const stripTags = (s) =>
+  String(s || '')
+    .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&[a-z]+;|&#\d+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 export const rolesOf = (job) => {
   const title = job.title || '';
   let got = ROLE_RULES.filter(([, , re]) => re.test(title)).map(([k]) => k);
   if (!got.length) {
     // 제목에 없을 때만 본문을 봅니다. 앞부분에 담당업무가 나옵니다.
-    const body = (job.description || '').slice(0, 600);
+    //
+    // 태그를 먼저 벗깁니다 (2026-10-28).
+    //   예전에는 받아온 HTML 을 그대로 600자 잘랐습니다. 그런데 그 600자의
+    //   절반(평균 53.5%)이 <div style="..."> 같은 태그라, 실제로는 300자쯤만
+    //   보고 있었습니다. 600자가 통째로 태그인 공고도 56건 있었습니다.
+    //   벗기고 자르면 같은 600자로 두 배를 읽습니다.
+    const body = stripTags(job.description).slice(0, 600);
     if (body) got = ROLE_RULES.filter(([, , re]) => re.test(body)).map(([k]) => k);
   }
   return got.slice(0, 3);
 };
 
 export const roleName = (code) => ROLE_NAME[code] || code;
+
+
+/*
+ * 기술·역량 태그 (2026-10-28)
+ * ===========================
+ * 사전은 tags.js 에 있습니다. 여기서는 공고 하나에 붙는 태그를 셉니다.
+ *
+ * 왜 본문 전체를 보는가
+ *   직무는 제목을 먼저 보고 본문은 보조로 씁니다. 한 공고에 직무가 여럿이면
+ *   거르는 의미가 없기 때문입니다. 태그는 반대입니다. 요구하는 기술이
+ *   여럿이면 길도 여럿이어야 맞습니다. 그래서 본문 전체를 봅니다.
+ *
+ * 태그를 매번 세는 것이 느리지 않은가
+ *   공고 5,311건 × 하위 252개 = 134만 번입니다. 빌드할 때 한 번이라
+ *   괜찮습니다. 느려지면 수집 단계에서 미리 계산해 jobs.json 에
+ *   담는 쪽으로 옮기세요.
+ *
+ * 나중에 요약이 생기면
+ *   요약에서 뽑는 편이 정확합니다. 공고 20건으로 재보니 원문 기준 114개,
+ *   요약 기준 95개였고 줄어든 19개는 전부 안내문에서 걸린 것이었습니다
+ *   ("채용담당자 유선 문의", 복지의 "영어 Fluent"). 요약에는 그런 글이
+ *   없어 저절로 걸러집니다. 요약이 쌓이면 여기를 요약 기준으로 바꾸세요.
+ */
+const tagText = (job) =>
+  (job.title || '') + '\n' + stripTags(job.description);
+
+/** 공고 하나에 붙는 기술 태그 이름들. 없으면 빈 배열입니다. */
+export const tagsOf = (job) => {
+  const text = tagText(job);
+  const out = [];
+  for (const [, subs] of TAGS) {
+    for (const [name, re] of subs) {
+      if (re.test(text)) out.push(name);
+    }
+  }
+  return out;
+};
+
+/** 태그가 속한 상위 분류들. 중복은 없앱니다. */
+export const tagTopsOf = (job) => [
+  ...new Set(tagsOf(job).map((t) => TAG_TOP[t]).filter(Boolean)),
+];
+
+/** 태그별 접수중 건수. 태그 페이지를 만들 때 씁니다. */
+export const tagCounts = () => {
+  const n = {};
+  for (const j of openJobs()) {
+    for (const t of tagsOf(j)) n[t] = (n[t] || 0) + 1;
+  }
+  return n;
+};
+
+
+/*
+ * 공고가 어느 길에 속하는지 (2026-10-28)
+ * ======================================
+ * 직무가 붙지 않는 공고가 1,250건(23.5%) 있습니다. 제목이 영문이거나
+ * ("Senior Product Manager"), 제목이 너무 짧거나("R&D_TBR 타이어 설계"),
+ * 그룹 공채처럼 직무가 정해지지 않은 공고입니다.
+ *
+ * 그런 공고도 기술 태그는 붙는 경우가 많습니다. 태그의 상위 분류를
+ * 「분야」로 보여주면 길이 생깁니다. 사전을 두 번 쓰는 셈이라 새 규칙을
+ * 따로 만들지 않아도 됩니다.
+ *
+ *   직무만          4,061건 (76.5%)
+ *   + 분야로 보완    4,583건 (86.3%)
+ *
+ * 직무가 있으면 분야는 보여주지 않습니다. 둘 다 보여주면 같은 말이
+ * 두 줄로 겹칩니다.
+ */
+export const fieldsOf = (job) =>
+  rolesOf(job).length ? [] : tagTopsOf(job).slice(0, 3);
+
+/** 직무 또는 분야. 화면에서 "이 공고가 속한 곳" 을 보여줄 때 씁니다. */
+export const pathsOf = (job) => {
+  const roles = rolesOf(job);
+  if (roles.length) return roles.map((r) => ({ kind: 'role', code: r, name: roleName(r) }));
+  return fieldsOf(job).map((f) => ({ kind: 'field', code: f, name: f }));
+};
 
 /** 공고가 있는 직무만. 건수와 함께 많은 순으로 돌려줍니다. */
 export const roles = () => {
