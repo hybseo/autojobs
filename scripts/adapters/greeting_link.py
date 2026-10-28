@@ -28,16 +28,40 @@ companies.json
 
 둘 다 받습니다. 공고 번호로 겹치는 것을 걸러냅니다.
 
-담기지 않는 것
---------------
-홈페이지 목록에는 날짜·경력·근무지가 없고 본문도 없습니다. 지어내지 않고
-비워 두면 사이트가 상시채용으로 표시하고, 카드를 누르면 원문으로 갑니다.
+본문은 상세 페이지에서 받습니다 (2026-10-28 추가)
+------------------------------------------------
+홈페이지 목록에는 제목과 링크만 있습니다. 예전에는 본문 없이 원문 링크로
+보냈는데, 닫혀 있는 것은 목록(/ko)뿐이고 상세(/ko/o/{id})는 정상입니다.
+그래서 공고마다 상세를 한 번 더 받아 본문과 날짜를 채웁니다.
+
+  2026-10-28 오늘의집 /ko/o/167227 확인
+    /ko           404
+    /ko/o/167227  200, __NEXT_DATA__ 안에 openingsInfo 가 그대로 있음
+    detail 9,132자 · openDate 2025-07-23 · dueDate null · status OPEN
+
+상세의 openingsInfo 에 들어 있는 것
+  status  OPEN 이 아니면 마감된 공고입니다. 목록에 남아 있어도 뺍니다.
+  detail  본문 HTML
+  openDate / dueDate / deadlineDDay
+
+들어 있지 않은 것
+  openingJobPositions 가 없습니다. 그래서 근무지와 경력 조건을 알 수
+  없습니다. 근무지는 계속 비워 둡니다. 지어내지 않습니다.
+  경력은 예전처럼 제목에서만 읽습니다.
+
+파싱은 그리팅 어댑터(greeting.py)의 것을 그대로 씁니다. 같은 ATS 라
+구조가 같고, 한쪽만 고치면 어긋납니다.
 """
 import html
 import re
 import time
 import urllib.error
 import urllib.request
+
+try:
+    from . import greeting
+except ImportError:          # 패키지 밖에서 직접 돌릴 때
+    import greeting
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
@@ -114,6 +138,20 @@ def list_open(code):
     return rows
 
 
+def _detail(url):
+    """상세 페이지에서 openingsInfo 를 꺼냅니다.
+
+    실패하면 빈 dict 를 돌려줍니다. 한 건 때문에 그 회사가 통째로
+    빠지는 것보다, 그 공고만 본문 없이 두는 편이 낫습니다.
+    """
+    try:
+        d = greeting._next_data(url)
+        q = greeting._pick(greeting._queries(d), second_key="getOpeningById")
+        return ((q or {}).get("data") or {}).get("openingsInfo") or {}
+    except Exception:
+        return {}
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     name = company["name"]
@@ -121,23 +159,46 @@ def fetch(company):
     rows = list_open(company["code"])
 
     jobs = []
+    closed = bodies = 0
     for x in rows:
+        info = _detail(x["url"])
+
+        # status 가 OPEN 이 아니면 마감된 공고입니다. 홈페이지 링크는
+        # 한동안 남아 있어서, 이걸 안 보면 마감된 자리가 목록에 뜹니다.
+        if info.get("status") and info["status"] != "OPEN":
+            closed += 1
+            continue
+
+        raw = info.get("detail") or ""
+        text = greeting.strip_html(raw)
+        # 본문이 이미지뿐이면 읽을 것이 없습니다. 원문으로 보냅니다.
+        image_only = len(text) < 50 and "<img" in raw.lower()
+        if raw and not image_only:
+            bodies += 1
+
         jobs.append({
             "id": f"glink-{slug}-{x['id']}",
             "unit": "공고",
             "company": name,
+            # 제목은 상세 쪽이 정확합니다. 홈페이지 링크 글자는 줄이거나
+            # 꾸며 둔 경우가 있습니다. 상세가 비면 링크 글자를 씁니다.
             "companySlug": slug,
-            "title": x["title"],
-            # 목록에 근무지·날짜가 없습니다. 지어내지 않습니다.
+            "title": (info.get("title") or "").strip() or x["title"],
+            # 상세에도 근무지 정보가 없습니다. 지어내지 않습니다.
             "location": "",
-            "career": _career(x["title"]),
-            "postedAt": "",
-            "closesAt": "",
-            "dday": None,
-            "multiRole": False,
+            "career": _career(info.get("title") or x["title"]),
+            "postedAt": (info.get("openDate") or "")[:10],
+            "closesAt": (info.get("dueDate") or "")[:10],
+            "dday": info.get("deadlineDDay"),
+            "multiRole": image_only,
             "sourceTitle": "",
             "sourceUrl": x["url"],
-            # 본문이 없습니다. 원문으로 보냅니다.
-            "description": "",
+            "description": raw if not image_only else "",
         })
+        time.sleep(0.3)
+
+    if closed:
+        print(f"      · 마감된 공고 {closed}건 제외")
+    if bodies:
+        print(f"      · 본문 {bodies}건 수집")
     return jobs

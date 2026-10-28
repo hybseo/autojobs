@@ -48,9 +48,31 @@ firstIndex 를 10 씩 늘립니다. 응답의 totalSize 가 전체 건수입니�
   classCdNm       직군 "Corporate" / "Tech"
   subJobCdNm      직무 "법무"
   jobDetailLink   원문 주소
+
+본문은 상세 페이지에서 받습니다 (2026-10-28 추가)
+------------------------------------------------
+목록(loadJobList.do)에는 본문이 없습니다. 예전에는 그래서 비워 두고
+원문 링크로 보냈습니다. 그런데 상세 페이지(view.do)는 서버가 HTML 을
+다 그려서 보내므로 그대로 읽을 수 있습니다. 자바스크립트가 필요 없습니다.
+
+  2026-10-28 annoId 30005625 확인
+    원본 HTML 109,882자 · 본문 글자 5,234자
+    <div class="detail_box"> 가 5개이고, 각각이 공고의 한 단락입니다
+      0 조직 소개      308자
+      1 담당 업무      485자
+      2 필요 역량      544자
+      3 우대 사항      520자
+      4 전형 절차 및 안내 사항  1,306자
+
+그래서 detail_box 를 전부 모아 본문으로 씁니다. 화면에 보이는 순서가
+그대로 유지됩니다. 전형 절차는 요약 단계에서 걸러냅니다.
+
+detail_box 가 하나도 없으면 구조가 바뀐 것입니다. 그때는 본문을
+비우고 넘어갑니다. 엉뚱한 글을 본문으로 넣지 않습니다.
 """
 import json
 import re
+import time
 import urllib.request
 
 LIST = ("https://recruit.navercorp.com/rcrt/loadJobList.do"
@@ -92,6 +114,75 @@ def _date(v):
     return f"{s[:4]}-{s[4:6]}-{s[6:]}"
 
 
+# 본문 단락을 감싼 태그. 여는 태그만 찾고, 다음 여는 태그까지를 한 단락으로
+# 봅니다. 닫는 </div> 를 세어 짝을 맞추려 하면 안쪽에 div 가 중첩돼 있어
+# 어긋납니다.
+DETAIL_BOX = re.compile(r'<div[^>]*class="[^"]*\bdetail_box\b[^"]*"[^>]*>', re.I)
+
+# 단락 끝을 알리는 태그.
+#
+# 마지막 단락(전형 절차) 뒤에는 지원 버튼과 바닥글이 이어집니다.
+# 2026-10-28 annoId 30005625 에서 실제로 확인한 순서입니다.
+#   <div class="detail_box">  전형 절차 …
+#   <script>                  화면 스크립트
+#   <div class="half_detail_box">   빈 레이아웃
+#   <footer class="footer">   약관·개인정보 처리방침·관련 사이트
+#
+# 바닥글이 <footer> 요소라서, div 의 class 만 보던 식으로는 안 걸렸습니다.
+# 그래서 요소 이름으로도 끊습니다.
+TAIL = re.compile(
+    r'<footer\b'
+    r'|<div[^>]*class="[^"]*\b(?:btn_area|relate_site|apply_area'
+    r'|half_detail_box|family_list|site_list)\b', re.I)
+
+# 스크립트·스타일은 미리 지웁니다. 안 지우면 전형 절차 단락에 jQuery
+# 코드가 본문으로 섞여 들어옵니다(실제로 그랬습니다).
+SCRIPT = re.compile(r"<(script|style)\b[^>]*>[\s\S]*?</\1>", re.I)
+
+VIEW = "https://recruit.navercorp.com/rcrt/view.do?annoId={}"
+
+
+def _html(url):
+    req = urllib.request.Request(url, headers={
+        "Accept": "text/html,application/xhtml+xml",
+        "Accept-Language": "ko-KR,ko;q=0.9",
+        "Referer": "https://recruit.navercorp.com/rcrt/list.do",
+        "User-Agent": UA,
+    })
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return r.read().decode("utf-8", "replace")
+
+
+def _body(anno_id):
+    """상세 페이지에서 본문 단락들을 모아 돌려줍니다.
+
+    실패하거나 단락을 못 찾으면 빈 문자열입니다. 그때는 예전처럼
+    원문 링크로 보냅니다. 엉뚱한 글을 본문으로 넣지 않습니다.
+    """
+    try:
+        page = _html(VIEW.format(anno_id))
+    except Exception:
+        return ""
+
+    page = SCRIPT.sub(" ", page)
+    starts = [m.end() for m in DETAIL_BOX.finditer(page)]
+    if not starts:
+        return ""
+
+    parts = []
+    for i, s in enumerate(starts):
+        end = starts[i + 1] if i + 1 < len(starts) else len(page)
+        seg = page[s:end]
+        # 마지막 단락 뒤에는 버튼·관련 사이트가 붙습니다. 거기서 끊습니다.
+        cut = TAIL.search(seg)
+        if cut:
+            seg = seg[:cut.start()]
+        seg = seg.strip()
+        if seg:
+            parts.append(seg)
+    return "\n".join(parts)
+
+
 def list_open():
     """접수중 공고 목록. probe 용으로 밖에서도 씁니다."""
     rows, total = [], None
@@ -130,6 +221,7 @@ def fetch(company):
         rows = keep
 
     jobs = []
+    bodies = 0
     for x in rows:
         aid = x.get("annoId")
         if not aid:
@@ -137,6 +229,10 @@ def fetch(company):
         # 직군·직무를 근무지 뒤에 붙이지 않습니다. location 은 근무지만.
         area = AREA.get(str(x.get("workAreaCd") or ""), "")
         ent = (x.get("entTypeCdNm") or "").strip()
+        raw = _body(aid)
+        if raw:
+            bodies += 1
+        time.sleep(0.3)
         jobs.append({
             "id": f"naver-{aid}",
             "unit": "공고",
@@ -151,9 +247,10 @@ def fetch(company):
             "dday": None,
             "multiRole": (x.get("subJobCdCnt") or 0) > 1,
             "sourceTitle": "",
-            "sourceUrl": (x.get("jobDetailLink")
-                          or f"https://recruit.navercorp.com/rcrt/view.do?annoId={aid}"),
-            # 목록에 본문이 없습니다. 원문으로 보냅니다.
-            "description": "",
+            "sourceUrl": (x.get("jobDetailLink") or VIEW.format(aid)),
+            # 상세 페이지에서 받아옵니다. 못 받으면 비우고 원문으로 보냅니다.
+            "description": raw,
         })
+    if bodies:
+        print(f"      · 본문 {bodies}건 수집")
     return jobs

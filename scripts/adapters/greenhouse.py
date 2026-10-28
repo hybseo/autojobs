@@ -34,6 +34,7 @@ Greenhouse 를 쓰는 회사는 해외 공고를 함께 올리는 경우가 많�
 import json
 import re
 import html
+import time
 import urllib.parse
 import urllib.request
 
@@ -125,6 +126,66 @@ def _wrapped(base):
     return _rows(_get(base + "/jobs"))
 
 
+def _fill_content(base, rows):
+    """감싼 주소의 본문을 공고별로 한 번 더 받아 채웁니다.
+
+    왜 따로 받아야 하는가
+    ---------------------
+    공개 주소(boards-api)는 ?content=true 를 붙이면 목록과 본문이 함께
+    옵니다. 요청 한 번으로 끝납니다.
+
+    감싼 주소는 다릅니다. 목록(/job-groups·/jobs)에 본문 필드가 아예
+    없고, 공고별 주소(/jobs/{id})에만 content 가 들어 있습니다.
+    그래서 목록을 받은 뒤 공고마다 한 번씩 더 걸어야 합니다.
+
+    2026-10-28 토스에서 확인한 값입니다.
+      /job-groups   283건, content 필드 없음
+      /jobs         488건, content 필드 없음   (근무지별로 갈려 있음)
+      /jobs/{id}    content 있음
+    표본 57건을 받아보니 49건에 쓸 만한 본문이 있었고(중간값 1,426자),
+    8건은 회사가 본문을 비워 둔 공고였습니다.
+
+    content 는 공개 주소와 같이 HTML 이 엔티티로 인코딩돼 옵니다.
+    푸는 것은 부르는 쪽(fetch)에서 이미 하므로 여기서는 그대로 담습니다.
+
+    요청이 늘어나는 것에 대하여
+    ---------------------------
+    토스 283건이면 갱신 한 번에 283번입니다. 0.3초씩 쉬어 1분 반쯤
+    걸립니다. 그리팅 어댑터가 이미 3천 건에 같은 방식을 쓰고 있어
+    새로운 부담은 아닙니다.
+
+    한 건이 실패하면 그 공고만 본문 없이 둡니다. 예전처럼 원문 링크로
+    보내면 되고, 한 건 때문에 회사가 통째로 빠지는 것보다 낫습니다.
+    """
+    base = base.rstrip("/")
+    got = fail = 0
+    for x in rows:
+        if not isinstance(x, dict) or x.get("content"):
+            continue
+        jid = x.get("id")
+        if not jid:
+            continue
+        try:
+            d = _get(f"{base}/jobs/{jid}")
+        except Exception:
+            fail += 1
+            continue
+        # 감싼 주소는 {"success": {...}} 로 한 건을 돌려줍니다.
+        one = d.get("success") if isinstance(d, dict) else None
+        if not isinstance(one, dict):
+            one = d if isinstance(d, dict) else {}
+        c = one.get("content")
+        if c:
+            x["content"] = c
+            got += 1
+        time.sleep(0.3)
+    if got or fail:
+        msg = f"      · 본문 {got}건 추가 수집"
+        if fail:
+            msg += f" (실패 {fail}건은 원문 링크로 둡니다)"
+        print(msg)
+
+
 def list_open(code, overseas=False):
     """공개된 공고 목록. probe 용으로 밖에서도 씁니다."""
     code = str(code or "").strip()
@@ -154,7 +215,12 @@ def fetch(company):
 
     # id 에 code 를 쓰는데 url: 형태는 주소가 통째로 들어가 버립니다.
     # 그때는 회사 slug 를 씁니다.
-    tag = slug if str(code).lower().startswith(URL_PREFIX) else code
+    wrapped = str(code).lower().startswith(URL_PREFIX)
+    tag = slug if wrapped else code
+
+    # 감싼 주소는 목록에 본문이 없습니다. 공고별로 받아 채웁니다.
+    if wrapped:
+        _fill_content(str(code)[len(URL_PREFIX):].strip(), rows)
 
     jobs = []
     for x in rows:
