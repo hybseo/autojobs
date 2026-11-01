@@ -163,8 +163,17 @@ const url = canonical ?? (site + Astro.url.pathname);
   </footer>
 
   <!-- Cloudflare Web Analytics. 쿠키를 쓰지 않아 동의 배너가 필요 없습니다.
-       봇은 자바스크립트를 실행하지 않으므로 실제 방문자만 집계됩니다. -->
+       봇은 자바스크립트를 실행하지 않으므로 실제 방문자만 집계됩니다.
+
+       토큰은 Cloudflare 대시보드 → Web Analytics → searchjob.co.kr →
+       Manage site 의 "Install JS Snippet" 에 있는 값과 한 글자도 다르면 안 됩니다.
+       2026-11-01 까지 여기 다른 토큰(449e0886...)이 들어 있어서, 설치한 지
+       24일이 지나도록 집계가 0건이었습니다. 대시보드에 "데이터가 충분하지
+       않습니다" 만 떴습니다. 같은 기간 구글 애널리틱스는 정상이었으니
+       사이트 문제가 아니라 토큰 문제였습니다.
+       토큰을 바꿀 일이 있으면 배포 뒤 하루쯤 지나 대시보드에 숫자가
+       올라오는지 반드시 확인하세요. -->
   <script type="module" defer src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "449e08863244437ea9cd0e8010c51546"}'></script>
+          data-cf-beacon='{"token": "4da0c82f0e654b77806a517d1b4f94ad"}'></script>
 </body>
 </html>
