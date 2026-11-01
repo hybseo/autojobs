@@ -4,6 +4,7 @@ import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
   industriesOf, industrySlug, rolesOf, roleName, hasDetail, lazyImages, cleanBody,
+  shown, isUnstated,
 } from '../../lib.js';
 
 /*
@@ -115,8 +116,19 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
     <div class="wrap">
       <div class="eyebrow"><a href={`/company/${job.companySlug}/`}>{job.company}</a></div>
       <h1>{job.title}</h1>
+      {/*
+        근무지·고용형태는 공고가 안 알려줬으면 「기재되지 않음」으로 적습니다
+        (2026-11-02 대표님 결정). 칸을 숨기면 우리가 빠뜨린 줄 알고,
+        추측해서 채우면 거짓이 됩니다. 판정은 lib.js 의 shown 하나로 합니다.
+      */}
       <div class="meta">
-        {job.location && <>{job.location} · </>}{job.career} ·
+        <span class:list={['fact', { dim: isUnstated(job.location) }]}>
+          근무지 {shown(job.location)}
+        </span> ·
+        <span class:list={['fact', { dim: isUnstated(job.employment) }]}>
+          {shown(job.employment)}
+        </span> ·
+        {job.career} ·
         {closed
           ? <> <b class="done">마감</b> · {job.closesAt} 마감</>
           : <> <b>{d > 0 ? `D-${d}` : '오늘 마감'}</b> · {job.closesAt} 마감</>}
@@ -215,4 +227,10 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
   .closed-note b { font-size: 15px; color: #16181C; }
   .closed-note span { font-size: 13.5px; color: #5A6068; }
   .mast .meta b.done { color: #B9C0C6; }
+  /*
+    「기재되지 않음」은 흐리게 둡니다. 적혀 있는 값과 같은 진하기로 보이면
+    공고가 알려준 사실처럼 읽힙니다. 숨기지는 않습니다 — 안 적혀 있다는
+    것도 구직자가 알아야 하는 정보입니다. (2026-11-02)
+  */
+  .mast .meta .fact.dim { color: #8A9198; }
 </style>

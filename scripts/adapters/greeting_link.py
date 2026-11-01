@@ -139,17 +139,22 @@ def list_open(code):
 
 
 def _detail(url):
-    """상세 페이지에서 openingsInfo 를 꺼냅니다.
+    """상세 페이지에서 openingsInfo 와 직무 목록을 꺼냅니다.
 
-    실패하면 빈 dict 를 돌려줍니다. 한 건 때문에 그 회사가 통째로
-    빠지는 것보다, 그 공고만 본문 없이 두는 편이 낫습니다.
+    직무 목록(jobPositionSetting.jobPositions)에 **근무지와 고용형태**가
+    들어 있습니다. 2026-11-02 까지 openingsInfo 만 꺼내 버려서 근무지가
+    통째로 비어 있었습니다(오늘의집 68건).
+
+    실패하면 빈 값을 돌려줍니다. 한 건 때문에 그 회사가 통째로 빠지는
+    것보다, 그 공고만 본문 없이 두는 편이 낫습니다.
     """
     try:
         d = greeting._next_data(url)
         q = greeting._pick(greeting._queries(d), second_key="getOpeningById")
-        return ((q or {}).get("data") or {}).get("openingsInfo") or {}
+        data = (q or {}).get("data") or {}
+        return (data.get("openingsInfo") or {}), greeting._detail_positions(d)
     except Exception:
-        return {}
+        return {}, []
 
 
 def fetch(company):
@@ -161,7 +166,7 @@ def fetch(company):
     jobs = []
     closed = bodies = 0
     for x in rows:
-        info = _detail(x["url"])
+        info, positions = _detail(x["url"])
 
         # status 가 OPEN 이 아니면 마감된 공고입니다. 홈페이지 링크는
         # 한동안 남아 있어서, 이걸 안 보면 마감된 자리가 목록에 뜹니다.
@@ -184,9 +189,11 @@ def fetch(company):
             # 꾸며 둔 경우가 있습니다. 상세가 비면 링크 글자를 씁니다.
             "companySlug": slug,
             "title": (info.get("title") or "").strip() or x["title"],
-            # 상세에도 근무지 정보가 없습니다. 지어내지 않습니다.
-            "location": "",
+            # 근무지·고용형태는 상세의 직무 목록에 있습니다(2026-11-02).
+            # 없으면 비웁니다. 화면에서 「기재되지 않음」으로 보입니다.
+            "location": greeting._location(positions, name),
             "career": _career(info.get("title") or x["title"]),
+            "employment": greeting._employment(positions),
             "postedAt": (info.get("openDate") or "")[:10],
             "closesAt": (info.get("dueDate") or "")[:10],
             "dday": info.get("deadlineDDay"),

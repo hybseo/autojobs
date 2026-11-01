@@ -172,16 +172,123 @@ def _career_label(positions):
     return "분야별상이"
 
 
-def _location(positions):
+# 주소 앞머리의 시·도 이름. 사이트의 다른 화면과 같은 짧은 이름으로 맞춥니다.
+SIDO_SHORT = {
+    "서울특별시": "서울", "부산광역시": "부산", "대구광역시": "대구",
+    "인천광역시": "인천", "광주광역시": "광주", "대전광역시": "대전",
+    "울산광역시": "울산", "세종특별자치시": "세종",
+    "경기도": "경기", "강원도": "강원", "강원특별자치도": "강원",
+    "충청북도": "충북", "충청남도": "충남",
+    "전라북도": "전북", "전북특별자치도": "전북", "전라남도": "전남",
+    "경상북도": "경북", "경상남도": "경남",
+    "제주특별자치도": "제주", "제주도": "제주",
+}
+
+
+def _from_address(place):
+    """그리팅이 주는 전체 주소에서 앞 두 조각만 남깁니다.
+
+        "대한민국 서울특별시 강남구 자곡동 649 816호" → "서울 강남구"
+        "경기도 성남시 판교역로241번길 20 ..."        → "경기 성남시"
+
+    번지까지 그대로 쓰면 목록 카드가 주소 한 줄로 가득 찹니다. 지역을
+    알아보는 데 필요한 만큼만 남깁니다. 없는 지역을 만들지는 않습니다 —
+    적혀 있는 앞부분을 자르는 것뿐입니다.
+    """
+    s = re.sub(r"\s+", " ", str(place or "")).strip()
+    s = re.sub(r"^대한민국\s*", "", s)
+    if not s:
+        return ""
+    parts = s.split(" ")
+    head = SIDO_SHORT.get(parts[0], parts[0])
+    if len(parts) == 1:
+        return head
+    # 두 번째 조각이 구·시·군이면 함께 씁니다. 도로명이면 시·도만 둡니다.
+    second = parts[1]
+    if re.search(r"(시|군|구)$", second):
+        return f"{head} {second}"
+    return head
+
+
+def _is_company_name(v, company):
+    """근무지 칸에 회사 이름이 들어온 경우를 가립니다.
+
+    그리팅의 workspacePlace.location 은 회사가 자유롭게 적는 이름표입니다.
+    컬리는 "역삼" 처럼 지명을 적지만 덴티움은 "덴티움", 딥엑스는 "㈜딥엑스"
+    라고 적습니다. 회사 이름이 들어오면 근무지로 쓸 수 없습니다.
+    (2026-11-02: 그래서 덴티움 85건이 근무지 없이 올라가 있었습니다.)
+    """
+    norm = lambda s: re.sub(r"[\s()（）㈜.,·\-]|주식회사", "", str(s or "")).lower()
+    a, b = norm(v), norm(company)
+    if not a or not b:
+        return False
+    return a == b or a in b or b in a
+
+
+def _location(positions, company=""):
+    """근무지. 회사가 적은 이름표를 먼저 쓰고, 그것이 회사 이름이면 주소에서 만듭니다."""
     places = []
     for p in positions or []:
         wp = (p or {}).get("workspacePlace") or {}
-        loc = wp.get("location") or wp.get("place")
+        label = str(wp.get("location") or "").strip()
+        if label and not _is_company_name(label, company):
+            loc = label
+        else:
+            loc = _from_address(wp.get("place"))
         if loc and loc not in places:
             places.append(loc)
     if not places:
         return ""
     return places[0] if len(places) == 1 else f"{places[0]} 외 {len(places) - 1}곳"
+
+
+# 그리팅의 고용형태 코드. 2026-11-02 에 확인한 값만 적습니다.
+# 낯선 코드가 오면 비워 둡니다 — 화면에 「기재되지 않음」으로 보입니다.
+EMPLOYMENT = {
+    "FULL_TIME_WORKER": "정규직",
+    "CONTRACT_WORKER": "계약직",
+    "PART_TIME_WORKER": "시간제",
+    "INTERN": "인턴",
+    "TEMPORARY_WORKER": "기간제",
+    "DISPATCHED_WORKER": "파견직",
+    "FREELANCER": "프리랜서",
+}
+
+
+def _employment(positions):
+    """고용형태. 직무마다 다르면 모두 적습니다."""
+    out = []
+    unknown = set()
+    for p in positions or []:
+        code = str(((p or {}).get("jobPositionEmployment") or {})
+                   .get("employmentType") or "").strip()
+        if not code:
+            continue
+        name = EMPLOYMENT.get(code)
+        if not name:
+            unknown.add(code)
+            continue
+        if name not in out:
+            out.append(name)
+    if unknown:
+        print(f"      · 그리팅: 모르는 고용형태 코드 {sorted(unknown)} "
+              f"— 비워 둡니다. EMPLOYMENT 에 추가하세요.")
+    return ", ".join(out) if len(out) <= 3 else ""
+
+
+def _detail_positions(detail):
+    """상세 페이지의 직무 목록.
+
+    근무지·고용형태는 **목록 응답에 없고 상세에만** 있습니다. 칸 이름도
+    다릅니다.
+
+        목록  openingJobPosition.openingJobPositions   (경력 조건만 있음)
+        상세  jobPositionSetting.jobPositions          (근무지·고용형태)
+
+    2026-11-02 까지 목록 쪽만 보고 있었습니다.
+    """
+    got = (_pick(_queries(detail), second_key="getOpeningById") or {}).get("data") or {}
+    return (got.get("jobPositionSetting") or {}).get("jobPositions") or []
 
 
 def base_url(company):
@@ -271,6 +378,8 @@ def fetch(company):
                      .get("openingJobPositions") or [])
 
         raw = ""
+        # 상세의 직무 목록. 근무지·고용형태가 여기에 있습니다.
+        dpos = []
         try:
             d = _next_data(f"{base}/ko/o/{oid}")
             info = ((_pick(_queries(d), second_key="getOpeningById") or {})
@@ -279,12 +388,16 @@ def fetch(company):
             if info.get("status") and info["status"] != "OPEN":
                 continue
             raw = info.get("detail") or ""
+            dpos = _detail_positions(d)
         except Exception:
             raw = ""
 
         text = strip_html(raw)
         # 본문이 이미지뿐이면 세부 직무를 읽을 수 없습니다. 원문으로 보냅니다.
         image_only = len(text) < 50 and "<img" in raw.lower()
+
+        # 회사 이름을 먼저 정합니다. 근무지에서 회사 이름을 걸러낼 때 씁니다.
+        co_name = (_affiliate(r.get("title"), want)[1] or name) if want else name
 
         jobs.append({
             "id": f"greeting-{code}-{oid}",
@@ -297,11 +410,14 @@ def fetch(company):
             # (2026-10-01 실제로 그렇게 올라갔습니다).
             #
             # affiliates 가 없으면 등록명을 그대로 씁니다.
-            "company": (_affiliate(r.get("title"), want)[1] or name) if want else name,
+            "company": co_name,
             "companySlug": slug,
             "title": r.get("title") or "",
-            "location": _location(positions),
+            # 근무지·고용형태는 상세(dpos)에서 가져옵니다. 목록에는 없습니다.
+            # 상세를 못 받았으면 목록 쪽으로 한 번 더 시도합니다.
+            "location": _location(dpos or positions, co_name),
             "career": _career_label(positions),
+            "employment": _employment(dpos),
             "postedAt": (r.get("openDate") or "")[:10],
             "closesAt": (r.get("dueDate") or "")[:10],
             "dday": r.get("deadlineDDay"),

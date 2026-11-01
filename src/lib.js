@@ -170,6 +170,61 @@ const CITY_TO_SIDO = {
   익산: '전북', 전주: '전북', 광양: '전남', 여수: '전남',
 };
 
+/*
+ * 공고가 알려주지 않은 칸을 화면에 어떻게 쓸 것인가 (2026-11-02 대표님 결정)
+ * ---------------------------------------------------------------------------
+ * 근무지·고용형태는 "가져올 수 있는 건 가져오고, 없는 건 「기재되지 않음」" 입니다.
+ *
+ * 비워 두거나 칸을 숨기면 구직자는 우리가 빠뜨린 줄 압니다. 반대로 추측해서
+ * 채우면 거짓이 됩니다(「근무지를 추측해서 채우지 않는다」 2026-10 결정).
+ * 그래서 공고가 안 알려줬다는 사실을 그대로 적습니다.
+ *
+ * 요약의 근무지 칸에는 수집 당시 「미표기」, 「본사 (상세 주소 미표기)」 처럼
+ * 사람이 쓴 말이 들어 있습니다. 그런 말도 여기서 한 가지 표현으로 모읍니다.
+ * 화면마다 다른 말이 보이면 같은 뜻인지 알 수 없습니다.
+ *
+ * 쓰는 곳: 공고 상세, 공고 카드, 기업 상세 — 표시가 필요한 모든 화면.
+ */
+export const UNSTATED = '기재되지 않음';
+
+// 값이 들어 있으나 사실은 "안 적혀 있다" 는 뜻인 말들.
+const UNSTATED_WORDS = /^(미표기|미공개|미정|없음|해당\s*없음|협의|추후\s*협의|협의\s*후\s*결정|비공개|-{1,2})$/;
+
+export const stated = (v) => {
+  const s = String(v ?? '').trim();
+  if (!s) return '';
+  // 「미표기 (공고의 근무지 칸에 회사명만 적혀 있습니다)」 처럼 꼬리말이 붙은 것까지 봅니다.
+  const head = s.split(/[(（]/)[0].trim();
+  if (UNSTATED_WORDS.test(head)) return '';
+  return s;
+};
+
+// 화면에 바로 쓸 값. 없으면 「기재되지 않음」.
+export const shown = (v) => stated(v) || UNSTATED;
+
+// 「기재되지 않음」으로 보여야 하는가. 흐린 글씨로 칠할 때 씁니다.
+export const isUnstated = (v) => !stated(v);
+
+/*
+ * 공고가 적어 준 고용형태를 구글이 쓰는 코드로 바꿉니다.
+ * 모르면 빈 값을 돌려주고, 부르는 쪽에서 칸을 아예 빼게 합니다.
+ * 짝지을 수 없는 말(「병역특례」 등)도 지어내지 않고 빈 값입니다.
+ */
+const EMPLOYMENT_CODE = [
+  [/정규/, 'FULL_TIME'],
+  [/무기\s*계약/, 'FULL_TIME'],
+  [/인턴|체험형|채용\s*연계/, 'INTERN'],
+  [/계약|기간제|파견|도급|프리랜서/, 'CONTRACTOR'],
+  [/시간제|파트\s*타임|아르바이트|단기/, 'PART_TIME'],
+];
+
+export const employmentCode = (v) => {
+  const s = stated(v);
+  if (!s) return '';
+  for (const [re, code] of EMPLOYMENT_CODE) if (re.test(s)) return code;
+  return '';
+};
+
 export const addressRegion = (location) => {
   const s = (location || '').trim();
   if (!s) return undefined;
@@ -1001,8 +1056,19 @@ export const jobPostingSchema = (j, pageUrl) => {
   if (!hasDetail(j)) return null;
   const datePosted = pickDatePosted(j);
   if (!datePosted) return null;
-  const employmentType =
-    j.career === '신입' ? 'FULL_TIME' : j.career === '무관' ? 'OTHER' : 'FULL_TIME';
+  /*
+   * 고용형태 (2026-11-02 고침)
+   *
+   * 전에는 career(신입/경력/무관)를 보고 정했습니다. 잘못된 짝짓기였습니다.
+   * 신입이냐 경력이냐는 **경력 요건** 이고, 정규직이냐 계약직이냐는
+   * **고용형태** 입니다. 그래서 계약직 공고에도 FULL_TIME 이 나갔습니다.
+   *
+   * 이제 공고가 알려준 고용형태를 씁니다(2026-11-02 부터 코오롱·큐렉소에서
+   * 수집합니다). 모르면 **칸을 아예 넣지 않습니다.** 구글에는 「기재되지
+   * 않음」을 넣을 자리가 없고, 모르는 것을 FULL_TIME 이라고 적으면 거짓이
+   * 됩니다. employmentType 은 구글이 요구하는 필수 칸이 아닙니다.
+   */
+  const employmentType = employmentCode(j.employment);
   return {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
@@ -1013,7 +1079,7 @@ export const jobPostingSchema = (j, pageUrl) => {
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
     datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
-    employmentType,
+    ...(employmentType ? { employmentType } : {}),
     hiringOrganization: {
       '@type': 'Organization',
       name: j.company,
@@ -1022,9 +1088,11 @@ export const jobPostingSchema = (j, pageUrl) => {
       '@type': 'Place',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: j.location || undefined,
+        // stated() 로 걸러 「미표기」 같은 말이 주소로 나가지 않게 합니다.
+        // 구글 구조화 데이터에 「미표기」가 근무지로 들어가면 안 됩니다.
+        addressLocality: stated(j.location) || undefined,
         // 알아낼 수 있을 때만 넣습니다. 원본에 없는 주소를 지어내지 않습니다.
-        addressRegion: addressRegion(j.location),
+        addressRegion: addressRegion(stated(j.location)),
         addressCountry: 'KR',
       },
     },

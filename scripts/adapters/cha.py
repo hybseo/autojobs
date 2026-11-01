@@ -38,10 +38,36 @@ companies.json 의 affiliates 에 담을 회사를 적습니다. 비워 두면 �
 2026-09-28 기준 45건 중 차바이오텍 15건·마티카바이오랩스 4건이었고
 나머지는 병원·연구소 공고였습니다.
 
-상세 주소
----------
-공고를 누르면 화면 안에서 열리고 주소가 #/main 그대로라, 주소로 바로
-갈 수 있는 개별 페이지가 없습니다. 모두 목록으로 보냅니다.
+상세 주소 — 2026-11-02 고침
+--------------------------
+처음에는 "주소가 #/main 그대로라 개별 페이지가 없다"고 적었습니다.
+틀렸습니다. 공고를 누르면 주소 뒤쪽(해시)이 바뀝니다.
+
+    https://recruit.chamc.co.kr/page.ckd#/recruit/announcement/RG20269027-001
+                                                               └─ recrId
+
+목록 API 가 recrGrpId(RG20269027)와 recrId(RG20269027-001)를 둘 다
+줍니다. 주소에 쓰는 것은 **recrId** 입니다. 뒤의 -001 이 빠지면 안 됩니다.
+
+해시 주소라 붙여넣고 새로 열어도 그 공고가 열립니다. 2026-11-02 확인.
+
+본문은 이미지입니다 — 글로 받을 수 없습니다
+-------------------------------------------
+상세는 POST .../recruit/announcement/recruitAnnouncementDetail.ckd
+({"recrId": "..."}) 가 줍니다. 그런데 내용이 글이 아니라 **이미지**입니다.
+
+    <img src="/file/editorViewer.ckd?fileNm=20261028154959409640304">
+
+2026-11-02 에 차바이오텍·마티카바이오랩스 5건을 전부 확인했습니다.
+다섯 건 모두 글자는 7자뿐이고 공고 내용이 사진 1~4장이었습니다.
+차병원 그룹 채용 시스템이 에디터에 이미지를 붙여 올리는 방식입니다.
+
+그래서 본문은 비웁니다. 이 회사 공고는 **이미지 공고** 로 분류되어
+화면을 읽고 요약하는 쪽으로 넘어갑니다. 상세 API 를 부르지 않습니다.
+불러도 글이 없으므로 괜히 요청만 늘립니다.
+
+근무지·고용형태도 목록·상세 어디에도 없습니다. 비워 둡니다. 화면에서
+「기재되지 않음」으로 보입니다.
 """
 import html
 import json
@@ -144,7 +170,11 @@ def fetch(company):
 
     jobs = []
     for x in rows:
+        # id 는 recrGrpId 로 만듭니다. 한번 정한 id 는 바꾸지 않습니다
+        # (바꾸면 지금까지 붙인 요약이 전부 떨어집니다).
         no = str(x.get("recrGrpId") or "").strip()
+        # 주소에 쓰는 것은 recrId 입니다. 뒤의 -001 이 빠지면 안 됩니다.
+        detail_no = str(x.get("recrId") or "").strip()
         title = _text(x.get("recrNm"))
         if not no or not title:
             continue
@@ -155,16 +185,20 @@ def fetch(company):
             "company": _text(x.get("psitnNm")) or name,
             "companySlug": slug,
             "title": title,
-            # 목록에 근무지가 없습니다. 지어내지 않습니다.
+            # 목록·상세 어디에도 근무지가 없습니다. 지어내지 않습니다.
             "location": "",
             "career": _career(x),
+            # 고용형태도 주지 않습니다.
+            "employment": "",
             "postedAt": _date(x.get("rcritStaDt")),
             "closesAt": _date(x.get("rcritEndDt")),
             "dday": None,
             "multiRole": False,
             "sourceTitle": "",
-            "sourceUrl": LIST_PAGE,
-            # 목록에 본문이 없습니다. 원문으로 보냅니다.
+            # 공고별 주소. recrId 가 없는 공고는 목록으로 보냅니다.
+            "sourceUrl": (f"{BASE}/page.ckd#/recruit/announcement/{detail_no}"
+                          if detail_no else LIST_PAGE),
+            # 본문이 이미지라 글로 받을 수 없습니다. 화면을 읽어 요약합니다.
             "description": "",
         })
     return jobs

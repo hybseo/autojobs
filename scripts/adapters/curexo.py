@@ -55,10 +55,41 @@ companies.json 의 code 에 이 UUID 를 적습니다. 페이지를 다시 만�
 2026-09-15 기준 다섯 건 모두 "채용 시까지" 였습니다. 날짜가 아니므로
 closesAt 을 비웁니다. 비우면 사이트가 상시채용으로 표시합니다.
 
-공고마다 고유 주소가 없습니다
------------------------------
-노션 데이터베이스의 행이라 각 공고에 열 수 있는 주소가 없습니다.
-모두 목록 페이지로 보냅니다. 없는 주소를 지어내지 않습니다.
+공고별 주소 — 2026-11-02 고침
+----------------------------
+처음에는 "노션 데이터베이스의 행이라 열 수 있는 주소가 없다"고 적고 모두
+목록으로 보냈습니다. 틀렸습니다. 노션 행은 그 자체가 페이지이고, 행의
+블록 ID 가 그대로 주소가 됩니다.
+
+    https://career.curexo.com/3c2ed000-1d73-8023-ad1f-e6be4cc1b568
+                             └─ recordMap 의 그 행 블록 ID (하이픈 그대로)
+
+목록 화면의 <a href> 와 블록 ID 가 같은지 2026-11-02 에 5건 모두
+확인했습니다. 요청을 더 하지 않고 ID 로 주소를 만듭니다.
+
+본문 — 상세를 한 단계 들어갑니다
+--------------------------------
+목록에는 본문이 없습니다. 공고 주소를 열면 같은 __NEXT_DATA__ 안에
+그 공고의 블록이 들어 있습니다. 행 블록에서 content 를 따라 내려가며
+글을 모읍니다.
+
+건너뛰는 블록
+-------------
+상세에는 모든 공고에 똑같이 붙는 공통 안내(전형절차·복리후생·회사 소개)가
+transclusion 으로 들어옵니다. 이걸 담으면 공고마다 같은 글이 반복되고
+요약도 흐려집니다. 그래서 아래 종류는 건너뜁니다.
+
+    transclusion_reference   공통 블록을 가리키는 참조
+    transclusion_container   그 참조를 감싼 통
+    collection_view          다른 데이터베이스가 박혀 있는 것
+    page                     하위 페이지(자기 자신 제외)
+
+2026-11-02 확인: 블록 178개 중 공고 본문은 37개였습니다.
+
+근무지·고용형태
+---------------
+노션 칸에 있어 목록만으로 얻습니다. 값이 없으면 비웁니다. 화면에서
+「기재되지 않음」으로 보입니다. 여기서 지어내지 않습니다.
 """
 import html
 import json
@@ -82,6 +113,16 @@ ALWAYS = re.compile(r"채용\s*시|상시|수시", re.I)
 # 모집 전형 → 사이트 career 표기.
 CAREER = {"경력": "경력", "신입": "신입", "신입/경력": "신입/경력",
           "무관": "무관", "경력무관": "무관", "인턴": "무관"}
+
+# 공고당 쉬는 시간. 2026-10-28 결정에 따라 0.3초를 지킵니다.
+DETAIL_GAP = 0.3
+
+# 본문에서 건너뛸 블록. 공통 안내가 이 형태로 들어옵니다.
+SKIP_TYPES = {"transclusion_reference", "transclusion_container",
+              "collection_view", "page"}
+
+# 블록 종류 → 우리 본문의 태그.
+HEADS = {"header": "h2", "sub_header": "h3", "sub_sub_header": "h4"}
 
 
 def _get(url):
@@ -114,6 +155,84 @@ def _plain(v):
         if isinstance(part, list) and part and isinstance(part[0], str):
             out.append(part[0])
     return re.sub(r"\s+", " ", html.unescape("".join(out))).strip()
+
+
+def _blocks(page):
+    """HTML 에서 __NEXT_DATA__ 의 block 묶음을 꺼냅니다."""
+    m = NEXT_DATA.search(page)
+    if not m:
+        return {}
+    try:
+        data = json.loads(m.group(1))
+        pp = (data.get("props") or {}).get("pageProps") or {}
+        return (pp.get("recordMap") or {}).get("block") or {}
+    except Exception:
+        return {}
+
+
+def _walk(blocks, root):
+    """공고 블록에서 아래로 내려가며 (종류, 글) 목록을 모읍니다.
+
+    공통 안내 블록은 건너뜁니다. 같은 블록을 두 번 담지 않습니다.
+    깊이를 8로 끊습니다. 노션 블록이 서로를 가리키면 끝없이 돌 수 있습니다.
+    """
+    out, seen = [], set()
+
+    def go(bid, depth):
+        if depth > 8 or bid in seen:
+            return
+        seen.add(bid)
+        v = (blocks.get(bid) or {}).get("value")
+        if not isinstance(v, dict):
+            return
+        if bid != root:
+            if v.get("type") in SKIP_TYPES:
+                return
+            text = _plain((v.get("properties") or {}).get("title"))
+            if text:
+                out.append((v.get("type") or "text", text))
+        for child in (v.get("content") or []):
+            go(child, depth + 1)
+
+    go(root, 0)
+    return out
+
+
+def _body(items):
+    """(종류, 글) 목록을 우리 상세 페이지에 넣을 HTML 로 만듭니다."""
+    out, bullets = [], []
+
+    def flush():
+        if bullets:
+            out.append("<ul>" + "".join(f"<li>{html.escape(b)}</li>"
+                                        for b in bullets) + "</ul>")
+            bullets.clear()
+
+    for kind, text in items:
+        if kind in ("bulleted_list", "numbered_list", "to_do"):
+            bullets.append(text)
+            continue
+        flush()
+        tag = HEADS.get(kind)
+        if tag:
+            out.append(f"<{tag}>{html.escape(text)}</{tag}>")
+        else:
+            out.append(f"<p>{html.escape(text)}</p>")
+    flush()
+    return "\n".join(out)
+
+
+def _detail(block_id):
+    """공고 주소를 열어 본문 HTML 을 돌려줍니다. 못 받으면 빈 문자열."""
+    try:
+        page = _get(f"{BASE}/{block_id}")
+    except Exception as e:
+        print(f"      ! 큐렉소 {block_id[:8]}: 상세를 받지 못했습니다 ({e})")
+        return ""
+    blocks = _blocks(page)
+    if not blocks:
+        return ""
+    return _body(_walk(blocks, block_id))
 
 
 def _date(v):
@@ -224,7 +343,6 @@ def fetch(company):
     code = company["code"]
 
     rows = list_open(code)
-    url = f"{BASE}/{code.strip().strip('/')}"
 
     jobs = []
     for x in rows:
@@ -233,6 +351,11 @@ def fetch(company):
         emp = x["employment"]
         if emp and emp != "정규직" and emp not in title:
             title = f"{title} ({emp})"
+
+        # 상세를 한 단계 들어가 본문을 받습니다.
+        body = _detail(x["id"]) if x["id"] else ""
+        if body:
+            time.sleep(DETAIL_GAP)
 
         jobs.append({
             # 노션 블록 ID 는 UUID 라 깁니다. 앞부분만 씁니다.
@@ -243,6 +366,7 @@ def fetch(company):
             "title": title,
             "location": x["location"],
             "career": _career(x["career"]),
+            "employment": x["employment"],
             # 게시일을 주지 않습니다.
             "postedAt": "",
             # "채용 시까지" 면 빈 문자열이 됩니다(상시채용).
@@ -250,10 +374,9 @@ def fetch(company):
             "dday": None,
             "multiRole": False,
             "sourceTitle": "",
-            # 공고마다 고유 주소가 없습니다. 목록으로 보냅니다.
-            "sourceUrl": url,
-            # 목록에 본문이 없습니다. 원문으로 보냅니다.
-            "description": "",
+            # 공고별 주소. 노션 행 블록 ID 가 그대로 주소입니다.
+            "sourceUrl": f"{BASE}/{x['id']}",
+            "description": body,
         })
 
     return jobs
