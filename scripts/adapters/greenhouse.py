@@ -76,6 +76,104 @@ def _get(url):
         return json.load(r)
 
 
+# ─────────────────────────────────────────────────────────────────────
+# 토스: Greenhouse 의 content 칸이 비어 있습니다 (2026-11-01 확인)
+#
+# 토스 공고 56건이 본문 없이 나가고 있었습니다. 원인을 찾아보니
+# api-public.toss.im 의 /jobs/{id} 응답에서 content 가 이렇게 옵니다.
+#
+#     "content": "&lt;p&gt;#LI-DNI&lt;/p&gt;"
+#
+# #LI-DNI 는 링크드인에 올리지 말라는 표시입니다. 본문이 아닙니다.
+# 응답의 칸 이름을 전부 확인했지만 description 같은 본문 칸은 없습니다.
+# (브라우저로 직접 호출해 확인: content 26자, description 칸 자체가 없음)
+#
+# 진짜 본문은 토스 채용 페이지 쪽에만 있습니다. Next.js 로 만든 페이지라
+# 서버가 완성해서 보내고, 그 데이터가 HTML 안에 그대로 들어 있습니다.
+#
+#   https://toss.im/career/job-detail?job_id={id}
+#   <script id="__NEXT_DATA__"> ... </script>
+#     props.pageProps.prefetchResult.dehydratedState.queries[]
+#       .state.data            ← 문자열로 들어 있어 한 번 더 JSON 으로 풀어야 합니다
+#         .job.description     ← 본문 (1,476자 확인)
+#
+# 공개 페이지이고 토큰도 로그인도 필요 없습니다. 브라우저로 확인했습니다.
+#
+# 본문은 HTML 이 아니라 **마크다운**입니다. "# 제목", "- 항목" 꼴입니다.
+# 사이트는 본문을 HTML 로 다루므로 아래 _md_to_html 로 최소한만 바꿉니다.
+# 마크다운 전체를 지원하려는 것이 아니라, 제목과 목록만 살립니다.
+TOSS_PAGE = "https://toss.im/career/job-detail?job_id={}"
+TOSS_NEXT = re.compile(
+    r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S | re.I)
+
+
+def _get_html(url):
+    req = urllib.request.Request(url, headers={
+        "Accept": "text/html", "User-Agent": UA,
+        "Accept-Language": "ko-KR,ko;q=0.9"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return r.read().decode("utf-8", "replace")
+
+
+def _md_to_html(md):
+    """마크다운 제목·목록만 HTML 로 바꿉니다. 나머지는 문단으로 둡니다."""
+    out, bullets = [], []
+
+    def flush():
+        if bullets:
+            out.append("<ul>" + "".join(f"<li>{b}</li>" for b in bullets)
+                       + "</ul>")
+            bullets.clear()
+
+    for raw in str(md or "").replace("\r\n", "\n").split("\n"):
+        ln = raw.strip()
+        if not ln:
+            flush()
+            continue
+        m = re.match(r"^(#{1,6})\s+(.*)$", ln)
+        if m:
+            flush()
+            out.append(f"<h3>{m.group(2).strip()}</h3>")
+            continue
+        m = re.match(r"^[-*>]\s+(.*)$", ln)
+        if m:
+            bullets.append(m.group(1).strip())
+            continue
+        flush()
+        out.append(f"<p>{ln}</p>")
+    flush()
+    return "\n".join(out)
+
+
+def _toss_body(jid):
+    """토스 채용 페이지에서 본문을 꺼냅니다. 실패하면 빈 문자열."""
+    try:
+        page = _get_html(TOSS_PAGE.format(jid))
+    except Exception:
+        return ""
+    m = TOSS_NEXT.search(page)
+    if not m:
+        return ""
+    try:
+        nd = json.loads(m.group(1))
+    except Exception:
+        return ""
+    qs = (((nd.get("props") or {}).get("pageProps") or {})
+          .get("prefetchResult") or {}).get("dehydratedState") or {}
+    for q in (qs.get("queries") or []):
+        d = (q.get("state") or {}).get("data")
+        if isinstance(d, str):
+            try:
+                d = json.loads(d)
+            except Exception:
+                continue
+        if isinstance(d, dict) and isinstance(d.get("job"), dict):
+            desc = str(d["job"].get("description") or "").strip()
+            return _md_to_html(desc) if desc else ""
+    return ""
+# ─────────────────────────────────────────────────────────────────────
+
+
 def strip_html(s):
     s = re.sub(r"<br\s*/?>", "\n", s or "", flags=re.I)
     s = re.sub(r"</(p|div|li|tr|h\d)>", "\n", s, flags=re.I)
@@ -158,7 +256,7 @@ def _fill_content(base, rows):
     보내면 되고, 한 건 때문에 회사가 통째로 빠지는 것보다 낫습니다.
     """
     base = base.rstrip("/")
-    got = fail = 0
+    got = fail = tossed = 0
     for x in rows:
         if not isinstance(x, dict) or x.get("content"):
             continue
@@ -175,12 +273,22 @@ def _fill_content(base, rows):
         if not isinstance(one, dict):
             one = d if isinstance(d, dict) else {}
         c = one.get("content")
+        # 본문처럼 생겼지만 알맹이가 없는 경우가 있습니다. 토스는
+        # "<p>#LI-DNI</p>" 한 줄이 들어옵니다. 위 설명을 보세요.
+        if c and len(strip_html(html.unescape(c))) < 30:
+            c = ""
+        if not c and "toss.im" in base:
+            c = _toss_body(jid)
+            if c:
+                tossed += 1
         if c:
             x["content"] = c
             got += 1
         time.sleep(0.3)
     if got or fail:
         msg = f"      · 본문 {got}건 추가 수집"
+        if tossed:
+            msg += f" (그중 {tossed}건은 채용 페이지에서 받았습니다)"
         if fail:
             msg += f" (실패 {fail}건은 원문 링크로 둡니다)"
         print(msg)
