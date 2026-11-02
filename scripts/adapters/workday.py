@@ -365,6 +365,7 @@ def fetch(company):
         return []
 
     jobs = []
+    empty = 0            # 본문이 비어 담지 않은 공고 수. 아래에서 알려 줍니다.
     for x in rows:
         path = x.get("externalPath") or ""
         if not path:
@@ -412,6 +413,29 @@ def fetch(company):
         text = strip_html(body)
         image_only = len(text) < 50 and "<img" in body.lower()
 
+        # 직무 내용이 없는 묵은 공고는 담지 않습니다 (2026-11-02 대표님 결정).
+        #
+        # 일진홀딩스가 Workday 에 공고를 올려 두고 마감 뒤에 내리지 않고
+        # 본문만 지웁니다. 화면에는 「공고 후 30일 이상 경과」로 찍혀 있고
+        # 회사소개·핵심가치·인재상·복리후생만 남습니다.
+        #
+        #   일진홀딩스 IT기획 차/부장급    본문 33자
+        #   부동산 개발/관리              본문  0자
+        #     ← 같은 자리를 다시 올린 「일진홀딩스 부동산개발/관리」(R-448)는
+        #       본문 491자로 멀쩡합니다. 묵은 쪽만 비어 있습니다.
+        #
+        # 글도 그림도 없으면 구직자에게 보여줄 것이 없고, 원문으로 보내도
+        # 회사소개만 나옵니다. 그래서 목록에서 뺍니다.
+        #
+        # 이미지 공고(image_only)는 그대로 담습니다. 그림이 본문이므로
+        # 원문으로 보내면 구직자가 읽을 수 있습니다.
+        #
+        # 2026-11-02 확인: 워크데이로 받는 열린 공고 373건 중 이 조건에
+        # 걸리는 것은 위 2건뿐입니다. 다른 회사 공고는 영향이 없습니다.
+        if len(text) < 50 and not image_only:
+            empty += 1
+            continue
+
         jobs.append({
             "id": f"workday-{tenant}-{jid}",
             "unit": "공고",
@@ -441,4 +465,7 @@ def fetch(company):
             "description": body if not image_only else "",
         })
 
+    if empty:
+        print(f"      · {name}: 직무 내용이 없는 공고 {empty}건 제외 "
+              f"(회사가 마감 뒤 본문만 지운 묵은 공고)")
     return jobs
