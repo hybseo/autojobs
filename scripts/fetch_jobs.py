@@ -652,6 +652,23 @@ def main():
     # 남아 구조화 데이터가 들어가므로 firstSeenAt 이 있어야 합니다.
     jobs = stamp_first_seen(jobs, previous, load_first_seen_seed(), today.isoformat())
 
+    # 고용형태(employment)는 저장하지 않습니다 (2026-11-02 대표님 지시).
+    #
+    # 2026-11-02 07:42 커밋이 그리팅·카카오 등 12개 어댑터에 employment 를
+    # 넣었는데, 그날 15:01 예약 실행이 자가진단에서 멈췄습니다.
+    #
+    #   ✗ 데이터  칸이 규약과 다른 공고 3177건: ['greeting-kci-239933', …]
+    #
+    # check.py 의 칸 목록(REQUIRED·OPTIONAL)에 없는 칸이라 규약 위반으로
+    # 잡힌 것입니다. 한 시간 반 수집한 결과를 통째로 버렸습니다.
+    #
+    # 같은 날 고용형태는 화면에서 빼기로 정해졌습니다. 공고가 적어 주는
+    # 곳이 드물어 거의 모든 공고에 「제공정보 없음」만 찍혔기 때문입니다.
+    # 아무도 읽지 않는 칸이라 저장하지 않습니다. 어댑터는 그대로 두어
+    # 나중에 다시 쓰고 싶어지면 이 세 줄만 지우면 됩니다.
+    for j in jobs:
+        j.pop("employment", None)
+
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},
         ensure_ascii=False, indent=1), encoding="utf-8")

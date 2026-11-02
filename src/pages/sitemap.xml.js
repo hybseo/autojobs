@@ -1,4 +1,4 @@
-import { companyPages, industries, roles, JOBS, COLLECTED_AT } from '../lib.js';
+import { companyPages, industries, roles, JOBS, COLLECTED_AT, hasDetail } from '../lib.js';
 
 // 마감 후 사이트맵에 남겨 두는 날 수. 아래 공고 상세 주석 참고.
 const GRACE_DAYS = 7;
@@ -78,7 +78,14 @@ export async function GET({ site }) {
      *     그대로 들어갔습니다.
      *   - 오늘 마감인 공고는 남은 날이 0 이라 빠졌습니다.
      */
-    ...JOBS.filter((j) => j.description && j.description.trim().length >= 50)
+    /*
+     * 2026-11-02: 기준을 본문 길이에서 요약 유무로 바꿨습니다. 화면이
+     * 요약을 그리므로 사이트맵도 요약이 있는 공고만 올립니다.
+     * 요약 없이 주소만 살려 둔 보관 페이지(isArchivedPage)는 noindex 라
+     * 여기에 넣으면 안 됩니다 — 크롤링해 달라고 해 놓고 색인하지 말라는
+     * 모순된 신호가 됩니다.
+     */
+    ...JOBS.filter(hasDetail)
       .filter((j) => {
         const shut = closedOn(j, today);
         return !shut || daysBetween(shut, today) <= GRACE_DAYS;

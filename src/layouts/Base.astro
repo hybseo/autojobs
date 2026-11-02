@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { ldJson } from '../lib.js';
-const { title, description, canonical, schema } = Astro.props;
+const { title, description, canonical, schema, noindex } = Astro.props;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const url = canonical ?? (site + Astro.url.pathname);
 ---
@@ -13,6 +13,15 @@ const url = canonical ?? (site + Astro.url.pathname);
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={url} />
+  {/*
+    검색에 내보내지 않는 페이지 (2026-11-02 대표님 지시)
+
+    회사가 내린 공고 중 우리 요약이 없는 것들입니다. 페이지는 남깁니다 —
+    구글이 색인해 둔 주소로 들어온 사람에게 404 대신 마감 사실을 알리기
+    위해서입니다. 다만 새로 색인되지는 않게 막습니다.
+    follow 를 붙여 이 페이지의 링크는 따라가게 둡니다.
+  */}
+  {noindex && <meta name="robots" content="noindex, follow" />}
 
   {/*
     파비콘.
