@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { roles, byRole, byDeadline, isAlways, industriesOf, COLLECTED_AT } from '../lib.js';
+import { roles, byRole, byDeadline, isAlways, daysLeft, industriesOf, industrySlug, jobTags, tagInfo, COLLECTED_AT } from '../lib.js';
 
 /*
  * 직무별 채용공고 페이지.
@@ -74,6 +74,24 @@ const topInds = [...indCount.entries()]
   .slice(0, 3)
   .map(([name]) => name);
 
+/* 머리 숫자 네 개 (2026-11-02) — 건수·기업 수·오늘 신규·급한 것.
+   전에는 제목과 목록뿐이라 "이 직무가 지금 어떤 상태인가" 를 말해주지
+   않았습니다. 산업 페이지와 같은 구성입니다. */
+const freshN = jobs.filter((j) => (j.firstSeenAt || '').slice(0, 10) === COLLECTED_AT).length;
+const soonN = jobs.filter((j) => !isAlways(j) && daysLeft(j) <= 3).length;
+
+/* 이 직무가 요구하는 기술. 「태그를 타고 다른 공고로」의 입구입니다. */
+const techCount = {};
+for (const j of jobs) {
+  for (const t of jobTags(j)) {
+    const info = tagInfo(t);
+    if (info && info.link && info.slug) techCount[t] = (techCount[t] || 0) + 1;
+  }
+}
+const topTechs = Object.entries(techCount)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ko'))
+  .slice(0, 12);
+
 const title = `${role.name} 채용공고 | SEARCHJOB`;
 const desc = `${role.name} 직무 채용공고 ${jobs.length}건을 모았습니다. `
   + `기업 ${cos.length}곳의 공식 채용페이지에 올라온 공고를 한눈에 보고 원문으로 바로 이동하세요.`;
@@ -102,6 +120,35 @@ const schema = {
   </header>
 
   <main class="wrap">
+    <div class="rolestats">
+      <div><b>{jobs.length.toLocaleString('ko-KR')}</b><span>진행중 공고</span></div>
+      <div><b>{cos.length.toLocaleString('ko-KR')}</b><span>기업</span></div>
+      <div><b>{freshN.toLocaleString('ko-KR')}</b><span>오늘 신규</span></div>
+      <div class={soonN ? 'urgent' : ''}><b>{soonN.toLocaleString('ko-KR')}</b><span>3일 내 마감</span></div>
+    </div>
+
+    {topInds.length > 0 && (
+      <>
+        <div class="section-h">이 직무가 나오는 분야</div>
+        <div class="chips techs">
+          {[...indCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([n, c]) => (
+            <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
+          ))}
+        </div>
+      </>
+    )}
+
+    {topTechs.length > 0 && (
+      <>
+        <div class="section-h">이 직무가 요구하는 기술</div>
+        <div class="chips techs">
+          {topTechs.map(([n, c]) => (
+            <a class="chip" href={`/tech/${tagInfo(n).slug}/`}>{n}<span class="n">{c}</span></a>
+          ))}
+        </div>
+      </>
+    )}
+
     <div class="section-h">이 직무를 뽑는 기업</div>
     <div class="chips cos" id="cos" data-open="false">
       {cos.map((n, i) => (
@@ -152,6 +199,24 @@ const schema = {
 </script>
 
 <style>
+  /* 머리 숫자 네 개 (2026-11-02) */
+  .rolestats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+               background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
+               margin: 18px 0 4px; }
+  @media (min-width: 640px) { .rolestats { grid-template-columns: repeat(4, 1fr); } }
+  .rolestats div { background: var(--paper, #fff); padding: 13px 14px; }
+  .rolestats b { display: block; font-family: var(--mono, monospace); font-size: 21px;
+                 font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+  .rolestats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92);
+                    margin-top: 3px; }
+  .rolestats .urgent b { color: var(--urgent, #B4322B); }
+
+  .chips.techs { margin-bottom: 10px; }
+  .chips.techs .chip { text-decoration: none; cursor: pointer; }
+  .chips.techs .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
+  .chips.techs .chip .n { font-family: var(--mono, monospace); font-size: 11px;
+                          opacity: .6; margin-left: 5px; }
+
   /* 기업 목록. 누르는 필터가 아니라 보여주기용이라 커서를 바꾸지 않습니다. */
   .chips.cos { margin-bottom: 8px; }
   .chips.cos .chip { cursor: default; }

@@ -257,7 +257,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       </div>
       <div class="fhead">경력구분</div>
       <div class="chips" id="fCa">
-        {tally((j) => j.career).map(([v, n]) => (
+        {tally((j) => (j.career === '기간제' || j.career === '인턴' ? '기간제·인턴' : j.career)).map(([v, n]) => (
           <button class="chip" type="button" data-k="ca" data-v={v} aria-pressed="false">{v}<span class="n">{n}</span></button>
         ))}
         <button class="chip morebtn" id="moreCa" type="button" hidden></button>

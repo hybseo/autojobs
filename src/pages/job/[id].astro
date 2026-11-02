@@ -2,10 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
-  openJobs, isRecentlyClosed, KEEP_DAYS,
+  openJobs, isRecentlyClosed, KEEP_DAYS, COLLECTED_AT,
   industriesOf, industrySlug, rolesOf, roleName, hasDetail,
   shown, isUnstated, summaryOf, detailPages, isArchivedPage, isGone,
-  jobTags, tagInfo,
+  jobTags, tagInfo, doorsOf,
 } from '../../lib.js';
 
 /*
@@ -117,6 +117,9 @@ const sameInd = inds.length
       .slice(0, LIMIT)
   : [];
 const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
+
+/* 여기서 갈 수 있는 곳. 건수는 lib.js 가 한 번만 세어 둡니다. */
+const doors = archived ? [] : doorsOf(job);
 ---
 <Base title={title} description={desc} schema={archived ? undefined : schema} noindex={archived}>
   <header class="mast">
@@ -234,6 +237,28 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       <div class="prose">
         <a class="cta" href={job.sourceUrl} target="_blank" rel="noopener nofollow">회사 공고로 이동 ↗</a>
       </div>
+    )}
+
+    {/* 이 공고 점검 이력 — 언제 처음 봤고 언제 확인했는지. */}
+    <div class="section-h">이 공고 점검 이력</div>
+    <div class="prose">
+      <ul class="hist">
+        {job.firstSeenAt && <li><span class="dt">{md(job.firstSeenAt)}</span>처음 확인</li>}
+        {isGone(job)
+          ? <li><span class="dt">{md(job.goneAt)}</span>회사 채용페이지에서 내려감</li>
+          : <li><span class="dt">{md(COLLECTED_AT)}</span>확인 · 살아 있음</li>}
+      </ul>
+    </div>
+
+    {doors.length > 0 && (
+      <>
+        <div class="section-h">여기서 갈 수 있는 곳</div>
+        <ul class="doors">
+          {doors.map((d) => (
+            <li><a href={d.href}><span>{d.label}</span><b>{d.n.toLocaleString('ko-KR')}</b></a></li>
+          ))}
+        </ul>
+      </>
     )}
 
     {sameRole.length > 0 && (
@@ -379,6 +404,21 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
   .section-h .gn { font-family: var(--mono, monospace); font-size: 11px;
                    color: var(--ink-3, #858B92); letter-spacing: 0;
                    text-transform: none; margin-left: 8px; }
+
+  /* 점검 이력 · 여기서 갈 수 있는 곳 (2026-11-02) */
+  .hist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .hist li { font-size: 13.5px; color: var(--ink-2, #4B5158); display: grid;
+             grid-template-columns: 62px 1fr; gap: 10px; align-items: baseline; }
+  .hist .dt { font-family: var(--mono, monospace); font-size: 11.5px; color: var(--ink-3, #858B92); }
+
+  .doors { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;
+           gap: 1px; background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
+  .doors a { display: flex; align-items: baseline; gap: 10px; padding: 12px 15px;
+             background: var(--paper, #fff); text-decoration: none; font-size: 13.5px;
+             color: var(--ink-2, #4B5158); }
+  .doors a:hover { background: var(--steel-soft, #E7EEF2); color: var(--steel, #2D5F7C); }
+  .doors b { margin-left: auto; font-family: var(--mono, monospace); font-size: 14px;
+             font-weight: 600; color: var(--ink, #16181C); }
 
   .fromsrc {
     margin-top: 22px;

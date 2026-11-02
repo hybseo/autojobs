@@ -972,6 +972,70 @@ export const byTech = (slug) => {
  * 이 태그와 함께 요구되는 태그들.
  * 「AUTOSAR 를 요구하는 공고가 기능안전도 함께 요구한다」를 세어 줍니다.
  */
+/*
+ * 「여기서 갈 수 있는 곳」 건수 (2026-11-02)
+ * ==========================================
+ * 공고 상세마다 회사·산업×직무·기술별 건수를 세어 보여줍니다.
+ *
+ * 공고 쪽마다 전수로 세면 안 됩니다. 처음에 그렇게 했더니 한 쪽에
+ * 300ms 가 걸렸습니다. rolesOf 는 제목에 정규식 수십 개를 돌리는
+ * 함수라, 6,848쪽 × 4,973건이면 빌드가 몇 배로 길어집니다.
+ *
+ * 그래서 접수중 공고를 한 번만 훑어 표를 만들어 둡니다.
+ */
+const doorCounts = (() => {
+  let memo = null;
+  return () => {
+    if (memo) return memo;
+    const co = {};
+    const indRole = {};
+    const tag = {};
+    for (const j of openJobs()) {
+      co[j.companySlug] = (co[j.companySlug] || 0) + 1;
+      const is = industriesOf(j);
+      const rs = rolesOf(j);
+      for (const i of is) for (const r of rs) {
+        const k = `${i}|${r}`;
+        indRole[k] = (indRole[k] || 0) + 1;
+      }
+      for (const t of jobTags(j)) tag[t] = (tag[t] || 0) + 1;
+    }
+    memo = { co, indRole, tag };
+    return memo;
+  };
+})();
+
+/* 받침에 따라 을/를 을 고릅니다. 「패키징·기판를」 처럼 어색해지는 것을 막습니다.
+   끝 글자가 한글이 아니면(AUTOSAR·RF) 「를」로 둡니다 — 읽을 때 그렇게 읽습니다. */
+const objParticle = (word) => {
+  const ch = String(word || '').trim().slice(-1);
+  const code = ch.charCodeAt(0);
+  if (!(code >= 0xac00 && code <= 0xd7a3)) return '를';
+  return (code - 0xac00) % 28 === 0 ? '를' : '을';
+};
+
+/** 이 공고에서 갈 수 있는 곳들. 건수 적은 순입니다(좁은 문이 더 쓸모 있습니다). */
+export const doorsOf = (job) => {
+  const c = doorCounts();
+  const out = [];
+  const same = (c.co[job.companySlug] || 0) - 1;
+  if (same > 0) out.push({ label: `${job.company}의 다른 공고`, n: same, href: `/company/${job.companySlug}/` });
+
+  const ind = industriesOf(job)[0];
+  const rc = rolesOf(job)[0];
+  if (ind && rc) {
+    const n = c.indRole[`${ind}|${rc}`] || 0;
+    if (n > 0) out.push({ label: `${ind} × ${roleName(rc)}`, n, href: `/role/${rc}/` });
+  }
+  for (const name of jobTags(job).slice(0, 3)) {
+    const info = TAG_INDEX[name];
+    if (!info || !info.link || !info.slug) continue;
+    const n = c.tag[name] || 0;
+    if (n > 0) out.push({ label: `${name}${objParticle(name)} 쓰는 공고`, n, href: `/tech/${info.slug}/` });
+  }
+  return out.sort((a, b) => a.n - b.n);
+};
+
 export const tagsWith = (name, jobs) => {
   const n = {};
   for (const j of jobs) {

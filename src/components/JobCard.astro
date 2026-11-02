@@ -80,11 +80,21 @@ const external = link === job.sourceUrl;
  *
  * 홈에도 붙이려면 목록을 끊어 그리는(페이지 나눔) 작업이 먼저입니다.
  */
+/*
+ * 경력 거르개용 묶음 값 (2026-11-02 대표님 지시: 기간제/인턴 항목을 하나 더)
+ *
+ * 기간제 9건 · 인턴 2건이라 따로 두면 칩이 거의 안 눌립니다. 둘 다
+ * "정해진 기간만 일하는 자리" 라는 점에서 같아서 거르개에서는 한 칸으로
+ * 묶습니다. 카드에 찍히는 글자(job.career)는 회사가 적은 그대로 둡니다.
+ */
+const careerGroup = (job.career === '기간제' || job.career === '인턴')
+  ? '기간제·인턴' : job.career;
+
 const sum = lean ? null : summaryOf(job);
 const gist = sum ? (sum.gist || (sum.duties || [])[0] || '') : '';
 const cardTags = lean ? [] : jobTags(job).slice(0, 2);
 ---
-<a class="card" href={link} data-co={job.company} data-career={job.career}
+<a class="card" href={link} data-co={job.company} data-career={careerGroup}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds}
    data-role={roleCodes}
    data-dday={sv} data-posted={job.postedAt || ''}
