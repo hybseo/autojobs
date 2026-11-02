@@ -55,7 +55,7 @@ const todayCloseN = hist[0].n;
 const weekFrom = addDays(-6);
 const weekNewN = jobs.filter((j) => (j.firstSeenAt || '').slice(0, 10) >= weekFrom).length;
 
-/* 분야 타일. 폰은 앞의 넷, 넓은 화면은 여덟 개 전부 (CSS 가 가립니다). */
+/* 분야 타일. 폰도 넓은 화면도 여덟 개 전부 보입니다 (칸 크기만 CSS 가 다르게 줍니다). */
 const tiles = industries().map((i) => ({
   name: i.name,
   slug: i.slug,
@@ -637,22 +637,27 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
                      margin-top: 3px; }
   .hero .nums .urgent b { color: var(--urgent, #B4322B); }
 
-  .hero .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  /* 분야 타일 — 폰에서도 여덟 개 전부, 네 칸 두 줄. 칸이 좁아서 글자를 줄이고
+     이름이 길면(중공업·화학·소재) 두 줄로 꺾이게 합니다. 넓은 화면은 아래에서 키웁니다. */
+  .hero .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
                  margin-top: 10px; }
   .hero .tile { background: var(--paper, #fff); border: 1px solid var(--line, #DDE1DE);
-                padding: 13px 14px; display: block; text-decoration: none; }
+                padding: 9px 6px; display: block; text-decoration: none; text-align: center; }
   .hero .tile:hover { border-color: var(--steel, #2D5F7C); }
-  .hero .tile .t { font-size: 13.5px; font-weight: 500; color: var(--ink, #16181C); }
-  .hero .tile .n { font-family: var(--mono, monospace); font-size: 19px; font-weight: 600;
-                   letter-spacing: -.02em; display: block; margin-top: 2px;
+  .hero .tile .t { font-size: 11.5px; font-weight: 500; color: var(--ink, #16181C);
+                   line-height: 1.25; letter-spacing: -.04em; word-break: keep-all;
+                   min-height: 2.5em; display: flex; align-items: center; justify-content: center; }
+  .hero .tile .n { font-family: var(--mono, monospace); font-size: 16px; font-weight: 600;
+                   letter-spacing: -.02em; display: block; margin-top: 3px;
                    color: var(--ink, #16181C); }
-  .hero .tile .n i { font-style: normal; font-size: 10.5px; color: var(--steel, #2D5F7C);
-                     margin-left: 6px; }
-  /* 폰에서는 앞의 넷만. 분야 여덟 개를 세로로 쌓으면 목록이 한참 밀립니다. */
-  .hero .tile:nth-child(n+5) { display: none; }
+  .hero .tile .n i { font-style: normal; font-size: 9.5px; color: var(--steel, #2D5F7C);
+                     display: block; margin: 0; }
   @media (min-width: 720px) {
-    .hero .tiles { grid-template-columns: repeat(4, 1fr); }
-    .hero .tile:nth-child(n+5) { display: block; }
+    .hero .tiles { gap: 8px; }
+    .hero .tile { padding: 13px 14px; text-align: left; }
+    .hero .tile .t { font-size: 13.5px; letter-spacing: normal; min-height: 0; display: block; }
+    .hero .tile .n { font-size: 19px; margin-top: 2px; }
+    .hero .tile .n i { font-size: 10.5px; display: inline; margin-left: 6px; }
   }
 
   :root {
