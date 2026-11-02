@@ -179,11 +179,12 @@
    "name": "경신",
    "slug": "kyungshin",
    "ats": "recruiter",
-   "code": "kyungshin",
+   "code": "kyungshinhr",
    "industry": [
     "자동차부품"
    ],
-   "enabled": true
+   "enabled": true,
+   "note": "자동차 전장·와이어링 하네스. 리크루터 주소가 kyungshin 이 아니라 kyungshinhr 입니다. 2026-11-02 확인: kyungshin 으로는 전체 2건·접수중 0건이 오고, kyungshinhr 로는 전체 3건·접수중 1건(2026년 전장시험팀 계약직)이 옵니다. 회사 이름과 주소가 달라 공고를 놓치고 있었습니다. slug 는 kyungshin 그대로 둡니다 — 주소를 바꾸면 구글이 색인한 기업 페이지가 깨집니다."
   },
   {
    "name": "세방전지",
