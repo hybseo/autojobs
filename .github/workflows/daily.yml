@@ -79,6 +79,11 @@ jobs:
           ref: main
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
+      # 수집 뒤 단계(경력 구분·태그)가 노드 스크립트라 노드도 필요합니다.
+      # 2026-11-02 까지는 파이썬만 깔았고, 그래서 태그를 손으로 돌려야
+      # 했습니다.
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
 
       # python -u 를 반드시 붙여야 합니다 (2026-10-08)
       # ------------------------------------------------
@@ -94,6 +99,24 @@ jobs:
       # -u 를 붙이면 버퍼를 쓰지 않고 바로 내보냅니다. 진행 상황이
       # 실시간으로 보여, 진짜로 멈춘 경우와 구분할 수 있습니다.
       - run: python -u scripts/fetch_jobs.py | tee /tmp/fetch.log
+
+      # 수집 뒤 두 단계 (2026-11-02 추가)
+      # ---------------------------------
+      # fetch_jobs.py 는 jobs.json 을 **통째로 다시 씁니다.** 그래서 요약을
+      # 재료로 쓰는 일은 수집이 끝난 뒤에 해야 합니다.
+      #
+      # 이 두 단계가 없어서 생기던 일
+      #   · 태그(job-tags.json)가 갱신되지 않았습니다. 새 공고가 들어와도
+      #     태그가 안 붙고, 제가 손으로 돌려야 했습니다.
+      #   · 요약에서 읽은 경력 구분이 다음 수집에 날아갔습니다.
+      #
+      # 순서가 중요합니다 — 경력 구분을 먼저 넣고, 그 다음 태그를 뽑습니다.
+      # 태그는 요약에서 뽑지만 진행중 판정에 jobs.json 을 쓰기 때문입니다.
+      - name: 경력 구분을 요약에서 읽기
+        run: node scripts/career_from_summary.mjs
+
+      - name: 공고 태그 다시 뽑기
+        run: node scripts/build_tags.mjs
 
       # 수집한 결과가 멀쩡한지 커밋하기 전에 봅니다.
       #
@@ -133,7 +156,10 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MSG="공고 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
 
-          git add src/data/jobs.json
+          # 2026-11-02: job-tags.json 과 scans.json 도 함께 저장합니다.
+          # 태그는 수집 뒤 단계에서 다시 뽑고, 수집 기록은 fetch_jobs.py 가
+          # 한 줄 적습니다. 여기서 add 하지 않으면 둘 다 버려집니다.
+          git add src/data/jobs.json src/data/job-tags.json src/data/scans.json
           git diff --cached --quiet || git commit -m "$MSG"
 
           for i in 1 2 3; do
@@ -144,10 +170,14 @@ jobs:
             echo "push 가 거부됐습니다 ($i/3). 저장소 최신 상태에 다시 얹습니다."
             sleep 5
             cp src/data/jobs.json /tmp/jobs-new.json
+            cp src/data/job-tags.json /tmp/tags-new.json
+            cp src/data/scans.json /tmp/scans-new.json
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/jobs-new.json src/data/jobs.json
-            git add src/data/jobs.json
+            cp /tmp/tags-new.json src/data/job-tags.json
+            cp /tmp/scans-new.json src/data/scans.json
+            git add src/data/jobs.json src/data/job-tags.json src/data/scans.json
             if git diff --cached --quiet; then
               echo "저장소에 있는 것과 같습니다. 더 할 일이 없습니다."
               exit 0

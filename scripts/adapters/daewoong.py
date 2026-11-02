@@ -99,13 +99,57 @@ START = re.compile(r'id="start-date"[^>]*>([^<]*)<', re.I)
 CLOSE = re.compile(r'id="close-date"[^>]*>([^<]*)<', re.I)
 # 마감 라벨. class 안에 w-condition-invisible 이 있으면 진행중입니다.
 CLOSED = re.compile(r'class="([^"]*close-day-label[^"]*)"', re.I)
-# 상세 본문.
-BODY = re.compile(r'<div[^>]+class="[^"]*w-richtext[^"]*"[^>]*>(.*?)</div>\s*</div>',
-                  re.S | re.I)
+# 상세 본문. 여는 태그만 찾고, 닫는 자리는 _body() 가 div 짝을 세어 찾습니다.
+BODY_OPEN = re.compile(r'<div[^>]+class="[^"]*w-richtext[^"]*"[^>]*>', re.I)
+DIV_EDGE = re.compile(r'<(/?)div\b')
 
 # 채용유형 → 사이트 career 값.
 CAREER = {"경력": "경력", "신입": "신입", "신입/주니어경력": "신입/경력",
           "신입/경력": "신입/경력", "계약직/인턴": "무관", "무관": "무관"}
+
+
+def _body(page):
+    """상세 본문을 꺼냅니다. div 짝을 세어 끊습니다 (2026-11-02 고침).
+
+    전에는 이렇게 잘랐습니다.
+
+        <div class="w-richtext">(.*?)</div>\\s*</div>
+
+    대웅 공고 대부분은 본문이 평평해서 이게 통했습니다. 그런데 일부
+    공고는 본문이 빈 div 여러 겹 안에 들어 있습니다.
+
+        <div></div><div><div><div><div><div><div><div><div>
+          <h1>"당신의 성장이 대웅의 목표입니다"</h1>
+          <p>대웅은 직원의 성장을 …</p>   ← 모든 공고에 붙는 머리글
+          <p>[조직소개] …</p>             ← 여기서부터 진짜 내용
+          <p>[담당업무] …</p>
+
+    비탐욕 패턴은 첫 </div></div> 에서 끊기므로 **머리글만 남고 담당업무와
+    자격요건이 통째로 날아갔습니다.** 2026-11-02 확인 기준:
+
+        ETC 로컬MR 경력직(광주)   283자 → 1,163자
+        건기식 상품개발 담당 경력직  283자
+        임상개발담당 경력직        282자
+
+    세 건 다 「회사 소개문만 있는 공고」로 보여서 요약을 포기할 뻔했습니다.
+    본문이 없는 게 아니라 우리가 끊어 버린 것이었습니다.
+
+    모비스 어댑터의 _sentence() 와 같은 문제·같은 해법입니다. HTML 중첩은
+    정규식으로 셀 수 없습니다.
+    """
+    m = BODY_OPEN.search(page)
+    if not m:
+        return ""
+    j = m.end()
+    depth = 1
+    for e in DIV_EDGE.finditer(page, j):
+        if e.group(1):                 # </div
+            depth -= 1
+            if depth == 0:
+                return page[j:e.start()].strip()
+        else:
+            depth += 1
+    return ""                          # 짝이 안 맞으면 버립니다
 
 
 def _get(url):
@@ -308,8 +352,7 @@ def fetch(company):
     for x in rows:
         raw = ""
         try:
-            m = BODY.search(_get(x["url"]))
-            raw = m.group(1) if m else ""
+            raw = _body(_get(x["url"]))
         except Exception:
             raw = ""
         time.sleep(0.3)

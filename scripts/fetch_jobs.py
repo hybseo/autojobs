@@ -336,10 +336,46 @@ def keep_recently_closed(fresh):
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import adapters  # noqa: E402
+from loc_normalize import normalize_location, UNSET
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
 OUT = ROOT / "src" / "data" / "jobs.json"
+SCANS = ROOT / "src" / "data" / "scans.json"
+
+
+def record_scan(jobs, day):
+    """이번 수집을 scans.json 에 한 줄 적습니다 (2026-11-02).
+
+    /scan/ 페이지가 이 파일을 읽습니다. 「35일 하루도 빠짐없이 확인했습니다」
+    는 이 사이트가 가진 거의 유일한 무기인데, 그 증거가 깃 커밋 메시지에만
+    있었습니다. 빌드하는 곳이 저장소를 얕게 받아 오면 꺼낼 수 없습니다.
+
+    같은 날 두 번 돌면 시각만 덧붙입니다. 하루 두 번이 정상입니다.
+    """
+    try:
+        doc = json.loads(SCANS.read_text(encoding="utf-8"))
+    except Exception:
+        doc = {"runs": []}
+    runs = doc.get("runs") or []
+    now = datetime.now(KST).strftime("%H:%M")
+    fresh = sum(1 for j in jobs if (j.get("firstSeenAt") or "")[:10] == day)
+
+    for r in runs:
+        if r.get("day") == day:
+            times = list(r.get("times") or [])
+            if now not in times:
+                times.append(now)
+            r["times"] = sorted(times)
+            r["new"] = fresh
+            break
+    else:
+        runs.append({"day": day, "times": [now], "new": fresh})
+
+    doc["runs"] = sorted(runs, key=lambda r: r.get("day") or "")
+    SCANS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n",
+                     encoding="utf-8")
+    print(f"  · 수집 기록에 적었습니다: {day} {now} · 오늘 신규 {fresh}건")
 # 공고별 '처음 나타난 날' 씨앗 파일. stamp_first_seen() 설명을 보세요.
 SEED = ROOT / "src" / "data" / "first-seen.json"
 
@@ -437,6 +473,58 @@ CO_ALIAS = {
 }
 
 
+# ── 공고 제목에서 신입/경력을 읽습니다 (2026-11-02 대표님 결정) ──
+#
+# 「회사에서 정한 경력 구분 기준을 따라」가 지시입니다.
+#
+# 왜 한 곳에서 하는가
+#   ATS 가 경력 구분을 칸으로 주지 않는 곳이 많습니다. 워크데이·그린하우스·
+#   애쉬비·브리지 등은 아예 없어서 수집기가 「무관」으로 못박아 둡니다.
+#   그런데 회사는 제목에 적어 둡니다 — 「경력사원 모집」, 「대졸신입 수시
+#   채용」, 「경력(3년↑)」. 제목도 공고가 준 글이므로 우리 추측이 아닙니다.
+#   (요약 규칙에서 근무지에 이미 같은 원칙을 씁니다)
+#
+#   수집기 여덟 곳에 같은 코드를 넣는 대신 여기 한 번만 둡니다. 새 수집기가
+#   들어와도 저절로 적용됩니다.
+#
+# 2026-11-02 실측: 진행중 4,973건 중 「무관」이 2,133건, 그중 제목에 적혀
+# 있는 것이 약 500건이었습니다.
+#
+# 부정 표현은 건드리지 않습니다
+#   「경력 무관」·「경력무관」·「무경력」·「경력 불문」은 회사가 **무관이라고
+#   밝힌 것**입니다. 22건 확인했습니다(아우토크립트·키다리스튜디오·크래프톤·
+#   엑셈·오토닉스). 이걸 「경력」으로 읽으면 정반대가 됩니다.
+#
+# 이미 값이 있는 공고는 손대지 않습니다. 수집기가 칸에서 읽은 값이 제목보다
+# 정확합니다.
+CAREER_UNTOUCHED = re.compile(
+    r"무경력|경력\s*무관|경력\s*불문|경력\s*상관\s*없|경력\s*여부\s*무관")
+CAREER_NEW = re.compile(
+    r"신입|인턴|체험형|신규\s*입사|대졸\s*신입|\bnew\s*grad\b|\bintern(ship)?\b",
+    re.I)
+CAREER_EXP = re.compile(
+    r"경력|중경력|\bsenior\b|\blead\b|\bstaff\b|\bprincipal\b|\d+\s*년\s*이상|\d+\s*년\s*↑",
+    re.I)
+
+
+def career_from_title(career, title):
+    """「무관」인 공고만, 제목에 적힌 신입/경력으로 바꿔 돌려줍니다."""
+    if str(career or "").strip() != "무관":
+        return career
+    t = str(title or "")
+    if not t or CAREER_UNTOUCHED.search(t):
+        return career
+    new = bool(CAREER_NEW.search(t))
+    exp = bool(CAREER_EXP.search(t))
+    if new and exp:
+        return "신입/경력"
+    if exp:
+        return "경력"
+    if new:
+        return "신입"
+    return career
+
+
 def clean_location(loc, company):
     """근무지에서 회사 이름을 걷어냅니다.
 
@@ -473,7 +561,12 @@ def clean_location(loc, company):
     if not loc or _co_key(loc) == co_key:
         return ""
 
-    return LOC_RENAME.get(loc, loc)
+    loc = LOC_RENAME.get(loc, loc)
+    # 시·도 표기로 맞춥니다 (2026-11-02 대표님 지시).
+    #   영문 표기는 한글 지명으로  Seoul → 서울 · Pangyo → 경기 성남
+    #   공장·연구소 이름과 회사명은 비움  의왕연구소 · Rebellions | Korea
+    # 자세한 규칙과 근거는 scripts/loc_normalize.py 를 보세요.
+    return normalize_location(loc)
 
 
 def load_companies(only_ats=None):
@@ -547,6 +640,16 @@ def main():
         if fixed:
             print(f"      · 근무지 정리 {fixed}건")
 
+        # 「무관」인데 제목에 회사가 적어 둔 신입/경력이 있으면 그것을 씁니다.
+        moved = 0
+        for j in got:
+            got_career = career_from_title(j.get("career"), j.get("title"))
+            if got_career != j.get("career"):
+                j["career"] = got_career
+                moved += 1
+        if moved:
+            print(f"      · 경력 구분을 제목에서 읽음 {moved}건")
+
         jobs += got
         print(f"  {c['name']}: {len(got)}건")
 
@@ -584,9 +687,60 @@ def main():
     # 남아 구조화 데이터가 들어가므로 firstSeenAt 이 있어야 합니다.
     jobs = stamp_first_seen(jobs, previous, load_first_seen_seed(), today.isoformat())
 
+    # 고용형태(employment)는 저장하지 않습니다 (2026-11-02 대표님 지시).
+    #
+    # 2026-11-02 07:42 커밋이 그리팅·카카오 등 12개 어댑터에 employment 를
+    # 넣었는데, 그날 15:01 예약 실행이 자가진단에서 멈췄습니다.
+    #
+    #   ✗ 데이터  칸이 규약과 다른 공고 3177건: ['greeting-kci-239933', …]
+    #
+    # check.py 의 칸 목록(REQUIRED·OPTIONAL)에 없는 칸이라 규약 위반으로
+    # 잡힌 것입니다. 한 시간 반 수집한 결과를 통째로 버렸습니다.
+    #
+    # 같은 날 고용형태는 화면에서 빼기로 정해졌습니다. 공고가 적어 주는
+    # 곳이 드물어 거의 모든 공고에 「제공정보 없음」만 찍혔기 때문입니다.
+    # 아무도 읽지 않는 칸이라 저장하지 않습니다. 어댑터는 그대로 두어
+    # 나중에 다시 쓰고 싶어지면 이 세 줄만 지우면 됩니다.
+    for j in jobs:
+        j.pop("employment", None)
+
+    # ── 요약이 본문에서 읽은 근무지를 받아 씁니다 ──────────────
+    #
+    # 공고의 근무지 칸이 비어 있는데 본문에 적혀 있는 경우가 많습니다.
+    # 요약 작업이 그것을 loc 에 담아 두었는데, 화면이 그 값을 그대로
+    # 보여주고 있어서 근무지 규칙을 거치지 않았습니다. 그래서
+    # 「의왕연구소」·「성서공장(본사)」 같은 표기가 670건 나갔고, 전체
+    # 주소도 섞였습니다 (2026-11-02 최종 점검).
+    #
+    # 이제 같은 규칙에 통과시킨 뒤 location 에 넣습니다. 표기가 한
+    # 곳에서만 정해지고, 화면은 location 하나만 봅니다. 이 단계가 없으면
+    # 다음 수집에서 1,087건의 근무지가 다시 빕니다.
+    try:
+        sums = json.loads(
+            (ROOT / "src" / "data" / "summaries.json").read_text(encoding="utf-8")
+        ).get("summaries") or {}
+    except Exception as e:                      # 요약 파일이 없어도 수집은 계속합니다
+        sums = {}
+        print(f"  · 요약 파일을 못 읽어 근무지 보완을 건너뜁니다 ({e})")
+    from_summary = 0
+    for j in jobs:
+        if str(j.get("location") or "").strip() not in ("", UNSET):
+            continue
+        raw = (sums.get(j["id"]) or {}).get("loc")
+        if not raw:
+            continue
+        got = normalize_location(raw)
+        if got and got != UNSET:
+            j["location"] = got
+            from_summary += 1
+    if from_summary:
+        print(f"  · 근무지를 요약 본문에서 받아 채움 {from_summary}건")
+
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},
         ensure_ascii=False, indent=1), encoding="utf-8")
+
+    record_scan(jobs, today.isoformat())
     print(f"→ {OUT}")
 
 

@@ -40,6 +40,7 @@ corpCode 를 알아내면 요청 단계에서 거르는 편이 더 깔끔합니�
 """
 import json
 import re
+import time
 import html
 import urllib.parse
 import urllib.request
@@ -227,6 +228,100 @@ def _date(v):
     return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
 
 
+# 상세 본문 (2026-11-02)
+# ======================
+# 전에는 "목록만으로는 본문을 알 수 없습니다" 라며 빈 값을 넣었습니다.
+# 그래서 SK 공고 12건이 전부 본문 없이 회사 사이트로 나갔습니다.
+#
+# 실제로는 상세 페이지 HTML 안에 다 들어 있습니다. 다만 한글이 숫자
+# 엔티티로 인코딩돼 있어(의 → &#51032;) 평문으로 찾으면 안 보입니다.
+# html.unescape 로 풀면 그대로 나옵니다.
+#
+#   <div class="item-column">
+#     <strong class="item-label">담당 업무 및 역할</strong>
+#     <div class="item-field"> … <ul><li>…</li></ul> </div>
+#   </div>
+#
+# robots.txt 는 /Recruit 를 명시적으로 허용합니다. 막는 것은 searchText
+# 질의뿐이고 그건 목록 쪽에서 이미 지키고 있습니다. (2026-11-02 확인)
+DETAIL_BLOCK = 'class="item-column"'
+LABEL = re.compile(r'class="item-label">(.*?)</strong>', re.S)
+FIELD_OPEN = re.compile(r'<div[^>]*class="[^"]*item-field[^"]*"[^>]*>', re.I)
+DIV_EDGE = re.compile(r"<(/?)div\b")
+
+# 뺄 절. 회사 공통 안내문이라 요약에 방해만 됩니다.
+#
+# 처음에는 "가져올 절" 을 적어 두었는데 계열사마다 라벨이 제각각이라
+# 반이 비었습니다. 실제로 본 라벨들입니다.
+#   SK케미칼   담당 업무 및 역할 / 필수사항 / 우대사항
+#   SK온       조직소개 / 수행업무 / 지원자격 / 우대사항 / 채용요건
+#   SK하이닉스  수행 업무 / 자격 요건 / 우대 사항 / 참고 사항
+#   SK실트론   담당 업무 및 역할 / 업무 수행을 위한 필요 역량 /
+#              직무 필요 전공 지식·학과 / 필요 기술·자격
+# 그래서 고르는 쪽이 아니라 빼는 쪽으로 바꿨습니다.
+DROP_LABEL = re.compile(
+    r"전형|기타\s*사항|유의\s*사항|건강검진|FAQ|참고\s*파일|채용\s*절차|"
+    r"서류\s*지원|접수\s*방법|문의")
+
+
+def _field(piece):
+    """절 하나의 내용(item-field)을 꺼냅니다.
+
+    div 깊이를 세어 닫는 자리를 찾습니다. 첫 </div> 에서 끊으면 안에
+    중첩된 div 때문에 잘리고, 안 끊으면 페이지 꼬리("같은 회사 공고 더
+    보기" 등)까지 딸려 옵니다. 실제로 끊지 않았을 때 한 절이 6,642자가
+    됐습니다.
+    """
+    m = FIELD_OPEN.search(piece)
+    if not m:
+        return ""
+    i = m.end()
+    depth = 1
+    for e in DIV_EDGE.finditer(piece, i):
+        if e.group(1):
+            depth -= 1
+            if depth == 0:
+                return piece[i:e.start()]
+        else:
+            depth += 1
+    return ""
+
+
+def _detail(rid):
+    """상세 페이지에서 쓸 절만 뽑아 HTML 로 돌려줍니다. 실패하면 빈 값."""
+    url = DETAIL.format(rid)
+    try:
+        req = urllib.request.Request(url, headers={
+            "User-Agent": UA,
+            "Accept": "text/html,application/xhtml+xml",
+            "Referer": "https://www.skcareers.com/Recruit",
+        })
+        with urllib.request.urlopen(req, timeout=25) as r:
+            page = r.read().decode("utf-8", "replace")
+    except Exception as e:
+        print(f"      ! SK 상세를 받지 못했습니다 {rid}: {e}")
+        return ""
+
+    out = []
+    for piece in page.split(DETAIL_BLOCK)[1:]:
+        m = LABEL.search(piece)
+        if not m:
+            continue
+        label = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()
+        # 라벨 자리에 긴 안내문이 들어온 공고가 있었습니다(SK온 30자 넘음).
+        if not label or len(label) > 30 or DROP_LABEL.search(label):
+            continue
+        body = _field(piece)
+        if not body.strip():
+            continue
+        out.append(f"<h3>{label}</h3>" + html.unescape(body))
+
+    if not out:
+        print(f"      ! SK 상세에서 절을 찾지 못했습니다 {rid} "
+              f"(받은 HTML {len(page)}자). 화면 구조가 바뀌었는지 보세요.")
+    return "".join(out)
+
+
 def fetch(company):
     """companies.json 항목 하나를 받아 공고 리스트를 돌려줍니다."""
     slug = company["slug"]
@@ -256,7 +351,15 @@ def fetch(company):
             "multiRole": False,
             "sourceTitle": "",
             "sourceUrl": DETAIL.format(rid),
-            # 목록만으로는 본문을 알 수 없습니다. 원문으로 보냅니다.
-            "description": "",
+            "description": _detail(rid),
         })
+        # 공고당 0.3초 쉽니다 (2026-10-28 결정).
+        time.sleep(0.3)
+
+    got = sum(1 for j in jobs if j["description"])
+    if jobs and not got:
+        print(f"  ! SK: {len(jobs)}건 모두 본문이 비었습니다. "
+              f"상세 페이지 구조가 바뀌었는지 확인하세요.")
+    else:
+        print(f"  · SK: {len(jobs)}건 중 본문 {got}건")
     return jobs

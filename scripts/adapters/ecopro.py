@@ -51,7 +51,24 @@ import urllib.request
 
 BASE = "https://ecoprorecruit.co.kr"
 LIST_API = BASE + "/eco_pro/api/user/apply/list"
-VIEW = BASE + "/apply/view/{}"
+
+# 공고 상세 주소 (2026-11-02 고침)
+# -----------------------------------
+# 전에는 BASE + "/apply/view/{}" 를 썼습니다. 이 주소는 **HTTP 403** 입니다.
+# S3 가 "AccessDenied" XML 을 돌려줍니다. 구직자가 목록에서 공고를 눌러도
+# 오류 화면만 봤습니다. 5건 전부 그랬습니다.
+#
+# 실제 주소는 목록 화면(/eco_pro/page/user/recruit)에서 공고를 클릭했을 때
+# 옮겨 가는 곳입니다. 카드에 href 가 없고 자바스크립트가 옮기므로 주소만
+# 보고는 알 수 없었습니다.
+#
+#   2026-11-02 실측
+#     /apply/view/2522014                            HTTP 403 ·    111자
+#     /eco_pro/page/user/apply_view?target=2522014   HTTP 200 · 20,456자
+#
+# 본문은 글이 아니라 이미지 한 장(2283x7998 PNG)이라 요약은 못 만듭니다.
+# 그래서 주소가 더 중요합니다 — 원문으로 보내는 것이 유일한 길입니다.
+VIEW = BASE + "/eco_pro/page/user/apply_view?target={}"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 "
