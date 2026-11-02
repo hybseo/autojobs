@@ -1298,6 +1298,16 @@ export const ldJson = (obj) =>
     .replace(new RegExp(String.fromCharCode(0x2028), 'g'), '\\u2028')
     .replace(new RegExp(String.fromCharCode(0x2029), 'g'), '\\u2029');
 
+/*
+ * 구인정보 스키마를 내보낼 최소 글자 수.
+ *
+ * 요약이 이보다 짧으면 JobPosting 을 아예 만들지 않습니다. 얇은 구인정보를
+ * 올려 사이트 전체 평가를 떨어뜨리느니 그 몇 건이 구인 검색에서 빠지는
+ * 편이 낫습니다. 페이지와 목록에는 그대로 남습니다.
+ * 2026-11-02 기준 요약 5,970건 중 51건이 여기에 걸립니다.
+ */
+export const SCHEMA_MIN = 150;
+
 export const jobPostingSchema = (j, pageUrl) => {
   if (!hasDetail(j)) return null;
   const datePosted = pickDatePosted(j);
@@ -1316,13 +1326,52 @@ export const jobPostingSchema = (j, pageUrl) => {
    * 모르는 것을 FULL_TIME 이라고 되돌리는 일은 하지 마세요. 그게 처음의
    * 잘못이었습니다.
    */
+  /*
+   * description 은 화면에 보이는 요약으로 만듭니다 (2026-11-02)
+   * ==========================================================
+   * 전에는 cleanBody(j.description) 즉 회사 원문을 보냈습니다. 그런데
+   * 같은 날 화면이 우리 요약을 그리도록 바뀌면서 둘이 어긋났습니다.
+   * 구조화 데이터의 내용은 사용자에게 보여야 한다는 것이 구글의 명시적
+   * 요구라, 어긋난 채로 두는 것이 바꾸는 것보다 위험합니다.
+   *
+   * 분량이 줄어드는 것은 감수합니다
+   *   원문 평균 2,020자 → 요약 평균 539자
+   *   구글 구인정보는 "완전한 직무 설명" 을 요구합니다. 요약은 책임·자격·
+   *   우대를 다 담지만 분량은 4분의 1입니다. 그래서 너무 짧은 것은 아예
+   *   내보내지 않습니다(아래 SCHEMA_MIN).
+   *
+   * HTML 서식으로 보냅니다
+   *   구글이 <p>·<ul> 을 권장합니다. 평문 한 덩어리로 보내면 같은 글자
+   *   수라도 더 얇게 평가됩니다.
+   *
+   * 되돌리려면 이 블록을 cleanBody(j.description) 한 줄로 바꾸면 됩니다.
+   * 단 원문을 jobs.json 에서 빼고 난 뒤에는 되돌릴 수 없습니다.
+   */
+  const sum = summaryOf(j);
+  if (!sum) return null;
+  const plain = [sum.gist, ...(sum.duties || []), ...(sum.quals || []), ...(sum.prefs || [])]
+    .filter(Boolean).join(' ');
+  if (plain.length < SCHEMA_MIN) return null;
+
+  const esc = (t) => String(t)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const block = (head, items) => (items && items.length
+    ? `<h3>${head}</h3><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
+    : '');
+  const body = [
+    sum.gist ? `<p>${esc(sum.gist)}</p>` : '',
+    block('주요 업무', sum.duties),
+    block('자격 요건', sum.quals),
+    block('우대 사항', sum.prefs),
+  ].filter(Boolean).join('');
+
   return {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
     title: j.title,
     // 화면에 그리는 쪽(job/[id].astro)과 반드시 같은 내용이어야 합니다.
-    // 둘 다 cleanBody 하나를 씁니다.
-    description: cleanBody(j.description),
+    // 둘 다 summaryOf 하나를 씁니다. 한쪽만 고치지 마세요.
+    description: body,
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
     datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
