@@ -1,6 +1,8 @@
 import raw from './data/jobs.json';
 import registry from './data/companies.json';
 import summaryDoc from './data/summaries.json';
+import tagDoc from './data/job-tags.json';
+import scanDoc from './data/scans.json';
 import { TAGS, TAG_TOP } from './tags.js';
 
 export const COLLECTED_AT = raw.collectedAt;
@@ -874,6 +876,113 @@ export const isArchivedPage = (j) => {
 
 /** 페이지를 만들 공고 — 보통 페이지 + 보관 페이지. */
 export const detailPages = () => JOBS.filter((j) => hasDetail(j) || isArchivedPage(j));
+
+/*
+ * 기술·역량 태그 (2026-11-02)
+ * ===========================
+ * 태그는 scripts/build_tags.mjs 가 요약에서 뽑아 job-tags.json 에 넣어
+ * 둡니다. 원문이 아니라 요약에서 뽑기 때문에 안내문·복지에 섞인 낱말이
+ * 걸리지 않습니다 (위 tagsOf 주석에 적어 둔 그대로입니다).
+ *
+ * 여기 있는 함수들이 /tech/{slug}/ 페이지를 만듭니다. 태그 310개 중
+ * 링크로 쓰기로 한 것만 페이지가 됩니다. 건수가 너무 적은 태그까지
+ * 페이지를 만들면 빈 페이지가 쌓입니다.
+ */
+const TAG_BY_JOB = tagDoc.tags || {};
+const TAG_INDEX = tagDoc.index || {};
+
+/*
+ * 수집 기록 (2026-11-02)
+ * ======================
+ * fetch_jobs.py 가 돌 때마다 scans.json 에 한 줄씩 적습니다.
+ * /scan/ 페이지가 이 값을 그대로 보여줍니다.
+ *
+ * 깃 커밋 기록에서 매번 뽑지 않는 이유는 빌드하는 곳이 저장소를 얕게
+ * 받아 오면 기록이 없을 수 있기 때문입니다. 화면에 쓰는 값은 파일로
+ * 들고 있는 편이 안전합니다.
+ */
+export const scanRuns = () => (scanDoc.runs || [])
+  .filter((r) => r && r.day)
+  .map((r) => ({ day: r.day, times: r.times || [], new: r.new || 0 }))
+  .sort((a, b) => a.day.localeCompare(b.day));
+
+/**
+ * 마지막 기록일부터 거꾸로 하루도 안 빠진 날 수.
+ * 하루라도 비면 거기서 끊습니다 — 「35일 연속」은 검증 가능한 문장이어야 합니다.
+ */
+export const scanStreak = () => {
+  const runs = scanRuns();
+  if (!runs.length) return 0;
+  const have = new Set(runs.map((r) => r.day));
+  let n = 0;
+  const d = new Date(`${runs[runs.length - 1].day}T00:00:00Z`);
+  while (have.has(d.toISOString().slice(0, 10))) {
+    n += 1;
+    d.setUTCDate(d.getUTCDate() - 1);
+  }
+  return n;
+};
+
+/** 공고에 붙은 태그 이름들. 구체적인 것부터 줄 세워져 있습니다. */
+export const jobTags = (j) => TAG_BY_JOB[j.id] || [];
+
+/** 태그 하나의 사전 정보. 없으면 null 입니다. */
+export const tagInfo = (name) => TAG_INDEX[name] || null;
+
+/*
+ * 페이지를 만들 태그들. 건수 많은 순입니다.
+ *
+ * 건수는 job-tags.json 의 count 를 믿지 않고 여기서 다시 셉니다.
+ * 그 값은 태그를 뽑던 시점의 접수중 건수라, 그 뒤 수집이 돌면
+ * 어긋납니다. 실제로 Python 이 index 에는 674, 지금 접수중으로는
+ * 547 이었습니다. 목록의 숫자와 페이지의 숫자가 다르면 바로 눈에
+ * 띕니다. 빌드할 때 한 번 세므로 비용은 문제되지 않습니다.
+ */
+const liveTagCount = (() => {
+  let memo = null;
+  return () => {
+    if (memo) return memo;
+    memo = {};
+    for (const j of openJobs()) {
+      for (const t of jobTags(j)) memo[t] = (memo[t] || 0) + 1;
+    }
+    return memo;
+  };
+})();
+
+export const techPages = () => {
+  const n = liveTagCount();
+  return Object.entries(TAG_INDEX)
+    .filter(([name, v]) => v.link && v.slug && (n[name] || 0) > 0)
+    .map(([name, v]) => ({ name, slug: v.slug, cat: v.cat || '', count: n[name] }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'ko'));
+};
+
+const TECH_BY_SLUG = Object.fromEntries(techPages().map((t) => [t.slug, t]));
+
+/** 주소로 태그 찾기. 그 태그가 붙은 접수중 공고도 함께 돌려줍니다. */
+export const byTech = (slug) => {
+  const t = TECH_BY_SLUG[slug];
+  if (!t) return null;
+  const jobs = openJobs().filter((j) => jobTags(j).includes(t.name));
+  return { ...t, jobs };
+};
+
+/**
+ * 이 태그와 함께 요구되는 태그들.
+ * 「AUTOSAR 를 요구하는 공고가 기능안전도 함께 요구한다」를 세어 줍니다.
+ */
+export const tagsWith = (name, jobs) => {
+  const n = {};
+  for (const j of jobs) {
+    for (const t of jobTags(j)) {
+      if (t !== name && TAG_INDEX[t] && TAG_INDEX[t].link) n[t] = (n[t] || 0) + 1;
+    }
+  }
+  return Object.entries(n)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ko'))
+    .map(([tag, count]) => ({ tag, count, slug: (TAG_INDEX[tag] || {}).slug }));
+};
 
 /*
  * 공고 본문의 이미지를 "보일 때 불러오기" 로 바꿉니다 (2026-10-12)

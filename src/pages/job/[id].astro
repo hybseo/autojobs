@@ -5,6 +5,7 @@ import {
   openJobs, isRecentlyClosed, KEEP_DAYS,
   industriesOf, industrySlug, rolesOf, roleName, hasDetail,
   shown, isUnstated, summaryOf, detailPages, isArchivedPage, isGone,
+  jobTags, tagInfo,
 } from '../../lib.js';
 
 /*
@@ -35,6 +36,9 @@ const d = daysLeft(job);
 const sum = summaryOf(job) || { gist: '', duties: [], quals: [], prefs: [], loc: '' };
 // 요약이 없는 보관 페이지입니다. 검색에 내보내지 않습니다 (lib.js 주석 참고).
 const archived = isArchivedPage(job);
+/* 이 공고에 붙은 기술 태그. 페이지가 있는 것만 링크로 겁니다 —
+   없는 주소로 보내면 404 입니다. (2026-11-02) */
+const techs = jobTags(job).map((name) => ({ name, info: tagInfo(name) }));
 /*
  * 마감 판정.
  *
@@ -188,6 +192,19 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       <>
         <div class="section-h">자격 요건</div>
         <ul class="sumlist">{sum.quals.map((x) => <li>{x}</li>)}</ul>
+      </>
+    )}
+
+    {!archived && techs.length > 0 && (
+      <>
+        <div class="section-h">기술 · 도구<span class="gn">{techs.length}개 전부</span></div>
+        <div class="techs">
+          {techs.map(({ name, info }) => (
+            info && info.link && info.slug
+              ? <a class="tg" href={`/tech/${info.slug}/`}>{name}</a>
+              : <span class="tg off">{name}</span>
+          ))}
+        </div>
       </>
     )}
 
@@ -349,6 +366,20 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
   }
   .cond dd { margin: 0; color: var(--ink-2, #4B5158); }
   .cond dd.dim { color: var(--ink-3, #858B92); }
+  /* 기술 태그. 누르면 그 기술을 요구하는 공고로 갑니다. */
+  .techs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .techs .tg {
+    font-family: var(--mono, monospace); font-size: 12px; padding: 4px 11px;
+    background: var(--steel-soft, #E7EEF2); color: var(--steel, #2D5F7C);
+    text-decoration: none; border: 1px solid transparent;
+  }
+  .techs a.tg:hover { border-color: var(--steel, #2D5F7C); }
+  /* 아직 페이지가 없는 태그. 링크로 걸지 않습니다. */
+  .techs .tg.off { background: var(--surface, #F1F3F2); color: var(--ink-3, #858B92); }
+  .section-h .gn { font-family: var(--mono, monospace); font-size: 11px;
+                   color: var(--ink-3, #858B92); letter-spacing: 0;
+                   text-transform: none; margin-left: 8px; }
+
   .fromsrc {
     margin-top: 22px;
     font-size: 12.5px;

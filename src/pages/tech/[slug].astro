@@ -1,0 +1,151 @@
+---
+import Base from '../../layouts/Base.astro';
+import JobCard from '../../components/JobCard.astro';
+import {
+  techPages, byTech, tagsWith, byDeadline, isAlways, daysLeft,
+  COLLECTED_AT, industriesOf,
+} from '../../lib.js';
+
+/*
+ * 기술·역량 태그 페이지 (2026-11-02 새로 만듦)
+ * ============================================
+ * 태그를 310개 뽑아 놓고 들어갈 페이지가 하나도 없었습니다. 공고 상세에서
+ * 「AUTOSAR」를 눌러도 갈 데가 없었습니다. 대표님이 말씀하신 「태그를 타고
+ * 다른 공고로」가 여기서 이어집니다.
+ *
+ * 이 페이지의 핵심은 맨 아래가 아니라 중간입니다 — 「함께 요구되는 기술」.
+ * AUTOSAR 16건을 보던 사람이 「임베디드·펌웨어 9건 겹침」을 눌러 자기도
+ * 몰랐던 인접 분야로 넘어갑니다. 겹침 건수는 두 태그가 같이 붙은 공고를
+ * 세기만 하면 나옵니다. 새로 모을 데이터가 없습니다.
+ *
+ * 태그는 요약(summaries.json)에서 뽑습니다. 원문에서 뽑으면 안내문이나
+ * 복지에 섞인 낱말이 걸립니다 — 「채용담당자 유선 문의」, 복지의 「영어
+ * Fluent」 같은 것들입니다.
+ */
+export function getStaticPaths() {
+  return techPages().map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const tech = byTech(slug);
+const jobs = [...tech.jobs].sort(byDeadline);
+
+const alwaysN = jobs.filter(isAlways).length;
+const deadlineN = jobs.length - alwaysN;
+const cos = [...new Set(jobs.map((j) => j.company))];
+const freshN = jobs.filter((j) => (j.firstSeenAt || '').slice(0, 10) === COLLECTED_AT).length;
+const soonN = jobs.filter((j) => !isAlways(j) && daysLeft(j) <= 3).length;
+
+// 함께 요구되는 기술 — 겹치는 건수가 많은 순으로 여섯 개.
+const together = tagsWith(tech.name, jobs).slice(0, 6);
+
+// 이 기술을 뽑는 기업 — 건수 많은 순으로 열둘.
+const byCo = {};
+for (const j of jobs) byCo[j.company] = (byCo[j.company] || 0) + 1;
+const topCos = Object.entries(byCo)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ko'))
+  .slice(0, 12);
+
+// 이 기술이 걸리는 산업.
+const byInd = {};
+for (const j of jobs) for (const n of industriesOf(j)) byInd[n] = (byInd[n] || 0) + 1;
+const topInds = Object.entries(byInd).sort((a, b) => b[1] - a[1]).slice(0, 7);
+
+const title = `${tech.name} 채용공고 ${jobs.length}건 | SEARCHJOB`;
+const desc = `${tech.name}을(를) 요구하는 채용공고 ${jobs.length}건. `
+  + `${cos.length}개 기업의 공식 채용페이지에서 모았습니다. ${COLLECTED_AT} 기준.`;
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: `${site}/tech/${slug}/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow">
+        <a href="/tech/">기술 전체</a>{tech.cat && <span class="cat">{tech.cat}</span>}
+      </div>
+      <h1>{tech.name} 채용 <em>{jobs.length}</em></h1>
+      <div class="meta">
+        <b>{cos.length}</b>개 기업 · 오늘 신규 <b>{freshN}</b>건 ·
+        3일 내 마감 <b>{soonN}</b>건 ·
+        마감 있는 공고 <b>{deadlineN}</b>건 · 상시채용 <b>{alwaysN}</b>건
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {together.length > 0 && (
+      <>
+        <div class="section-h">이 기술을 요구하는 공고가 함께 요구하는 것</div>
+        <ul class="withs">
+          {together.map((w) => (
+            <li>
+              <a href={`/tech/${w.slug}/`}>
+                <span class="n">{w.tag}</span>
+                <span class="c">{jobs.length}건 중 <b>{w.count}</b>건 겹침</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    {topInds.length > 0 && (
+      <>
+        <div class="section-h">이 기술이 걸리는 분야</div>
+        <div class="chips">
+          {topInds.map(([n, c]) => (
+            <span class="chip">{n}<span class="n">{c}</span></span>
+          ))}
+        </div>
+      </>
+    )}
+
+    <div class="section-h">진행중인 채용</div>
+    {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
+      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
+        기술 전체 목록에서 다른 기술을 살펴보세요.</div>
+    )}
+
+    {topCos.length > 0 && (
+      <>
+        <div class="section-h">이 기술을 뽑는 기업</div>
+        <ul class="archive">
+          {topCos.map(([n, c]) => (
+            <li><span>{n}</span><time>{c}건</time></li>
+          ))}
+        </ul>
+      </>
+    )}
+
+    <p style="margin:28px 0 56px">
+      <a class="back" href="/tech/">← 기술 전체 보기</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  .eyebrow .cat { color: #7FB3D0; }
+
+  /* 함께 요구되는 기술. 이 페이지에서 가장 많이 눌리는 자리라 크게 둡니다. */
+  .withs { list-style: none; margin: 0 0 4px; padding: 0; display: grid; gap: 1px;
+           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
+  @media (min-width: 720px) { .withs { grid-template-columns: repeat(2, 1fr); } }
+  .withs a { display: flex; align-items: baseline; gap: 10px; padding: 13px 15px;
+             background: var(--paper, #fff); text-decoration: none; }
+  .withs a:hover { background: var(--steel-soft, #E7EEF2); }
+  .withs .n { font-size: 14px; font-weight: 600; color: var(--ink, #16181C); }
+  .withs .c { margin-left: auto; font-family: var(--mono, monospace); font-size: 11.5px;
+              color: var(--ink-3, #858B92); white-space: nowrap; }
+  .withs .c b { color: var(--steel, #2D5F7C); font-weight: 600; font-size: 13px; }
+
+  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
+                    opacity: .6; margin-left: 5px; }
+  .chips .chip { cursor: default; }
+</style>

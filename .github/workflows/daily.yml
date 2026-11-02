@@ -156,9 +156,10 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           MSG="공고 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
 
-          # 2026-11-02: job-tags.json 도 함께 저장합니다. 수집 뒤 단계에서
-          # 태그를 다시 뽑는데, 여기서 add 하지 않으면 그 결과가 버려집니다.
-          git add src/data/jobs.json src/data/job-tags.json
+          # 2026-11-02: job-tags.json 과 scans.json 도 함께 저장합니다.
+          # 태그는 수집 뒤 단계에서 다시 뽑고, 수집 기록은 fetch_jobs.py 가
+          # 한 줄 적습니다. 여기서 add 하지 않으면 둘 다 버려집니다.
+          git add src/data/jobs.json src/data/job-tags.json src/data/scans.json
           git diff --cached --quiet || git commit -m "$MSG"
 
           for i in 1 2 3; do
@@ -170,11 +171,13 @@ jobs:
             sleep 5
             cp src/data/jobs.json /tmp/jobs-new.json
             cp src/data/job-tags.json /tmp/tags-new.json
+            cp src/data/scans.json /tmp/scans-new.json
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/jobs-new.json src/data/jobs.json
             cp /tmp/tags-new.json src/data/job-tags.json
-            git add src/data/jobs.json src/data/job-tags.json
+            cp /tmp/scans-new.json src/data/scans.json
+            git add src/data/jobs.json src/data/job-tags.json src/data/scans.json
             if git diff --cached --quiet; then
               echo "저장소에 있는 것과 같습니다. 더 할 일이 없습니다."
               exit 0

@@ -1,13 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
 import JobCard from '../components/JobCard.astro';
-import { openJobs, byDeadline, isAlways, COLLECTED_AT, STALE_DAYS, companies, industries, industriesOf, roles } from '../lib.js';
+import { openJobs, byDeadline, isAlways, daysLeft, parseDate, COLLECTED_AT, STALE_DAYS,
+  companies, companyPages, industries, industriesOf, industrySlug, roles,
+  scanRuns, scanStreak } from '../lib.js';
 
 // 마감 있는 공고가 먼저, 상시채용이 뒤로 옵니다.
 const jobs = openJobs().sort(byDeadline);
 const cos = companies().length;
 const alwaysN = jobs.filter(isAlways).length;
 const deadlineN = jobs.length - alwaysN;
+
+/* ──────────────────────────────────────────────────────────────
+   첫 화면 버전2 (2026-11-02)
+
+   전에는 숫자 하나를 세워두고 곧장 필터와 목록이었습니다. 들어온 사람이
+   할 일을 스스로 찾아야 했습니다. 지원아는 "오늘 117건 열렸고 179건
+   바뀌었습니다" 라고 먼저 말을 겁니다.
+
+   그래서 맨 위에 마감 그래프를 둡니다. 그릴 수 있는 데이터 셋을 전부
+   그려 보고 고른 것입니다.
+
+     마감 분포 14일   4~215 로 봉우리가 뚜렷   → 그림이 됨
+     분야별 공고 수    IT 하나가 압도           → 막대 하나가 다 먹음
+     신규 추이 14일    일요일마다 0             → 살아있다는 신호일 뿐
+
+   "이번 주말에 407건이 마감됩니다" 는 "지금 지원할 수 있는 자리 5311" 이
+   못 하는 말입니다. 들어온 사람이 오늘 안에 움직이게 합니다.
+   ────────────────────────────────────────────────────────────── */
+const DAY = 86400000;
+const addDays = (n) => new Date(parseDate(COLLECTED_AT).getTime() + n * DAY)
+  .toISOString().slice(0, 10);
+
+// 앞으로 14일 마감 분포.
+const hist = Array.from({ length: 14 }, (_, n) => {
+  const day = addDays(n);
+  return { day, n: jobs.filter((j) => j.closesAt === day).length };
+});
+const peak = hist.reduce((a, b) => (b.n > a.n ? b : a), hist[0]);
+const histMax = Math.max(peak.n, 1);
+
+const WD = ['일', '월', '화', '수', '목', '금', '토'];
+// 날짜 글자를 UTC 자정으로 읽습니다. +09:00 으로 읽으면 하루 전 요일이 나옵니다.
+const wd = (d) => WD[new Date(`${d}T00:00:00Z`).getUTCDay()];
+const md = (d) => `${Number(d.slice(5, 7))}.${d.slice(8, 10)}`;
+const ymd = (d) => `${Number(d.slice(5, 7))}월 ${Number(d.slice(8, 10))}일`;
+
+const todayCloseN = hist[0].n;
+const weekFrom = addDays(-6);
+const weekNewN = jobs.filter((j) => (j.firstSeenAt || '').slice(0, 10) >= weekFrom).length;
+
+/* 분야 타일. 폰은 앞의 넷, 넓은 화면은 여덟 개 전부 (CSS 가 가립니다). */
+const tiles = industries().map((i) => ({
+  name: i.name,
+  slug: i.slug,
+  n: i.jobs.length,
+  fresh: i.jobs.filter((j) => (j.firstSeenAt || '').slice(0, 10) === COLLECTED_AT).length,
+}));
+
+/* 점검 상태 띠 — 이 사이트의 신뢰 근거입니다. 자세한 것은 /scan/ 이 받습니다. */
+const runs = scanRuns();
+const streak = scanStreak();
+const todayRun = runs.find((r) => r.day === COLLECTED_AT);
+const streakFrom = runs.length >= streak ? runs[runs.length - streak].day : COLLECTED_AT;
+const watched = companyPages().length;
 /*
  * 필터 칩 목록.
  *
@@ -71,6 +127,70 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       </p>
     </div>
   </header>
+
+  {/* 점검 상태 띠. 들어오자마자 "언제 확인했나" 가 보입니다. */}
+  <div class="scanbar">
+    <div class="wrap">
+      <span class="ok">오늘 <b>{todayRun ? todayRun.times.join(' · ') : '—'}</b> 확인 완료</span>
+      <span><b>{watched}</b>개사 공식 채용페이지 · 하루 두 번</span>
+      <a href="/scan/">{streakFrom.replace(/-/g, '. ')}부터 <b>{streak}일 연속</b> →</a>
+    </div>
+  </div>
+
+  {/* 전역 길. 기업·기술·점검 기록은 홈에서만 들어갈 수 있었습니다. */}
+  <nav class="globalnav">
+    <div class="wrap">
+      <a href="/companies/">기업 {watched}</a>
+      <a href="/tech/">기술</a>
+      {tiles.slice(0, 3).map((t) => <a href={`/industry/${t.slug}/`}>{t.name}</a>)}
+      <a href="/scan/">점검 기록</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="wrap">
+      {peak.n > 0 && (
+        <div class="graph">
+          <h2>{ymd(peak.day)}({wd(peak.day)}) 하루에 <em>{peak.n.toLocaleString('ko-KR')}건</em>이 마감됩니다</h2>
+          <p class="cap">앞으로 14일 · 마감일 있는 공고 {deadlineN.toLocaleString('ko-KR')}건</p>
+          <div class="bars">
+            {hist.map((h) => (
+              <span class={`b${h.n >= histMax * 0.6 ? ' hot' : ''}`}
+                    title={`${ymd(h.day)}(${wd(h.day)}) 마감 ${h.n}건`}>
+                <i class="v">{h.n || ''}</i>
+                <i class="f" style={`height:${Math.max(Math.round((h.n / histMax) * 100), 1)}%`}></i>
+              </span>
+            ))}
+          </div>
+          <div class="xaxis">
+            {hist.map((h, i) => (
+              <span class={wd(h.day) === '토' || wd(h.day) === '일' ? 'we' : ''}>
+                {i === 0 ? md(h.day) : Number(h.day.slice(8, 10))}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="nums">
+        <div class={todayCloseN ? 'urgent' : ''}>
+          <b>{todayCloseN.toLocaleString('ko-KR')}</b><span>오늘 마감</span>
+        </div>
+        <div><b>{weekNewN.toLocaleString('ko-KR')}</b><span>최근 7일 새로 열린 공고</span></div>
+        <div><b>{jobs.length.toLocaleString('ko-KR')}</b><span>지금 지원 가능</span></div>
+        <div><b>{alwaysN.toLocaleString('ko-KR')}</b><span>상시 채용</span></div>
+      </div>
+
+      <div class="tiles">
+        {tiles.map((t) => (
+          <a class="tile" href={`/industry/${t.slug}/`}>
+            <span class="t">{t.name}</span>
+            <span class="n">{t.n.toLocaleString('ko-KR')}{t.fresh > 0 && <i>오늘 +{t.fresh}</i>}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <div class="split">
   <div class="controls">
@@ -186,7 +306,8 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       </select>
     </div>
     <div class="list" id="list">
-      {jobs.map((j) => <JobCard job={j} />)}
+      {/* 홈은 카드 4,973장이라 요약·태그를 빼고 그립니다 (JobCard 주석 참고). */}
+      {jobs.map((j) => <JobCard job={j} lean />)}
       <div class="empty" id="empty" hidden>
         <svg class="empty-ico" viewBox="0 0 48 48" aria-hidden="true">
           <circle cx="21" cy="21" r="13" fill="none" stroke="currentColor" stroke-width="2.2"/>
@@ -442,6 +563,83 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
    * IT 는 의료·보안·커머스가 섞여 성격이 넓어 회청색으로 눌렀습니다.
    * 게임은 2026-11-02 에 IT 에서 떼어내며 자주색을 줬습니다.
    */
+  /* ── 첫 화면 버전2 (2026-11-02) ─────────────────────────── */
+  .scanbar { background: var(--paper, #fff); border-bottom: 1px solid var(--line, #DDE1DE); }
+  .scanbar .wrap { padding: 9px 20px; display: flex; gap: 10px; align-items: baseline;
+                   flex-wrap: wrap; font-family: var(--mono, monospace);
+                   font-size: 11.5px; color: var(--ink-3, #858B92); }
+  .scanbar b { color: var(--ink, #16181C); font-weight: 600; }
+  .scanbar .ok::before { content: ""; display: inline-block; width: 6px; height: 6px;
+                         border-radius: 50%; background: #2F7D4F; margin-right: 6px;
+                         vertical-align: 1px; }
+  .scanbar a { margin-left: auto; color: var(--steel, #2D5F7C); white-space: nowrap;
+               text-decoration: none; }
+  .scanbar a:hover { text-decoration: underline; }
+
+  .globalnav { background: var(--paper, #fff); border-bottom: 1px solid var(--line, #DDE1DE);
+               overflow-x: auto; }
+  .globalnav .wrap { display: flex; gap: 2px; padding: 0 20px; width: max-content;
+                     min-width: 100%; }
+  .globalnav a { font-size: 13px; padding: 10px 12px; color: var(--ink-2, #4B5158);
+                 text-decoration: none; white-space: nowrap;
+                 border-bottom: 2px solid transparent; }
+  .globalnav a:hover { color: var(--steel, #2D5F7C); border-bottom-color: var(--steel, #2D5F7C); }
+
+  .hero { background: var(--surface, #F1F3F2); padding: 18px 0 4px; }
+  .graph { background: var(--paper, #fff); border: 1px solid var(--line, #DDE1DE);
+           padding: 18px 16px 12px; }
+  .graph h2 { font-size: clamp(17px, 3.8vw, 22px); font-weight: 600; letter-spacing: -.02em;
+              line-height: 1.35; text-wrap: balance; }
+  .graph h2 em { font-style: normal; font-family: var(--mono, monospace);
+                 color: var(--urgent, #B4322B); font-weight: 600; }
+  .graph .cap { font-family: var(--mono, monospace); font-size: 11px;
+                color: var(--ink-3, #858B92); margin-top: 5px; }
+  .graph .bars { display: flex; gap: 3px; align-items: flex-end; height: 112px; margin-top: 16px; }
+  .graph .bars .b { flex: 1; min-width: 0; display: flex; flex-direction: column;
+                    justify-content: flex-end; height: 100%; gap: 3px; }
+  .graph .bars .v { font-style: normal; font-family: var(--mono, monospace); font-size: 9.5px;
+                    color: var(--ink-3, #858B92); text-align: center; line-height: 1; height: 10px; }
+  .graph .bars .f { display: block; background: var(--steel-soft, #E7EEF2);
+                    border-top: 2px solid var(--steel, #2D5F7C); min-height: 2px; }
+  .graph .bars .b.hot .f { background: var(--urgent-soft, #FBEDEC);
+                           border-top-color: var(--urgent, #B4322B); }
+  .graph .bars .b.hot .v { color: var(--urgent, #B4322B); font-weight: 600; }
+  .graph .xaxis { display: flex; gap: 3px; margin-top: 5px;
+                  border-top: 1px solid var(--line, #DDE1DE); padding-top: 5px; }
+  .graph .xaxis span { flex: 1; min-width: 0; text-align: center;
+                       font-family: var(--mono, monospace); font-size: 9px;
+                       color: var(--ink-3, #858B92); white-space: nowrap; overflow: hidden; }
+  .graph .xaxis span.we { color: var(--urgent, #B4322B); }
+
+  .hero .nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+                background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
+                margin-top: 10px; }
+  @media (min-width: 720px) { .hero .nums { grid-template-columns: repeat(4, 1fr); } }
+  .hero .nums div { background: var(--paper, #fff); padding: 13px 14px; }
+  .hero .nums b { display: block; font-family: var(--mono, monospace); font-size: 21px;
+                  font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+  .hero .nums span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92);
+                     margin-top: 3px; }
+  .hero .nums .urgent b { color: var(--urgent, #B4322B); }
+
+  .hero .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+                 margin-top: 10px; }
+  .hero .tile { background: var(--paper, #fff); border: 1px solid var(--line, #DDE1DE);
+                padding: 13px 14px; display: block; text-decoration: none; }
+  .hero .tile:hover { border-color: var(--steel, #2D5F7C); }
+  .hero .tile .t { font-size: 13.5px; font-weight: 500; color: var(--ink, #16181C); }
+  .hero .tile .n { font-family: var(--mono, monospace); font-size: 19px; font-weight: 600;
+                   letter-spacing: -.02em; display: block; margin-top: 2px;
+                   color: var(--ink, #16181C); }
+  .hero .tile .n i { font-style: normal; font-size: 10.5px; color: var(--steel, #2D5F7C);
+                     margin-left: 6px; }
+  /* 폰에서는 앞의 넷만. 분야 여덟 개를 세로로 쌓으면 목록이 한참 밀립니다. */
+  .hero .tile:nth-child(n+5) { display: none; }
+  @media (min-width: 720px) {
+    .hero .tiles { grid-template-columns: repeat(4, 1fr); }
+    .hero .tile:nth-child(n+5) { display: block; }
+  }
+
   :root {
     --auto: #2D5F7C;
     --semi: #6B4E8F;
@@ -1198,6 +1396,26 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     return { shown, inOther, other };
   }
 
+  /* 같은 회사가 maxRun 건을 넘겨 연달아 나오지 않게 미룹니다. */
+  function spreadByCompany(list, maxRun) {
+    const pool = [...list];
+    const out = [];
+    let last = null;
+    let run = 0;
+    while (pool.length) {
+      let i = 0;
+      if (last !== null && run >= maxRun) {
+        while (i < pool.length && pool[i].dataset.co === last) i += 1;
+        if (i === pool.length) i = 0;        // 남은 게 전부 같은 회사
+      }
+      const el = pool.splice(i, 1)[0];
+      if (el.dataset.co === last) run += 1;
+      else { last = el.dataset.co; run = 1; }
+      out.push(el);
+    }
+    return out;
+  }
+
   function sortCards() {
     /*
      * 정렬 세 가지.
@@ -1234,7 +1452,7 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     const coHit = (c) =>
       sq && (c.dataset.co || '').toLowerCase().includes(sq) ? 0 : 1;
 
-    const arr = [...cards].sort((a, b) => {
+    let arr = [...cards].sort((a, b) => {
       if (sq) {
         const d = coHit(a) - coHit(b);
         if (d) return d;
@@ -1245,6 +1463,22 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
         ? a.dataset.dday - b.dataset.dday
         : a.dataset.co.localeCompare(b.dataset.co, 'ko');
     });
+
+    /*
+     * 한 회사가 연달아 나오지 않게 흩뜨립니다 (2026-11-02)
+     * ----------------------------------------------------
+     * 상시채용 탭을 최신 등록순으로 보면 서진시스템 39건이 줄줄이
+     * 나옵니다. 토스·넥슨도 한 날에 수십 건씩 올립니다. 그 회사에
+     * 관심 없는 사람은 거기서 목록을 닫습니다.
+     *
+     * 날짜 차례는 그대로 두고, 같은 회사가 세 건을 넘기면 다음에 올
+     * 다른 회사 카드를 먼저 꺼냅니다. 실측으로 최대 연속 39건 → 3건이
+     * 되고 날짜가 거꾸로 가는 지점은 4,133건 중 14곳뿐이었습니다.
+     *
+     * 기업별 정렬에서는 하지 않습니다. 일부러 회사끼리 모아 보는
+     * 화면이기 때문입니다.
+     */
+    if (state.sort !== 'co') arr = spreadByCompany(arr, 3);
     /*
      * 거르는 중에는 보이는 카드만 줄 세웁니다.
      *

@@ -1,0 +1,194 @@
+---
+import Base from '../../layouts/Base.astro';
+import {
+  companyPages, openJobs, closedJobs, isRecentlyClosed,
+  COLLECTED_AT, industriesOf, industrySlug,
+} from '../../lib.js';
+
+/*
+ * 기업 목록 (2026-11-02 새로 만듦)
+ * ================================
+ * 기업 상세(/company/{slug}/)는 있는데 그 목록이 없었습니다. 425개사를
+ * 매일 확인하고 있다는 사실이 사이트 어디에도 드러나지 않았습니다.
+ *
+ * 「공고 없음」을 숨기지 않고 셉니다
+ * ----------------------------------
+ * 확인은 하고 있는데 지금 뽑는 자리가 없다는 것도 정보입니다. 숨기면
+ * 「425곳을 본다」는 말이 「공고가 있는 곳만 본다」로 줄어듭니다.
+ * 지원아가 "549/552개 확인" 을 그대로 보여주는 것과 같은 이유입니다.
+ *
+ * 정렬 세 가지는 자바스크립트로 바꿉니다. 처음 그려지는 것은 공고 많은
+ * 순이고, 스크립트가 막혀 있어도 목록은 그대로 보입니다.
+ */
+const open = openJobs();
+const recentlyClosed = closedJobs().filter(isRecentlyClosed);
+
+const openBy = {};
+const freshBy = {};
+const closedBy = {};
+const indBy = {};
+for (const j of open) {
+  openBy[j.companySlug] = (openBy[j.companySlug] || 0) + 1;
+  if ((j.firstSeenAt || '').slice(0, 10) === COLLECTED_AT) {
+    freshBy[j.companySlug] = (freshBy[j.companySlug] || 0) + 1;
+  }
+  if (!indBy[j.companySlug]) indBy[j.companySlug] = industriesOf(j);
+}
+for (const j of recentlyClosed) closedBy[j.companySlug] = (closedBy[j.companySlug] || 0) + 1;
+
+const rows = companyPages().map((c) => ({
+  slug: c.slug,
+  name: c.name,
+  open: openBy[c.slug] || 0,
+  fresh: freshBy[c.slug] || 0,
+  closed: closedBy[c.slug] || 0,
+  inds: indBy[c.slug] || [],
+})).sort((a, b) => b.open - a.open || a.name.localeCompare(b.name, 'ko'));
+
+const hiring = rows.filter((r) => r.open > 0).length;
+const empty = rows.length - hiring;
+
+// 산업 칩 — 기업 수 기준.
+const indCount = {};
+for (const r of rows) for (const n of r.inds) indCount[n] = (indCount[n] || 0) + 1;
+const inds = Object.entries(indCount).sort((a, b) => b[1] - a[1]);
+
+const title = '매일 확인하는 기업 | SEARCHJOB';
+const desc = `${rows.length}개 기업의 공식 채용페이지를 하루 두 번 확인합니다. `
+  + `지금 뽑는 기업 ${hiring}곳, 공고 없는 기업 ${empty}곳. ${COLLECTED_AT} 기준.`;
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: `${site}/companies/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">전체 채용공고</a><a href="/scan/">점검 기록</a></div>
+      <h1>우리가 매일 확인하는 기업 <em>{rows.length}</em></h1>
+      <div class="meta">
+        공식 채용페이지만 직접 확인합니다 · 하루 두 번 ·
+        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+      </div>
+      <p class="lede">
+        채용 플랫폼에만 올라오는 공고나 비공개 채용은 다루지 않습니다.
+        지금 뽑는 자리가 없는 회사도 목록에 남깁니다 — 확인은 하고 있는데
+        공고가 없다는 사실도 정보이기 때문입니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="stats">
+      <div><b>{rows.length.toLocaleString('ko-KR')}</b><span>확인 중인 기업</span></div>
+      <div><b>{hiring.toLocaleString('ko-KR')}</b><span>지금 뽑는 기업</span></div>
+      <div><b>{empty.toLocaleString('ko-KR')}</b><span>공고 없음</span></div>
+    </div>
+
+    <div class="section-h">산업</div>
+    <div class="chips">
+      {inds.map(([n, c]) => (
+        <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
+      ))}
+    </div>
+
+    <div class="countrow">
+      <div class="count" id="count"><b>{rows.length.toLocaleString('ko-KR')}</b>개사</div>
+      <select class="sortbtn" id="sort" aria-label="정렬 기준">
+        <option value="open">공고 많은 순</option>
+        <option value="fresh">오늘 신규순</option>
+        <option value="name">가나다</option>
+      </select>
+    </div>
+
+    <ul class="colist" id="colist">
+      {rows.map((r) => (
+        <li data-open={r.open} data-fresh={r.fresh} data-name={r.name}>
+          <a href={`/company/${r.slug}/`}>
+            <span class="av" aria-hidden="true">{r.name.trim().charAt(0)}</span>
+            <span class="nm">
+              {r.name}
+              {r.inds[0] && <span class="in">{r.inds[0]}</span>}
+            </span>
+            <span class="rt">
+              {r.open > 0
+                ? <><b>{r.open}</b>{r.fresh > 0 && <i>오늘 +{r.fresh}</i>}</>
+                : <em>공고 없음</em>}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
+  </main>
+</Base>
+
+<script>
+  /*
+   * 정렬. 목록은 서버가 이미 공고 많은 순으로 그려 두었고, 여기서는
+   * 고른 기준으로 다시 줄만 세웁니다. 스크립트가 막혀도 목록은 보입니다.
+   */
+  const list = document.getElementById('colist');
+  const sel = document.getElementById('sort');
+  if (list && sel) {
+    const items = [...list.children];
+    const num = (el, k) => Number(el.dataset[k] || 0);
+    sel.addEventListener('change', () => {
+      const how = sel.value;
+      const sorted = [...items].sort((a, b) => {
+        if (how === 'name') return a.dataset.name.localeCompare(b.dataset.name, 'ko');
+        if (how === 'fresh') return num(b, 'fresh') - num(a, 'fresh') || num(b, 'open') - num(a, 'open');
+        return num(b, 'open') - num(a, 'open') || a.dataset.name.localeCompare(b.dataset.name, 'ko');
+      });
+      const frag = document.createDocumentFragment();
+      sorted.forEach((el) => frag.appendChild(el));
+      list.appendChild(frag);
+    });
+  }
+</script>
+
+<style>
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
+           margin: 18px 0 4px; }
+  .stats div { background: var(--paper, #fff); padding: 14px 15px; }
+  .stats b { display: block; font-family: var(--mono, monospace); font-size: 22px;
+             font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+  .stats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92); margin-top: 3px; }
+
+  .chips .chip { text-decoration: none; }
+  .chips .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
+  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
+                    opacity: .6; margin-left: 5px; }
+
+  .countrow { display: flex; align-items: center; gap: 10px; margin: 20px 0 8px; }
+  .count { font-family: var(--mono, monospace); font-size: 12px; color: var(--ink-3, #858B92); }
+  .count b { color: var(--ink, #16181C); font-weight: 600; }
+  .countrow .sortbtn { margin-left: auto; }
+
+  .colist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;
+            gap: 1px; background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
+  .colist a { display: flex; align-items: center; gap: 11px; padding: 12px 14px;
+              background: var(--paper, #fff); text-decoration: none; }
+  .colist a:hover { background: var(--steel-soft, #E7EEF2); }
+  .colist .av { width: 28px; height: 28px; flex: none; background: var(--surface, #F1F3F2);
+                border: 1px solid var(--line, #DDE1DE); display: grid; place-items: center;
+                font-size: 12px; color: var(--ink-2, #4B5158); }
+  .colist .nm { font-size: 13.5px; font-weight: 500; color: var(--ink, #16181C); min-width: 0; }
+  .colist .in { font-family: var(--mono, monospace); font-size: 10.5px;
+                color: var(--ink-3, #858B92); margin-left: 7px; }
+  .colist .rt { margin-left: auto; text-align: right; flex: none; }
+  .colist .rt b { font-family: var(--mono, monospace); font-size: 16px; font-weight: 600;
+                  color: var(--ink, #16181C); }
+  .colist .rt i { font-style: normal; font-family: var(--mono, monospace); font-size: 10.5px;
+                  color: var(--steel, #2D5F7C); margin-left: 6px; }
+  .colist .rt em { font-style: normal; font-family: var(--mono, monospace); font-size: 11px;
+                   color: var(--ink-3, #858B92); }
+  @media (max-width: 480px) { .colist .in { display: none; } }
+</style>

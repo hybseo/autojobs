@@ -341,6 +341,41 @@ from loc_normalize import normalize_location
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
 OUT = ROOT / "src" / "data" / "jobs.json"
+SCANS = ROOT / "src" / "data" / "scans.json"
+
+
+def record_scan(jobs, day):
+    """이번 수집을 scans.json 에 한 줄 적습니다 (2026-11-02).
+
+    /scan/ 페이지가 이 파일을 읽습니다. 「35일 하루도 빠짐없이 확인했습니다」
+    는 이 사이트가 가진 거의 유일한 무기인데, 그 증거가 깃 커밋 메시지에만
+    있었습니다. 빌드하는 곳이 저장소를 얕게 받아 오면 꺼낼 수 없습니다.
+
+    같은 날 두 번 돌면 시각만 덧붙입니다. 하루 두 번이 정상입니다.
+    """
+    try:
+        doc = json.loads(SCANS.read_text(encoding="utf-8"))
+    except Exception:
+        doc = {"runs": []}
+    runs = doc.get("runs") or []
+    now = datetime.now(KST).strftime("%H:%M")
+    fresh = sum(1 for j in jobs if (j.get("firstSeenAt") or "")[:10] == day)
+
+    for r in runs:
+        if r.get("day") == day:
+            times = list(r.get("times") or [])
+            if now not in times:
+                times.append(now)
+            r["times"] = sorted(times)
+            r["new"] = fresh
+            break
+    else:
+        runs.append({"day": day, "times": [now], "new": fresh})
+
+    doc["runs"] = sorted(runs, key=lambda r: r.get("day") or "")
+    SCANS.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n",
+                     encoding="utf-8")
+    print(f"  · 수집 기록에 적었습니다: {day} {now} · 오늘 신규 {fresh}건")
 # 공고별 '처음 나타난 날' 씨앗 파일. stamp_first_seen() 설명을 보세요.
 SEED = ROOT / "src" / "data" / "first-seen.json"
 
@@ -672,6 +707,8 @@ def main():
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},
         ensure_ascii=False, indent=1), encoding="utf-8")
+
+    record_scan(jobs, today.isoformat())
     print(f"→ {OUT}")
 
 

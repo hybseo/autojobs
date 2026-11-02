@@ -1,4 +1,4 @@
-import { companyPages, industries, roles, JOBS, COLLECTED_AT, hasDetail } from '../lib.js';
+import { companyPages, industries, roles, techPages, JOBS, COLLECTED_AT, hasDetail } from '../lib.js';
 
 // 마감 후 사이트맵에 남겨 두는 날 수. 아래 공고 상세 주석 참고.
 const GRACE_DAYS = 7;
@@ -49,6 +49,17 @@ export async function GET({ site }) {
     { loc: `${base}/about/`, pri: '0.5', freq: 'monthly', mod: today },
     // 산업 페이지가 산업 키워드 검색을 받습니다. 메인 다음으로 중요합니다.
     ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily', mod: today })),
+    /*
+     * 2026-11-02 에 새로 생긴 페이지들.
+     *   /tech/        기술 전체 목록
+     *   /tech/{slug}/ 기술별 공고. "AUTOSAR 채용" 같은 긴 꼬리 검색을 받습니다.
+     *   /companies/   매일 확인하는 기업 425곳
+     *   /scan/        점검 기록. 이 사이트의 신뢰 근거입니다.
+     */
+    { loc: `${base}/tech/`, pri: '0.9', freq: 'daily', mod: today },
+    { loc: `${base}/companies/`, pri: '0.8', freq: 'daily', mod: today },
+    { loc: `${base}/scan/`, pri: '0.7', freq: 'daily', mod: today },
+    ...techPages().map((t) => ({ loc: `${base}/tech/${t.slug}/`, pri: '0.8', freq: 'daily', mod: today })),
     // 직무 페이지. "회로설계 채용", "임베디드 개발자 채용" 같은 검색을 받습니다.
     ...roles().map((r) => ({ loc: `${base}/role/${r.code}/`, pri: '0.9', freq: 'daily', mod: today })),
     // 공고가 0건인 회사도 페이지가 있으므로 여기에 넣습니다. 넣어야

@@ -1,6 +1,6 @@
 ---
-import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias, hasDetail, stated } from '../lib.js';
-const { job, href } = Astro.props;
+import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias, hasDetail, stated, summaryOf, jobTags } from '../lib.js';
+const { job, href, lean = false } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
 const always = isAlways(job);
@@ -62,6 +62,27 @@ const searchExtra = `${searchAlias(job.company)} ${roleNames}`.trim().toLowerCas
 // 페이지 생성 조건과 어긋나 404 가 납니다(2026-10-10 컴투스 사례).
 const link = href ?? (hasDetail(job) ? `/job/${job.id}/` : job.sourceUrl);
 const external = link === job.sourceUrl;
+
+/*
+ * 한 줄 요약과 기술 태그 (2026-11-02)
+ * ====================================
+ * 카드에 우리 요약 한 줄과 태그 두 개를 붙입니다. 제목만 있는 카드보다
+ * 「무슨 일을 하는 자리인가」가 훨씬 빨리 읽힙니다.
+ *
+ * 그런데 홈에서는 붙이지 않습니다 (lean).
+ *   홈은 카드 4,973장을 한 페이지에 그립니다. 한 줄 요약이 평균 61자라
+ *   다 붙이면 900KB 가 더해져 홈이 3,088KB → 4MB 가 됩니다. 전에
+ *   5,040KB 짜리 홈을 네이버 검색로봇이 "접근할 수 없습니다" 로 보고한
+ *   적이 있습니다(이 파일 아래 <style> 주석 참고).
+ *
+ *   산업·직무·기술·기업 페이지는 많아야 수백 장이라 그대로 붙입니다.
+ *   거기가 실제로 공고를 고르는 화면이기도 합니다.
+ *
+ * 홈에도 붙이려면 목록을 끊어 그리는(페이지 나눔) 작업이 먼저입니다.
+ */
+const sum = lean ? null : summaryOf(job);
+const gist = sum ? (sum.gist || (sum.duties || [])[0] || '') : '';
+const cardTags = lean ? [] : jobTags(job).slice(0, 2);
 ---
 <a class="card" href={link} data-co={job.company} data-career={job.career}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds}
@@ -98,6 +119,10 @@ const external = link === job.sourceUrl;
     */}
     {external && <span class="f ext">원문 사이트 ↗</span>}
   </div>
+  {gist && <div class="gist1">{gist}</div>}
+  {cardTags.length > 0 && (
+    <div class="ctags">{cardTags.map((t) => <span>{t}</span>)}</div>
+  )}
   {job.sourceTitle && <div class="src">{job.sourceTitle}</div>}
   {p === null ? (
     <div class="gauge"><span class="g-open">상시 접수 · 마감일 미정</span></div>

@@ -146,3 +146,12 @@ footer b{color:var(--ink-2);font-weight:500}
 @media(max-width:560px){.mast{padding:30px 0 26px}
   .card{padding:16px;contain-intrinsic-size:auto 179px}.g-date{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* 카드의 한 줄 요약과 기술 태그 (2026-11-02)
+   JobCard.astro 에 <style> 을 두면 요소마다 표식이 붙어 홈이 1.2MB 커집니다.
+   그래서 여기에 둡니다. 자세한 사정은 JobCard.astro 아래 주석을 보세요. */
+.card .gist1{margin-top:8px;font-size:12.5px;line-height:1.55;color:var(--ink-2);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.card .ctags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.card .ctags span{font-family:var(--mono);font-size:10.5px;padding:1px 7px;
+  background:var(--steel-soft);color:var(--steel);white-space:nowrap}

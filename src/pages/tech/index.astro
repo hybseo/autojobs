@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import { techPages, COLLECTED_AT, openJobs } from '../../lib.js';
+
+/*
+ * 기술·역량 전체 목록 (2026-11-02 새로 만듦)
+ * ==========================================
+ * 태그 299개를 상위 분류로 묶어 보여줍니다. 299개를 한 줄로 늘어놓으면
+ * 고르는 화면이 아니라 벽이 됩니다.
+ *
+ * 분류 안에서는 건수 많은 순입니다. 분류끼리도 그 안의 공고 수가 많은
+ * 순으로 둡니다 — 반도체 설계가 열 개 들어 있어도 건수가 적으면 아래로
+ * 내려갑니다.
+ */
+const tags = techPages();
+const total = openJobs().length;
+
+const groups = new Map();
+for (const t of tags) {
+  const cat = t.cat || '기타';
+  if (!groups.has(cat)) groups.set(cat, []);
+  groups.get(cat).push(t);
+}
+const ordered = [...groups.entries()]
+  .map(([cat, items]) => ({ cat, items, sum: items.reduce((a, b) => a + b.count, 0) }))
+  .sort((a, b) => b.sum - a.sum);
+
+const title = '기술·역량으로 채용공고 찾기 | SEARCHJOB';
+const desc = `AUTOSAR·기능안전·반도체 설계처럼 공고가 실제로 요구하는 기술 ${tags.length}가지로 `
+  + `채용공고를 찾습니다. 공고 요약에서 뽑았습니다. ${COLLECTED_AT} 기준.`;
+
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: `${site}/tech/`,
+};
+---
+<Base title={title} description={desc} schema={schema}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">전체 채용공고</a></div>
+      <h1>기술·역량 <em>{tags.length}</em></h1>
+      <div class="meta">
+        진행중 공고 <b>{total.toLocaleString('ko-KR')}</b>건에서 뽑았습니다 ·
+        공고 요약 기준 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b>
+      </div>
+      <p class="lede">
+        회사가 쓴 자격요건과 우대사항에서 실제로 요구하는 기술만 골라냈습니다.
+        하나를 누르면 그 기술을 요구하는 공고가 모두 나오고, 거기서 함께
+        요구되는 다른 기술로 이어서 넘어갈 수 있습니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {ordered.map((g) => (
+      <section class="grp">
+        <div class="section-h">{g.cat}<span class="gn">{g.sum.toLocaleString('ko-KR')}건</span></div>
+        <div class="chips">
+          {g.items.map((t) => (
+            <a class="chip" href={`/tech/${t.slug}/`}>{t.name}<span class="n">{t.count}</span></a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
+  </main>
+</Base>
+
+<style>
+  .grp { margin-bottom: 4px; }
+  .section-h .gn { font-family: var(--mono, monospace); font-size: 11px;
+                   color: var(--ink-3, #858B92); letter-spacing: 0;
+                   text-transform: none; margin-left: 8px; }
+  .chips { margin-bottom: 18px; }
+  .chips .chip { text-decoration: none; }
+  .chips .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
+  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
+                    opacity: .6; margin-left: 5px; }
+</style>
