@@ -117,16 +117,17 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       <div class="eyebrow"><a href={`/company/${job.companySlug}/`}>{job.company}</a></div>
       <h1>{job.title}</h1>
       {/*
-        근무지·고용형태는 공고가 안 알려줬으면 「기재되지 않음」으로 적습니다
+        근무지는 공고가 안 알려줬으면 「기재되지 않음」으로 적습니다
         (2026-11-02 대표님 결정). 칸을 숨기면 우리가 빠뜨린 줄 알고,
         추측해서 채우면 거짓이 됩니다. 판정은 lib.js 의 shown 하나로 합니다.
+
+        고용형태는 화면에서 뺐습니다 (2026-11-02 대표님 지시).
+        공고가 고용형태를 적어 주는 곳이 드물어 거의 모든 공고에
+        「기재되지 않음」만 찍혔습니다. 알려 주는 것이 없는 칸입니다.
       */}
       <div class="meta">
         <span class:list={['fact', { dim: isUnstated(job.location) }]}>
           근무지 {shown(job.location)}
-        </span> ·
-        <span class:list={['fact', { dim: isUnstated(job.employment) }]}>
-          {shown(job.employment)}
         </span> ·
         {job.career} ·
         {closed

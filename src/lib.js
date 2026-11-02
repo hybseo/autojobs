@@ -206,24 +206,12 @@ export const shown = (v) => stated(v) || UNSTATED;
 export const isUnstated = (v) => !stated(v);
 
 /*
- * 공고가 적어 준 고용형태를 구글이 쓰는 코드로 바꿉니다.
- * 모르면 빈 값을 돌려주고, 부르는 쪽에서 칸을 아예 빼게 합니다.
- * 짝지을 수 없는 말(「병역특례」 등)도 지어내지 않고 빈 값입니다.
+ * 고용형태를 다루던 employmentCode 는 없앴습니다 (2026-11-02 대표님 지시).
+ * 공고가 고용형태를 적어 주는 곳이 드물어 거의 전부 빈 값이었습니다.
+ * 화면(목록 칩·상세 메타)과 JobPosting 스키마에서 모두 뺐습니다.
+ * 되살릴 일이 생기면 이 자리에 다시 두고, career 로 FULL_TIME 을 정하는
+ * 예전 방식으로는 돌아가지 마세요 — 그게 처음의 잘못이었습니다.
  */
-const EMPLOYMENT_CODE = [
-  [/정규/, 'FULL_TIME'],
-  [/무기\s*계약/, 'FULL_TIME'],
-  [/인턴|체험형|채용\s*연계/, 'INTERN'],
-  [/계약|기간제|파견|도급|프리랜서/, 'CONTRACTOR'],
-  [/시간제|파트\s*타임|아르바이트|단기/, 'PART_TIME'],
-];
-
-export const employmentCode = (v) => {
-  const s = stated(v);
-  if (!s) return '';
-  for (const [re, code] of EMPLOYMENT_CODE) if (re.test(s)) return code;
-  return '';
-};
 
 export const addressRegion = (location) => {
   const s = (location || '').trim();
@@ -1057,18 +1045,19 @@ export const jobPostingSchema = (j, pageUrl) => {
   const datePosted = pickDatePosted(j);
   if (!datePosted) return null;
   /*
-   * 고용형태 (2026-11-02 고침)
+   * 고용형태는 넣지 않습니다 (2026-11-02 대표님 지시)
    *
-   * 전에는 career(신입/경력/무관)를 보고 정했습니다. 잘못된 짝짓기였습니다.
-   * 신입이냐 경력이냐는 **경력 요건** 이고, 정규직이냐 계약직이냐는
-   * **고용형태** 입니다. 그래서 계약직 공고에도 FULL_TIME 이 나갔습니다.
+   * 전에는 career(신입/경력/무관)를 보고 FULL_TIME 을 넣었습니다. 잘못된
+   * 짝짓기였습니다 — 신입이냐 경력이냐는 **경력 요건** 이고, 정규직이냐
+   * 계약직이냐는 **고용형태** 입니다. 계약직 공고에도 FULL_TIME 이 나갔습니다.
    *
-   * 이제 공고가 알려준 고용형태를 씁니다(2026-11-02 부터 코오롱·큐렉소에서
-   * 수집합니다). 모르면 **칸을 아예 넣지 않습니다.** 구글에는 「기재되지
-   * 않음」을 넣을 자리가 없고, 모르는 것을 FULL_TIME 이라고 적으면 거짓이
-   * 됩니다. employmentType 은 구글이 요구하는 필수 칸이 아닙니다.
+   * 그래서 공고가 알려준 값만 쓰도록 바꿨는데, 실제로 고용형태를 적어 주는
+   * 공고가 드물어 거의 전부 빈 값이었습니다. 쓸모가 없어 칸 자체를 뺐습니다.
+   * employmentType 은 구글이 요구하는 필수 칸이 아니라 빼도 문제없습니다.
+   *
+   * 모르는 것을 FULL_TIME 이라고 되돌리는 일은 하지 마세요. 그게 처음의
+   * 잘못이었습니다.
    */
-  const employmentType = employmentCode(j.employment);
   return {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
@@ -1079,7 +1068,6 @@ export const jobPostingSchema = (j, pageUrl) => {
     identifier: { '@type': 'PropertyValue', name: j.company, value: j.id },
     datePosted,
     ...(j.closesAt ? { validThrough: j.closesAt + 'T23:59:59+09:00' } : {}),
-    ...(employmentType ? { employmentType } : {}),
     hiringOrganization: {
       '@type': 'Organization',
       name: j.company,

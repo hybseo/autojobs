@@ -437,6 +437,58 @@ CO_ALIAS = {
 }
 
 
+# ── 공고 제목에서 신입/경력을 읽습니다 (2026-11-02 대표님 결정) ──
+#
+# 「회사에서 정한 경력 구분 기준을 따라」가 지시입니다.
+#
+# 왜 한 곳에서 하는가
+#   ATS 가 경력 구분을 칸으로 주지 않는 곳이 많습니다. 워크데이·그린하우스·
+#   애쉬비·브리지 등은 아예 없어서 수집기가 「무관」으로 못박아 둡니다.
+#   그런데 회사는 제목에 적어 둡니다 — 「경력사원 모집」, 「대졸신입 수시
+#   채용」, 「경력(3년↑)」. 제목도 공고가 준 글이므로 우리 추측이 아닙니다.
+#   (요약 규칙에서 근무지에 이미 같은 원칙을 씁니다)
+#
+#   수집기 여덟 곳에 같은 코드를 넣는 대신 여기 한 번만 둡니다. 새 수집기가
+#   들어와도 저절로 적용됩니다.
+#
+# 2026-11-02 실측: 진행중 4,973건 중 「무관」이 2,133건, 그중 제목에 적혀
+# 있는 것이 약 500건이었습니다.
+#
+# 부정 표현은 건드리지 않습니다
+#   「경력 무관」·「경력무관」·「무경력」·「경력 불문」은 회사가 **무관이라고
+#   밝힌 것**입니다. 22건 확인했습니다(아우토크립트·키다리스튜디오·크래프톤·
+#   엑셈·오토닉스). 이걸 「경력」으로 읽으면 정반대가 됩니다.
+#
+# 이미 값이 있는 공고는 손대지 않습니다. 수집기가 칸에서 읽은 값이 제목보다
+# 정확합니다.
+CAREER_UNTOUCHED = re.compile(
+    r"무경력|경력\s*무관|경력\s*불문|경력\s*상관\s*없|경력\s*여부\s*무관")
+CAREER_NEW = re.compile(
+    r"신입|인턴|체험형|신규\s*입사|대졸\s*신입|\bnew\s*grad\b|\bintern(ship)?\b",
+    re.I)
+CAREER_EXP = re.compile(
+    r"경력|중경력|\bsenior\b|\blead\b|\bstaff\b|\bprincipal\b|\d+\s*년\s*이상|\d+\s*년\s*↑",
+    re.I)
+
+
+def career_from_title(career, title):
+    """「무관」인 공고만, 제목에 적힌 신입/경력으로 바꿔 돌려줍니다."""
+    if str(career or "").strip() != "무관":
+        return career
+    t = str(title or "")
+    if not t or CAREER_UNTOUCHED.search(t):
+        return career
+    new = bool(CAREER_NEW.search(t))
+    exp = bool(CAREER_EXP.search(t))
+    if new and exp:
+        return "신입/경력"
+    if exp:
+        return "경력"
+    if new:
+        return "신입"
+    return career
+
+
 def clean_location(loc, company):
     """근무지에서 회사 이름을 걷어냅니다.
 
@@ -546,6 +598,16 @@ def main():
                 fixed += 1
         if fixed:
             print(f"      · 근무지 정리 {fixed}건")
+
+        # 「무관」인데 제목에 회사가 적어 둔 신입/경력이 있으면 그것을 씁니다.
+        moved = 0
+        for j in got:
+            got_career = career_from_title(j.get("career"), j.get("title"))
+            if got_career != j.get("career"):
+                j["career"] = got_career
+                moved += 1
+        if moved:
+            print(f"      · 경력 구분을 제목에서 읽음 {moved}건")
 
         jobs += got
         print(f"  {c['name']}: {len(got)}건")

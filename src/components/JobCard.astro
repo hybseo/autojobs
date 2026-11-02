@@ -87,8 +87,9 @@ const external = link === job.sourceUrl;
       안 적혀 있다는 사실은 상세 페이지에 또박또박 적습니다. (2026-11-02)
       stated() 로 「미표기」 같은 말이 지명처럼 보이는 것을 막습니다.
     */}
+    {/* 고용형태 칩은 뺐습니다 (2026-11-02 대표님 지시). 상세 화면과 함께
+        없앴습니다. 공고가 고용형태를 적어 주는 곳이 드물어 쓸모가 없었습니다. */}
     {stated(job.location) && <span class="f loc">{stated(job.location)}</span>}
-    {stated(job.employment) && <span class="f">{stated(job.employment)}</span>}
     <span class="f">{job.career}</span>
     {job.multiRole && <span class="f multi">여러 직무 포함 가능</span>}
     {/*
