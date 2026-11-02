@@ -62,6 +62,12 @@
   Cache-Control: public, max-age=86400
 /og.png
   Cache-Control: public, max-age=86400
+/icon-192.png
+  Cache-Control: public, max-age=86400
+/icon-512.png
+  Cache-Control: public, max-age=86400
+/manifest.webmanifest
+  Cache-Control: public, max-age=86400
 
 # robots.txt 와 sitemap.xml 은 검색엔진이 읽습니다.
 # 수집 로봇이 옛날 것을 들고 가면 곤란하니 짧게 둡니다.

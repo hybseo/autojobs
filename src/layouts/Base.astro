@@ -35,6 +35,13 @@ const url = canonical ?? (site + Astro.url.pathname);
   */}
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  {/*
+    홈 화면에 앱처럼 추가할 수 있게 하는 설정(PWA).
+    서비스 워커는 일부러 넣지 않았습니다. 공고는 마감·삭제가 잦아서
+    폰에 옛 화면이 저장되면 마감된 공고에 지원하는 일이 생깁니다.
+  */}
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#2D5F7C" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />

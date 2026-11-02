@@ -1,0 +1,15 @@
+{
+  "name": "SEARCHJOB 서치잡",
+  "short_name": "서치잡",
+  "description": "기업 공식 채용페이지 통합 검색",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F1F3F2",
+  "theme_color": "#2D5F7C",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
