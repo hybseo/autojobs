@@ -3,8 +3,8 @@ import Base from '../../layouts/Base.astro';
 import {
   JOBS, jobPostingSchema, daysLeft, byCompany,
   openJobs, isRecentlyClosed, KEEP_DAYS,
-  industriesOf, industrySlug, rolesOf, roleName, hasDetail, lazyImages, cleanBody,
-  shown, isUnstated,
+  industriesOf, industrySlug, rolesOf, roleName, hasDetail,
+  shown, isUnstated, summaryOf,
 } from '../../lib.js';
 
 /*
@@ -32,6 +32,8 @@ const { job } = Astro.props;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const pageUrl = `${site}/job/${job.id}/`;
 const d = daysLeft(job);
+// 페이지가 만들어졌다는 건 요약이 있다는 뜻입니다 (hasDetail 참고).
+const sum = summaryOf(job) || { gist: '', duties: [], quals: [], prefs: [], loc: '' };
 /*
  * 마감 판정.
  *
@@ -145,16 +147,66 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
       </div>
     )}
 
-    <div class="section-h">직무 상세</div>
-    {/* cleanBody 가 남의 <script> 와 본문에 통째로 박힌 그림을 걷어냅니다.
-        그 다음 남은 이미지를 "보일 때 불러오기" 로 미룹니다.
-        왜 그러는지는 lib.js 의 stripScripts · stripDataImages 주석을
-        보세요. (2026-10-16, 2026-10-20) */}
-    <div class="prose" set:html={lazyImages(cleanBody(job.description))} />
+    {/*
+      회사 원문은 싣지 않습니다 (2026-11-02 대표님 지시).
+
+      버전2 원칙은 「우리 요약이 본문, 원문은 회사 사이트로 보내는 버튼」
+      입니다. 10월 28일 PC 시안에도 그렇게 적혀 있습니다 — "회사 원문은
+      싣지 않습니다. 우리가 쓴 요약과 「회사 공고로 이동」 버튼이 그 자리를
+      대신합니다."
+
+      전에는 cleanBody(job.description) 을 그대로 그렸습니다. 요약을
+      4,479건 써 놓고도 화면에는 원문 복사본이 나가고 있었습니다.
+
+      페이지가 만들어지는 공고는 전부 요약이 있습니다(getStaticPaths 의
+      hasDetail 이 요약 유무로 거릅니다). 그래서 여기서 요약이 없을까
+      걱정하지 않아도 됩니다.
+    */}
+    {sum.gist && (
+      <>
+        <div class="section-h">한 줄 요약</div>
+        <p class="gist">{sum.gist}</p>
+      </>
+    )}
+
+    {sum.duties.length > 0 && (
+      <>
+        <div class="section-h">주요 업무</div>
+        <ul class="sumlist">{sum.duties.map((x) => <li>{x}</li>)}</ul>
+      </>
+    )}
+
+    {sum.quals.length > 0 && (
+      <>
+        <div class="section-h">자격 요건</div>
+        <ul class="sumlist">{sum.quals.map((x) => <li>{x}</li>)}</ul>
+      </>
+    )}
+
+    {sum.prefs.length > 0 && (
+      <>
+        <div class="section-h">우대 사항</div>
+        <ul class="sumlist">{sum.prefs.map((x) => <li>{x}</li>)}</ul>
+      </>
+    )}
+
+    <div class="section-h">근무 조건</div>
+    <dl class="cond">
+      <dt>근무지</dt><dd class:list={[{ dim: isUnstated(sum.loc || job.location) }]}>
+        {shown(sum.loc || job.location)}</dd>
+      <dt>경력</dt><dd>{shown(job.career)}</dd>
+      <dt>마감</dt><dd>{job.closesAt ? `${job.closesAt}${closed ? ' (마감)' : ''}` : '상시 채용 · 마감일 없음'}</dd>
+    </dl>
+
+    {/*
+      요약은 우리가 원문을 읽고 추린 것입니다. 원문이 고쳐지면 우리 요약이
+      뒤처질 수 있어, 지원 전에 회사 공고를 보라고 분명히 적습니다.
+    */}
+    <p class="fromsrc">이 요약은 회사 공고를 읽고 추린 것입니다. 지원 전에 회사 공고에서 원문을 확인하세요.</p>
 
     {!closed && (
       <div class="prose">
-        <a class="cta" href={job.sourceUrl} target="_blank" rel="noopener nofollow">원문 공고에서 지원하기</a>
+        <a class="cta" href={job.sourceUrl} target="_blank" rel="noopener nofollow">회사 공고로 이동 ↗</a>
       </div>
     )}
 
@@ -234,4 +286,70 @@ const md = (s) => (s ? s.slice(5).replace('-', '.') : '');
     것도 구직자가 알아야 하는 정보입니다. (2026-11-02)
   */
   .mast .meta .fact.dim { color: #8A9198; }
+
+  /* ── 요약 화면 (2026-11-02) ────────────────────────────────
+     원문 대신 우리가 쓴 요약을 그립니다. 글줄은 짧게, 칸은 넓게 둡니다.
+     읽는 사람이 위에서 아래로 한 번에 훑는 화면입니다. */
+  .gist {
+    background: var(--steel-soft, #E7EEF2);
+    border-left: 3px solid var(--steel, #2D5F7C);
+    padding: 15px 18px;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink, #16181C);
+    max-width: 62ch;
+  }
+  .sumlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    max-width: 68ch;
+  }
+  .sumlist li {
+    position: relative;
+    padding-left: 15px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-2, #4B5158);
+  }
+  .sumlist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 6px;
+    height: 1px;
+    background: var(--ink-3, #858B92);
+  }
+  .cond {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 18px;
+    margin: 0;
+    font-size: 14px;
+    max-width: 68ch;
+  }
+  .cond dt {
+    font-family: var(--mono, monospace);
+    font-size: 11.5px;
+    color: var(--ink-3, #858B92);
+    padding-top: 3px;
+  }
+  .cond dd { margin: 0; color: var(--ink-2, #4B5158); }
+  .cond dd.dim { color: var(--ink-3, #858B92); }
+  .fromsrc {
+    margin-top: 22px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink-3, #858B92);
+    max-width: 62ch;
+  }
+  @media (max-width: 520px) {
+    .gist { font-size: 14.5px; padding: 13px 15px; }
+    .cond { grid-template-columns: 1fr; gap: 2px 0; }
+    .cond dd + dt { margin-top: 10px; }
+  }
 </style>

@@ -1,5 +1,6 @@
 import raw from './data/jobs.json';
 import registry from './data/companies.json';
+import summaryDoc from './data/summaries.json';
 import { TAGS, TAG_TOP } from './tags.js';
 
 export const COLLECTED_AT = raw.collectedAt;
@@ -804,10 +805,48 @@ export const DETAIL_MIN = 50;
  * cleanBody 는 이 줄보다 아래에 적혀 있습니다. 함수 몸통은 부를 때
  * 실행되므로 순서는 문제되지 않습니다.
  */
-export const hasDetail = (j) => {
-  const body = cleanBody(j.description);
-  return !!body && body.trim().length >= DETAIL_MIN;
+/*
+ * 상세 페이지는 요약으로 만듭니다 (2026-11-02 대표님 지시)
+ * ========================================================
+ * 버전2 원칙은 「우리 요약이 본문이고, 원문은 회사 사이트로 보내는
+ * 버튼」입니다. 그런데 요약 4,479건을 써 놓고도 화면은 10월 내내 원문을
+ * 그대로 그리고 있었습니다. summaries.json 을 읽는 곳이 경력 구분과
+ * 태그뿐이었습니다.
+ *
+ * 그래서 판정 기준을 본문 길이에서 요약 유무로 바꿉니다.
+ *
+ *   바뀌기 전   본문 50자 이상            4,364건
+ *   바뀐 뒤     쓸 수 있는 요약이 있음      4,479건
+ *
+ *   새로 생기는 페이지 235건
+ *     요약은 썼는데 원문이 짧아 밖으로 밀려 나가던 공고입니다.
+ *     SK온 보안정책 담당자·SK하이닉스 부속의원 전문의 같은 것들입니다.
+ *   없어지는 페이지 120건
+ *     전부 안내문입니다. 원문은 있지만 한 자리의 담당업무가 아니라
+ *     모집부문 표만 있는 것이라, 표를 복사해 보여주느니 회사 페이지로
+ *     보내는 편이 낫습니다.
+ *
+ * 「쓸 수 있는 요약」은 안내문(skip)이 아니고 담당 업무가 한 줄이라도
+ * 있는 것입니다. 담당 업무가 비면 제목과 자격요건뿐이라 목록 카드보다
+ * 나을 것이 없습니다 (2026-11-02 에 그런 19건을 안내문으로 돌렸습니다).
+ */
+const SUMMARIES = summaryDoc.summaries || {};
+
+/** 이 공고의 요약. 없거나 안내문이면 null 입니다. */
+export const summaryOf = (j) => {
+  const s = SUMMARIES[j.id];
+  if (!s || s.skip) return null;
+  if (!(s.duties || []).length) return null;
+  return s;
 };
+
+/** 이 공고가 안내문으로 분류된 이유. 아니면 빈 문자열입니다. */
+export const noticeReason = (j) => {
+  const s = SUMMARIES[j.id];
+  return s && s.skip ? String(s.skip) : '';
+};
+
+export const hasDetail = (j) => !!summaryOf(j);
 
 /*
  * 공고 본문의 이미지를 "보일 때 불러오기" 로 바꿉니다 (2026-10-12)
