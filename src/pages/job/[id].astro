@@ -59,9 +59,11 @@ const co = byCompany(job.companySlug);
 // 지원할 수 없는 자리를 채용공고로 알리면 잘못된 정보가 됩니다.
 const schema = closed ? null : jobPostingSchema(job, pageUrl);
 
-const title = closed
+// 제목에 빈칸이 두 칸 들어 있는 공고가 38건 있습니다. <title> 에도
+// 그대로 나가므로 여기서 합칩니다 (2026-11-02 최종 점검).
+const title = (closed
   ? `[마감] ${job.company} ${job.title} | SEARCHJOB`
-  : `${job.company} ${job.title} 채용 | SEARCHJOB`;
+  : `${job.company} ${job.title} 채용 | SEARCHJOB`).replace(/\s+/g, ' ').trim();
 /*
  * 검색 결과에 나가는 설명문.
  *
@@ -86,9 +88,17 @@ const descBits = [
   [stated(job.location) || null, job.career || null].filter(Boolean).join(' · ') || null,
   job.closesAt ? `${job.closesAt} 마감` : '상시채용 · 마감일 없음',
 ].filter(Boolean);
+/*
+ * 빈칸 정리는 양쪽 다 합니다.
+ *
+ * 공고 제목 자체에 빈칸이 두 칸 들어 있는 것이 38건 있습니다
+ * (「QUALITY CONTROL 1  Team Member」·「사무보조 채용 」). 글자에서는
+ * 브라우저가 알아서 합치지만 meta 설명문은 그대로 나갑니다.
+ */
+const tidy = (s) => s.replace(/\s+/g, ' ').trim();
 const desc = closed
-  ? `${job.company} ${job.title} 공고는 ${job.closesAt} 마감되었습니다. ${co.name}의 다른 진행중 공고를 확인하세요.`
-  : `${descBits.join('. ').replace(/\s+/g, ' ')}.`;
+  ? tidy(`${job.company} ${job.title} 공고는 ${job.closesAt} 마감되었습니다. ${co.name}의 다른 진행중 공고를 확인하세요.`)
+  : `${tidy(descBits.join('. '))}.`;
 
 // 마감 화면에서 안내할 대체 공고
 const inds = industriesOf(job);

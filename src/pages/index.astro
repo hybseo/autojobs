@@ -315,7 +315,14 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     </div>
     <div class="list" id="list">
       {/* 홈은 카드 4,973장이라 요약·태그를 빼고 그립니다 (JobCard 주석 참고). */}
-      {jobs.map((j) => <JobCard job={j} lean />)}
+      {/*
+        기본 탭은 「마감 있음」입니다. 상시채용 카드는 서버가 미리 숨깁니다.
+        전에는 거르기를 자바스크립트만 했고 그것을 첫 화면에서 부르지
+        않아서, 들어오면 4,973장이 다 보이는데 숫자는 「840건 표시 중」
+        이었습니다 (2026-11-02 최종 점검). 글자에는 그대로 남아 있어
+        검색엔진은 4,973장을 모두 봅니다.
+      */}
+      {jobs.map((j) => <JobCard job={j} lean hidden={isAlways(j)} />)}
       <div class="empty" id="empty" hidden>
         <svg class="empty-ico" viewBox="0 0 48 48" aria-hidden="true">
           <circle cx="21" cy="21" r="13" fill="none" stroke="currentColor" stroke-width="2.2"/>
@@ -1663,6 +1670,16 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
       tabPicked = true;
       switchTab(t.dataset.tab);
       apply();
+      /*
+       * 탭을 바꾸면 반드시 다시 줄을 세웁니다.
+       *
+       * sortCards 는 「보이는 카드」만 옮깁니다. 탭이 바뀌면 보이는 것이
+       * 통째로 달라지므로, 다시 부르지 않으면 새 탭의 카드는 옛 자리에
+       * 그대로 있고 회사 흩뜨리기도 걸리지 않습니다. 상시채용 쪽에서
+       * 토스가 159건 연달아 나온 이유입니다 (2026-11-02 최종 점검).
+       * switchTab 안에서는 상시채용으로 갈 때만 불렀습니다.
+       */
+      sortCards();
       layoutChips();
     });
   });
@@ -1909,4 +1926,25 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
   syncHeaderVar();
   window.addEventListener('resize', syncHeaderVar);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderVar);
+
+  /*
+   * 첫 화면을 한 번 정리합니다 (2026-11-02 최종 점검에서 빠진 것을 찾음)
+   * ====================================================================
+   * 여기까지 apply() 도 sortCards() 도 한 번도 부르지 않았습니다. 둘 다
+   * 사용자가 무엇을 누른 뒤에만 돌았습니다. 그래서 처음 들어오면
+   *
+   *   · 탭이 안 걸려 4,973장이 다 보이는데 숫자는 「840건 표시 중」
+   *   · 회사 흩뜨리기가 안 걸려 같은 회사가 228건 연달아
+   *
+   * 이 상태였습니다. 들어와서 맨 먼저 보는 화면입니다.
+   *
+   * 숨기기는 서버가 이미 해 두었으니(JobCard 의 hidden) 첫 그림은
+   * 맞습니다. 여기서는 그 상태를 자바스크립트 쪽에도 알려 주고
+   * (apply) 회사가 몰린 자리를 흩뜨립니다(sortCards).
+   *
+   * 순서가 중요합니다 — sortCards 는 「보이는 카드」만 옮기므로
+   * apply 가 먼저 돌아 hidden 이 정해져 있어야 합니다.
+   */
+  apply();
+  sortCards();
 </script>

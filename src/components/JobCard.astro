@@ -1,6 +1,18 @@
 ---
 import { daysLeft, progress, isAlways, sortValue, industriesOf, rolesOf, roleName, searchAlias, hasDetail, stated, summaryOf, jobTags } from '../lib.js';
-const { job, href, lean = false } = Astro.props;
+/*
+ * hidden 은 첫 화면에서 서버가 미리 숨겨 두는 데 씁니다.
+ *
+ * 홈은 카드를 4,973장 다 그려 놓고 탭(마감 있음 / 상시채용)으로 거릅니다.
+ * 그런데 거르는 일을 자바스크립트가 하고, 그걸 첫 화면에서 부르지 않아
+ * 들어오면 4,973장이 다 보였습니다. 숫자는 「840건 표시 중」이었습니다.
+ * (2026-11-02 최종 점검)
+ *
+ * 그래서 서버가 기본 탭에 안 맞는 카드에 hidden 을 붙여 둡니다.
+ * 첫 그림이 처음부터 맞고, 자바스크립트가 늦거나 막혀도 맞습니다.
+ * 카드는 글자에 그대로 남아 있어 검색엔진은 전부 봅니다.
+ */
+const { job, href, lean = false, hidden = false } = Astro.props;
 const d = daysLeft(job);
 const p = progress(job);
 const always = isAlways(job);
@@ -94,7 +106,7 @@ const sum = lean ? null : summaryOf(job);
 const gist = sum ? (sum.gist || (sum.duties || [])[0] || '') : '';
 const cardTags = lean ? [] : jobTags(job).slice(0, 2);
 ---
-<a class="card" href={link} data-co={job.company} data-career={careerGroup}
+<a class="card" href={link} hidden={hidden} data-co={job.company} data-career={careerGroup}
    data-op={always ? '상시채용' : '마감 있음'} data-in={inds}
    data-role={roleCodes}
    data-dday={sv} data-posted={job.postedAt || ''}
