@@ -95,6 +95,20 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 STATUS = re.compile(r"""class=['"]status[^'"]*['"][^>]*>([^<]{0,12})<""", re.I)
 TITLE = re.compile(r"<h4[^>]*>(.*?)</h4>", re.S | re.I)
 LI = re.compile(r"<li[^>]*>(.*?)</li>", re.S | re.I)
+
+# 공고별 주소 (2026-11-02)
+# -----------------------
+# 전에는 공고마다 고유 주소가 없다고 보고 목록 주소를 그대로 넣었습니다.
+# 그래서 58건이 전부 같은 주소를 가리켰고, 구직자가 누르면 게시판 맨 위로
+# 떨어져 자기가 보던 공고를 다시 찾아야 했습니다.
+#
+# 실제로는 각 블록의 「지원하기」 단추에 고유 주소가 들어 있습니다.
+#   <a href="https://career.shiftup.co.kr/ko/o/242878/apply" …>
+# 끝의 /apply 를 떼면 그 공고의 상세 주소가 됩니다.
+#   https://career.shiftup.co.kr/ko/o/242878
+#
+# 2026-11-02 화면에서 41건 전부 이 단추를 가지고 있는 것을 확인했습니다.
+APPLY = re.compile(r"""href=['"]https://career\.shiftup\.co\.kr/ko/o/(\d+)""", re.I)
 # 본문. recruit_content 안쪽입니다.
 BODY = re.compile(
     r'<div[^>]+class="[^"]*recruit_content[^"]*"[^>]*>(.*?)</div>\s*</div>',
@@ -201,6 +215,7 @@ def list_open():
             "career": lis[1] if len(lis) > 1 else "",
             "employment": lis[2] if len(lis) > 2 else "",
             "body": m.group(1) if m else "",
+            "oid": (APPLY.search(b).group(1) if APPLY.search(b) else ""),
         })
 
     if not rows:
@@ -252,8 +267,9 @@ def fetch(company):
             "dday": None,
             "multiRole": image_only,
             "sourceTitle": "",
-            # 공고마다 고유 주소가 없습니다. 목록으로 보냅니다.
-            "sourceUrl": LIST_URL,
+            # 공고별 주소가 있으면 그쪽으로 보냅니다. 없으면 목록입니다.
+            "sourceUrl": (f"https://career.shiftup.co.kr/ko/o/{x['oid']}"
+                          if x.get("oid") else LIST_URL),
             "description": raw if not image_only else "",
         })
 
