@@ -18,13 +18,21 @@
  ],
  "tags": {
   "mobis-131836": [
-   "경영기획·전략"
+   "패키징·기판",
+   "모터 설계·제어",
+   "매니퓰레이터·모션제어",
+   "AMR·AGV",
+   "CATIA·3D CAD"
   ],
   "mobis-131838": [
-   "경영기획·전략"
+   "투자·M&A",
+   "구매·SCM",
+   "경영기획·전략",
+   "영어 업무 가능"
   ],
   "mobis-132656": [
-   "PR·홍보"
+   "PR·홍보",
+   "영어 점수"
   ],
   "hlcompany-46525": [
    "안전·보건 관리"
@@ -158,8 +166,8 @@
    "WMS·창고관리"
   ],
   "greeting-kci-213190": [
-   "모터 설계·제어",
    "배송·운전",
+   "모터 설계·제어",
    "생산직·제조 현장",
    "물류·창고 운영"
   ],
@@ -1973,8 +1981,8 @@
    "장비 셋업·필드"
   ],
   "breezy-bear-robotics-308ce43faf3b": [
-   "AMR·AGV",
    "ASPICE",
+   "AMR·AGV",
    "드론·UAV",
    "기능안전 ISO 26262",
    "PMO·프로젝트관리",
@@ -2580,7 +2588,6 @@
    "Python"
   ],
   "greeting-gaonchips-137833": [
-   "포장·패키지 디자인",
    "패키징·기판",
    "아날로그·PMIC",
    "고속 인터페이스",
@@ -5168,8 +5175,8 @@
   "greeting-axbis-226146": [
    "포토마스크",
    "CAE·구조해석",
-   "AMR·AGV",
    "개발 리더십·테크리드",
+   "AMR·AGV",
    "WMS·창고관리",
    "ROS·로봇 SW",
    "게임 이펙트·애니메이션",
@@ -10309,8 +10316,8 @@
    "콘텐츠·SNS 운영"
   ],
   "sf-lscable-4587950": [
-   "영어 점수",
    "IT 헬프데스크·자산",
+   "영어 점수",
    "재무·자금",
    "결산·세무",
    "SAP·ERP"
@@ -12341,8 +12348,8 @@
    "구매·SCM"
   ],
   "sf-gc-4582550": [
-   "플랜트 설계",
    "식품 개발·R&D",
+   "플랜트 설계",
    "클린룸·설비",
    "GMP·밸리데이션"
   ],
@@ -22112,7 +22119,6 @@
   ],
   "greeting-kcpartstech1-241167": [
    "전극·조립 공정",
-   "식품 개발·R&D",
    "표면처리·도금",
    "특허·IP",
    "식각(Etch)",
@@ -26468,7 +26474,6 @@
    "장비 셋업·필드"
   ],
   "workday-amat-PDC-XVision--Process-Support-Engineer_R2632162": [
-   "식품 개발·R&D",
    "패키징·기판",
    "MATLAB·Simulink",
    "HBM·메모리 설계",
@@ -26869,13 +26874,11 @@
   ],
   "workday-kla-SBU-OMD-Customer-Engagement-Applications-Engineer_2641892": [
    "포토·리소그래피",
-   "식품 개발·R&D",
    "계측·검사장비",
    "공공사업·제안",
    "장비 셋업·필드"
   ],
   "workday-kla-SBU-LS-SWIFT-Customer-Engagement-Applications-Engineer------_2640168": [
-   "식품 개발·R&D",
    "iOS·Swift",
    "계측·검사장비",
    "장비 셋업·필드",
@@ -27122,7 +27125,6 @@
    "Python"
   ],
   "workday-kla-SKBU-Ebeam-Customer-Engagement-Applications-Engineer_2637973-2": [
-   "식품 개발·R&D",
    "계측·검사장비",
    "장비 셋업·필드",
    "영어 업무 가능"
@@ -27162,14 +27164,12 @@
    "계측·검사장비"
   ],
   "workday-kla-SKBU-LS-SWIFT-Customer-Engagement-Applications-Engineer_2637142-2": [
-   "식품 개발·R&D",
    "iOS·Swift",
    "생산·공정관리",
    "장비 셋업·필드",
    "영어 업무 가능"
   ],
   "workday-kla-SKBU-BBP-Customer-Engagement-Applications-Engineer---_2637920": [
-   "식품 개발·R&D",
    "장비 셋업·필드",
    "영어 업무 가능"
   ],
@@ -31264,8 +31264,6 @@
    "장비 셋업·필드"
   ],
   "workday-kla-CI-Customer-Engagement-Application-Engineer-for-Korea_2638161-3": [
-   "포장·패키지 디자인",
-   "식품 개발·R&D",
    "패키징·기판",
    "수율·불량분석",
    "계측·검사장비",
@@ -35318,13 +35316,13 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 570,
+   "count": 571,
    "link": true
   },
   "경영기획·전략": {
    "slug": "corporate-strategy",
    "cat": "업무 영역 — 인사·경영",
-   "count": 445,
+   "count": 444,
    "link": true
   },
   "C·C++": {
@@ -35384,7 +35382,7 @@
   "구매·SCM": {
    "slug": "scm",
    "cat": "인사·구매·운영",
-   "count": 282,
+   "count": 283,
    "link": true
   },
   "CI/CD·IaC": {
@@ -35639,16 +35637,16 @@
    "count": 127,
    "link": true
   },
+  "투자·M&A": {
+   "slug": "m-a",
+   "cat": "업무 영역 — 인사·경영",
+   "count": 123,
+   "link": true
+  },
   "RAG·검색증강": {
    "slug": "rag",
    "cat": "LLM 세부",
    "count": 123,
-   "link": true
-  },
-  "투자·M&A": {
-   "slug": "m-a",
-   "cat": "업무 영역 — 인사·경영",
-   "count": 122,
    "link": true
   },
   "추론 서빙·최적화": {
@@ -35750,7 +35748,7 @@
   "CATIA·3D CAD": {
    "slug": "catia-3d-cad",
    "cat": "기구·해석",
-   "count": 99,
+   "count": 100,
    "link": true
   },
   "고속 인터페이스": {
@@ -36035,6 +36033,12 @@
    "count": 65,
    "link": true
   },
+  "영어 점수": {
+   "slug": "english-score",
+   "cat": "어학",
+   "count": 64,
+   "link": true
+  },
   "기능안전 ISO 26262": {
    "slug": "iso-26262",
    "cat": "자동차·전장",
@@ -36051,12 +36055,6 @@
    "slug": "it-helpdesk",
    "cat": "업무 영역 — 운영·지원",
    "count": 64,
-   "link": true
-  },
-  "영어 점수": {
-   "slug": "english-score",
-   "cat": "어학",
-   "count": 63,
    "link": true
   },
   "머신비전": {
@@ -36257,6 +36255,12 @@
    "count": 46,
    "link": true
   },
+  "AMR·AGV": {
+   "slug": "amr-agv",
+   "cat": "로봇·비전",
+   "count": 45,
+   "link": true
+  },
   "품질검사·QC": {
    "slug": "quality-inspection",
    "cat": "업무 영역 — 생산·품질·설비",
@@ -36272,12 +36276,6 @@
   "ASPICE": {
    "slug": "aspice",
    "cat": "자동차·전장",
-   "count": 44,
-   "link": true
-  },
-  "AMR·AGV": {
-   "slug": "amr-agv",
-   "cat": "로봇·비전",
    "count": 44,
    "link": true
   },
@@ -36455,16 +36453,16 @@
    "count": 38,
    "link": true
   },
+  "매니퓰레이터·모션제어": {
+   "slug": "motion-control",
+   "cat": "로봇·비전",
+   "count": 37,
+   "link": true
+  },
   "증착(CVD·PVD·ALD)": {
    "slug": "cvd-pvd-ald",
    "cat": "반도체 공정·장비",
    "count": 37,
-   "link": true
-  },
-  "매니퓰레이터·모션제어": {
-   "slug": "motion-control",
-   "cat": "로봇·비전",
-   "count": 36,
    "link": true
   },
   "치공구·자동화설비": {
@@ -36497,6 +36495,12 @@
    "count": 33,
    "link": true
   },
+  "모터 설계·제어": {
+   "slug": "motor-control",
+   "cat": "전력·배터리",
+   "count": 31,
+   "link": true
+  },
   "준법감시·내부통제": {
    "slug": "compliance-internal-control",
    "cat": "업무 영역 — 인사·경영",
@@ -36515,9 +36519,9 @@
    "count": 31,
    "link": true
   },
-  "모터 설계·제어": {
-   "slug": "motor-control",
-   "cat": "전력·배터리",
+  "패키징·기판": {
+   "slug": "packaging-substrate",
+   "cat": "반도체 공정·장비",
    "count": 30,
    "link": true
   },
@@ -36536,12 +36540,6 @@
   "BMS·배터리": {
    "slug": "bms",
    "cat": "전력·배터리",
-   "count": 29,
-   "link": true
-  },
-  "패키징·기판": {
-   "slug": "packaging-substrate",
-   "cat": "반도체 공정·장비",
    "count": 29,
    "link": true
   },
@@ -36767,12 +36765,6 @@
    "count": 15,
    "link": true
   },
-  "식품 개발·R&D": {
-   "slug": "food-rnd",
-   "cat": "식품·화장품·소비재",
-   "count": 15,
-   "link": true
-  },
   "물리설계·PnR": {
    "slug": "physical-design",
    "cat": "반도체 설계",
@@ -36941,6 +36933,12 @@
    "count": 7,
    "link": true
   },
+  "식품 개발·R&D": {
+   "slug": "food-rnd",
+   "cat": "식품·화장품·소비재",
+   "count": 7,
+   "link": true
+  },
   "RF·안테나": {
    "slug": "rf-antenna",
    "cat": "임베디드·제어",
@@ -36980,12 +36978,6 @@
   "기판·PCB 제조": {
    "slug": "pcb-manufacturing",
    "cat": "반도체 후공정",
-   "count": 5,
-   "link": true
-  },
-  "포장·패키지 디자인": {
-   "slug": "package-design",
-   "cat": "식품·화장품·소비재",
    "count": 5,
    "link": true
   },
@@ -37052,6 +37044,12 @@
   "약가·급여 등재": {
    "slug": "drug-pricing-reimbursement",
    "cat": "업무 영역 — 의료·바이오",
+   "count": 3,
+   "link": true
+  },
+  "포장·패키지 디자인": {
+   "slug": "package-design",
+   "cat": "식품·화장품·소비재",
    "count": 3,
    "link": true
   },

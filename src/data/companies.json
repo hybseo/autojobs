@@ -14,12 +14,13 @@
   {
    "name": "현대모비스",
    "slug": "hyundai-mobis",
-   "ats": "recruiter",
+   "ats": "mobis",
    "code": "mobis",
    "industry": [
     "자동차부품"
    ],
-   "enabled": true
+   "enabled": true,
+   "note": "2026-11-02: ats 를 recruiter 에서 mobis 로 바꿨습니다. mobis 어댑터는 리크루터(mobis.recruiter.co.kr)를 뼈대로 쓰고 자체 사이트(careers.mobis.com)의 한글 본문·근무장소·세부직무를 덮습니다. code 는 리크루터 prefix 라 그대로 두어야 합니다. 바꾼 이유: 리크루터가 주는 본문 25건이 전부 영문(한글 0~168자)이고 근무지가 없었습니다. 자체 사이트는 한글 본문과 근무장소(역삼본사·의왕연구소 등 16곳)를 줍니다. 공고 id 와 /job/{id}/ 주소는 그대로 유지됩니다."
   },
   {
    "name": "HL그룹",
