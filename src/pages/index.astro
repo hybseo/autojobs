@@ -28,8 +28,13 @@ const deadlineN = jobs.length - alwaysN;
    "이번 주말에 407건이 마감됩니다" 는 "지금 지원할 수 있는 자리 5311" 이
    못 하는 말입니다. 들어온 사람이 오늘 안에 움직이게 합니다.
    ────────────────────────────────────────────────────────────── */
+/* 날짜 더하기는 한국시간으로 셉니다.
+   parseDate 는 KST 자정이라 toISOString 을 바로 쓰면 UTC 로 바뀌면서
+   하루 전 날짜가 나옵니다. 실제로 그래프가 11.01 부터 시작하고
+   「오늘 마감」이 0 으로 찍혔습니다. 9시간을 더해 KST 달력 날짜를 얻습니다. */
 const DAY = 86400000;
-const addDays = (n) => new Date(parseDate(COLLECTED_AT).getTime() + n * DAY)
+const KST = 9 * 3600000;
+const addDays = (n) => new Date(parseDate(COLLECTED_AT).getTime() + n * DAY + KST)
   .toISOString().slice(0, 10);
 
 // 앞으로 14일 마감 분포.
@@ -98,7 +103,10 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     <div class="wrap">
       <h1>지금 지원할 수 있는 자리 <em>{jobs.length}</em></h1>
       <div class="meta">
-        <b>{cos}</b>개사 공식 채용페이지 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+        {/* 바로 아래 점검 띠가 「426개사 확인」이라고 적습니다. 여기 숫자는
+            공고가 있는 회사라 다릅니다. 같은 화면에 다른 숫자가 둘이면
+            헷갈리므로 무엇을 센 숫자인지 적습니다. (2026-11-02) */}
+        지금 뽑는 기업 <b>{cos}</b>곳 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
         {STALE_DAYS >= 1 && (
           <span class="stale">{STALE_DAYS}일 전 정보 · 마감된 공고가 있을 수 있습니다</span>
         )}
