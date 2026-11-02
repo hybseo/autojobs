@@ -2,6 +2,10 @@ name: 공고 갱신
 
 # 하루 두 번 공고를 새로 받아 커밋합니다.
 #
+# 2026-11-03 부터 실제 시작은 Claude 예약 작업 「서치잡 갱신 버튼」이
+# 00:17·09:17(한국시간)에 Run workflow 를 눌러 합니다. 아래 schedule 은
+# 버튼이 안 눌렸을 때의 예비이고, 이미 수집했으면 첫 단계에서 끝납니다.
+#
 # 시간대는 UTC 입니다. 한국시간으로 보려면 9시간을 더하세요.
 #   17 15 * * *  →  한국시간 00:17
 #   17  0 * * *  →  한국시간 09:17
@@ -77,12 +81,54 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+      # 이미 돌았으면 건너뛰기 (2026-11-03)
+      # ------------------------------------
+      # GitHub 예약은 4~8시간씩 늦게 시작합니다(10월 말~11월 초 실측:
+      # 00:17 예약이 04:16~08:06, 09:17 예약이 14:40~15:03 에 시작).
+      # 그래서 정시에 깨어나는 Claude 예약 작업 「서치잡 갱신 버튼」이
+      # 00:17·09:17 에 이 워크플로의 Run workflow 를 대신 누릅니다.
+      #
+      # 아래 schedule 은 그 버튼이 안 눌렸을 때를 위한 예비입니다.
+      # 버튼으로 이미 돌았는데 예비까지 또 돌면 수집처에 요청이 두 배로
+      # 갑니다. 그래서 예약으로 시작한 실행만, 그 예약 시각 이후에 끝난
+      # 수집이 scans.json 에 있으면 아무것도 하지 않고 끝냅니다.
+      # 버튼(workflow_dispatch)으로 시작한 실행은 항상 수집합니다.
+      - name: 이미 돌았으면 건너뛰기
+        id: gate
+        if: github.event_name == 'schedule'
+        env:
+          CRON: ${{ github.event.schedule }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timedelta, timezone
+          KST = timezone(timedelta(hours=9))
+          now = datetime.now(KST)
+          m, h = os.environ["CRON"].split()[:2]
+          slot = datetime.now(timezone.utc).replace(hour=int(h), minute=int(m), second=0, microsecond=0)
+          if slot > datetime.now(timezone.utc):
+              slot -= timedelta(days=1)
+          slot = slot.astimezone(KST)
+          runs = json.load(open("src/data/scans.json", encoding="utf-8"))["runs"]
+          last = None
+          for r in runs:
+              for t in r.get("times") or []:
+                  x = datetime.strptime(f"{r['day']} {t}", "%Y-%m-%d %H:%M").replace(tzinfo=KST)
+                  last = x if last is None or x > last else last
+          skip = last is not None and last >= slot
+          print(f"예약 시각 {slot:%m-%d %H:%M} · 마지막 수집 {last:%m-%d %H:%M} · 지금 {now:%m-%d %H:%M}")
+          print("이미 수집했습니다. 건너뜁니다." if skip else "이 예약분 수집이 아직 없습니다. 수집합니다.")
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"skip={'true' if skip else 'false'}\n")
+          PY
+
       - uses: actions/setup-python@v5
+        if: steps.gate.outputs.skip != 'true'
         with: { python-version: '3.12' }
       # 수집 뒤 단계(경력 구분·태그)가 노드 스크립트라 노드도 필요합니다.
       # 2026-11-02 까지는 파이썬만 깔았고, 그래서 태그를 손으로 돌려야
       # 했습니다.
       - uses: actions/setup-node@v4
+        if: steps.gate.outputs.skip != 'true'
         with: { node-version: '22' }
 
       # python -u 를 반드시 붙여야 합니다 (2026-10-08)
@@ -98,7 +144,8 @@ jobs:
       #
       # -u 를 붙이면 버퍼를 쓰지 않고 바로 내보냅니다. 진행 상황이
       # 실시간으로 보여, 진짜로 멈춘 경우와 구분할 수 있습니다.
-      - run: python -u scripts/fetch_jobs.py | tee /tmp/fetch.log
+      - if: steps.gate.outputs.skip != 'true'
+        run: python -u scripts/fetch_jobs.py | tee /tmp/fetch.log
 
       # 수집 뒤 두 단계 (2026-11-02 추가)
       # ---------------------------------
@@ -113,9 +160,11 @@ jobs:
       # 순서가 중요합니다 — 경력 구분을 먼저 넣고, 그 다음 태그를 뽑습니다.
       # 태그는 요약에서 뽑지만 진행중 판정에 jobs.json 을 쓰기 때문입니다.
       - name: 경력 구분을 요약에서 읽기
+        if: steps.gate.outputs.skip != 'true'
         run: node scripts/career_from_summary.mjs
 
       - name: 공고 태그 다시 뽑기
+        if: steps.gate.outputs.skip != 'true'
         run: node scripts/build_tags.mjs
 
       # 수집한 결과가 멀쩡한지 커밋하기 전에 봅니다.
@@ -127,6 +176,7 @@ jobs:
       # 실패가 있으면 커밋을 멈춥니다. 이전 데이터가 남아 있는 편이
       # 망가진 데이터가 올라가는 것보다 낫습니다.
       - name: 자가진단
+        if: steps.gate.outputs.skip != 'true'
         run: python scripts/check.py --log /tmp/fetch.log
 
       # push 가 거부되면 다시 얹어서 재시도합니다 (2026-10-07)
@@ -151,6 +201,7 @@ jobs:
       # 다시 쓰는 파일이라 줄 단위로 합치면 깨지기 때문입니다. 충돌이
       # 생길 수 없는 방식으로 갑니다.
       - name: commit
+        if: steps.gate.outputs.skip != 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
