@@ -1,0 +1,109 @@
+---
+/*
+ * 휴대폰 홈 화면에 설치하는 방법 (2026-11-03)
+ * =====================================================================
+ * 설치(PWA) 설정은 public/manifest.webmanifest 와 Base.astro 의 연결
+ * 두 줄이 전부입니다. 이 페이지는 그 설치 방법을 기기별로 알려 줍니다.
+ *
+ * 서비스 워커는 일부러 두지 않았습니다. 공고는 마감·삭제가 잦아서
+ * 폰에 옛 화면이 저장되면 마감된 공고에 지원하는 일이 생깁니다.
+ * 그래서 이 글에도 "인터넷 없이 쓸 수 있다" 는 말은 넣지 않습니다.
+ * 서비스 워커를 나중에 넣게 되면 이 글도 같이 고쳐야 합니다.
+ *
+ * 숫자(공고 수 등)는 넣지 않습니다. about 페이지와 같은 이유입니다.
+ */
+import Base from '../layouts/Base.astro';
+
+const title = '휴대폰 홈 화면에 SEARCHJOB 설치하기 | 앱처럼 쓰기';
+const desc =
+  '앱스토어에서 받지 않아도 홈 화면에 SEARCHJOB 아이콘을 만들어 한 번에 열 수 있습니다. '
+  + '삼성 인터넷, 크롬, 아이폰 사파리별 방법을 안내합니다.';
+---
+<Base title={title} description={desc}>
+  <header class="mast">
+    <div class="wrap">
+      <h1>휴대폰 홈 화면에 SEARCHJOB 설치하기</h1>
+      <p class="lede">
+        앱스토어에서 따로 받지 않아도, 홈 화면에 아이콘을 만들어 앱처럼 한 번에
+        열 수 있습니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="doc">
+      <p id="install-wrap" hidden>
+        <button type="button" id="install-btn" class="cta">지금 바로 설치하기</button>
+      </p>
+      <p>
+        위에 "지금 바로 설치하기" 버튼이 보이면 누르기만 하면 됩니다. 버튼이 없으면
+        아래에서 쓰시는 인터넷 앱에 맞는 방법을 따라 하세요.
+      </p>
+
+      <h2>설치하면 좋은 점</h2>
+      <p>
+        홈 화면의 아이콘 한 번으로 바로 열리고, 주소창 없이 넓은 화면으로 공고를
+        볼 수 있습니다. 회원가입은 필요 없고, 설치해도 달라지는 개인정보 수집은
+        없습니다. 공고는 마감이 자주 바뀌므로 인터넷에 연결되어 있을 때 최신
+        내용으로 보입니다.
+      </p>
+
+      <h2>삼성 인터넷</h2>
+      <ol class="steps">
+        <li>삼성 인터넷으로 SEARCHJOB 사이트를 엽니다.</li>
+        <li>화면 오른쪽 아래의 메뉴 버튼을 누릅니다.</li>
+        <li>목록에서 "현재 페이지 추가"를 고르고, 이어서 "홈 화면"을 누릅니다.</li>
+        <li>이름을 확인하고 "추가"를 누르면 홈 화면에 아이콘이 생깁니다.</li>
+      </ol>
+
+      <h2>크롬</h2>
+      <ol class="steps">
+        <li>크롬으로 SEARCHJOB 사이트를 엽니다.</li>
+        <li>화면 오른쪽 위의 점 세 개(⋮)를 누릅니다.</li>
+        <li>목록에서 "홈 화면에 추가"를 고르고 "추가"를 누릅니다.</li>
+        <li>
+          휴대폰에 따라 아이콘이 홈 화면이 아니라 앱 목록에 먼저 생길 수 있습니다.
+          앱 목록에서 아이콘을 길게 눌러 홈 화면으로 옮기면 됩니다.
+        </li>
+      </ol>
+
+      <h2>아이폰 (사파리)</h2>
+      <ol class="steps">
+        <li>사파리로 SEARCHJOB 사이트를 엽니다.</li>
+        <li>화면 아래(또는 위)의 공유 버튼(네모에 위쪽 화살표)을 누릅니다.</li>
+        <li>목록을 내려 "홈 화면에 추가"를 고르고 "추가"를 누릅니다.</li>
+      </ol>
+
+      <p class="back-cta">
+        <a class="cta" href="/">채용공고 보러 가기</a>
+      </p>
+    </section>
+  </main>
+
+  <script is:inline>
+    // 크롬·삼성 인터넷은 설치 가능할 때 이 이벤트를 보냅니다. 받았을 때만 버튼을 보여 줍니다.
+    // 아이폰 사파리는 이 이벤트가 없어서 버튼 없이 아래 안내만 보입니다.
+    (function () {
+      var deferred = null;
+      var wrap = document.getElementById('install-wrap');
+      var btn = document.getElementById('install-btn');
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferred = e;
+        wrap.hidden = false;
+      });
+      btn.addEventListener('click', function () {
+        if (!deferred) return;
+        deferred.prompt();
+        deferred.userChoice.then(function () { deferred = null; wrap.hidden = true; });
+      });
+      window.addEventListener('appinstalled', function () { wrap.hidden = true; });
+    })();
+  </script>
+</Base>
+
+<style is:global>
+  .doc .steps { margin: 0 0 0 1.2em; padding: 0; }
+  .doc .steps li { font-size: 15px; line-height: 1.85; color: var(--ink-2); margin-top: 4px; }
+  @media (max-width: 560px) { .doc .steps li { font-size: 14.5px; line-height: 1.8; } }
+</style>
