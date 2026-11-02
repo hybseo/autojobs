@@ -133,23 +133,36 @@ const url = canonical ?? (site + Astro.url.pathname);
    * 이름이 아니라 작은 라벨로 읽혔습니다. 24px 로 키우고 설명은
    * 그만큼 물러나게 해 위계를 만듭니다.
    */
+  /*
+   * 워드마크 (2026-11-02 대표님 결정: 오라클처럼)
+   *
+   * 전에는 고정폭(Plex Mono)에 자간 .12em 이었습니다. 고정폭은 좁은 J 가
+   * 넓은 O 와 같은 칸을 차지해 글자 사이가 성기게 벌어집니다. 사양서
+   * 느낌은 나지만 워드마크로는 흩어져 보입니다.
+   *
+   * 비례폭 산세리프로 바꾸고 자간을 조였습니다. 오라클 워드마크의 단단한
+   * 인상은 글꼴 종류보다 글자 폭과 자간에서 나옵니다.
+   *
+   * 색은 브랜드 빨강입니다. 마감 임박 빨강보다 한 단 깊습니다 —
+   * global.css 의 --brand 주석을 보세요.
+   */
   .wordmark {
-    font-family: 'IBM Plex Mono', ui-monospace, monospace;
-    font-weight: 600;
-    font-size: 24px;
-    letter-spacing: .12em;
-    color: var(--ink, #16181C);
+    font-family: 'IBM Plex Sans KR', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -.02em;
+    color: var(--brand, #A32E25);
     text-decoration: none;
     white-space: nowrap;
   }
-  .wordmark:hover { color: var(--steel, #2D5F7C); }
+  .wordmark:hover { color: var(--urgent, #B4322B); }
   .wm-tag { font-size: 13px; color: #858B92; letter-spacing: -.01em; }
   @media (max-width: 520px) {
     header.site .wrap {
       flex-direction: column; gap: 3px; align-items: flex-start;
       padding-top: 14px; padding-bottom: 14px;
     }
-    .wordmark { font-size: 21px; }
+    .wordmark { font-size: 22px; }
     .wm-tag { font-size: 12px; }
   }
 </style>
