@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-02 · 진행중 6183건 중 요약 있는 5629건을 훑어",
-  "5613건에 태그가 붙었습니다 (99.7%)."
+  "만든 날 2026-11-02 · 진행중 6183건 중 요약 있는 5636건을 훑어",
+  "5620건에 태그가 붙었습니다 (99.7%)."
  ],
  "tags": {
   "mobis-131836": [
@@ -3186,8 +3186,8 @@
    "애자일·스크럼",
    "PMO·프로젝트관리",
    "Jira·협업툴",
-   "NPU·AI 반도체",
    "Azure·GCP",
+   "NPU·AI 반도체",
    "SoC·IP 설계",
    "임베디드·펌웨어",
    "생산·공정관리",
@@ -10405,6 +10405,10 @@
    "서비스 QA·검수",
    "생산·공정관리"
   ],
+  "daewoong-ff6554627f8c1000": [
+   "이커머스 운영",
+   "MD·상품기획"
+  ],
   "daewoong-83867a4663da1001fc4dd9207dfb0000": [
    "고객 성공·온보딩",
    "총무·사무환경",
@@ -10437,6 +10441,11 @@
    "의학부·학술 MSL",
    "대외협력·대관"
   ],
+  "daewoong-5d3a38d1d0fc10059ff52ffa9b2b0000": [
+   "세포·항체",
+   "임상·인허가",
+   "영어 업무 가능"
+  ],
   "daewoong-5d3a38d1d0fc10056dff7666ee650000": [
    "제약영업·MR"
   ],
@@ -10445,14 +10454,27 @@
    "임상·인허가",
    "영어 업무 가능"
   ],
+  "daewoong-c6b043f18436100a074a26597d340000": [
+   "제약영업·MR"
+  ],
+  "daewoong-c67e8b84ebe910015a8cec9ac2ae0000": [
+   "제약영업·MR"
+  ],
   "daewoong-4df0e41305151000": [
-   "제약영업·MR",
-   "의료기기 영업"
+   "제약영업·MR"
+  ],
+  "daewoong-6c9a68ad65a41000bfd29a38c2eb0000": [
+   "브랜드 마케팅",
+   "임상·인허가",
+   "MD·상품기획",
+   "구매·SCM",
+   "콘텐츠·SNS 운영",
+   "경영기획·전략"
   ],
   "daewoong-40affda101871000bfba84e3ffdb0000": [
    "브랜드 마케팅",
-   "임상·인허가",
    "PLC·산업제어",
+   "임상·인허가",
    "MD·상품기획",
    "구매·SCM",
    "콘텐츠·SNS 운영",
@@ -10470,8 +10492,13 @@
    "약가·급여 등재"
   ],
   "daewoong-f4b7b265776e1001": [
-   "제약영업·MR",
-   "의료기기 영업"
+   "제약영업·MR"
+  ],
+  "daewoong-808727455e631001ff2994e8805d0000": [
+   "생산직·제조 현장",
+   "수율·불량분석",
+   "GMP·밸리데이션",
+   "생산·공정관리"
   ],
   "daewoong-1c9b5bbef0711002": [
    "생산직·제조 현장",
@@ -10486,8 +10513,8 @@
   ],
   "daewoong-6300a53ee2ea1001": [
    "브랜드 마케팅",
-   "임상·인허가",
    "PLC·산업제어",
+   "임상·인허가",
    "MD·상품기획",
    "구매·SCM",
    "콘텐츠·SNS 운영",
@@ -10579,8 +10606,7 @@
    "물류·창고 운영"
   ],
   "dkpharm-95500": [
-   "제약영업·MR",
-   "의료기기 영업"
+   "제약영업·MR"
   ],
   "greeting-pharmaresearch_hr-241475": [
    "의학부·학술 MSL",
@@ -10628,6 +10654,7 @@
    "대외협력·대관"
   ],
   "greeting-pharmaresearch_hr-237001": [
+   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-pharmaresearch_hr-236618": [
@@ -10646,11 +10673,11 @@
   "greeting-pharmaresearch_hr-236306": [
    "대외협력·대관",
    "임상·인허가",
-   "Azure·GCP",
    "재무·자금",
    "영어 업무 가능"
   ],
   "greeting-pharmaresearch_hr-230765": [
+   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-pharmaresearch_hr-230764": [
@@ -10678,7 +10705,7 @@
    "생산·공정관리"
   ],
   "greeting-pharmaresearch_hr-216073": [
-   "의료기기 영업",
+   "제약영업·MR",
    "어카운트·거래처 관리"
   ],
   "greeting-pharmaresearch_hr-204691": [
@@ -12518,8 +12545,8 @@
   "greeting-solum-232029": [
    "해외영업",
    "수출입·통관",
-   "임상·인허가",
    "물류·창고 운영",
+   "임상·인허가",
    "영업기획·영업관리",
    "구매·SCM",
    "SAP·ERP"
@@ -13959,6 +13986,10 @@
    "Adobe 그래픽",
    "콘텐츠·SNS 운영"
   ],
+  "greenhouse-daangn-5838884003": [
+   "PR·홍보",
+   "콘텐츠·SNS 운영"
+  ],
   "greenhouse-daangn-7507320003": [
    "데이터 거버넌스",
    "데이터 모델링",
@@ -14241,8 +14272,8 @@
    "LLM·생성형 AI"
   ],
   "greenhouse-daangn-7611095003": [
-   "PR·홍보",
    "프롬프트 엔지니어링",
+   "PR·홍보",
    "심사·리스크 운영",
    "서비스 기획·PO",
    "SQL·데이터 추출",
@@ -14568,8 +14599,8 @@
    "개발 리더십·테크리드",
    "디자인 시스템",
    "프론트엔드 개발",
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "테스트 자동화",
    "React·Next.js",
    "Node.js·TypeScript",
@@ -14579,8 +14610,8 @@
   "greeting-kurly-215234": [
    "디자인 시스템",
    "프론트엔드 개발",
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "React·Next.js",
    "Node.js·TypeScript",
    "물류·창고 운영",
@@ -15664,8 +15695,8 @@
   "greeting-musinsa-241770": [
    "객체 스토리지",
    "대용량 트래픽·서버",
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "MSA·아키텍처",
    "메시징·스트리밍",
    "Java·Spring",
@@ -15728,8 +15759,8 @@
    "경영기획·전략"
   ],
   "greeting-musinsa-240841": [
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "물류·창고 운영",
    "서비스 기획·PO",
    "구매·SCM"
@@ -24003,22 +24034,19 @@
    "Jira·협업툴",
    "임상·인허가",
    "Figma·UI 툴",
-   "Azure·GCP",
    "서비스 기획·PO",
    "경영기획·전략"
   ],
   "greeting-jnpmedi-197561": [
    "품질경영 ISO",
    "GMP·밸리데이션",
-   "Azure·GCP",
    "생산·공정관리"
   ],
   "greeting-jnpmedi-134082": [
    "품질경영 ISO",
    "Slack·사내 협업",
    "기사 자격",
-   "서비스 QA·검수",
-   "Azure·GCP"
+   "서비스 QA·검수"
   ],
   "greeting-jnpmedi-175916": [
    "보훈·장애인 채용",
@@ -24470,8 +24498,8 @@
   ],
   "greeting-acrossb-33213": [
    "데이터 거버넌스",
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "수출입·통관",
    "정산·수수료",
    "물류·창고 운영",
@@ -24544,7 +24572,6 @@
    "고객상담·CS"
   ],
   "greeting-opn-236636": [
-   "의료기기 영업",
    "제휴·사업개발",
    "구매·SCM",
    "경영기획·전략"
@@ -24977,13 +25004,11 @@
   ],
   "greeting-voronoi-186852": [
    "의학부·학술 MSL",
-   "임상·인허가",
-   "Azure·GCP"
+   "임상·인허가"
   ],
   "greeting-voronoi-156841": [
    "의학부·학술 MSL",
    "임상·인허가",
-   "Azure·GCP",
    "생산·공정관리"
   ],
   "greeting-vatechnetworks-242050": [
@@ -27051,8 +27076,7 @@
    "수요예측·재고최적화",
    "클린룸·설비",
    "채용·HR 운영",
-   "브랜드 마케팅",
-   "PLC·산업제어"
+   "브랜드 마케팅"
   ],
   "workday-kla-KLAS-SWIFT-Product-Installation-Engineer---_2638882-4": [
    "iOS·Swift",
@@ -28419,6 +28443,7 @@
    "계약·컴플라이언스"
   ],
   "greeting-pharmaresearch_hr-232511": [
+   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-classyshr-239035": [
@@ -28948,8 +28973,8 @@
   ],
   "greeting-storelink-236922": [
    "운영 지원·오퍼레이션",
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "수출입·통관",
    "물류·창고 운영",
    "구매·SCM",
@@ -31442,8 +31467,8 @@
    "SQL·데이터 추출"
   ],
   "greeting-musinsa-228862": [
-   "이커머스 운영",
    "WMS·창고관리",
+   "이커머스 운영",
    "서비스 기획·PO",
    "구매·SCM"
   ],
@@ -32394,6 +32419,7 @@
    "영어 업무 가능"
   ],
   "greeting-lutronic-236155": [
+   "제약영업·MR",
    "의료기기 영업",
    "어카운트·거래처 관리"
   ],
@@ -35258,13 +35284,13 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 571,
+   "count": 572,
    "link": true
   },
   "경영기획·전략": {
    "slug": "corporate-strategy",
    "cat": "업무 영역 — 인사·경영",
-   "count": 442,
+   "count": 443,
    "link": true
   },
   "C·C++": {
@@ -35312,7 +35338,7 @@
   "콘텐츠·SNS 운영": {
    "slug": "content-sns",
    "cat": "마케팅·커머스",
-   "count": 298,
+   "count": 300,
    "link": true
   },
   "장비 셋업·필드": {
@@ -35324,7 +35350,7 @@
   "구매·SCM": {
    "slug": "scm",
    "cat": "인사·구매·운영",
-   "count": 282,
+   "count": 283,
    "link": true
   },
   "CI/CD·IaC": {
@@ -35336,7 +35362,7 @@
   "생산·공정관리": {
    "slug": "production-management",
    "cat": "인사·구매·운영",
-   "count": 258,
+   "count": 259,
    "link": true
   },
   "Java·Spring": {
@@ -35357,16 +35383,16 @@
    "count": 231,
    "link": true
   },
+  "MD·상품기획": {
+   "slug": "merchandising",
+   "cat": "마케팅·커머스",
+   "count": 231,
+   "link": true
+  },
   "Git·형상관리": {
    "slug": "git",
    "cat": "형상·협업 도구",
    "count": 230,
-   "link": true
-  },
-  "MD·상품기획": {
-   "slug": "merchandising",
-   "cat": "마케팅·커머스",
-   "count": 229,
    "link": true
   },
   "임베디드·펌웨어": {
@@ -35462,7 +35488,7 @@
   "Azure·GCP": {
    "slug": "azure-gcp",
    "cat": "클라우드·인프라",
-   "count": 165,
+   "count": 159,
    "link": true
   },
   "NPU·AI 반도체": {
@@ -35519,16 +35545,22 @@
    "count": 144,
    "link": true
   },
-  "PLC·산업제어": {
-   "slug": "plc",
-   "cat": "임베디드·제어",
-   "count": 142,
-   "link": true
-  },
   "일본어": {
    "slug": "japanese",
    "cat": "어학",
    "count": 142,
+   "link": true
+  },
+  "PLC·산업제어": {
+   "slug": "plc",
+   "cat": "임베디드·제어",
+   "count": 141,
+   "link": true
+  },
+  "임상·인허가": {
+   "slug": "clinical-regulatory",
+   "cat": "바이오·제약·화학",
+   "count": 141,
    "link": true
   },
   "물류·창고 운영": {
@@ -35537,16 +35569,10 @@
    "count": 140,
    "link": true
   },
-  "임상·인허가": {
-   "slug": "clinical-regulatory",
-   "cat": "바이오·제약·화학",
-   "count": 139,
-   "link": true
-  },
   "브랜드 마케팅": {
    "slug": "brand-marketing",
    "cat": "마케팅·커머스",
-   "count": 138,
+   "count": 139,
    "link": true
   },
   "Jira·협업툴": {
@@ -35729,16 +35755,16 @@
    "count": 90,
    "link": true
   },
+  "GMP·밸리데이션": {
+   "slug": "gmp",
+   "cat": "품질·안전·인증",
+   "count": 89,
+   "link": true
+  },
   "테스트 자동화": {
    "slug": "test-automation",
    "cat": "QA·테스트",
    "count": 89,
-   "link": true
-  },
-  "GMP·밸리데이션": {
-   "slug": "gmp",
-   "cat": "품질·안전·인증",
-   "count": 88,
    "link": true
   },
   "GPU·CUDA": {
@@ -35798,7 +35824,7 @@
   "수율·불량분석": {
    "slug": "yield-analysis",
    "cat": "반도체 공정·장비",
-   "count": 80,
+   "count": 81,
    "link": true
   },
   "모의해킹·취약점진단": {
@@ -35816,7 +35842,7 @@
   "생산직·제조 현장": {
    "slug": "production-operator",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 76,
+   "count": 77,
    "link": true
   },
   "보안관제·SOC": {
@@ -35879,15 +35905,15 @@
    "count": 73,
    "link": true
   },
-  "기타 외국어": {
-   "slug": "other-languages",
-   "cat": "어학",
-   "count": 72,
-   "link": true
-  },
   "이커머스 운영": {
    "slug": "ecommerce-operations",
    "cat": "물류·유통 운영",
+   "count": 73,
+   "link": true
+  },
+  "기타 외국어": {
+   "slug": "other-languages",
+   "cat": "어학",
    "count": 72,
    "link": true
   },
@@ -36023,12 +36049,6 @@
    "count": 61,
    "link": true
   },
-  "의료기기 영업": {
-   "slug": "medical-device-sales",
-   "cat": "업무 영역 — 영업·고객",
-   "count": 60,
-   "link": true
-  },
   "품질경영 ISO": {
    "slug": "iso-quality",
    "cat": "품질·안전·인증",
@@ -36068,6 +36088,12 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
+   "count": 55,
+   "link": true
+  },
+  "의료기기 영업": {
+   "slug": "medical-device-sales",
+   "cat": "업무 영역 — 영업·고객",
    "count": 55,
    "link": true
   },
@@ -36263,6 +36289,12 @@
    "count": 43,
    "link": true
   },
+  "PR·홍보": {
+   "slug": "pr-communications",
+   "cat": "마케팅·커머스",
+   "count": 41,
+   "link": true
+  },
   "신뢰성 평가": {
    "slug": "reliability-testing",
    "cat": "QA·테스트",
@@ -36291,12 +36323,6 @@
    "slug": "growth-ab-testing",
    "cat": "마케팅·커머스",
    "count": 41,
-   "link": true
-  },
-  "PR·홍보": {
-   "slug": "pr-communications",
-   "cat": "마케팅·커머스",
-   "count": 40,
    "link": true
   },
   "프롬프트 엔지니어링": {
@@ -36395,6 +36421,12 @@
    "count": 38,
    "link": true
   },
+  "제약영업·MR": {
+   "slug": "pharma-sales",
+   "cat": "바이오·제약·화학",
+   "count": 38,
+   "link": true
+  },
   "매니퓰레이터·모션제어": {
    "slug": "motion-control",
    "cat": "로봇·비전",
@@ -36446,12 +36478,6 @@
   "블록체인·가상자산": {
    "slug": "blockchain",
    "cat": "금융·핀테크",
-   "count": 31,
-   "link": true
-  },
-  "제약영업·MR": {
-   "slug": "pharma-sales",
-   "cat": "바이오·제약·화학",
    "count": 31,
    "link": true
   },
@@ -36665,6 +36691,12 @@
    "count": 17,
    "link": true
   },
+  "세포·항체": {
+   "slug": "cell-antibody",
+   "cat": "바이오·제약·화학",
+   "count": 17,
+   "link": true
+  },
   "Wi-Fi·BLE": {
    "slug": "wi-fi-ble",
    "cat": "운영체제·하드웨어",
@@ -36686,12 +36718,6 @@
   "게임 QA": {
    "slug": "game-qa",
    "cat": "QA·테스트",
-   "count": 16,
-   "link": true
-  },
-  "세포·항체": {
-   "slug": "cell-antibody",
-   "cat": "바이오·제약·화학",
    "count": 16,
    "link": true
   },
