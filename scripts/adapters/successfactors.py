@@ -178,6 +178,48 @@ def _close(text):
     return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
 
 
+def _place(text, company=""):
+    """본문의 "근무지 본사(용인)" 에서 근무지를 읽습니다.
+
+    왜 본문에서 읽나 (2026-11-02)
+    -----------------------------
+    목록에 「근무위치」 칸이 있는데 값이 `KR` 입니다. 국가 코드라 쓸 수
+    없습니다. 실제 근무지는 상세 본문 머리에 「근무지 본사(용인)」 처럼
+    적혀 있습니다. 공고마감일과 같은 자리라 이미 읽고 있는 글입니다.
+
+    2026-11-02 에 GC녹십자 8건을 확인했습니다.
+
+        본사(용인) · 음성공장(충북음성) · 구성캠퍼스(용인) · GC녹십자MS
+
+    괄호를 끝까지 읽어야 합니다. 공백까지만 끊으면 「음성공장(충북」 처럼
+    잘립니다. 값이 회사 이름뿐이면 근무지가 아니므로 버립니다.
+    """
+    t = re.sub(r"\s+", " ", text or "")
+    m = re.search(r"근무지\s*[:：]?\s*([^\s]+(?:\([^)]*\))?)", t)
+    if not m:
+        return ""
+    v = m.group(1).strip(" ,·")
+    # 괄호가 열리고 안 닫혔으면 뒤까지 더 붙입니다.
+    if v.count("(") > v.count(")"):
+        m2 = re.search(r"근무지\s*[:：]?\s*([^()]*\([^)]*\))", t)
+        if m2:
+            v = m2.group(1).strip(" ,·")
+    if not v or len(v) > 40:
+        return ""
+    # 「근무지 정보가 없는 공고입니다」처럼 문장이 이어지는 경우를 막습니다.
+    # 근무지 이름에는 조사가 붙지 않습니다. 조사로 끝나면 지명이 아닙니다.
+    if re.search(r"(이|가|은|는|을|를|의|도|만|와|과|에|에서|으로|로)$", v):
+        return ""
+    # 「미정」처럼 값이 아닌 말도 버립니다.
+    if v in ("미정", "미표기", "미공개", "없음", "협의", "추후협의", "해당없음"):
+        return ""
+    norm = lambda s: re.sub(r"[\s()（）㈜.,·\-]|주식회사", "", str(s or "")).lower()
+    # 근무지 칸에 회사 이름만 적힌 공고가 있습니다. 그건 근무지가 아닙니다.
+    if norm(v) and norm(v) == norm(company):
+        return ""
+    return v
+
+
 def _inner_by_class(page, cls):
     """class 이름으로 요소를 찾아 그 안쪽 HTML 을 돌려줍니다.
 
@@ -332,7 +374,12 @@ def fetch(company):
             "company": x["corp"] or name,
             "companySlug": slug,
             "title": title,
-            "location": x["location"],
+            # 목록의 「근무위치」는 국가 코드(KR)라 쓸 수 없습니다. 값이
+            # 있으면 그대로 쓰고, 없으면 상세 본문의 「근무지 …」를 읽습니다.
+            "location": x["location"] or _place(text, x["corp"] or name),
+            # 읽어둔 고용형태를 데이터로도 내보냅니다. 2026-11-02 까지
+            # 제목에만 붙이고 칸으로는 내보내지 않아 비어 있었습니다.
+            "employment": emp,
             # 경력 칸이 있으면 그 값을, 없으면 제목에서 읽습니다.
             "career": _career(x.get("career") or x["title"]),
             # 게시일은 목록 칸에서, 마감일은 본문의 "공고마감일" 에서 읽습니다.

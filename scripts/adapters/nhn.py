@@ -87,6 +87,11 @@ MAX_PAGES = 20  # 안전장치. 4,000건이면 충분합니다.
 CAREER = {"경력": "경력", "신입": "신입", "무관": "무관",
           "신입/경력": "신입/경력", "인턴": "무관"}
 
+# employeeType.name → 사이트 표기. 2026-11-02 에 69건을 훑어 확인한 값은
+# 정규·계약·인턴 셋뿐입니다. 낯선 값이 오면 비워 둡니다 — 지어내지 않습니다.
+EMPLOYEE = {"정규": "정규직", "계약": "계약직", "인턴": "인턴",
+            "파견": "파견직", "시간제": "시간제"}
+
 # 해외 법인. 회사명에 이 말이 들어가면 국내가 아닙니다.
 OVERSEAS = re.compile(r"japan|jp\b|china|global|america|usa", re.I)
 
@@ -243,9 +248,15 @@ def fetch(company):
                         or company["name"]).strip(),
             "companySlug": slug,
             "title": (x.get("name") or "").strip(),
-            # 근무지를 주지 않습니다. 지어내지 않습니다.
+            # 근무지는 칸으로 주지 않습니다. 본문 글 안에 "근무지는 충북
+            # 청주시 ... 입니다" 처럼 섞여 있을 뿐이라, 글에서 뽑아내면
+            # 틀릴 때가 생깁니다. 비워 둡니다(화면에서 「기재되지 않음」).
             "location": "",
             "career": CAREER.get(career, "무관"),
+            # employeeType.name 이 고용형태입니다. 2026-11-02 확인 기준
+            # 69건 전부 값이 있었고 종류는 정규·계약·인턴 셋이었습니다.
+            "employment": EMPLOYEE.get(
+                ((x.get("employeeType") or {}).get("name") or "").strip(), ""),
             "postedAt": _date(x.get("postingStaDatetime")),
             # 2100년 이후는 _date 가 빈 문자열로 돌려줍니다(상시채용).
             "closesAt": _date(x.get("postingEndDatetime")),

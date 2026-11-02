@@ -231,8 +231,14 @@ def fetch(company):
             "companySlug": slug,
             "title": title,
             # 상세의 locationName 입니다. 공동체 공고는 비어 있어 그대로 둡니다.
+            # 2026-11-02 기준 45건 중 29건이 「판교」, 16건이 빈 값이었습니다.
             "location": place,
             "career": _career(x),
+            # employeeTypeName. 2026-11-02 확인 기준 정규직 30·계약직 5·
+            # 어시스턴트 10 이었습니다. 「어시스턴트」는 카카오가 쓰는 자체
+            # 표기라 그대로 둡니다 — 우리가 정규직/계약직으로 바꿔 적으면
+            # 공고가 말하지 않은 것을 적는 셈이 됩니다.
+            "employment": _text(x.get("employeeTypeName")),
             "postedAt": _date(x.get("regDate")),
             # 상시채용은 마감일이 비어 옵니다. 그대로 비웁니다.
             "closesAt": _date(x.get("endDate")),
