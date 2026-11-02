@@ -336,6 +336,7 @@ def keep_recently_closed(fresh):
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import adapters  # noqa: E402
+from loc_normalize import normalize_location
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
@@ -525,7 +526,12 @@ def clean_location(loc, company):
     if not loc or _co_key(loc) == co_key:
         return ""
 
-    return LOC_RENAME.get(loc, loc)
+    loc = LOC_RENAME.get(loc, loc)
+    # 시·도 표기로 맞춥니다 (2026-11-02 대표님 지시).
+    #   영문 표기는 한글 지명으로  Seoul → 서울 · Pangyo → 경기 성남
+    #   공장·연구소 이름과 회사명은 비움  의왕연구소 · Rebellions | Korea
+    # 자세한 규칙과 근거는 scripts/loc_normalize.py 를 보세요.
+    return normalize_location(loc)
 
 
 def load_companies(only_ats=None):

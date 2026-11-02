@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-02 · 진행중 6181건 중 요약 있는 5636건을 훑어",
-  "5620건에 태그가 붙었습니다 (99.7%)."
+  "만든 날 2026-11-02 · 진행중 6181건 중 요약 있는 5617건을 훑어",
+  "5601건에 태그가 붙었습니다 (99.7%)."
  ],
  "tags": {
   "mobis-131836": [
@@ -35,9 +35,6 @@
    "영어 점수"
   ],
   "hlcompany-46525": [
-   "안전·보건 관리"
-  ],
-  "hlcompany-46535": [
    "안전·보건 관리"
   ],
   "hanonsystems-121665": [
@@ -530,8 +527,8 @@
    "품질검사·QC",
    "품질경영 ISO",
    "React·Next.js",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "Java·Spring",
    "SAP·ERP"
   ],
@@ -1800,9 +1797,6 @@
    "서비스 기획·PO",
    "고객상담·CS"
   ],
-  "sk-R262302": [
-   "HBM·메모리 설계"
-  ],
   "sk-R262277": [
    "물리보안·출입통제",
    "보안관제·SOC",
@@ -2193,8 +2187,8 @@
    "WMS·창고관리",
    "SLAM·측위",
    "PMO·프로젝트관리",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "어카운트·거래처 관리",
    "영어 업무 가능"
   ],
@@ -2441,8 +2435,8 @@
    "치공구·자동화설비",
    "정밀가공·용접",
    "생산직·제조 현장",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "생산·공정관리",
    "구매·SCM",
    "SAP·ERP"
@@ -4248,8 +4242,8 @@
    "CPU·아키텍처",
    "메모리·스토리지",
    "HBM·메모리 설계",
-   "FPGA",
    "추천·검색",
+   "FPGA",
    "고속 인터페이스",
    "SoC·IP 설계",
    "임베디드·펌웨어",
@@ -4650,9 +4644,6 @@
   ],
   "hanamicron-132528": [
    "생산직·제조 현장"
-  ],
-  "hanamicron-132268": [
-   "경영기획·전략"
   ],
   "hanamicron-122273": [
    "패키징·기판",
@@ -5142,8 +5133,8 @@
    "CATIA·3D CAD",
    "PMO·프로젝트관리",
    "정부과제·국책과제",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "기술영업",
    "Figma·UI 툴",
    "REST API 설계",
@@ -6728,8 +6719,8 @@
    "LLM·생성형 AI"
   ],
   "greeting-konantec-237607": [
-   "Vue·Nuxt",
    "C#·.NET",
+   "Vue·Nuxt",
    "React·Next.js",
    "Node.js·TypeScript",
    "PLC·산업제어",
@@ -8356,8 +8347,8 @@
   "greenhouse-krafton-8514517002": [
    "산업보건·간호",
    "품질경영 ISO",
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "계약·컴플라이언스"
   ],
   "greenhouse-krafton-8514533002": [
@@ -9396,8 +9387,8 @@
   ],
   "nexon-10105": [
    "Flutter·RN",
-   "Vue·Nuxt",
    "C#·.NET",
+   "Vue·Nuxt",
    "데이터 모델링",
    "React·Next.js",
    "Azure·GCP",
@@ -10275,8 +10266,8 @@
    "콘텐츠·SNS 운영"
   ],
   "sf-lscable-4587950": [
-   "IT 헬프데스크·자산",
    "영어 점수",
+   "IT 헬프데스크·자산",
    "재무·자금",
    "결산·세무",
    "SAP·ERP"
@@ -10895,15 +10886,6 @@
    "LLM·생성형 AI",
    "Python"
   ],
-  "greeting-applydongasocio-238873": [
-   "GMP·밸리데이션",
-   "PLC·산업제어",
-   "어카운트·거래처 관리",
-   "Java·Spring"
-  ],
-  "greeting-applydongasocio-242390": [
-   "어카운트·거래처 관리"
-  ],
   "greeting-dentium-242708": [
    "총무·사무환경",
    "영업기획·영업관리"
@@ -11415,11 +11397,6 @@
    "해외영업",
    "영어 업무 가능"
   ],
-  "workday-iljini-XMLNAME--------_R-461": [
-   "CAE·구조해석",
-   "영어 점수",
-   "3D 그래픽 툴"
-  ],
   "workday-iljini-XMLNAME-----_R-427": [
    "안전·보건 관리",
    "총무·사무환경"
@@ -11540,8 +11517,8 @@
   ],
   "rainbow-174": [
    "배송·운전",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "생산·공정관리",
    "구매·SCM",
    "SAP·ERP"
@@ -11584,8 +11561,8 @@
   "rainbow-166": [
    "공차·GD&T",
    "품질검사·QC",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "SAP·ERP"
   ],
   "rainbow-165": [
@@ -13731,8 +13708,8 @@
   ],
   "greenhouse-toss-6434513003": [
    "투자·M&A",
-   "재무·자금",
    "데이터 파이프라인",
+   "재무·자금",
    "Java·Spring",
    "SQL·데이터 추출",
    "Python"
@@ -13880,14 +13857,6 @@
   "greenhouse-toss-8002139003": [
    "결제·PG",
    "B2B 영업"
-  ],
-  "greenhouse-toss-7820053003": [
-   "가상화·오픈스택",
-   "채용·HR 운영",
-   "데이터 파이프라인",
-   "RDBMS",
-   "Java·Spring",
-   "Kubernetes·Docker"
   ],
   "greenhouse-toss-6613948003": [
    "고객상담·CS"
@@ -14686,20 +14655,20 @@
   ],
   "greeting-kurly-238631": [
    "산업보건·간호",
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "재무·자금"
   ],
   "greeting-kurly-223752": [
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "재무·자금",
    "LLM·생성형 AI"
   ],
   "greeting-kurly-236568": [
    "산업보건·간호",
-   "제조품질·QC",
-   "안전·보건 관리"
+   "안전·보건 관리",
+   "제조품질·QC"
   ],
   "greeting-kurly-241537": [
    "네트워크",
@@ -15961,8 +15930,8 @@
   ],
   "greeting-musinsa-220349": [
    "WMS·창고관리",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "서비스 기획·PO",
    "구매·SCM",
    "SQL·데이터 추출",
@@ -17814,20 +17783,6 @@
    "SQL·데이터 추출",
    "Python"
   ],
-  "greeting-interxlab-138437": [
-   "C#·.NET",
-   "블록체인·가상자산",
-   "추천·검색",
-   "테스트 자동화",
-   "NoSQL·캐시",
-   "REST API 설계",
-   "RDBMS",
-   "Git·형상관리",
-   "Java·Spring",
-   "Kubernetes·Docker",
-   "SQL·데이터 추출",
-   "Python"
-  ],
   "greeting-ctrl9-241183": [
    "언리얼 엔진",
    "Git·형상관리",
@@ -18120,8 +18075,8 @@
    "ROS·로봇 SW",
    "SLAM·측위",
    "SDV·차량 SW 플랫폼",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "ADAS·자율주행",
    "딥러닝·비전모델",
    "임베디드·펌웨어",
@@ -18162,8 +18117,8 @@
   "greeting-riibotics-220811": [
    "AMR·AGV",
    "기능안전 ISO 26262",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "임베디드·펌웨어",
    "리눅스·서버 운영",
    "C·C++"
@@ -18946,8 +18901,8 @@
   ],
   "greeting-nextsecurities-215321": [
    "그로스·A/B 테스트",
-   "디자인 시스템",
    "추천·검색",
+   "디자인 시스템",
    "멀티모달·VLM",
    "프로덕트 디자인",
    "Figma·UI 툴",
@@ -22070,8 +22025,8 @@
    "식각(Etch)",
    "클린룸·설비",
    "수율·불량분석",
-   "계측·검사장비",
    "기사 자격",
+   "계측·검사장비",
    "생산·공정관리"
   ],
   "greeting-kcpartstech1-235086": [
@@ -24049,18 +24004,6 @@
    "보훈·장애인 채용",
    "사무보조·어시스턴트"
   ],
-  "greeting-sangjiship-241486": [
-   "승선·해기사"
-  ],
-  "greeting-sangjiship-240365": [
-   "승선·해기사"
-  ],
-  "greeting-sangjiship-240186": [
-   "승선·해기사"
-  ],
-  "greeting-sangjiship-235556": [
-   "승선·해기사"
-  ],
   "greeting-skshieldus-210554": [
    "재무·자금",
    "결산·세무",
@@ -24085,9 +24028,6 @@
   ],
   "greeting-skshieldus-141598": [
    "소비자보호·민원",
-   "기사 자격"
-  ],
-  "greeting-skshieldus-242065": [
    "기사 자격"
   ],
   "greeting-skshieldus-117369": [
@@ -24726,9 +24666,6 @@
    "GPU·CUDA",
    "딥러닝·비전모델",
    "LLM·생성형 AI"
-  ],
-  "greeting-sionicai-209587": [
-   "Git·형상관리"
   ],
   "greeting-sionicai-174051": [
    "Go·Rust",
@@ -26654,8 +26591,8 @@
   ],
   "workday-amat-EHS-Manager--Safety-Engineer_R2627428": [
    "클린룸·설비",
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "장비 셋업·필드"
   ],
   "workday-amat-Epitaxy-FEP-Customer-Engineer_R2627813": [
@@ -26816,8 +26753,8 @@
   ],
   "workday-kla-Environmental--Health----Safety-Engineer_2640132-5": [
    "품질경영 ISO",
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "고객상담·CS"
   ],
   "workday-kla-Engr--Cust-Supp_2642551-1": [
@@ -26853,12 +26790,6 @@
    "조직문화·사내소통",
    "채용·HR 운영",
    "구매·SCM"
-  ],
-  "workday-kla-SKBU-SFS-Customer-Support-Engineer_2642779": [
-   "장비 셋업·필드"
-  ],
-  "workday-kla-SKBU-SFS-Customer-Support-Engineer_2642780": [
-   "장비 셋업·필드"
   ],
   "workday-kla-SKBU-OMD-Customer-Support-Engineer---_2642731": [
    "장비 셋업·필드"
@@ -27008,12 +26939,6 @@
   "workday-kla-Division-Product-Development-Engineer_2640189-5": [
    "계측·검사장비"
   ],
-  "workday-kla-Division-Regional-Development-Applications-Engineer_2639689-5": [
-   "포토마스크",
-   "수율·불량분석",
-   "리눅스·서버 운영",
-   "Python"
-  ],
   "workday-kla-SKBU-PCB-ICOS-Technical-Engagement-Manager_2639708-6": [
    "회로설계·PCB",
    "생산·공정관리",
@@ -27113,10 +27038,6 @@
    "iOS·Swift",
    "장비 셋업·필드"
   ],
-  "workday-kla-SKBU-SFS-Customer-Support-Engineer_2635984-3": [
-   "장비 셋업·필드",
-   "영어 업무 가능"
-  ],
   "workday-kla-Division-MACH-Software-Applications-Engineer_2635584-1": [
    "RDBMS",
    "장비 셋업·필드",
@@ -27205,8 +27126,8 @@
    "포토마스크",
    "매니퓰레이터·모션제어",
    "가상화·오픈스택",
-   "제조품질·QC",
    "안전·보건 관리",
+   "제조품질·QC",
    "PLC·산업제어",
    "REST API 설계",
    "SQL·데이터 추출",
@@ -27250,8 +27171,8 @@
    "장비 셋업·필드"
   ],
   "workday-entegris-Specialist--Global-R-D-Sampling---Logistics-Coordinator_REQ-13917": [
-   "수출입·통관",
    "안전·보건 관리",
+   "수출입·통관",
    "물류·창고 운영",
    "SAP·ERP"
   ],
@@ -27486,9 +27407,6 @@
   "workday-airliquidehr-XMLNAME-----Young-Talent-Program----_R10029257-1": [
    "채용·HR 운영"
   ],
-  "workday-airliquidehr-Air-Liquide-Engineer_R10035909": [
-   "산업용 가스"
-  ],
   "workday-dupont-XMLNAME--Senior--TS-D-Specialist--Water-Solutions_249641W": [
    "수처리·환경설비",
    "기술영업"
@@ -27626,8 +27544,8 @@
   "workday-danaher-EHS-Specialist--1-year-contract-_R1320253": [
    "데이터 라벨링",
    "산업보건·간호",
-   "제조품질·QC",
-   "안전·보건 관리"
+   "안전·보건 관리",
+   "제조품질·QC"
   ],
   "workday-danaher-Bioprocess-Upstream-HW---Cons--UFM--Field-Application-Specialist_R1319460": [
    "세포·항체",
@@ -28066,8 +27984,8 @@
    "WMS·창고관리",
    "기사 자격",
    "CATIA·3D CAD",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "중국어",
    "생산·공정관리",
    "SAP·ERP",
@@ -28834,8 +28752,8 @@
    "게임 원화·컨셉아트",
    "영어 점수",
    "수출입·통관",
-   "물류·창고 운영",
    "PLC·산업제어",
+   "물류·창고 운영",
    "중국어",
    "생산·공정관리",
    "구매·SCM",
@@ -28963,8 +28881,8 @@
   ],
   "greeting-wrtn-199492": [
    "IR·공시",
-   "재무·자금",
    "데이터 파이프라인",
+   "재무·자금",
    "LLM·생성형 AI"
   ],
   "greeting-storelink-236922": [
@@ -31163,8 +31081,8 @@
    "결제·PG",
    "메시징·스트리밍",
    "NoSQL·캐시",
-   "재무·자금",
    "데이터 파이프라인",
+   "재무·자금",
    "Java·Spring",
    "AWS",
    "Kubernetes·Docker"
@@ -35267,7 +35185,7 @@
   "Python": {
    "slug": "python",
    "cat": "백엔드·언어",
-   "count": 676,
+   "count": 674,
    "link": true
   },
   "LLM·생성형 AI": {
@@ -35279,13 +35197,13 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 572,
+   "count": 571,
    "link": true
   },
   "경영기획·전략": {
    "slug": "corporate-strategy",
    "cat": "업무 영역 — 인사·경영",
-   "count": 443,
+   "count": 442,
    "link": true
   },
   "C·C++": {
@@ -35297,13 +35215,13 @@
   "리눅스·서버 운영": {
    "slug": "linux-server",
    "cat": "클라우드·인프라",
-   "count": 380,
+   "count": 379,
    "link": true
   },
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
-   "count": 357,
+   "count": 356,
    "link": true
   },
   "SAP·ERP": {
@@ -35315,7 +35233,7 @@
   "Kubernetes·Docker": {
    "slug": "kubernetes-docker",
    "cat": "클라우드·인프라",
-   "count": 346,
+   "count": 344,
    "link": true
   },
   "AWS": {
@@ -35339,7 +35257,7 @@
   "장비 셋업·필드": {
    "slug": "equipment-field-service",
    "cat": "반도체 세부",
-   "count": 294,
+   "count": 291,
    "link": true
   },
   "구매·SCM": {
@@ -35363,7 +35281,7 @@
   "Java·Spring": {
    "slug": "java-spring",
    "cat": "백엔드·언어",
-   "count": 258,
+   "count": 255,
    "link": true
   },
   "서비스 기획·PO": {
@@ -35387,7 +35305,7 @@
   "Git·형상관리": {
    "slug": "git",
    "cat": "형상·협업 도구",
-   "count": 230,
+   "count": 228,
    "link": true
   },
   "임베디드·펌웨어": {
@@ -35429,18 +35347,18 @@
   "RDBMS": {
    "slug": "rdbms",
    "cat": "백엔드·언어",
-   "count": 207,
-   "link": true
-  },
-  "데이터 파이프라인": {
-   "slug": "data-pipeline",
-   "cat": "데이터·AI",
-   "count": 192,
+   "count": 205,
    "link": true
   },
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
+   "count": 191,
+   "link": true
+  },
+  "데이터 파이프라인": {
+   "slug": "data-pipeline",
+   "cat": "데이터·AI",
    "count": 191,
    "link": true
   },
@@ -35465,13 +35383,13 @@
   "REST API 설계": {
    "slug": "rest-api",
    "cat": "웹·API",
-   "count": 175,
+   "count": 174,
    "link": true
   },
   "NoSQL·캐시": {
    "slug": "nosql",
    "cat": "백엔드·언어",
-   "count": 173,
+   "count": 172,
    "link": true
   },
   "SoC·IP 설계": {
@@ -35516,16 +35434,16 @@
    "count": 150,
    "link": true
   },
-  "어카운트·거래처 관리": {
-   "slug": "account-management",
-   "cat": "업무 영역 — 영업·고객",
-   "count": 148,
-   "link": true
-  },
   "Figma·UI 툴": {
    "slug": "figma-ui",
    "cat": "디자인·툴",
    "count": 147,
+   "link": true
+  },
+  "어카운트·거래처 관리": {
+   "slug": "account-management",
+   "cat": "업무 영역 — 영업·고객",
+   "count": 146,
    "link": true
   },
   "영업기획·영업관리": {
@@ -35546,16 +35464,16 @@
    "count": 142,
    "link": true
   },
-  "PLC·산업제어": {
-   "slug": "plc",
-   "cat": "임베디드·제어",
-   "count": 141,
-   "link": true
-  },
   "임상·인허가": {
    "slug": "clinical-regulatory",
    "cat": "바이오·제약·화학",
    "count": 141,
+   "link": true
+  },
+  "PLC·산업제어": {
+   "slug": "plc",
+   "cat": "임베디드·제어",
+   "count": 140,
    "link": true
   },
   "물류·창고 운영": {
@@ -35627,13 +35545,13 @@
   "채용·HR 운영": {
    "slug": "recruiting-hr",
    "cat": "인사·구매·운영",
-   "count": 115,
+   "count": 114,
    "link": true
   },
   "3D 그래픽 툴": {
    "slug": "3d-graphics",
    "cat": "게임",
-   "count": 114,
+   "count": 113,
    "link": true
   },
   "게임 운영·라이브서비스": {
@@ -35753,13 +35671,13 @@
   "GMP·밸리데이션": {
    "slug": "gmp",
    "cat": "품질·안전·인증",
-   "count": 89,
+   "count": 88,
    "link": true
   },
   "테스트 자동화": {
    "slug": "test-automation",
    "cat": "QA·테스트",
-   "count": 89,
+   "count": 88,
    "link": true
   },
   "GPU·CUDA": {
@@ -35798,12 +35716,6 @@
    "count": 83,
    "link": true
   },
-  "기사 자격": {
-   "slug": "engineer-license",
-   "cat": "품질·안전·인증",
-   "count": 82,
-   "link": true
-  },
   "계측·검사장비": {
    "slug": "metrology-inspection",
    "cat": "반도체 공정·장비",
@@ -35816,10 +35728,16 @@
    "count": 82,
    "link": true
   },
+  "기사 자격": {
+   "slug": "engineer-license",
+   "cat": "품질·안전·인증",
+   "count": 81,
+   "link": true
+  },
   "수율·불량분석": {
    "slug": "yield-analysis",
    "cat": "반도체 공정·장비",
-   "count": 81,
+   "count": 80,
    "link": true
   },
   "모의해킹·취약점진단": {
@@ -35864,12 +35782,6 @@
    "count": 75,
    "link": true
   },
-  "안전·보건 관리": {
-   "slug": "safety-health",
-   "cat": "품질·안전·인증",
-   "count": 74,
-   "link": true
-  },
   "보안 자격증": {
    "slug": "security-certification",
    "cat": "보안",
@@ -35886,6 +35798,12 @@
    "slug": "trade-customs",
    "cat": "인사·구매·운영",
    "count": 74,
+   "link": true
+  },
+  "안전·보건 관리": {
+   "slug": "safety-health",
+   "cat": "품질·안전·인증",
+   "count": 73,
    "link": true
   },
   "WMS·창고관리": {
@@ -35924,12 +35842,6 @@
    "count": 71,
    "link": true
   },
-  "추천·검색": {
-   "slug": "recommendation-search",
-   "cat": "데이터·AI",
-   "count": 71,
-   "link": true
-  },
   "RTL·Verilog": {
    "slug": "rtl-verilog",
    "cat": "반도체 설계",
@@ -35946,6 +35858,12 @@
    "slug": "design-system",
    "cat": "디자인·툴",
    "count": 71,
+   "link": true
+  },
+  "추천·검색": {
+   "slug": "recommendation-search",
+   "cat": "데이터·AI",
+   "count": 70,
    "link": true
   },
   "IR·공시": {
@@ -35996,12 +35914,6 @@
    "count": 65,
    "link": true
   },
-  "영어 점수": {
-   "slug": "english-score",
-   "cat": "어학",
-   "count": 64,
-   "link": true
-  },
   "기능안전 ISO 26262": {
    "slug": "iso-26262",
    "cat": "자동차·전장",
@@ -36018,6 +35930,12 @@
    "slug": "it-helpdesk",
    "cat": "업무 영역 — 운영·지원",
    "count": 64,
+   "link": true
+  },
+  "영어 점수": {
+   "slug": "english-score",
+   "cat": "어학",
+   "count": 63,
    "link": true
   },
   "머신비전": {
@@ -36068,12 +35986,6 @@
    "count": 56,
    "link": true
   },
-  "HBM·메모리 설계": {
-   "slug": "hbm",
-   "cat": "반도체 설계",
-   "count": 56,
-   "link": true
-  },
   "HTML·CSS": {
    "slug": "html-css",
    "cat": "웹·API",
@@ -36083,6 +35995,12 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
+   "count": 55,
+   "link": true
+  },
+  "HBM·메모리 설계": {
+   "slug": "hbm",
+   "cat": "반도체 설계",
    "count": 55,
    "link": true
   },
@@ -36128,16 +36046,16 @@
    "count": 53,
    "link": true
   },
-  "가상화·오픈스택": {
-   "slug": "virtualization",
-   "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
-   "count": 52,
-   "link": true
-  },
   "게임 시나리오·내러티브": {
    "slug": "game-narrative",
    "cat": "업무 영역 — 게임 제작",
    "count": 52,
+   "link": true
+  },
+  "가상화·오픈스택": {
+   "slug": "virtualization",
+   "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
+   "count": 51,
    "link": true
   },
   "데이터 거버넌스": {
@@ -36446,16 +36364,16 @@
    "count": 34,
    "link": true
   },
-  "CAE·구조해석": {
-   "slug": "cae",
-   "cat": "기구·해석",
-   "count": 33,
-   "link": true
-  },
   "제약영업·MR": {
    "slug": "pharma-sales",
    "cat": "바이오·제약·화학",
    "count": 33,
+   "link": true
+  },
+  "CAE·구조해석": {
+   "slug": "cae",
+   "cat": "기구·해석",
+   "count": 32,
    "link": true
   },
   "모터 설계·제어": {
@@ -36467,12 +36385,6 @@
   "준법감시·내부통제": {
    "slug": "compliance-internal-control",
    "cat": "업무 영역 — 인사·경영",
-   "count": 31,
-   "link": true
-  },
-  "블록체인·가상자산": {
-   "slug": "blockchain",
-   "cat": "금융·핀테크",
    "count": 31,
    "link": true
   },
@@ -36497,6 +36409,12 @@
   "고객 성공·온보딩": {
    "slug": "customer-success",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
+   "count": 30,
+   "link": true
+  },
+  "블록체인·가상자산": {
+   "slug": "blockchain",
+   "cat": "금융·핀테크",
    "count": 30,
    "link": true
   },
@@ -36620,16 +36538,16 @@
    "count": 21,
    "link": true
   },
-  "C#·.NET": {
-   "slug": "csharp-net",
-   "cat": "백엔드·언어",
-   "count": 20,
-   "link": true
-  },
   "CMP·세정": {
    "slug": "cmp-clean",
    "cat": "반도체 공정·장비",
    "count": 20,
+   "link": true
+  },
+  "C#·.NET": {
+   "slug": "csharp-net",
+   "cat": "백엔드·언어",
+   "count": 19,
    "link": true
   },
   "임베디드 리눅스": {
@@ -36830,12 +36748,6 @@
    "count": 10,
    "link": true
   },
-  "포토마스크": {
-   "slug": "photomask",
-   "cat": "반도체 세부",
-   "count": 10,
-   "link": true
-  },
   "스타일링·의상": {
    "slug": "styling",
    "cat": "식품·화장품·소비재",
@@ -36846,6 +36758,12 @@
    "slug": "patient-care",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
    "count": 10,
+   "link": true
+  },
+  "포토마스크": {
+   "slug": "photomask",
+   "cat": "반도체 세부",
+   "count": 9,
    "link": true
   },
   "전력반도체": {
@@ -36932,12 +36850,6 @@
    "count": 6,
    "link": true
   },
-  "산업용 가스": {
-   "slug": "industrial-gas",
-   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
-   "count": 6,
-   "link": true
-  },
   "기판·PCB 제조": {
    "slug": "pcb-manufacturing",
    "cat": "반도체 후공정",
@@ -36962,9 +36874,9 @@
    "count": 5,
    "link": true
   },
-  "승선·해기사": {
-   "slug": "marine-officer",
-   "cat": "업무 영역 — 기타",
+  "산업용 가스": {
+   "slug": "industrial-gas",
+   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
    "count": 5,
    "link": true
   },
@@ -37115,6 +37027,12 @@
   "웨이퍼 본딩·WLP": {
    "slug": "wlp",
    "cat": "반도체 후공정",
+   "count": 1,
+   "link": false
+  },
+  "승선·해기사": {
+   "slug": "marine-officer",
+   "cat": "업무 영역 — 기타",
    "count": 1,
    "link": false
   },
