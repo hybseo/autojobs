@@ -10654,7 +10654,6 @@
    "대외협력·대관"
   ],
   "greeting-pharmaresearch_hr-237001": [
-   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-pharmaresearch_hr-236618": [
@@ -10677,7 +10676,6 @@
    "영어 업무 가능"
   ],
   "greeting-pharmaresearch_hr-230765": [
-   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-pharmaresearch_hr-230764": [
@@ -10705,7 +10703,6 @@
    "생산·공정관리"
   ],
   "greeting-pharmaresearch_hr-216073": [
-   "제약영업·MR",
    "어카운트·거래처 관리"
   ],
   "greeting-pharmaresearch_hr-204691": [
@@ -28443,7 +28440,6 @@
    "계약·컴플라이언스"
   ],
   "greeting-pharmaresearch_hr-232511": [
-   "제약영업·MR",
    "의료기기 영업"
   ],
   "greeting-classyshr-239035": [
@@ -32419,7 +32415,6 @@
    "영어 업무 가능"
   ],
   "greeting-lutronic-236155": [
-   "제약영업·MR",
    "의료기기 영업",
    "어카운트·거래처 관리"
   ],
@@ -36421,12 +36416,6 @@
    "count": 38,
    "link": true
   },
-  "제약영업·MR": {
-   "slug": "pharma-sales",
-   "cat": "바이오·제약·화학",
-   "count": 38,
-   "link": true
-  },
   "매니퓰레이터·모션제어": {
    "slug": "motion-control",
    "cat": "로봇·비전",
@@ -36460,6 +36449,12 @@
   "CAE·구조해석": {
    "slug": "cae",
    "cat": "기구·해석",
+   "count": 33,
+   "link": true
+  },
+  "제약영업·MR": {
+   "slug": "pharma-sales",
+   "cat": "바이오·제약·화학",
    "count": 33,
    "link": true
   },
