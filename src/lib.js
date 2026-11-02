@@ -137,6 +137,15 @@ export const byDeadline = (a, b) => {
 export const progress = (j) => {
   if (isAlways(j)) return null;
   const s = parseDate(j.postedAt), e = parseDate(j.closesAt);
+  /*
+   * 등록일을 안 적은 공고가 106건 있습니다 (LS전선 41, LG전자 18 …).
+   * 그러면 (TODAY - s) / (e - s) 가 NaN 이 되고, 카드의 기간 막대가
+   * style="--p:NaN" 으로 나가 빈 막대와 빈 날짜 칸만 남습니다.
+   * 마감일만 아는 공고는 기간을 그릴 수 없으니 상시 공고와 같은 취급으로
+   * 막대를 아예 안 그립니다 — 마감일은 카드의 D- 배지에 이미 있습니다.
+   * (2026-11-02 최종 점검에서 18쪽 36칸 발견)
+   */
+  if (!Number.isFinite(+s) || !Number.isFinite(+e) || +e <= +s) return null;
   return Math.max(0.02, Math.min(1, (TODAY - s) / (e - s)));
 };
 
@@ -1007,10 +1016,23 @@ const doorCounts = (() => {
 
 /* 받침에 따라 을/를 을 고릅니다. 「패키징·기판를」 처럼 어색해지는 것을 막습니다.
    끝 글자가 한글이 아니면(AUTOSAR·RF) 「를」로 둡니다 — 읽을 때 그렇게 읽습니다. */
-const objParticle = (word) => {
+/*
+ * 을/를 고르기.
+ *
+ * 한글은 받침을 보면 틀릴 일이 없습니다. 영문은 읽는 소리를 알아야 합니다 —
+ * Python 은 「파이썬」이라 「을」, AUTOSAR 은 「아우토사」라 「를」입니다.
+ * 글자만 보고는 알 수 없고, 그렇다고 발음표를 추측해서 넣을 수도 없습니다.
+ * 전에는 영문에 무조건 「를」을 붙여 「Python를 요구하는」이 기술 페이지
+ * 299쪽의 설명문에 나갔습니다 (2026-11-02 최종 점검).
+ *
+ * 그래서 한글이 아니면 조사를 아예 붙이지 않습니다. 「Python 요구하는
+ * 채용공고」, 「Python 쓰는 공고」는 목록 제목으로 자연스럽게 읽히고,
+ * 무엇보다 틀리지 않습니다.
+ */
+export const objParticle = (word) => {
   const ch = String(word || '').trim().slice(-1);
   const code = ch.charCodeAt(0);
-  if (!(code >= 0xac00 && code <= 0xd7a3)) return '를';
+  if (!(code >= 0xac00 && code <= 0xd7a3)) return '';
   return (code - 0xac00) % 28 === 0 ? '를' : '을';
 };
 

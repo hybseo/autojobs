@@ -1486,7 +1486,9 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
      * 기업별 정렬에서는 하지 않습니다. 일부러 회사끼리 모아 보는
      * 화면이기 때문입니다.
      */
-    if (state.sort !== 'co') arr = spreadByCompany(arr, 3);
+    /* 흩뜨리기는 아래에서 "실제로 보이는 카드" 에만 겁니다.
+       전체에 걸면 탭이 숨긴 카드가 사이에 끼어 효과가 사라집니다 —
+       상시채용 탭에서 토스가 159건 연달아 나왔습니다 (2026-11-02 시험). */
     /*
      * 거르는 중에는 보이는 카드만 줄 세웁니다.
      *
@@ -1500,9 +1502,20 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
      * 하나씩 옮기면 옮길 때마다 화면을 다시 계산하므로, 조각에 모아
      * 한 번에 답니다.
      */
-    const filtered =
-      state.q.trim() || state.co.size || state.ca.size || state.in.size || state.ro.size;
-    const moving = filtered ? arr.filter((c) => !c.hidden) : arr;
+    /*
+     * 보이는 카드만 옮깁니다 (2026-11-02 고침)
+     * ----------------------------------------
+     * 전에는 검색·필터가 없을 때 4,973장을 전부 옮겼습니다. 그런데 탭이
+     * 늘 걸려 있어서(마감 있음 / 상시채용) 실제로 보이는 것은 절반입니다.
+     * 전체를 흩뜨려도 숨은 카드가 사이에 끼면 보이는 것끼리는 다시 붙습니다.
+     * 상시채용 탭에서 토스 159건이 연달아 나온 이유입니다.
+     *
+     * 숨은 카드는 화면에 없으니 순서가 보이지 않고, 필터가 바뀌면
+     * 이 함수가 다시 돌아 그때 보이는 것을 다시 줄 세웁니다.
+     */
+    let moving = arr.filter((c) => !c.hidden);
+    if (!moving.length) moving = arr;          // 아직 거르기 전(첫 그리기)
+    if (state.sort !== 'co') moving = spreadByCompany(moving, 3);
 
     const frag = document.createDocumentFragment();
     for (const c of moving) frag.appendChild(c);

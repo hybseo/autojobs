@@ -134,8 +134,15 @@ const cardTags = lean ? [] : jobTags(job).slice(0, 2);
     <div class="ctags">{cardTags.map((t) => <span>{t}</span>)}</div>
   )}
   {job.sourceTitle && <div class="src">{job.sourceTitle}</div>}
+  {/*
+    기간 막대는 등록일과 마감일이 둘 다 있어야 그릴 수 있습니다. 마감일만
+    아는 공고(회사가 등록일을 안 적은 106건)는 막대 없이 마감일만 적습니다.
+    「상시 접수」로 묶으면 마감일이 있는 공고를 없다고 말하게 됩니다.
+  */}
   {p === null ? (
-    <div class="gauge"><span class="g-open">상시 접수 · 마감일 미정</span></div>
+    always
+      ? <div class="gauge"><span class="g-open">상시 접수 · 마감일 미정</span></div>
+      : <div class="gauge"><span class="g-open">{md(job.closesAt)} 마감 · 등록일 미표기</span></div>
   ) : (
     <div class="gauge">
       <span class="g-date">{md(job.postedAt)}</span>

@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import {
+  openJobs, companyPages, techPages, industriesOf, industrySlug, COLLECTED_AT,
+} from '../lib.js';
+
+/*
+ * 없는 주소 (2026-11-02 새로 만듦)
+ * ================================
+ * 최종 점검에서 404 화면이 아예 없는 것을 찾았습니다. 주소를 잘못 치거나
+ * 오래된 링크로 들어오면 클라우드플레어 기본 오류 화면이 떴습니다.
+ *
+ * 이 사이트에서는 그 경우가 꾸준히 생깁니다. 회사가 공고를 내리면 60일
+ * 뒤 페이지도 사라지는데, 구글은 색인한 주소를 한참 더 방문합니다.
+ * 즉 404 로 들어오는 사람 대부분은 「끝난 공고를 찾아온 구직자」입니다.
+ * 그 사람에게 필요한 것은 오류 번호가 아니라 지금 열린 자리입니다.
+ *
+ * 그래서 사과문 대신 세 가지를 둡니다 — 왜 사라졌는지 한 줄, 지금 열린
+ * 공고 수, 그리고 바로 누를 수 있는 산업·기술 입구.
+ *
+ * 공고 카드는 넣지 않습니다. 404 는 클라우드플레어가 모든 없는 주소에
+ * 돌려주는 화면이라 가벼워야 하고, 어차피 한 번 보고 지나가는 쪽입니다.
+ */
+const open = openJobs();
+const watched = companyPages().length;
+const techN = techPages().length;
+
+const indCount = {};
+for (const j of open) for (const n of industriesOf(j)) indCount[n] = (indCount[n] || 0) + 1;
+const inds = Object.entries(indCount).sort((a, b) => b[1] - a[1]);
+
+const title = '없는 주소입니다 | SEARCHJOB';
+const desc = '찾으시는 페이지가 없습니다. 끝난 공고일 수 있습니다. '
+  + `지금 지원할 수 있는 공고 ${open.length.toLocaleString('ko-KR')}건에서 다시 찾아보세요.`;
+---
+<Base title={title} description={desc} noindex={true}>
+  <header class="mast">
+    <div class="wrap">
+      <div class="eyebrow"><a href="/">전체 채용공고</a><a href="/companies/">기업 목록</a></div>
+      <h1>찾으시는 페이지가 없습니다</h1>
+      <div class="meta">
+        주소가 잘못되었거나, 공고가 내려간 뒤 페이지까지 사라졌을 수 있습니다 ·
+        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
+      </div>
+      <p class="lede">
+        회사가 공고를 내리면 저희도 목록에서 빼고, 60일이 지나면 페이지를 지웁니다.
+        검색 결과에 남아 있던 주소로 들어오셨다면 그 공고는 이미 끝난 자리입니다.
+        아래에서 지금 열려 있는 자리를 바로 찾을 수 있습니다.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="stats">
+      <div><b>{open.length.toLocaleString('ko-KR')}</b><span>지금 지원 가능</span></div>
+      <div><b>{watched.toLocaleString('ko-KR')}</b><span>확인 중인 기업</span></div>
+      <div><b>{techN.toLocaleString('ko-KR')}</b><span>기술·역량</span></div>
+    </div>
+
+    <p class="bigcta"><a class="cta" href="/">전체 공고에서 검색하기 →</a></p>
+
+    <div class="section-h">산업으로 찾기</div>
+    <div class="chips">
+      {inds.map(([n, c]) => (
+        <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
+      ))}
+    </div>
+
+    <div class="section-h">다른 길</div>
+    <div class="prose">
+      <ul class="ways">
+        <li><a href="/companies/">기업 목록</a> — {watched}개 기업을 가나다·공고 수로 훑어봅니다.</li>
+        <li><a href="/tech/">기술·역량</a> — AUTOSAR·기능안전처럼 공고가 요구하는 기술로 찾습니다.</li>
+        <li><a href="/scan/">점검 기록</a> — 언제 무엇을 확인했는지 날짜별로 공개합니다.</li>
+        <li><a href="/about/">소개</a> — 어떤 공고를 어떻게 모으는지 적어 두었습니다.</li>
+      </ul>
+    </div>
+
+    <p style="margin:28px 0 56px"><a class="back" href="/">← 첫 화면으로</a></p>
+  </main>
+</Base>
+
+<style>
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
+           margin: 18px 0 4px; }
+  .stats div { background: var(--paper, #fff); padding: 14px 15px; }
+  .stats b { display: block; font-family: var(--mono, monospace); font-size: 22px;
+             font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+  .stats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92); margin-top: 3px; }
+
+  .bigcta { margin: 22px 0 4px; }
+
+  .chips .chip { text-decoration: none; }
+  .chips .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
+  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
+                    opacity: .6; margin-left: 5px; }
+
+  .ways { list-style: none; margin: 0; padding: 0; display: flex;
+          flex-direction: column; gap: 9px; }
+  .ways li { position: relative; padding-left: 15px; font-size: 14px; line-height: 1.7;
+             color: var(--ink-2, #4B5158); }
+  .ways li::before { content: "·"; position: absolute; left: 4px; color: var(--ink-3, #858B92); }
+  .ways a { color: var(--ink, #16181C); font-weight: 600; }
+</style>

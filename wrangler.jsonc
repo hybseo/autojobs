@@ -2,6 +2,20 @@
   "name": "autojobs",
   "compatibility_date": "2026-08-01",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+
+    /*
+     * 없는 주소로 들어오면 dist/404.html 을 보여줍니다.
+     *
+     * 2026-11-02 최종 점검에서 404 화면이 아예 없는 것을 찾았습니다.
+     * 이 값을 안 적으면 클라우드플레어가 본문 없는 404 만 돌려줍니다.
+     * 회사가 공고를 내리면 60일 뒤 페이지도 지우는데 구글은 그 주소를
+     * 한참 더 방문하므로, 404 로 들어오는 사람이 꾸준히 생깁니다.
+     *
+     * 값은 셋 중 하나입니다 — single-page-application(/index.html 을 줌),
+     * 404-page(/404.html 을 줌), none(본문 없이 404). 확인한 문서:
+     * developers.cloudflare.com/workers/static-assets/routing/static-site-generation/
+     */
+    "not_found_handling": "404-page"
   }
 }

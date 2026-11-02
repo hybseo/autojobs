@@ -336,7 +336,7 @@ def keep_recently_closed(fresh):
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import adapters  # noqa: E402
-from loc_normalize import normalize_location
+from loc_normalize import normalize_location, UNSET
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
@@ -703,6 +703,38 @@ def main():
     # 나중에 다시 쓰고 싶어지면 이 세 줄만 지우면 됩니다.
     for j in jobs:
         j.pop("employment", None)
+
+    # ── 요약이 본문에서 읽은 근무지를 받아 씁니다 ──────────────
+    #
+    # 공고의 근무지 칸이 비어 있는데 본문에 적혀 있는 경우가 많습니다.
+    # 요약 작업이 그것을 loc 에 담아 두었는데, 화면이 그 값을 그대로
+    # 보여주고 있어서 근무지 규칙을 거치지 않았습니다. 그래서
+    # 「의왕연구소」·「성서공장(본사)」 같은 표기가 670건 나갔고, 전체
+    # 주소도 섞였습니다 (2026-11-02 최종 점검).
+    #
+    # 이제 같은 규칙에 통과시킨 뒤 location 에 넣습니다. 표기가 한
+    # 곳에서만 정해지고, 화면은 location 하나만 봅니다. 이 단계가 없으면
+    # 다음 수집에서 1,087건의 근무지가 다시 빕니다.
+    try:
+        sums = json.loads(
+            (ROOT / "src" / "data" / "summaries.json").read_text(encoding="utf-8")
+        ).get("summaries") or {}
+    except Exception as e:                      # 요약 파일이 없어도 수집은 계속합니다
+        sums = {}
+        print(f"  · 요약 파일을 못 읽어 근무지 보완을 건너뜁니다 ({e})")
+    from_summary = 0
+    for j in jobs:
+        if str(j.get("location") or "").strip() not in ("", UNSET):
+            continue
+        raw = (sums.get(j["id"]) or {}).get("loc")
+        if not raw:
+            continue
+        got = normalize_location(raw)
+        if got and got != UNSET:
+            j["location"] = got
+            from_summary += 1
+    if from_summary:
+        print(f"  · 근무지를 요약 본문에서 받아 채움 {from_summary}건")
 
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},

@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import JobCard from '../../components/JobCard.astro';
 import {
   techPages, byTech, tagsWith, byDeadline, isAlways, daysLeft,
-  COLLECTED_AT, industriesOf,
+  COLLECTED_AT, industriesOf, objParticle,
 } from '../../lib.js';
 
 /*
@@ -52,7 +52,9 @@ for (const j of jobs) for (const n of industriesOf(j)) byInd[n] = (byInd[n] || 0
 const topInds = Object.entries(byInd).sort((a, b) => b[1] - a[1]).slice(0, 7);
 
 const title = `${tech.name} 채용공고 ${jobs.length}건 | SEARCHJOB`;
-const desc = `${tech.name}을(를) 요구하는 채용공고 ${jobs.length}건. `
+// 「Python을(를) 요구하는」이 299쪽의 설명문에 그대로 나가고 있었습니다.
+// 조사는 받침을 보고 고릅니다 (2026-11-02 최종 점검).
+const desc = `${tech.name}${objParticle(tech.name)} 요구하는 채용공고 ${jobs.length}건. `
   + `${cos.length}개 기업의 공식 채용페이지에서 모았습니다. ${COLLECTED_AT} 기준.`;
 
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
