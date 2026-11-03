@@ -1,6 +1,7 @@
 ---
+import { getData } from '../../v2/data.js';
+import { viewCompany } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
-import JobCard from '../../components/JobCard.astro';
 import { companyPages, byCompany, openJobs, closedJobs, daysLeft, parseDate, industriesOf, industrySlug } from '../../lib.js';
 
 /*
@@ -58,45 +59,10 @@ const schema = {
   about: { '@type': 'Organization', name: co.name },
   url: `${site}/company/${slug}/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewCompany 가 그립니다. */
+const D = getData();
+const html = viewCompany(D, slug);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow">
-        {inds.length
-          ? inds.map((n, k) => (<>{k > 0 && ' · '}<a href={`/industry/${industrySlug(n)}/`}>{n}</a></>))
-          : <a href="/">전체 채용공고</a>}
-      </div>
-      <h1>{co.name} 채용 <em>{open.length}</em></h1>
-      <div class="meta">진행중 <b>{open.length}</b>건 · 지난 채용 <b>{closed.length}</b>건</div>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="section-h">진행중인 채용</div>
-    {open.length ? open.map((j) => <JobCard job={j} />) : (
-      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
-        {closed.length
-          ? '지난 채용 이력을 보시면 이 회사가 어떤 직무를 주로 뽑는지 알 수 있습니다.'
-          : <>{co.name} 공식 채용페이지를 하루 두 번 확인하고 있습니다. 새 공고가 올라오면 이 페이지에 바로 반영됩니다.
-            {inds.length > 0 && <> 그동안 <a href={`/industry/${industrySlug(inds[0])}/`}>{inds[0]} 채용공고</a>를 둘러보세요.</>}</>}
-      </div>
-    )}
-
-    {closed.length > 0 && (
-      <>
-        <div class="section-h">지난 채용 이력</div>
-        <ul class="archive">
-          {closed.map((j) => (
-            <li>
-              <a href={j.sourceUrl} target="_blank" rel="noopener nofollow">{j.title}</a>
-              <time>{j.closesAt.replace(/-/g, '.')} 마감</time>
-            </li>
-          ))}
-        </ul>
-      </>
-    )}
-
-    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="companies">
+  <main class="wrap" set:html={html} />
 </Base>

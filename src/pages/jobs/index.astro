@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getData } from '../../v2/data.js';
+import { viewJobs, newState } from '../../v2/views.js';
+
+/*
+ * 공고 목록 (버전2 · 2026-11-03)
+ * ============================================================
+ * 왼쪽 거르개(산업·기술·경력·근무지) + 탭(마감 있는 공고 / 상시채용) +
+ * 정렬 + 「더 보기」. 11-02 확정본의 공고 목록 화면 그대로입니다.
+ *
+ * 처음 40건은 서버가 그려 둡니다(자바스크립트가 늦거나 꺼져 있어도
+ * 공고가 보이게). 그 뒤 브라우저가 /v2/jobs.json 을 받아 같은 함수
+ * (src/v2/views.js 의 viewJobs)로 다시 그립니다.
+ *
+ * 주소로 조건을 받습니다 — 홈의 그래프 막대(?day=), 「최근 7일」(?recent=),
+ * 공고 상세의 「여기서 갈 수 있는 곳」(?ind=&role=, ?reg=), 검색창(?q=).
+ * 조건을 바꾸면 주소도 바꿔 둡니다. 뒤로 가기와 링크 공유가 됩니다.
+ */
+const D = getData();
+const html = viewJobs(D, newState());
+const title = '채용공고 전체 | SEARCHJOB';
+const desc = '기업 공식 채용페이지에 올라온 진행중 공고를 산업·기술·경력·근무지로 걸러 봅니다. 마감 있는 공고와 상시채용을 나눠 보여줍니다.';
+---
+<Base title={title} description={desc} nav="jobs">
+  <main class="wrap" id="app" set:html={html} />
+</Base>
+
+<script>
+  import { viewJobs, newState, CLEAR } from '../../v2/views.js';
+
+  const app = document.getElementById('app');
+  const qbox = document.getElementById('q');
+  const S = newState();
+  const KEYS = ['ind', 'tag', 'car', 'reg', 'role', 'co', 'day', 'recent'];
+  let D = null;
+
+  /* 주소 ↔ 상태 */
+  const readUrl = () => {
+    const p = new URLSearchParams(location.search);
+    S.f = CLEAR();
+    KEYS.forEach((k) => { if (p.get(k)) S.f[k] = p.get(k); });
+    S.q = p.get('q') || '';
+    S.sort = p.get('sort') === 'new' ? 'new' : 'dl';
+    S.tab = p.get('tab') === '상시' ? '상시' : '마감';
+    if (qbox) qbox.value = S.q;
+  };
+  const writeUrl = () => {
+    const p = new URLSearchParams();
+    if (S.q.trim()) p.set('q', S.q.trim());
+    KEYS.forEach((k) => { if (S.f[k]) p.set(k, S.f[k]); });
+    if (S.sort === 'new') p.set('sort', 'new');
+    if (S.tab === '상시') p.set('tab', '상시');
+    const qs = p.toString();
+    history.replaceState(null, '', `/jobs/${qs ? `?${qs}` : ''}`);
+  };
+  const render = (top) => {
+    if (!D) return;
+    app.innerHTML = viewJobs(D, S);
+    writeUrl();
+    if (top) window.scrollTo(0, 0);
+  };
+
+  readUrl();
+  fetch('/v2/jobs.json').then((r) => r.json()).then((d) => {
+    D = d;
+    const dirty = S.q || S.sort !== 'dl' || S.tab !== '마감' || KEYS.some((k) => S.f[k]);
+    if (dirty) render(false);
+  });
+
+  app.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-f],[data-q],[data-tab],[data-sort],[data-more],[data-side]');
+    if (!t || !D) return;
+    e.preventDefault();
+    if (t.hasAttribute('data-f')) {
+      S.f[t.getAttribute('data-f')] = t.getAttribute('data-v') || null;
+      S.n = 40; return render(false);
+    }
+    if (t.hasAttribute('data-q')) { S.q = ''; if (qbox) qbox.value = ''; S.n = 40; return render(false); }
+    if (t.hasAttribute('data-tab')) {
+      S.tab = t.getAttribute('data-tab');
+      if (S.tab === '마감') S.f.recent = S.f.recent; // 그대로
+      S.n = 40; return render(false);
+    }
+    if (t.hasAttribute('data-sort')) { S.sort = t.getAttribute('data-sort'); S.n = 40; return render(false); }
+    if (t.hasAttribute('data-more')) { S.n += 60; return render(false); }
+    if (t.hasAttribute('data-side')) { S.sidedown = !S.sidedown; return render(false); }
+  });
+
+  /* 이 쪽에서는 검색창이 치는 대로 거릅니다. Enter 로 다시 불러오지 않습니다. */
+  if (qbox) {
+    let tm = null;
+    qbox.form && qbox.form.addEventListener('submit', (e) => e.preventDefault());
+    qbox.addEventListener('input', () => {
+      clearTimeout(tm);
+      tm = setTimeout(() => { S.q = qbox.value; S.n = 40; render(false); }, 180);
+    });
+  }
+</script>

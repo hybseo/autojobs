@@ -1,4 +1,6 @@
 ---
+import { getData } from '../../v2/data.js';
+import { viewScan } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
 import {
   scanRuns, scanStreak, openJobs, closedJobs, isRecentlyClosed,
@@ -56,116 +58,10 @@ const schema = {
   description: desc,
   url: `${site}/scan/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewScan 가 그립니다. */
+const D = getData();
+const html = viewScan(D);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow"><a href="/">전체 채용공고</a><a href="/companies/">기업 목록</a></div>
-      <h1><em>{streak}일</em> 하루도 빠짐없이 확인했습니다</h1>
-      <div class="meta">
-        <b>{watched}</b>개 기업 공식 채용페이지 · 하루 <b>{perDay}</b>번 ·
-        마지막 확인 <b>{todayRun ? todayRun.times.join(' · ') : '—'}</b>
-      </div>
-      <p class="lede">
-        아래는 꾸민 숫자가 아니라 수집이 끝난 시각 그대로입니다.
-        언제 확인했는지 적어 두면 「매일 확인합니다」라는 말을 검증할 수 있습니다.
-      </p>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="stats">
-      <div><b>{streak}</b><span>연속 확인한 날</span></div>
-      <div><b>{perDay}회</b><span>하루 확인</span></div>
-      <div><b>{watched.toLocaleString('ko-KR')}</b><span>확인 기업</span></div>
-      <div><b>{open.length.toLocaleString('ko-KR')}</b><span>지금 지원 가능</span></div>
-    </div>
-
-    <div class="section-h">날짜별 신규 공고<span class="gn">최근 {recent.length}일</span></div>
-    <div class="bars">
-      {recent.map((r) => (
-        <span class="sc" title={`${md(r.day)}(${wd(r.day)}) ${r.times.join(' · ')} 확인 · 신규 ${r.new}건`}>
-          <i style={`height:${Math.max(Math.min(Math.round((r.new / cap) * 100), 100), 4)}%`}></i>
-        </span>
-      ))}
-    </div>
-    <div class="barfoot">
-      <span>{recent.length ? md(recent[0].day) : ''}</span>
-      <span>칸 = 그날 확인함 · 높이 = 그날 처음 본 공고 수</span>
-      <span>{recent.length ? md(recent[recent.length - 1].day) : ''}</span>
-    </div>
-
-    <div class="section-h">기록</div>
-    <ul class="runs">
-      {[...runs].reverse().map((r) => (
-        <li>
-          <span class="d">{md(r.day)}<i>{wd(r.day)}</i></span>
-          <span class="t">{r.times.join(' · ')} 완료</span>
-          <span class="n"><b>{r.new.toLocaleString('ko-KR')}</b> 신규</span>
-        </li>
-      ))}
-    </ul>
-
-    <div class="section-h">어떻게 모으나</div>
-    <div class="prose">
-      <ul class="how">
-        <li><b>{watched}</b>개 기업의 <b>공식 채용페이지만</b> 직접 확인합니다.</li>
-        <li>채용 플랫폼 전용 공고나 비공개 채용은 다루지 않습니다.</li>
-        <li>회사가 공고를 내리면 목록에서 빼고, 페이지는 60일 동안 남깁니다 — 지금 <b>{kept.length.toLocaleString('ko-KR')}</b>건.</li>
-        <li>오늘 새로 올라온 공고 <b>{freshN.toLocaleString('ko-KR')}</b>건을 찾았습니다.</li>
-      </ul>
-      <p class="note">
-        확인 시각이 날마다 조금씩 다른 것은 예약 실행이 밀리기 때문입니다.
-        정시가 아니라 「그 시각쯤」 돌아갑니다.
-      </p>
-    </div>
-
-    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="scan">
+  <main class="wrap" set:html={html} />
 </Base>
-
-<style>
-  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
-           margin: 18px 0 4px; }
-  @media (min-width: 640px) { .stats { grid-template-columns: repeat(4, 1fr); } }
-  .stats div { background: var(--paper, #fff); padding: 14px 15px; }
-  .stats b { display: block; font-family: var(--mono, monospace); font-size: 22px;
-             font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
-  .stats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92); margin-top: 3px; }
-
-  .bars { display: flex; gap: 2px; align-items: stretch; height: 70px;
-          background: var(--paper, #fff); border: 1px solid var(--line, #DDE1DE);
-          padding: 12px 14px 0; }
-  .bars .sc { flex: 1; min-width: 0; background: var(--surface, #F1F3F2);
-              display: flex; align-items: flex-end;
-              border-bottom: 2px solid var(--steel, #2D5F7C); }
-  .bars .sc i { display: block; width: 100%; background: var(--steel, #2D5F7C); opacity: .8; }
-  .bars .sc:hover { background: var(--steel-soft, #E7EEF2); }
-  .bars .sc:hover i { opacity: 1; }
-  .barfoot { display: flex; justify-content: space-between; gap: 10px; padding: 6px 14px 0;
-             font-family: var(--mono, monospace); font-size: 10px; color: var(--ink-3, #858B92); }
-  @media (max-width: 520px) { .barfoot span:nth-child(2) { display: none; } }
-
-  .runs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;
-          gap: 1px; background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
-  .runs li { background: var(--paper, #fff); padding: 11px 14px; display: flex;
-             align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .runs .d { font-family: var(--mono, monospace); font-size: 13px; font-weight: 600;
-             width: 56px; flex: none; color: var(--ink, #16181C); }
-  .runs .d i { font-style: normal; font-size: 10px; color: var(--ink-3, #858B92); margin-left: 4px; }
-  .runs .t { font-family: var(--mono, monospace); font-size: 11.5px; color: var(--ink-2, #4B5158); }
-  .runs .n { margin-left: auto; font-family: var(--mono, monospace); font-size: 11.5px;
-             color: var(--ink-3, #858B92); }
-  .runs .n b { color: var(--ink, #16181C); font-weight: 600; font-size: 13px; }
-
-  .how { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
-  .how li { position: relative; padding-left: 15px; font-size: 14px; line-height: 1.7;
-            color: var(--ink-2, #4B5158); }
-  .how li::before { content: "·"; position: absolute; left: 4px; color: var(--ink-3, #858B92); }
-  .how b { color: var(--ink, #16181C); font-weight: 600; }
-  .prose .note { margin-top: 14px; font-size: 12.5px; color: var(--ink-3, #858B92); line-height: 1.6; }
-  .section-h .gn { font-family: var(--mono, monospace); font-size: 11px;
-                   color: var(--ink-3, #858B92); letter-spacing: 0;
-                   text-transform: none; margin-left: 8px; }
-</style>

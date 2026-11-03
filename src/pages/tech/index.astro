@@ -1,4 +1,6 @@
 ---
+import { getData } from '../../v2/data.js';
+import { viewTechs } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
 import { techPages, COLLECTED_AT, openJobs } from '../../lib.js';
 
@@ -37,48 +39,10 @@ const schema = {
   description: desc,
   url: `${site}/tech/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewTechs 가 그립니다. */
+const D = getData();
+const html = viewTechs(D);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow"><a href="/">전체 채용공고</a></div>
-      <h1>기술·역량 <em>{tags.length}</em></h1>
-      <div class="meta">
-        진행중 공고 <b>{total.toLocaleString('ko-KR')}</b>건에서 뽑았습니다 ·
-        공고 요약 기준 · <b>{COLLECTED_AT.replace(/-/g, '.')}</b>
-      </div>
-      <p class="lede">
-        회사가 쓴 자격요건과 우대사항에서 실제로 요구하는 기술만 골라냈습니다.
-        하나를 누르면 그 기술을 요구하는 공고가 모두 나오고, 거기서 함께
-        요구되는 다른 기술로 이어서 넘어갈 수 있습니다.
-      </p>
-    </div>
-  </header>
-
-  <main class="wrap">
-    {ordered.map((g) => (
-      <section class="grp">
-        <div class="section-h">{g.cat}<span class="gn">{g.sum.toLocaleString('ko-KR')}건</span></div>
-        <div class="chips">
-          {g.items.map((t) => (
-            <a class="chip" href={`/tech/${t.slug}/`}>{t.name}<span class="n">{t.count}</span></a>
-          ))}
-        </div>
-      </section>
-    ))}
-
-    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="techs">
+  <main class="wrap" set:html={html} />
 </Base>
-
-<style>
-  .grp { margin-bottom: 4px; }
-  .section-h .gn { font-family: var(--mono, monospace); font-size: 11px;
-                   color: var(--ink-3, #858B92); letter-spacing: 0;
-                   text-transform: none; margin-left: 8px; }
-  .chips { margin-bottom: 18px; }
-  .chips .chip { text-decoration: none; }
-  .chips .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
-  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
-                    opacity: .6; margin-left: 5px; }
-</style>

@@ -1,6 +1,7 @@
 ---
+import { getData } from '../v2/data.js';
+import { viewRole } from '../v2/views.js';
 import Base from '../layouts/Base.astro';
-import JobCard from '../components/JobCard.astro';
 import { roles, byRole, byDeadline, isAlways, daysLeft, industriesOf, industrySlug, jobTags, tagInfo, COLLECTED_AT } from '../lib.js';
 
 /*
@@ -104,131 +105,10 @@ const schema = {
   description: desc,
   url: `${site}/role/${code}/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewRole 가 그립니다. */
+const D = getData();
+const html = viewRole(D, code);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow"><a href="/">전체 채용공고</a></div>
-      <h1>{role.name} 채용 <em>{jobs.length}</em></h1>
-      <div class="meta">
-        <b>{cos.length}</b>개사 공식 채용페이지 ·
-        마감 있는 공고 <b>{deadlineN}</b>건 · 상시채용 <b>{alwaysN}</b>건 ·
-        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
-        {topInds.length > 0 && <span> · 주로 {topInds.join('·')} 분야</span>}
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="rolestats">
-      <div><b>{jobs.length.toLocaleString('ko-KR')}</b><span>진행중 공고</span></div>
-      <div><b>{cos.length.toLocaleString('ko-KR')}</b><span>기업</span></div>
-      <div><b>{freshN.toLocaleString('ko-KR')}</b><span>오늘 신규</span></div>
-      <div class={soonN ? 'urgent' : ''}><b>{soonN.toLocaleString('ko-KR')}</b><span>3일 내 마감</span></div>
-    </div>
-
-    {topInds.length > 0 && (
-      <>
-        <div class="section-h">이 직무가 나오는 분야</div>
-        <div class="chips techs">
-          {[...indCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([n, c]) => (
-            <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
-          ))}
-        </div>
-      </>
-    )}
-
-    {topTechs.length > 0 && (
-      <>
-        <div class="section-h">이 직무가 요구하는 기술</div>
-        <div class="chips techs">
-          {topTechs.map(([n, c]) => (
-            <a class="chip" href={`/tech/${tagInfo(n).slug}/`}>{n}<span class="n">{c}</span></a>
-          ))}
-        </div>
-      </>
-    )}
-
-    <div class="section-h">이 직무를 뽑는 기업</div>
-    <div class="chips cos" id="cos" data-open="false">
-      {cos.map((n, i) => (
-        <span class="chip" data-extra={i >= FOLD_AT ? 'y' : null}>{n}</span>
-      ))}
-    </div>
-    {cos.length > FOLD_AT && (
-      <button type="button" id="cos-toggle" class="cos-more"
-              aria-expanded="false" aria-controls="cos">
-        기업 {cos.length - FOLD_AT}곳 더 보기
-      </button>
-    )}
-
-    <div class="section-h">진행중인 채용</div>
-    {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
-      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
-        다른 직무를 살펴보시거나 전체 목록에서 검색해 보세요.</div>
-    )}
-
-    <div class="section-h">다른 직무</div>
-    <ul class="archive">
-      {roles().filter((r) => r.code !== code).map((r) => (
-        <li><a href={`/role/${r.code}/`}>{r.name} 채용</a><time>{r.jobs.length}건</time></li>
-      ))}
-    </ul>
-
-    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="roles">
+  <main class="wrap" set:html={html} />
 </Base>
-
-<script>
-  /*
-   * 기업 이름 더 보기 / 접기.
-   * 자바스크립트가 막혀 있어도 이름은 모두 보입니다. 접는 일은 CSS 가 하고,
-   * 그 CSS 는 data-open="false" 일 때만 듣습니다. 스크립트는 값만 뒤집습니다.
-   */
-  const box = document.getElementById('cos');
-  const btn = document.getElementById('cos-toggle');
-  if (box && btn) {
-    const hidden = box.querySelectorAll('[data-extra]').length;
-    btn.addEventListener('click', () => {
-      const open = box.dataset.open === 'true';
-      box.dataset.open = open ? 'false' : 'true';
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      btn.textContent = open ? `기업 ${hidden}곳 더 보기` : '접기';
-    });
-  }
-</script>
-
-<style>
-  /* 머리 숫자 네 개 (2026-11-02) */
-  .rolestats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-               background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
-               margin: 18px 0 4px; }
-  @media (min-width: 640px) { .rolestats { grid-template-columns: repeat(4, 1fr); } }
-  .rolestats div { background: var(--paper, #fff); padding: 13px 14px; }
-  .rolestats b { display: block; font-family: var(--mono, monospace); font-size: 21px;
-                 font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
-  .rolestats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92);
-                    margin-top: 3px; }
-  .rolestats .urgent b { color: var(--urgent, #B4322B); }
-
-  .chips.techs { margin-bottom: 10px; }
-  .chips.techs .chip { text-decoration: none; cursor: pointer; }
-  .chips.techs .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
-  .chips.techs .chip .n { font-family: var(--mono, monospace); font-size: 11px;
-                          opacity: .6; margin-left: 5px; }
-
-  /* 기업 목록. 누르는 필터가 아니라 보여주기용이라 커서를 바꾸지 않습니다. */
-  .chips.cos { margin-bottom: 8px; }
-  .chips.cos .chip { cursor: default; }
-
-  /* 접힌 상태에서만 뒤쪽 이름을 숨깁니다. 자바스크립트가 없으면 모두 보입니다. */
-  .chips.cos[data-open="false"] .chip[data-extra] { display: none; }
-
-  .cos-more {
-    display: inline-block; margin: 0 0 8px;
-    padding: 6px 12px; border: 1px solid var(--line); border-radius: 2px;
-    background: var(--paper); color: var(--ink);
-    font-family: var(--mono); font-size: 12.5px; cursor: pointer;
-  }
-  .cos-more:hover { border-color: var(--steel); color: var(--steel); }
-</style>

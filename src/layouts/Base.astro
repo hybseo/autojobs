@@ -1,7 +1,14 @@
 ---
 import '../styles/global.css';
 import { ldJson } from '../lib.js';
-const { title, description, canonical, schema, noindex } = Astro.props;
+import { getData } from '../v2/data.js';
+import { NAVS, scanBar } from '../v2/views.js';
+/*
+ * nav  — 메뉴에서 밑줄을 그을 칸 (home·jobs·companies·industries·roles·techs·scan)
+ * q    — 검색창에 미리 넣어 둘 글자 (/jobs/?q= 로 들어왔을 때)
+ */
+const { title, description, canonical, schema, noindex, nav = '', q = '' } = Astro.props;
+const D = getData();
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const url = canonical ?? (site + Astro.url.pathname);
 ---
@@ -111,76 +118,32 @@ const url = canonical ?? (site + Astro.url.pathname);
   */}
   {schema && <script type="application/ld+json" set:html={ldJson(schema)} />}
 
-<style is:global>
-  /* 사이트 공통 헤더. 사양서 감각에 맞춰 Plex Mono 로 자간을 넓힌 워드마크입니다. */
-  header.site {
-    border-bottom: 1px solid var(--line, #DDE1DE);
-    background: var(--paper, #fff);
-  }
-  /*
-   * 넓은 화면에서는 워드마크 줄을 붙여둡니다. 검색창·탭과 함께
-   * 세 줄이 고정되어 스크롤 중에도 조작할 수 있습니다.
-   *
-   * 좁은 화면에서는 붙이지 않습니다. 세로 700px 중 고정 영역이
-   * 166px 이면 공고 볼 자리가 그만큼 줄어듭니다. 모바일에서 사이트
-   * 이름이 계속 보일 이유는 약합니다.
-   */
-  @media (min-width: 861px) {
-    header.site { position: sticky; top: 0; z-index: 40; }
-  }
-  header.site .wrap {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-  }
-  /*
-   * 워드마크는 사이트 이름입니다. 17px 은 본문(16px)과 거의 같아서
-   * 이름이 아니라 작은 라벨로 읽혔습니다. 24px 로 키우고 설명은
-   * 그만큼 물러나게 해 위계를 만듭니다.
-   */
-  /*
-   * 워드마크 (2026-11-02 대표님 결정: 오라클처럼)
-   *
-   * 전에는 고정폭(Plex Mono)에 자간 .12em 이었습니다. 고정폭은 좁은 J 가
-   * 넓은 O 와 같은 칸을 차지해 글자 사이가 성기게 벌어집니다. 사양서
-   * 느낌은 나지만 워드마크로는 흩어져 보입니다.
-   *
-   * 비례폭 산세리프로 바꾸고 자간을 조였습니다. 오라클 워드마크의 단단한
-   * 인상은 글꼴 종류보다 글자 폭과 자간에서 나옵니다.
-   *
-   * 색은 브랜드 빨강입니다. 마감 임박 빨강보다 한 단 깊습니다 —
-   * global.css 의 --brand 주석을 보세요.
-   */
-  .wordmark {
-    font-family: 'IBM Plex Sans KR', system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 26px;
-    letter-spacing: -.02em;
-    color: var(--brand, #A32E25);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .wordmark:hover { color: var(--urgent, #B4322B); }
-  .wm-tag { font-size: 13px; color: #858B92; letter-spacing: -.01em; }
-  @media (max-width: 520px) {
-    header.site .wrap {
-      flex-direction: column; gap: 3px; align-items: flex-start;
-      padding-top: 14px; padding-bottom: 14px;
-    }
-    .wordmark { font-size: 22px; }
-    .wm-tag { font-size: 12px; }
-  }
-</style>
+{/*
+    머리줄 (2026-11-03 대표님 확정)
+    11-02 확정본의 검정 머리줄을 걷어내고 빨간 워드마크를 올렸습니다.
+    로고 · 검색창 / 메뉴 / 점검 상태, 세 줄이 모든 쪽에 똑같이 붙습니다.
+    스타일은 global.css 의 .top · .gnav · .scanbar 입니다.
+  */}
 </head>
 <body>
-  <header class="site">
+  <header class="top">
     <div class="wrap">
-      <a class="wordmark" href="/" aria-label="SEARCHJOB 홈">SEARCHJOB</a>
-      <span class="wm-tag">기업 공식 채용페이지 통합 검색</span>
+      <a class="brand" href="/" aria-label="SEARCHJOB 홈"><b>SEARCHJOB</b><small>기업 공식 채용페이지 통합 검색</small></a>
+      <div class="search">
+        {/* 검색은 공고 목록(/jobs/)이 받습니다. 그 쪽에서는 치는 대로 걸러지고,
+            다른 쪽에서는 Enter 로 넘어갑니다. 기업 목록에서는 기업을 거릅니다. */}
+        <form action="/jobs/" method="get" role="search">
+          <input id="q" name="q" type="search" placeholder="직무 · 기업 · 기술로 찾기" autocomplete="off" value={q} aria-label="공고 검색" />
+        </form>
+      </div>
     </div>
+    <nav class="gnav" aria-label="사이트 메뉴"><div class="wrap">
+      {NAVS.map(([k, label, href]) => (
+        <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>
+      ))}
+    </div></nav>
   </header>
+  <div class="scanbar"><div class="wrap" set:html={scanBar(D)} /></div>
   <slot />
   <footer class="wrap">
     {/* 모든 페이지에서 소개로 갈 수 있게 둡니다. 홈 제목 영역에도
@@ -202,6 +165,21 @@ const url = canonical ?? (site + Astro.url.pathname);
        사이트 문제가 아니라 토큰 문제였습니다.
        토큰을 바꿀 일이 있으면 배포 뒤 하루쯤 지나 대시보드에 숫자가
        올라오는지 반드시 확인하세요. -->
+  <script is:inline>
+    /* 「N건 더 보기」 — 서버가 다 그려 두고 숨긴 카드를 60건씩 엽니다.
+       (산업·직무·기술·기업 쪽. 검색엔진은 숨긴 카드까지 다 읽습니다.) */
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-reveal]');
+      if (!b) return;
+      var box = b.previousElementSibling;
+      var hid = box ? box.querySelectorAll(':scope > [hidden]') : [];
+      var n = Number(b.getAttribute('data-reveal')) || 60;
+      for (var i = 0; i < hid.length && i < n; i += 1) hid[i].hidden = false;
+      var left = hid.length - Math.min(n, hid.length);
+      if (left > 0) b.textContent = left.toLocaleString('ko-KR') + '건 더 보기';
+      else b.remove();
+    });
+  </script>
   <script type="module" defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "4da0c82f0e654b77806a517d1b4f94ad"}'></script>
 </body>

@@ -57,6 +57,10 @@ export async function GET({ site }) {
      *   /scan/        점검 기록. 이 사이트의 신뢰 근거입니다.
      */
     { loc: `${base}/tech/`, pri: '0.9', freq: 'daily', mod: today },
+    /* 2026-11-03 버전2 에서 생긴 목록 쪽. 공고 전체(/jobs/)와 산업·직무 목록. */
+    { loc: `${base}/jobs/`, pri: '0.9', freq: 'daily', mod: today },
+    { loc: `${base}/industry/`, pri: '0.7', freq: 'daily', mod: today },
+    { loc: `${base}/role/`, pri: '0.7', freq: 'daily', mod: today },
     { loc: `${base}/companies/`, pri: '0.8', freq: 'daily', mod: today },
     { loc: `${base}/scan/`, pri: '0.7', freq: 'daily', mod: today },
     ...techPages().map((t) => ({ loc: `${base}/tech/${t.slug}/`, pri: '0.8', freq: 'daily', mod: today })),

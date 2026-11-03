@@ -1,4 +1,6 @@
 ---
+import { getData } from '../../v2/data.js';
+import { viewCompanies } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
 import {
   companyPages, openJobs, closedJobs, isRecentlyClosed,
@@ -65,130 +67,52 @@ const schema = {
   description: desc,
   url: `${site}/companies/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewCompanies 가 그립니다. */
+const D = getData();
+const html = viewCompanies(D);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow"><a href="/">전체 채용공고</a><a href="/scan/">점검 기록</a></div>
-      <h1>우리가 매일 확인하는 기업 <em>{rows.length}</em></h1>
-      <div class="meta">
-        공식 채용페이지만 직접 확인합니다 · 하루 두 번 ·
-        <b>{COLLECTED_AT.replace(/-/g, '.')}</b> 기준
-      </div>
-      <p class="lede">
-        채용 플랫폼에만 올라오는 공고나 비공개 채용은 다루지 않습니다.
-        지금 뽑는 자리가 없는 회사도 목록에 남깁니다 — 확인은 하고 있는데
-        공고가 없다는 사실도 정보이기 때문입니다.
-      </p>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <div class="stats">
-      <div><b>{rows.length.toLocaleString('ko-KR')}</b><span>확인 중인 기업</span></div>
-      <div><b>{hiring.toLocaleString('ko-KR')}</b><span>지금 뽑는 기업</span></div>
-      <div><b>{empty.toLocaleString('ko-KR')}</b><span>공고 없음</span></div>
-    </div>
-
-    <div class="section-h">산업</div>
-    <div class="chips">
-      {inds.map(([n, c]) => (
-        <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
-      ))}
-    </div>
-
-    <div class="countrow">
-      <div class="count" id="count"><b>{rows.length.toLocaleString('ko-KR')}</b>개사</div>
-      <select class="sortbtn" id="sort" aria-label="정렬 기준">
-        <option value="open">공고 많은 순</option>
-        <option value="fresh">오늘 신규순</option>
-        <option value="name">가나다</option>
-      </select>
-    </div>
-
-    <ul class="colist" id="colist">
-      {rows.map((r) => (
-        <li data-open={r.open} data-fresh={r.fresh} data-name={r.name}>
-          <a href={`/company/${r.slug}/`}>
-            <span class="av" aria-hidden="true">{r.name.trim().charAt(0)}</span>
-            <span class="nm">
-              {r.name}
-              {r.inds[0] && <span class="in">{r.inds[0]}</span>}
-            </span>
-            <span class="rt">
-              {r.open > 0
-                ? <><b>{r.open}</b>{r.fresh > 0 && <i>오늘 +{r.fresh}</i>}</>
-                : <em>공고 없음</em>}
-            </span>
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    <p style="margin:28px 0 56px"><a class="back" href="/">← 전체 공고 보기</a></p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="companies">
+  <main class="wrap" set:html={html} />
 </Base>
 
 <script>
-  /*
-   * 정렬. 목록은 서버가 이미 공고 많은 순으로 그려 두었고, 여기서는
-   * 고른 기준으로 다시 줄만 세웁니다. 스크립트가 막혀도 목록은 보입니다.
-   */
-  const list = document.getElementById('colist');
-  const sel = document.getElementById('sort');
-  if (list && sel) {
-    const items = [...list.children];
-    const num = (el, k) => Number(el.dataset[k] || 0);
-    sel.addEventListener('change', () => {
-      const how = sel.value;
-      const sorted = [...items].sort((a, b) => {
-        if (how === 'name') return a.dataset.name.localeCompare(b.dataset.name, 'ko');
-        if (how === 'fresh') return num(b, 'fresh') - num(a, 'fresh') || num(b, 'open') - num(a, 'open');
-        return num(b, 'open') - num(a, 'open') || a.dataset.name.localeCompare(b.dataset.name, 'ko');
-      });
-      const frag = document.createDocumentFragment();
-      sorted.forEach((el) => frag.appendChild(el));
-      list.appendChild(frag);
-    });
-  }
+  /* 기업 목록: 정렬 · 산업 칩 · 검색창 — 서버가 그려 둔 줄을 그 자리에서 고릅니다. */
+  const rows = document.getElementById('coRows');
+  const count = document.getElementById('coCount');
+  const qbox = document.getElementById('q');
+  let ind = '';
+  let q = '';
+  const all = rows ? [...rows.children] : [];
+  const apply = () => {
+    let n = 0;
+    for (const r of all) {
+      const ok = (!ind || (r.dataset.ind || '').split('|').includes(ind))
+        && (!q || (r.dataset.n || '').includes(q));
+      r.hidden = !ok;
+      if (ok) n += 1;
+    }
+    if (count) count.textContent = `${n.toLocaleString('ko-KR')}개사`;
+  };
+  document.addEventListener('click', (e) => {
+    const s = e.target.closest('[data-sort]');
+    if (s && rows) {
+      const k = s.getAttribute('data-sort');
+      document.querySelectorAll('[data-sort]').forEach((b) => b.setAttribute('aria-pressed', String(b === s)));
+      const name = (r) => r.querySelector('.nm').firstChild.textContent.trim();
+      all.sort((a, b) => (k === 'new' ? (b.dataset.w - a.dataset.w) || (b.dataset.o - a.dataset.o)
+        : k === 'ko' ? name(a).localeCompare(name(b), 'ko')
+          : (b.dataset.o - a.dataset.o) || name(a).localeCompare(name(b), 'ko')));
+      all.forEach((r) => rows.appendChild(r));
+      return;
+    }
+    const c = e.target.closest('button.chip[data-ind]');
+    if (c) {
+      const v = c.getAttribute('data-ind');
+      ind = ind === v ? '' : v;
+      document.querySelectorAll('button.chip[data-ind]').forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute('data-ind') === ind)));
+      apply();
+    }
+  });
+  /* 이 쪽의 검색창은 기업을 거릅니다. Enter 를 치면 공고 검색으로 넘어갑니다. */
+  if (qbox) qbox.addEventListener('input', () => { q = qbox.value.trim().toLowerCase(); apply(); });
 </script>
-
-<style>
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE);
-           margin: 18px 0 4px; }
-  .stats div { background: var(--paper, #fff); padding: 14px 15px; }
-  .stats b { display: block; font-family: var(--mono, monospace); font-size: 22px;
-             font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
-  .stats span { display: block; font-size: 11.5px; color: var(--ink-3, #858B92); margin-top: 3px; }
-
-  .chips .chip { text-decoration: none; }
-  .chips .chip:hover { border-color: var(--steel, #2D5F7C); color: var(--steel, #2D5F7C); }
-  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
-                    opacity: .6; margin-left: 5px; }
-
-  .countrow { display: flex; align-items: center; gap: 10px; margin: 20px 0 8px; }
-  .count { font-family: var(--mono, monospace); font-size: 12px; color: var(--ink-3, #858B92); }
-  .count b { color: var(--ink, #16181C); font-weight: 600; }
-  .countrow .sortbtn { margin-left: auto; }
-
-  .colist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;
-            gap: 1px; background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
-  .colist a { display: flex; align-items: center; gap: 11px; padding: 12px 14px;
-              background: var(--paper, #fff); text-decoration: none; }
-  .colist a:hover { background: var(--steel-soft, #E7EEF2); }
-  .colist .av { width: 28px; height: 28px; flex: none; background: var(--surface, #F1F3F2);
-                border: 1px solid var(--line, #DDE1DE); display: grid; place-items: center;
-                font-size: 12px; color: var(--ink-2, #4B5158); }
-  .colist .nm { font-size: 13.5px; font-weight: 500; color: var(--ink, #16181C); min-width: 0; }
-  .colist .in { font-family: var(--mono, monospace); font-size: 10.5px;
-                color: var(--ink-3, #858B92); margin-left: 7px; }
-  .colist .rt { margin-left: auto; text-align: right; flex: none; }
-  .colist .rt b { font-family: var(--mono, monospace); font-size: 16px; font-weight: 600;
-                  color: var(--ink, #16181C); }
-  .colist .rt i { font-style: normal; font-family: var(--mono, monospace); font-size: 10.5px;
-                  color: var(--steel, #2D5F7C); margin-left: 6px; }
-  .colist .rt em { font-style: normal; font-family: var(--mono, monospace); font-size: 11px;
-                   color: var(--ink-3, #858B92); }
-  @media (max-width: 480px) { .colist .in { display: none; } }
-</style>

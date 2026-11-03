@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getData } from '../../v2/data.js';
+import { viewIndustries } from '../../v2/views.js';
+/* 산업 목록 (버전2 · 2026-11-03) — 산업 여덟 칸과 직무 바로 가기. */
+const D = getData();
+const html = viewIndustries(D);
+const title = '산업별 채용공고 | SEARCHJOB';
+const desc = `IT·제약바이오·반도체·게임·중공업·전기전자·자동차부품·로봇, ${D.industries.length}개 산업의 기업 공식 채용공고를 모았습니다.`;
+---
+<Base title={title} description={desc} nav="industries">
+  <main class="wrap" set:html={html} />
+</Base>

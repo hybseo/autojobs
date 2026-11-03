@@ -1,6 +1,7 @@
 ---
+import { getData } from '../../v2/data.js';
+import { viewTech } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
-import JobCard from '../../components/JobCard.astro';
 import {
   techPages, byTech, tagsWith, byDeadline, isAlways, daysLeft,
   COLLECTED_AT, industriesOf, objParticle,
@@ -65,89 +66,10 @@ const schema = {
   description: desc,
   url: `${site}/tech/${slug}/`,
 };
+/* 화면 (버전2 · 2026-11-03 대표님 확정) — src/v2/views.js 의 viewTech 가 그립니다. */
+const D = getData();
+const html = viewTech(D, tech.name);
 ---
-<Base title={title} description={desc} schema={schema}>
-  <header class="mast">
-    <div class="wrap">
-      <div class="eyebrow">
-        <a href="/tech/">기술 전체</a>{tech.cat && <span class="cat">{tech.cat}</span>}
-      </div>
-      <h1>{tech.name} 채용 <em>{jobs.length}</em></h1>
-      <div class="meta">
-        <b>{cos.length}</b>개 기업 · 오늘 신규 <b>{freshN}</b>건 ·
-        3일 내 마감 <b>{soonN}</b>건 ·
-        마감 있는 공고 <b>{deadlineN}</b>건 · 상시채용 <b>{alwaysN}</b>건
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap">
-    {together.length > 0 && (
-      <>
-        <div class="section-h">이 기술을 요구하는 공고가 함께 요구하는 것</div>
-        <ul class="withs">
-          {together.map((w) => (
-            <li>
-              <a href={`/tech/${w.slug}/`}>
-                <span class="n">{w.tag}</span>
-                <span class="c">{jobs.length}건 중 <b>{w.count}</b>건 겹침</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </>
-    )}
-
-    {topInds.length > 0 && (
-      <>
-        <div class="section-h">이 기술이 걸리는 분야</div>
-        <div class="chips">
-          {topInds.map(([n, c]) => (
-            <span class="chip">{n}<span class="n">{c}</span></span>
-          ))}
-        </div>
-      </>
-    )}
-
-    <div class="section-h">진행중인 채용</div>
-    {jobs.length ? jobs.map((j) => <JobCard job={j} />) : (
-      <div class="empty"><b>지금은 진행중인 공고가 없습니다</b>
-        기술 전체 목록에서 다른 기술을 살펴보세요.</div>
-    )}
-
-    {topCos.length > 0 && (
-      <>
-        <div class="section-h">이 기술을 뽑는 기업</div>
-        <ul class="archive">
-          {topCos.map(([n, c]) => (
-            <li><span>{n}</span><time>{c}건</time></li>
-          ))}
-        </ul>
-      </>
-    )}
-
-    <p style="margin:28px 0 56px">
-      <a class="back" href="/tech/">← 기술 전체 보기</a>
-    </p>
-  </main>
+<Base title={title} description={desc} schema={schema} nav="techs">
+  <main class="wrap" set:html={html} />
 </Base>
-
-<style>
-  .eyebrow .cat { color: #7FB3D0; }
-
-  /* 함께 요구되는 기술. 이 페이지에서 가장 많이 눌리는 자리라 크게 둡니다. */
-  .withs { list-style: none; margin: 0 0 4px; padding: 0; display: grid; gap: 1px;
-           background: var(--line, #DDE1DE); border: 1px solid var(--line, #DDE1DE); }
-  @media (min-width: 720px) { .withs { grid-template-columns: repeat(2, 1fr); } }
-  .withs a { display: flex; align-items: baseline; gap: 10px; padding: 13px 15px;
-             background: var(--paper, #fff); text-decoration: none; }
-  .withs a:hover { background: var(--steel-soft, #E7EEF2); }
-  .withs .n { font-size: 14px; font-weight: 600; color: var(--ink, #16181C); }
-  .withs .c { margin-left: auto; font-family: var(--mono, monospace); font-size: 11.5px;
-              color: var(--ink-3, #858B92); white-space: nowrap; }
-  .withs .c b { color: var(--steel, #2D5F7C); font-weight: 600; font-size: 13px; }
-
-  .chips .chip .n { font-family: var(--mono, monospace); font-size: 11px;
-                    opacity: .6; margin-left: 5px; }
-  .chips .chip { cursor: default; }
-</style>

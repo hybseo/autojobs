@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getData } from '../../v2/data.js';
+import { viewRoles } from '../../v2/views.js';
+/* 직무 목록 (버전2 · 2026-11-03). 직무 쪽(/role/{code}/)은 [...path].astro 가 만듭니다. */
+const D = getData();
+const html = viewRoles(D);
+const title = '직무별 채용공고 | SEARCHJOB';
+const desc = `영업·경영지원·소프트웨어개발 등 직무 ${D.roles.length}개로 기업 공식 채용공고를 나눠 봅니다.`;
+---
+<Base title={title} description={desc} nav="roles">
+  <main class="wrap" set:html={html} />
+</Base>

@@ -1,142 +1,417 @@
+/*
+ * 서치잡 버전2 화면 (2026-11-03 대표님 확정)
+ * ============================================================
+ * 11-02 에 확정한 「서치잡 버전2 미리보기」의 스타일을 그대로 옮겼습니다.
+ * 바꾼 것은 둘뿐입니다.
+ *   1) 검정 머리줄을 걷어내고 빨간 워드마크 (흰 바탕)
+ *   2) 폰 화면 손질 — 첫 화면 압축, 필터 접기, 공고 상세 아래 고정 버튼
+ *
+ * 화면을 그리는 함수는 src/v2/views.js 에 있습니다. 미리보기의 함수를
+ * 그대로 옮겨 서버(빌드)와 /jobs/ 화면의 브라우저가 같이 씁니다.
+ * 그래서 클래스 이름도 미리보기와 같습니다. 하나만 다릅니다 —
+ * 미리보기의 .cta(지원 버튼 묶음)는 소개 페이지의 .cta 버튼과 이름이
+ * 겹쳐 .acts 로 바꿨습니다.
+ */
 :root{
   --ink:#16181C; --ink-2:#4B5158; --ink-3:#858B92;
   --paper:#FFFFFF; --surface:#F1F3F2; --line:#DDE1DE;
   --steel:#2D5F7C; --steel-soft:#E7EEF2;
+  --urgent:#B4322B; --urgent-soft:#FBEDEC;
   /* 브랜드 빨강 — 워드마크 전용 (2026-11-02 대표님 결정).
      마감 임박 빨강(--urgent #B4322B)보다 한 단 깊게 둡니다. 같은 색이면
-     로고와 「오늘 마감」이 같은 신호로 읽힙니다. 오라클 빨강(#C74634)은
-     --urgent 와 거의 같아 쓰지 않았습니다. */
+     로고와 「오늘 마감」이 같은 신호로 읽힙니다. */
   --brand:#A32E25;
-  --urgent:#B4322B; --urgent-soft:#FBEDEC;
   --warn:#8A5A08; --warn-soft:#FBF2E2;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
   --sans:"IBM Plex Sans KR",system-ui,sans-serif;
+  color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:var(--sans);background:var(--surface);color:var(--ink);
-  line-height:1.6;font-feature-settings:"tnum";-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  line-height:1.6;font-feature-settings:"tnum";font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;font-size:14px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1240px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px))}
 
-/* 쪽 제목 영역 (2026-11-02 대표님 지시: 검정 모자를 걷어냅니다)
- *
- * 전에는 검정 바탕에 흰 글씨였습니다. padding 40/34 에 제목·메타·한 줄
- * 소개까지 들어가 홈에서 약 210px 짜리 검정 덩어리가 됐습니다. 폰 화면의
- * 4분의 1이고, 모든 페이지에 똑같이 붙어 되풀이되는 뚜껑처럼 보였습니다.
- *
- * 버전2 에서는 그 자리를 마감 그래프가 가져갑니다. 「11월 8일 하루에
- * 143건이 마감됩니다」가 「지금 지원할 수 있는 자리 4,973」보다 할 말이
- * 많습니다. 검정이 앞을 막으면 그래프가 화면 밖으로 밀립니다.
- *
- * 빨간 워드마크가 들어오면서 더 그렇습니다. 검정과 빨강이 둘 다 세면
- * 서로 싸웁니다. 빨강이 브랜드를 맡고 검정은 비켜 줍니다.
- */
-.mast{background:var(--paper);color:var(--ink);padding:22px 0 20px;
+/* ── 머리 (검정 걷어냄 · 빨간 워드마크) ─────────────── */
+.top{background:var(--paper);color:var(--ink);position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
   border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ink-3);display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
-.eyebrow a{text-decoration:none;color:inherit}
-.eyebrow a:hover{color:var(--steel)}
-.mast h1{font-size:clamp(24px,5vw,38px);font-weight:600;letter-spacing:-.02em;line-height:1.25}
-.mast h1 em{font-style:normal;font-family:var(--mono);font-weight:600;color:var(--steel)}
-.meta{margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
-.meta b{color:var(--ink);font-weight:600}
-/* 제목 영역 안의 한 줄 소개.
- *
- * 어두운 배경이라 본문보다 밝게, 그러나 제목보다는 어둡게 둡니다.
- * 글줄은 58자 안쪽으로 잡아 한 줄이 끝까지 늘어지지 않게 합니다.
- * 자세한 내용은 index.astro 의 .lede 주석을 보세요. (2026-10-16) */
-.lede{margin-top:12px;font-size:14px;line-height:1.7;color:var(--ink-2);max-width:58ch}
-.lede a{color:var(--steel);text-decoration:none;white-space:nowrap;margin-left:4px}
-.lede a:hover{text-decoration:underline}
-@media(max-width:560px){.lede{font-size:13.5px;margin-top:12px}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);
+  z-index:40;background:var(--paper)}
+.top .wrap{padding-block:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:12px;white-space:nowrap}
+.brand b{font-family:var(--sans);font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--brand);line-height:1}
+.brand small{font-family:var(--sans);font-weight:400;font-size:13px;letter-spacing:-.01em;color:var(--ink-3)}
+.search{flex:1;min-width:150px;display:flex;max-width:520px;margin-left:auto}
+.search input{flex:1;min-width:0;font-family:var(--sans);font-size:13.5px;padding:9px 12px;
+  border:1px solid #C9CFCB;border-radius:2px;background:#fff;color:var(--ink)}
+.search input::placeholder{color:var(--ink-3)}
+.search input:focus{outline:2px solid var(--steel);outline-offset:-1px}
+.gnav{border-top:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.gnav .wrap{display:flex;gap:2px;padding-block:0;flex-wrap:nowrap;align-items:stretch}
+.gnav a{font-size:13px;padding:10px 12px;color:var(--ink-2);white-space:nowrap;
+  border-bottom:2px solid transparent}
+.gnav a:first-child{margin-left:-12px}
+.gnav a:hover{color:var(--ink)}
+.gnav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--brand);font-weight:600}
+/* 폰: 로고와 검색창을 한 줄에 (확정본 그대로). 소개 문구는 로고 밑으로 */
+@media(max-width:520px){
+  .top .wrap{flex-wrap:nowrap;gap:12px;padding-block:11px}
+  .brand{flex-direction:column;gap:3px}
+  .brand b{font-size:21px}.brand small{font-size:10.5px;letter-spacing:-.02em}
+  .search{min-width:0;max-width:none}
+  .search input{font-size:13px;padding:8px 10px}
+  /* 점검 상태 줄을 한 줄로 — 「425개사 · 하루 두 번」은 바로 아래 점검 띠에 같은 말이 있습니다 */
+  .scanbar .wrap{flex-wrap:nowrap}
+  .scanbar .wrap>span:nth-child(2){display:none}
+  /* 메뉴 일곱 칸이 390px 폭에 다 들어가게 좌우 여백을 줄입니다 */
+  .gnav .wrap{gap:2px;padding-block:0;flex-wrap:nowrap}  /* 위 .top .wrap 폰 규칙이 메뉴 줄에도 걸리지 않게 */
+  .gnav a{padding:10px 9px}
+  .gnav a:first-child{margin-left:-9px}
+}
 
-.controls{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-.ctrl-in{padding:14px 0 12px}
-.searchrow{display:flex;gap:10px;margin-bottom:12px}
-#q{flex:1;min-width:0;font-family:var(--sans);font-size:15px;padding:11px 14px;
-  border:1px solid var(--line);border-radius:2px;background:var(--surface);color:var(--ink)}
-#q:focus{outline:2px solid var(--steel);outline-offset:-1px;background:#fff}
-.sortbtn{font-family:var(--mono);font-size:12px;padding:11px 14px;border:1px solid var(--line);
-  background:var(--paper);cursor:pointer;border-radius:2px;color:var(--ink-2);white-space:nowrap}
-.sortbtn:hover{border-color:var(--steel);color:var(--steel)}
+/* ── 점검 상태 띠 ─────────────────────────────────── */
+.scanbar{background:var(--paper);border-bottom:1px solid var(--line)}
+.scanbar .wrap{padding-block:9px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.scanbar b{color:var(--ink);font-weight:600}
+.scanbar .ok::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#2F7D4F;margin-right:6px;vertical-align:1px}
+.scanbar a{color:var(--steel);margin-left:auto;white-space:nowrap}
+.scanbar a:hover{text-decoration:underline}
+
+main{padding-block:20px 60px}
+.h1{font-size:clamp(20px,4.4vw,28px);font-weight:600;letter-spacing:-.02em;line-height:1.3;
+  text-wrap:balance}
+.sub{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:6px}
+.sub b{color:var(--ink-2);font-weight:500}
+.sect{margin-top:28px}
+.sect-h{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.sect-h h2{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.sect-h .more{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--steel)}
+.sect-h .more:hover{text-decoration:underline}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ── 마감 그래프 ──────────────────────────────────── */
+.graph{background:var(--paper);border:1px solid var(--line);padding:18px 16px 12px}
+.graph h2{font-size:clamp(17px,3.8vw,22px);font-weight:600;letter-spacing:-.02em;line-height:1.35}
+.graph h2 em{font-style:normal;font-family:var(--mono);color:var(--urgent);font-weight:600}
+.graph .cap{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:5px}
+.bars{display:flex;gap:3px;align-items:flex-end;height:112px;margin-top:16px}
+.bars a{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;
+  height:100%;gap:3px}
+.bars .v{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);text-align:center;
+  line-height:1;height:10px}
+.bars .b{background:var(--steel-soft);border-top:2px solid var(--steel);min-height:2px}
+.bars a:hover .b{background:#D4E3EB}
+.bars a.hot .b{background:var(--urgent-soft);border-top-color:var(--urgent)}
+.bars a.hot .v{color:var(--urgent);font-weight:600}
+.bars a.sel .b{background:var(--ink);border-top-color:var(--ink)}
+.xaxis{display:flex;gap:3px;margin-top:5px;border-top:1px solid var(--line);padding-top:5px}
+.xaxis span{flex:1;min-width:0;text-align:center;font-family:var(--mono);font-size:9px;
+  color:var(--ink-3);white-space:nowrap;overflow:hidden}
+.xaxis span.we{color:var(--urgent)}
+
+/* ── 숫자 줄 ──────────────────────────────────────── */
+.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:14px}
+.nums div{background:var(--paper);padding:13px 14px}
+.nums .n{font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.02em;
+  line-height:1.1;display:block}
+.nums .l{font-size:11.5px;color:var(--ink-3);margin-top:3px;display:block}
+.nums .urgent .n{color:var(--urgent)}
+@media(min-width:720px){.nums{grid-template-columns:repeat(4,1fr)}}
+
+/* ── 분야 타일 ────────────────────────────────────── */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tile{background:var(--paper);border:1px solid var(--line);padding:13px 14px;display:block}
+.tile:hover{border-color:var(--steel)}
+.tile .t{font-size:13.5px;font-weight:500}
+.tile .n{font-family:var(--mono);font-size:19px;font-weight:600;letter-spacing:-.02em;
+  display:block;margin-top:2px}
+.tile .w{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-left:6px}
+.tile:nth-child(n+5){display:none}
+@media(min-width:720px){
+  .tiles{grid-template-columns:repeat(4,1fr)}
+  .tile:nth-child(n+5){display:block}
+}
+/* 산업이 8칸이 되어(게임 분리) 가로 7칸을 쓰면 한 칸이 혼자 떨어집니다.
+   넓은 화면에서도 4칸 두 줄로 둡니다. */
+
+/* ── 칩 ───────────────────────────────────────────── */
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips+.chips{margin-top:6px}
-.chip{font-size:13px;padding:6px 12px;border:1px solid var(--line);background:var(--paper);
-  cursor:pointer;border-radius:999px;color:var(--ink-2);font-family:var(--sans)}
+.chip{font-size:12.5px;padding:5px 11px;border:1px solid var(--line);background:var(--paper);
+  border-radius:999px;color:var(--ink-2)}
 .chip:hover{border-color:var(--ink-3)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-.chip .n{font-family:var(--mono);font-size:11px;opacity:.6;margin-left:5px}
+.chip .n{font-family:var(--mono);font-size:10.5px;opacity:.6;margin-left:5px}
 
-.count{font-family:var(--mono);font-size:12px;color:var(--ink-3);padding:16px 0 8px}
-.count b{color:var(--ink);font-weight:600}
-.list{padding-bottom:56px}
-
-/* 화면 밖 카드는 나중에 그립니다 (2026-10-16)
- * ------------------------------------------------------------------
- * 보급형 폰에서 홈을 열면 메인 스레드가 한 번에 10초 가까이 붙잡혔습니다.
- * 그 동안 무엇을 눌러도 반응이 없습니다. 실제 이용자 기록에도 그대로
- * 남아 있었습니다 — 필터 펼치기 9,336ms, 검색창 6,184ms.
- *
- * 원인은 우리 자바스크립트가 아니었습니다. 스크립트를 통째로 막고 재도
- * 10,991ms 짜리 작업이 그대로 났습니다. 브라우저가 카드 5,245장을
- * 배치하는 비용 자체입니다.
- *
- * content-visibility:auto 는 "화면에 보일 때까지 이 안은 그리지 말라" 는
- * 뜻입니다. 요소는 문서에 그대로 있고, 검색엔진이 읽는 내용도 그대로이며,
- * 찾기(Ctrl+F)도 됩니다. 그리는 시점만 미룹니다.
- *
- * contain-intrinsic-size 는 아직 안 그린 카드의 자리를 얼마로 잡을지입니다.
- * auto 를 붙이면 한 번 그린 뒤에는 실제 높이를 기억합니다. 값이 실제와
- * 많이 다르면 스크롤 막대가 출렁이므로, 카드 높이를 재서 정했습니다.
- */
-.card{background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:18px 20px;
-  margin-bottom:8px;display:block;text-decoration:none;transition:.15s;
-  content-visibility:auto;contain-intrinsic-size:auto 160px}
-.card:hover{border-color:var(--steel);transform:translateY(-1px)}
+/* ── 공고 카드 ────────────────────────────────────── */
+.list{display:flex;flex-direction:column;gap:8px}
+.card{background:var(--paper);border:1px solid var(--line);padding:13px 15px;display:block;
+  text-align:left;width:100%;transition:.14s;content-visibility:auto;contain-intrinsic-size:auto 128px}
+.card:hover{border-color:var(--steel)}
 .card:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
-.chead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px}
-.co{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;
-  color:var(--steel);text-transform:uppercase}
-.dday{font-family:var(--mono);font-size:12.5px;font-weight:600;white-space:nowrap;
-  padding:2px 8px;border-radius:2px}
-.d-far{color:var(--ink-2);background:var(--surface)}
-.d-warn{color:var(--warn);background:var(--warn-soft)}
-.d-urgent{color:var(--urgent);background:var(--urgent-soft)}
-.ttl{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.45;margin-bottom:9px}
-.facts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.f{font-size:12.5px;padding:3px 9px;background:var(--surface);border-radius:2px;color:var(--ink-2)}
-.f.multi{background:var(--steel-soft);color:var(--steel)}
-/* 원문으로 바로 나가는 카드 표시.
- *
- * 본문을 주지 않는 회사(삼성·현대모비스 등)의 공고는 우리 상세 페이지가
- * 없어 카드를 누르면 새 탭이 열립니다. 표시가 없으면 누를 때마다
- * 놀라게 됩니다. 다른 칩(.f)과 같은 모양이되 글자만 진하게 하고,
- * "여러 직무 포함 가능"(.f.multi)과 헷갈리지 않게 색을 달리합니다.
- *
- * 원래 JobCard.astro 안의 <style> 에 있었는데 2026-10-14 에 여기로
- * 옮겼습니다. 이유는 아래 "왜 여기 있는가" 를 보세요. */
-.facts .f.ext{color:var(--ink);font-variant-numeric:tabular-nums}
-.src{font-size:12px;color:var(--ink-3);margin-bottom:12px}
-.src::before{content:"원공고 ";font-family:var(--mono);font-size:10.5px;letter-spacing:.06em}
+.card .co{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-3);
+  font-family:var(--mono)}
+.card .av{width:19px;height:19px;flex:none;background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:10px;font-family:var(--sans);color:var(--ink-2)}
+.card .co b{color:var(--ink-2);font-weight:500;font-family:var(--sans);font-size:12px}
+.card h3{font-size:14.5px;font-weight:600;line-height:1.4;margin-top:6px;letter-spacing:-.01em}
+.card .ch{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.card .ch span{font-size:11px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;
+  color:var(--ink-2)}
+.card .ch span.k{background:var(--surface)}
+.card .gistline{margin-top:8px;font-size:12.5px;line-height:1.55;color:var(--ink-2);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 
-.gauge{display:flex;align-items:center;gap:10px}
-.g-date{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
-.g-track{flex:1;height:3px;background:var(--line);position:relative;border-radius:2px;min-width:60px}
-.g-fill{position:absolute;inset:0 auto 0 0;background:var(--steel);border-radius:2px;
-  transform-origin:left;transform:scaleX(var(--p,0))}
-.g-fill.urgent{background:var(--urgent)}
-.g-dot{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--paper);
-  border:2.5px solid var(--steel);transform:translate(-50%,-50%)}
-.g-dot.urgent{border-color:var(--urgent)}
-.g-open{flex:1;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+/* 묶음 머리글 — 마감 있는 공고 / 상시 채용 */
+.group{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  padding:16px 2px 8px;border-bottom:1px solid var(--line);margin-bottom:9px}
+.group:first-child{padding-top:2px}
+.group h3{font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.group h3 .mono{font-size:15px;color:var(--steel)}
+.group span{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-left:auto}
 
-.empty{background:var(--paper);border:1px dashed var(--line);padding:44px 20px;
-  text-align:center;color:var(--ink-2);border-radius:2px}
-.empty b{display:block;font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px}
+/* 34일 점검 막대 */
+.scanstrip{background:var(--paper);border:1px solid var(--line);padding:13px 15px 11px;
+  margin-top:8px}
+.scanstrip .sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:13px}
+.scanstrip .sh b{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--ink)}
+.scanstrip .sh .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.scanstrip .sh a{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--steel);
+  white-space:nowrap}
+.scanstrip .sh a:hover{text-decoration:underline}
+.sbars{display:flex;gap:2px;align-items:stretch;height:40px;margin-top:11px}
+.sbars .sc{flex:1;min-width:0;background:var(--surface);display:flex;align-items:flex-end;
+  border-bottom:2px solid var(--steel)}
+.sbars .sc i{display:block;width:100%;background:var(--steel);opacity:.8}
+.sbars .sc:hover i{opacity:1}
+.sbars .sc:hover{background:var(--steel-soft)}
+.sfoot{display:flex;justify-content:space-between;gap:10px;margin-top:5px;
+  font-family:var(--mono);font-size:9.5px;color:var(--ink-3)}
+.sfoot span:nth-child(2){color:var(--ink-3);opacity:.75}
+@media(max-width:480px){.sfoot span:nth-child(2){display:none}}
+.card .tg{display:flex;gap:4px;margin-left:auto;min-width:0;overflow:hidden}
+.card .tg i{font-style:normal;font-family:var(--mono);font-size:10.5px;padding:1px 7px;
+  background:var(--steel-soft);color:var(--steel);white-space:nowrap}
+@media(max-width:420px){.card .tg i:nth-child(n+2){display:none}}
+.card .foot{display:flex;align-items:baseline;gap:8px;margin-top:9px;padding-top:7px;
+  border-top:1px solid var(--surface);font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.card .dd{font-weight:600;color:var(--ink-2)}
+.card .dd.hot{color:var(--urgent)}
+.card .ext{margin-left:auto;color:var(--steel)}
+.card.bare{border-left:3px solid var(--warn)}
 
+
+/* ── 목록 화면 두 기둥 ────────────────────────────── */
+.cols{display:grid;gap:18px}
+@media(min-width:960px){.cols{grid-template-columns:230px 1fr;align-items:start}}
+.side{display:flex;flex-direction:column;gap:16px}
+.side h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:7px}
+.side .f{display:flex;flex-direction:column;gap:1px}
+.side .f button{display:flex;gap:8px;align-items:baseline;font-size:12.5px;padding:4px 7px;
+  color:var(--ink-2);border-left:2px solid transparent}
+.side .f button:hover{background:var(--paper)}
+.side .f button[aria-pressed="true"]{background:var(--paper);border-left-color:var(--steel);
+  color:var(--ink);font-weight:500}
+.side .f button .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.sidebox{background:var(--paper);border:1px solid var(--line);padding:13px 14px}
+.filter-toggle{display:flex;gap:8px;align-items:center;background:var(--paper);
+  border:1px solid var(--line);padding:9px 12px;font-size:12.5px;width:100%}
+@media(min-width:960px){.filter-toggle{display:none}.side{display:flex!important}}
+@media(max-width:959px){.side[data-narrow-hide] .f,.side[data-narrow-hide] h4{display:none}
+  .side[data-narrow-hide]{gap:0}}
+
+.count{font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.count b{color:var(--ink);font-weight:600}
+.count .sorts{margin-left:auto;display:flex;gap:1px}
+.count .sorts button{font-family:var(--mono);font-size:11.5px;padding:4px 9px;
+  border:1px solid var(--line);background:var(--paper);color:var(--ink-3)}
+.count .sorts button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.more-btn{margin-top:10px;width:100%;padding:12px;background:var(--paper);
+  border:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.more-btn:hover{border-color:var(--steel);color:var(--steel)}
+.empty{background:var(--paper);border:1px solid var(--line);padding:28px 18px;text-align:center;
+  color:var(--ink-3);font-size:13px}
+
+/* ── 공고 상세 ────────────────────────────────────── */
+.detail{display:grid;gap:20px}
+@media(min-width:1040px){.detail{grid-template-columns:1fr 274px;align-items:start}}
+.crumb{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:10px}
+.crumb a:hover{color:var(--steel);text-decoration:underline}
+.paper{background:var(--paper);border:1px solid var(--line);padding:20px 18px}
+.paper + .paper{margin-top:8px}
+.jhead h1{font-size:clamp(18px,4.2vw,25px);font-weight:600;line-height:1.35;letter-spacing:-.02em;
+  text-wrap:balance}
+.jhead .ch{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.jhead .ch span{font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;
+  color:var(--ink-2)}
+.jhead .ch span.k{background:var(--surface)}
+.coline{display:flex;gap:10px;align-items:center;margin-top:16px;padding-top:14px;
+  border-top:1px solid var(--surface)}
+.coline .av{width:34px;height:34px;flex:none;background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:14px;color:var(--ink-2)}
+.coline .nm{font-size:13.5px;font-weight:600}
+.coline .bio{font-size:12px;color:var(--ink-3);line-height:1.45}
+.gist{font-size:15px;line-height:1.7;color:var(--ink);background:var(--steel-soft);
+  border-left:3px solid var(--steel);padding:14px 16px;margin-top:8px}
+.block h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:10px}
+.block ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.block li{font-size:13.5px;line-height:1.65;padding-left:14px;position:relative;color:var(--ink-2)}
+.block li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:1px;
+  background:var(--ink-3)}
+.block .tg{display:flex;flex-wrap:wrap;gap:5px}
+.block .tg a,.block .tg span{font-family:var(--mono);font-size:11.5px;padding:4px 10px;
+  background:var(--steel-soft);color:var(--steel);border:1px solid transparent}
+.block .tg a:hover{border-color:var(--steel)}
+.cond{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.cond dt{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:2px}
+.cond dd{color:var(--ink-2)}
+.acts{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.acts a,.acts button{display:block;text-align:center;padding:13px;font-size:13.5px;font-weight:500}
+.acts .go{background:var(--ink);color:#fff}
+.acts .go:hover{background:var(--steel)}
+.acts .star{border:1px solid var(--line);background:var(--paper);color:var(--ink-2)}
+.rail{display:flex;flex-direction:column;gap:8px;position:sticky;top:120px}
+.mdd,.mbar{display:none}
+@media(max-width:1039px){
+  .rail{position:static}
+  .rail .dbox,.detail .acts.tail{display:none}
+  .mdd{display:flex;gap:8px;align-items:baseline;margin-top:12px;font-family:var(--mono);
+    font-size:12px;color:var(--ink-3)}
+  .mdd b{font-size:15px;font-weight:600;color:var(--ink)}
+  .mdd b.hot{color:var(--urgent)}
+  .mbar{display:flex;gap:8px;align-items:center;position:fixed;left:0;right:0;bottom:0;z-index:30;
+    background:var(--paper);border-top:1px solid var(--line);
+    padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  .mbar .d{font-family:var(--mono);font-size:15px;font-weight:600;min-width:52px}
+  .mbar .d.hot{color:var(--urgent)}
+  .mbar .go{flex:1;text-align:center;background:var(--ink);color:#fff;padding:12px;font-size:14px;font-weight:500}
+  .mbar .mstar{width:46px;align-self:stretch;border:1px solid var(--line);font-size:17px;color:var(--ink-2)}
+  main.jobpage{padding-bottom:96px}
+}
+.dbox{background:var(--paper);border:1px solid var(--line);padding:16px;text-align:center}
+.dbox .d{font-family:var(--mono);font-size:27px;font-weight:600;letter-spacing:-.02em;
+  line-height:1.1}
+.dbox .d.hot{color:var(--urgent)}
+.dbox .w{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:5px}
+.hist{display:flex;flex-direction:column;gap:9px}
+.hist div{display:grid;grid-template-columns:62px 1fr;gap:9px;font-size:12px;
+  color:var(--ink-2);align-items:baseline}
+.hist .dt{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.doors{display:flex;flex-direction:column;gap:1px}
+.doors a{display:flex;gap:9px;align-items:baseline;font-size:12.5px;padding:7px 2px;
+  border-bottom:1px solid var(--surface);color:var(--ink-2);text-align:left;width:100%}
+.doors a:hover{color:var(--steel)}
+.doors a .n{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:600;
+  color:var(--ink)}
+
+/* ── 기업 / 목록 행 ───────────────────────────────── */
+.rows{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.row{background:var(--paper);padding:12px 14px;display:flex;gap:11px;align-items:center;
+  text-align:left;width:100%}
+.row:hover{background:var(--steel-soft)}
+.row .av{width:28px;height:28px;flex:none;background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:12px;color:var(--ink-2)}
+.row .nm{font-size:13.5px;font-weight:500;min-width:0}
+.row .in{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.row .bio{font-size:11.5px;color:var(--ink-3);margin-top:1px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.row .rt{margin-left:auto;text-align:right;flex:none}
+.row .rt .n{font-family:var(--mono);font-size:16px;font-weight:600;line-height:1.1}
+.row .rt .w{font-family:var(--mono);font-size:10.5px;color:var(--steel)}
+.row .rt .z{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);margin-top:14px}
+.statrow div{background:var(--paper);padding:12px 13px}
+.statrow .n{font-family:var(--mono);font-size:19px;font-weight:600;display:block;line-height:1.15}
+.statrow .l{font-size:11.5px;color:var(--ink-3);display:block;margin-top:2px}
+
+/* ── 점검 기록 ────────────────────────────────────── */
+.scans{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.scans .s{background:var(--paper);padding:11px 14px;display:flex;gap:12px;align-items:baseline;
+  flex-wrap:wrap}
+.scans .d{font-family:var(--mono);font-size:13px;font-weight:600;width:48px;flex:none}
+.scans .t{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.scans .n{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.scans .n b{color:var(--ink);font-weight:600;font-size:13px}
+.how{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.how li{font-size:13px;color:var(--ink-2);padding-left:15px;position:relative;line-height:1.6}
+.how li::before{content:"·";position:absolute;left:4px;color:var(--ink-3)}
+
+.taggroup{margin-top:18px}
+.taggroup h4{font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:7px}
+:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* 탭 — 사이트 index.astro 의 .tabs 를 그대로 옮겼습니다 */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:4px;
+  position:sticky;top:0;z-index:15;background:var(--paper)}
+.tabs .tab{border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:10px 14px;
+  font-size:14px;color:var(--ink-3);white-space:nowrap;background:none}
+.tabs .tab:hover{color:var(--ink)}
+.tabs .tab[aria-selected="true"]{color:var(--steel);border-bottom-color:var(--steel);
+  font-weight:600}
+.tabs .tn{margin-left:5px;font-family:var(--mono);font-size:12px;opacity:.75}
+@media(max-width:400px){.tabs .tab{padding:10px 8px;font-size:13px}}
+
+/* ── 폰 첫 화면: 공고가 첫 화면에 들어오게 ──────────────
+   그래프는 제목 한 줄 + 낮은 막대로, 숫자 넷은 한 줄로,
+   분야는 옆으로 넘기는 한 줄로, 점검 띠는 폰에서 뺍니다
+   (바로 위 점검 상태 줄에 「34일 연속 →」이 이미 있습니다). */
+@media(max-width:520px){
+  main{padding-block:12px 60px}
+  .graph{padding:12px 12px 8px}
+  .graph h2{font-size:16px}
+  .graph .cap{display:none}
+  .bars{height:46px;margin-top:10px;gap:2px}
+  .bars .v{display:none}
+  .bars a.hot .v{display:block;font-size:9px}
+  .xaxis{margin-top:3px;padding-top:3px}
+  .xaxis span{font-size:8.5px}
+  .nums{grid-template-columns:repeat(4,1fr);margin-top:8px}
+  .nums div{padding:8px 8px 7px}
+  .nums .n{font-size:16px}
+  .nums .l{font-size:10px;line-height:1.3;letter-spacing:-.03em;margin-top:2px}
+  .scanstrip{display:none}
+  .sect{margin-top:18px}
+  .sect.inds{margin-top:10px}
+  .sect.inds .sect-h{display:none}
+  .sect.inds .tiles{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));padding-right:16px;scrollbar-width:none}
+  .sect.inds .tiles::-webkit-scrollbar{display:none}
+  .sect.inds .tile,.sect.inds .tile:nth-child(n+5){display:flex;flex:none;align-items:baseline;gap:6px;
+    padding:7px 11px;border-radius:999px}
+  .sect.inds .tile .t{font-size:12.5px;white-space:nowrap}
+  .sect.inds .tile .n{font-size:12px;margin:0;color:var(--ink-3);font-weight:500}
+  .sect.inds .tile .w{display:none}
+}
+
+
+/* ── 소개·설치 안내·404 쪽 (예전 화면 조각) ─────────────
+   이 세 쪽은 글 위주라 예전 모양을 그대로 씁니다. 폭만 새 틀(1240px)을 따릅니다. */
+.mast{background:var(--paper);color:var(--ink);padding:22px 0 20px;border-bottom:1px solid var(--line)}
+.mast h1{font-size:clamp(22px,4.6vw,30px);font-weight:600;letter-spacing:-.02em;line-height:1.3}
+.mast h1 em{font-style:normal;font-family:var(--mono);font-weight:600;color:var(--steel)}
+.eyebrow a{text-decoration:none;color:inherit}
+.eyebrow a:hover{color:var(--steel)}
+.meta{margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
+.meta b{color:var(--ink);font-weight:600}
+.lede{margin-top:12px;font-size:14px;line-height:1.7;color:var(--ink-2);max-width:62ch}
+.lede a{color:var(--steel);text-decoration:none;white-space:nowrap;margin-left:4px}
+.lede a:hover{text-decoration:underline}
 .section-h{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-3);margin:34px 0 12px;display:flex;align-items:center;gap:10px}
 .section-h::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -150,27 +425,28 @@ a{color:inherit}
 .archive a{text-decoration:none;color:var(--ink-2)}
 .archive a:hover{color:var(--steel)}
 .archive time{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
-
 .cta{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:13px;
   padding:12px 20px;background:var(--ink);color:#fff;text-decoration:none;border-radius:2px}
 .cta:hover{background:var(--steel)}
 .back{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-decoration:none}
 .back:hover{color:var(--steel)}
-footer{border-top:1px solid var(--line);padding:26px 0 50px;font-size:12.5px;
+footer{border-top:1px solid var(--line);padding-block:26px 50px;font-size:12.5px;
   color:var(--ink-3);line-height:1.75}
 footer b{color:var(--ink-2);font-weight:500}
 
-/* 좁은 화면에서는 제목이 줄바꿈돼 카드가 더 높습니다(중앙값 179px).
- * 아직 안 그린 카드의 자리값도 그만큼 잡아야 스크롤 막대가 덜 출렁입니다. */
-@media(max-width:560px){.mast{padding:30px 0 26px}
-  .card{padding:16px;contain-intrinsic-size:auto 179px}.g-date{font-size:10px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-
-/* 카드의 한 줄 요약과 기술 태그 (2026-11-02)
-   JobCard.astro 에 <style> 을 두면 요소마다 표식이 붙어 홈이 1.2MB 커집니다.
-   그래서 여기에 둡니다. 자세한 사정은 JobCard.astro 아래 주석을 보세요. */
-.card .gist1{margin-top:8px;font-size:12.5px;line-height:1.55;color:var(--ink-2);
-  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.card .ctags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-.card .ctags span{font-family:var(--mono);font-size:10.5px;padding:1px 7px;
-  background:var(--steel-soft);color:var(--steel);white-space:nowrap}
+/* ── 사이트에만 있는 것 ─────────────────────────────── */
+[hidden]{display:none!important}
+/* 마감·내려간 공고 안내 — 눈에 띄되 경고처럼 보이지 않게 */
+.closed-note{border-left:3px solid var(--warn);margin-bottom:8px;display:flex;flex-direction:column;gap:4px}
+.closed-note b{font-size:14px;font-weight:600;color:var(--ink)}
+.closed-note span{font-size:13px;color:var(--ink-2);line-height:1.6}
+.fromsrc{font-size:12px;color:var(--ink-3);margin-top:10px;line-height:1.6}
+.coline .nm a:hover,.crumb a:hover{color:var(--steel);text-decoration:underline}
+.jhead .ch span{white-space:nowrap}
+/* 검색창은 폼입니다. 검색 단추는 두지 않고 Enter 로 보냅니다. */
+.search form{flex:1;display:flex;min-width:0}
+.scanbar .stale{color:#A03A2B;background:#FBE9E7;padding:1px 8px;border-radius:999px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* 탭은 머리줄(로고·메뉴, 위에 붙어 있음) 바로 밑에 붙습니다. 머리줄 높이: 넓은 화면 109px · 폰 108px */
+.tabs{top:calc(env(safe-area-inset-top,0px) + 109px)}
+@media(max-width:520px){.tabs{top:calc(env(safe-area-inset-top,0px) + 108px)}}
