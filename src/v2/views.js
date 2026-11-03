@@ -200,7 +200,8 @@ export function scanBar(D) {
       + `<span><b>${esc(m.at)}</b> 수집 · <b>${num(m.watched)}</b>개사 공식 채용페이지</span>`
       + `<a href="/scan/">점검 기록 →</a>`;
   }
-  return `<span class="ok">오늘 <b>${m.scanTimes.join(' · ') || '—'}</b> 확인 완료</span>`
+  /* 날짜만 씁니다. 시각은 뺍니다 (2026-11-04 대표님 지시 — 버전1처럼 2026.11.04). */
+  return `<span class="ok"><b>${esc(m.at.replace(/-/g, '.'))}</b> 확인 완료</span>`
     + `<span><b>${num(m.watched)}</b>개사 공식 채용페이지 · 하루 두 번</span>`
     + `<a href="/scan/">${m.streakFrom.replace(/-/g, '. ')}부터 <b>${m.streak}일 연속</b> →</a>`;
 }
