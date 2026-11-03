@@ -48,6 +48,11 @@ const url = canonical ?? (site + Astro.url.pathname);
     폰에 옛 화면이 저장되면 마감된 공고에 지원하는 일이 생깁니다.
   */}
   <link rel="manifest" href="/manifest.webmanifest" />
+  {/*
+    RSS 피드. 네이버가 사이트맵보다 이 주소를 더 자주 확인해 "새 글이
+    올라왔다" 는 신호로 씁니다. src/pages/rss.xml.js 가 만듭니다. (2026-11-03)
+  */}
+  <link rel="alternate" type="application/rss+xml" title="서치잡 — 자동차부품·전자 채용공고" href="/rss.xml" />
   <meta name="theme-color" content="#2D5F7C" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
