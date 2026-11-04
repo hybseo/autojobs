@@ -486,6 +486,21 @@ const ROLE_RULES = [
   ['marketing', '마케팅',        /마케팅|브랜드\s*매니저|홍보|\bMarketing\b|Brand\s*Manager/i],
   ['pm',        '기획·PM',       /서비스\s*기획|프로덕트|\bPM\b|\bPO\b|사업\s*기획|전략\s*기획|Product\s*(Manager|Owner)|Program\s*Manager|Project\s*Manager/i],
   ['design',    '디자인',        /디자인|\bUX\b|그래픽|아트|일러스트|\bDesigner\b|\bArtist\b|\bVFX\b/i],
+  // 2026-11-04 추가. 변호사는 국내/해외 변호사 자격이 서로 다른 채용
+  // 시장이라 하나로 묶으면 안 됩니다. "변호사" 단독(자격 불명시)은
+  // hr(경영지원) 로만 잡히고 이 둘에는 안 잡습니다 — 수식어 없는 말을
+  // 추측으로 어느 한쪽에 넣지 않습니다(tags.js 원칙 3과 동일).
+  ['lawyer_kr',       '변호사(국내)', /(국내|한국|대한민국)\s*변호사|변호사\s*\(한국\)/],
+  ['lawyer_intl',     '변호사(해외)', /해외\s*변호사|영미권\s*변호사|국제\s*변호사|외국\s*변호사\s*자격|변호사\s*\(미국\)|미국\s*변호사|뉴욕주\s*변호사|\bJD\b\s*학위/i],
+  // CPA 는 마케팅에서 Cost Per Action(또는 Acquisition)을 뜻하기도
+  // 합니다. "CPA/ROAS 광고 효율" 처럼 붙어 나오면 그쪽입니다. 확인:
+  // 2026-11-04 기준 CPA 로 걸린 공고 중 키다리스튜디오 퍼포먼스
+  // 마케팅 1건이 "CPA/ROAS 광고 효율 개선"으로 그쪽이었습니다.
+  ['cpa',             '회계사',      /공인\s*회계사|AICPA|\bCPA\b(?!\s*\/\s*ROAS)(?<!ROAS\s*\/\s*)/i],
+  ['tax_accountant',  '세무사',      /세무사/],
+  ['labor_attorney',  '노무사',      /노무사/],
+  ['patent_attorney', '변리사',      /변리사/],
+  ['legal_scrivener', '법무사',      /법무사/],
   ['hr',        '경영지원',       /인사|\bHR\b|재무|회계|총무|법무|\bIR\b|구매\s*담당|재경|감사|변리사|Procurement|Purchasing|\bSCM\b|Accounting/i],
   ['research',  '연구개발',       /연구원|연구소|\bR&D\b|연구\s*개발|선행\s*연구/i],
 ];
