@@ -37254,7 +37254,7 @@
    "link": true
   },
   "회계사": {
-   "slug": "",
+   "slug": "cpa",
    "cat": "재무·회계·법무",
    "count": 60,
    "link": true
@@ -37452,7 +37452,7 @@
    "link": true
   },
   "변호사": {
-   "slug": "",
+   "slug": "lawyer",
    "cat": "재무·회계·법무",
    "count": 46,
    "link": true
@@ -37842,7 +37842,7 @@
    "link": true
   },
   "노무사": {
-   "slug": "",
+   "slug": "labor-attorney",
    "cat": "재무·회계·법무",
    "count": 20,
    "link": true
@@ -38064,7 +38064,7 @@
    "link": true
   },
   "변리사": {
-   "slug": "",
+   "slug": "patent-attorney",
    "cat": "재무·회계·법무",
    "count": 10,
    "link": true
@@ -38082,7 +38082,7 @@
    "link": true
   },
   "세무사": {
-   "slug": "",
+   "slug": "tax-accountant",
    "cat": "재무·회계·법무",
    "count": 10,
    "link": true
@@ -38262,7 +38262,7 @@
    "link": true
   },
   "법무사": {
-   "slug": "",
+   "slug": "legal-scrivener",
    "cat": "재무·회계·법무",
    "count": 3,
    "link": true

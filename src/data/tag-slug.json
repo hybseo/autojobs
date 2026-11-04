@@ -14,6 +14,12 @@
     "자동 생성이 어색한 것만 여기에 적어 덮어씁니다."
   ],
   "slug": {
+    "변호사": "lawyer",
+    "변리사": "patent-attorney",
+    "법무사": "legal-scrivener",
+    "노무사": "labor-attorney",
+    "회계사": "cpa",
+    "세무사": "tax-accountant",
     "차량 사이버보안": "vehicle-security",
     "차량 시험·평가": "vehicle-testing",
     "전력변환·인버터": "power-conversion",
