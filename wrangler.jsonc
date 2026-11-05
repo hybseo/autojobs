@@ -1,7 +1,21 @@
 {
   "name": "autojobs",
   "compatibility_date": "2026-08-01",
+  /*
+   * 회원 기능 서버 (2026-11-05)
+   * ------------------------------------------------------------------
+   * worker/index.js 가 /api/* 와 /auth/* 요청만 받습니다. 나머지(공고·기업·
+   * 산업 페이지 전부)는 예전처럼 서버를 거치지 않고 정적 파일로 나갑니다.
+   * 그래서 일반 방문은 Worker 무료 한도(하루 10만 건)에 잡히지 않습니다.
+   *
+   * 데이터베이스(D1)와 비밀키는 아래 「회원기능 설정」 단계에서 연결합니다.
+   * 연결 전에는 이 서버가 "회원 기능이 아직 켜지지 않았습니다(503)" 만 답하고
+   * 사이트의 나머지는 전과 똑같이 동작합니다.
+   */
+  "main": "./worker/index.js",
   "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/auth/*"],
     "directory": "./dist",
 
     /*
@@ -17,5 +31,23 @@
      * developers.cloudflare.com/workers/static-assets/routing/static-site-generation/
      */
     "not_found_handling": "404-page"
+  },
+
+  /*
+   * 회원 데이터베이스 (Cloudflare D1, 2026-11-05 대시보드에서 만듦)
+   * 이름 searchjob-members · 표는 worker/schema.js 가 처음 요청 때 스스로 만듭니다.
+   * database_id 는 대시보드 주소에서 확인한 실제 값입니다.
+   */
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "searchjob-members",
+      "database_id": "9ddda530-f54c-49cd-a472-3745f863410a"
+    }
+  ],
+
+  /* 로그인 후 돌아올 사이트 주소. 비밀이 아닌 공개 값이라 여기에 둡니다. */
+  "vars": {
+    "SITE_ORIGIN": "https://searchjob.co.kr"
   }
 }

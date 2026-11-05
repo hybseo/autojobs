@@ -75,3 +75,15 @@
   Cache-Control: public, max-age=300
 /sitemap.xml
   Cache-Control: public, max-age=300
+
+# 회원 기능 (2026-11-05)
+# 알림 서비스 워커는 브라우저가 매번 새로 확인해야 고친 내용이 바로 반영됩니다.
+/sw.js
+  Cache-Control: no-cache
+# 회원 스크립트. 고치면 5분 안에 반영됩니다.
+/member.js
+  Cache-Control: public, max-age=300
+/terms/
+  Cache-Control: public, max-age=300
+/privacy/
+  Cache-Control: public, max-age=300

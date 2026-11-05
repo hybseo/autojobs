@@ -1,0 +1,98 @@
+/*
+ * 새 공고·마감 임박 공고를 뽑아 회원 알림 서버로 보냅니다.
+ * =====================================================================
+ * 언제 도나: .github/workflows/notify.yml 이 「공고 갱신」이 끝난 뒤 실행합니다.
+ * 무엇을 보내나
+ *   fresh   최근 2일 안에 처음 본 진행중 공고 (id·제목·회사·산업)
+ *   closing 마감까지 0~3일 남은 공고 (id·제목·회사·남은 일수)
+ * 같은 공고를 다시 보내도 서버가 한 번만 처리합니다(중복 알림 없음).
+ *
+ * 보내는 곳과 비밀키는 환경변수로 받습니다.
+ *   NOTIFY_URL     예) https://searchjob.co.kr
+ *   NOTIFY_SECRET  Cloudflare 의 NOTIFY_SECRET 과 같은 값
+ * 둘 중 하나라도 없으면 아무것도 하지 않고 정상 종료합니다(회원 기능 설정 전).
+ * 이 단계가 실패해도 공고 갱신 자체는 실패로 만들지 않습니다(워크플로 쪽 설정).
+ *
+ * 산업 판정은 src/lib.js 의 industriesOf 와 같은 규칙입니다. lib.js 는 Astro 에서만
+ * 불러올 수 있어 여기에 같은 규칙을 적었습니다. lib.js 를 바꾸면 여기도 맞추세요.
+ *
+ * 사용: node scripts/notify_delta.mjs [--dry]   (--dry 는 보내지 않고 요약만 출력)
+ */
+import fs from 'node:fs';
+
+const dry = process.argv.includes('--dry');
+const URL_BASE = (process.env.NOTIFY_URL || '').replace(/\/$/, '');
+const SECRET = process.env.NOTIFY_SECRET || '';
+if (!dry && (!URL_BASE || !SECRET)) {
+  console.log('NOTIFY_URL / NOTIFY_SECRET 이 없어 건너뜁니다(회원 기능 설정 전).');
+  process.exit(0);
+}
+
+const jobsDoc = JSON.parse(fs.readFileSync('src/data/jobs.json', 'utf8'));
+const registry = JSON.parse(fs.readFileSync('src/data/companies.json', 'utf8'));
+const jobs = jobsDoc.jobs;
+
+// ── lib.js 와 같은 규칙 ──
+const parseDate = (s) => new Date(s + 'T00:00:00+09:00');
+const TODAY = new Date((process.env.TODAY ?? jobsDoc.collectedAt) + 'T00:00:00+09:00');
+const DAY = 86400000;
+const normCo = (v) => String(v || '').replace(/[\s.,()㈜/]|주식회사/g, '').toLowerCase();
+const CO_INDUSTRY = Object.fromEntries((registry.companies || []).map((c) => [c.slug, c.industry || []]));
+const CO_AFFILIATE = Object.fromEntries(
+  (registry.companies || []).filter((c) => c.affiliateIndustry).map((c) => [c.slug, c.affiliateIndustry]));
+const industriesOf = (job) => {
+  const table = CO_AFFILIATE[job.companySlug];
+  if (table) {
+    const target = normCo(job.company);
+    for (const [name, inds] of Object.entries(table)) {
+      const key = normCo(name);
+      if (key && target.includes(key)) return inds;
+    }
+  }
+  return CO_INDUSTRY[job.companySlug] || [];
+};
+const isGone = (j) => Boolean(j.goneAt);
+const isOpen = (j) => !isGone(j) && (!j.closesAt || parseDate(j.closesAt) >= TODAY);
+const daysLeft = (j) => (j.closesAt ? Math.ceil((parseDate(j.closesAt) - TODAY) / DAY) : Infinity);
+const coName = Object.fromEntries((registry.companies || []).map((c) => [c.slug, c.name]));
+
+const since = new Date(TODAY.getTime() - 2 * DAY).toISOString().slice(0, 10);
+const fresh = jobs
+  .filter((j) => isOpen(j) && j.firstSeenAt && j.firstSeenAt >= since)
+  .map((j) => ({
+    id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '',
+    slug: j.companySlug, ind: industriesOf(j),
+  }));
+const closing = jobs
+  .filter((j) => isOpen(j) && j.closesAt && daysLeft(j) >= 0 && daysLeft(j) <= 3)
+  .map((j) => ({ id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '', days: daysLeft(j) }));
+
+console.log(`기준일 ${jobsDoc.collectedAt} · 새 공고 ${fresh.length}건 · 마감 임박 ${closing.length}건`);
+if (dry) { console.log('(--dry) 보내지 않습니다.'); process.exit(0); }
+
+const headers = { Authorization: `Bearer ${SECRET}`, 'Content-Type': 'application/json' };
+async function call(path, body) {
+  const r = await fetch(URL_BASE + path, { method: 'POST', headers, body: JSON.stringify(body) });
+  const text = await r.text();
+  let j = {};
+  try { j = JSON.parse(text); } catch { /* 본문이 JSON 이 아님 */ }
+  if (!r.ok) throw new Error(`${path} → ${r.status} ${text.slice(0, 200)}`);
+  return j;
+}
+
+// 한 번에 너무 많이 보내지 않도록 500건씩 나눕니다.
+const chunks = [];
+const n = Math.max(Math.ceil(fresh.length / 500), Math.ceil(closing.length / 500), 1);
+for (let i = 0; i < n; i += 1) chunks.push({ fresh: fresh.slice(i * 500, (i + 1) * 500), closing: closing.slice(i * 500, (i + 1) * 500) });
+for (const c of chunks) {
+  const r = await call('/api/internal/new-jobs', c);
+  console.log('알림 대상 처리:', JSON.stringify(r));
+}
+
+// 쌓인 알림 보내기: 서버가 한 번에 일부만 처리하므로 다 끝날 때까지 반복합니다.
+for (let i = 0; i < 100; i += 1) {
+  const r = await call('/api/internal/flush', {});
+  console.log('알림 발송:', JSON.stringify(r));
+  if (r.skipped || !r.remaining) break;
+}
+console.log('끝');

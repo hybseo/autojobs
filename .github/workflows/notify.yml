@@ -1,0 +1,51 @@
+name: 회원 알림 발송
+
+# 「공고 갱신」이 끝나면 자동으로 이어서 돌아, 새 공고와 마감 임박 공고를
+# 회원 알림 서버(Cloudflare Worker)에 알립니다. 서버가 팔로우·찜·저장 검색과
+# 맞는 회원을 찾아 알림함에 넣고, 알림을 켠 회원에게 푸시를 보냅니다.
+#
+# 이 작업은 공고 데이터를 건드리지 않습니다. 저장소에 아무것도 커밋하지 않습니다.
+# 읽기만 하고 알림 서버를 부릅니다.
+#
+# 설정 전에는 아무 일도 하지 않습니다
+#   저장소 Settings → Secrets and variables → Actions 에 아래 둘이 없으면
+#   스크립트가 "건너뜁니다" 하고 정상 종료합니다.
+#     NOTIFY_URL     https://searchjob.co.kr
+#     NOTIFY_SECRET  Cloudflare 의 NOTIFY_SECRET 과 같은 값
+#
+# 이 단계가 실패해도 공고 갱신을 실패로 만들지 않습니다(continue-on-error).
+# 실패하면 이 워크플로의 로그에 사유가 남고, 다음 갱신 때 같은 공고를 다시
+# 보내므로(중복 처리는 서버가 막습니다) 놓친 알림은 자동으로 이어집니다.
+
+on:
+  workflow_run:
+    workflows: ['공고 갱신']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: member-notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    # 공고 갱신이 성공했을 때만. 손으로 누른 실행은 항상.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 알림 보내기
+        continue-on-error: true
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+        run: node scripts/notify_delta.mjs
