@@ -47,6 +47,8 @@ export async function GET({ site }) {
      * 사이트맵에는 넣습니다. (2026-10-16)
      */
     { loc: `${base}/about/`, pri: '0.5', freq: 'monthly', mod: today },
+    { loc: `${base}/terms/`, pri: '0.1', freq: 'yearly', mod: today },
+    { loc: `${base}/privacy/`, pri: '0.1', freq: 'yearly', mod: today },
     // 산업 페이지가 산업 키워드 검색을 받습니다. 메인 다음으로 중요합니다.
     ...industries().map((i) => ({ loc: `${base}/industry/${i.slug}/`, pri: '0.9', freq: 'daily', mod: today })),
     /*

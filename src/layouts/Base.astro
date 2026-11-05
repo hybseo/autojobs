@@ -44,7 +44,8 @@ const url = canonical ?? (site + Astro.url.pathname);
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   {/*
     홈 화면에 앱처럼 추가할 수 있게 하는 설정(PWA).
-    서비스 워커는 일부러 넣지 않았습니다. 공고는 마감·삭제가 잦아서
+    서비스 워커는 알림 전용(/sw.js)만 둡니다. 공고는 마감·삭제가 잦아서
+    페이지를 저장(캐시)하는 서비스 워커는 일부러 두지 않습니다.
     폰에 옛 화면이 저장되면 마감된 공고에 지원하는 일이 생깁니다.
   */}
   <link rel="manifest" href="/manifest.webmanifest" />
@@ -141,6 +142,8 @@ const url = canonical ?? (site + Astro.url.pathname);
           <input id="q" name="q" type="search" placeholder="직무 · 기업 · 기술로 찾기" autocomplete="off" value={q} aria-label="공고 검색" />
         </form>
       </div>
+      {/* 로그인 (2026-11-05). 로그인한 브라우저에서는 /member.js 가 「마이페이지」로 바꿉니다. */}
+      <a id="login-link" class="login-link" href="/my/">로그인</a>
     </div>
     <nav class="gnav" aria-label="사이트 메뉴"><div class="wrap">
       {NAVS.map(([k, label, href]) => (
@@ -153,10 +156,10 @@ const url = canonical ?? (site + Astro.url.pathname);
   <footer class="wrap">
     {/* 모든 페이지에서 소개로 갈 수 있게 둡니다. 홈 제목 영역에도
         한 줄 소개와 함께 같은 링크가 있습니다. (2026-10-16) */}
-    <p style="margin-bottom:10px"><a href="/about/" class="back">SEARCHJOB 소개</a> · <a href="/app/" class="back">홈 화면에 설치</a></p>
+    <p style="margin-bottom:10px"><a href="/about/" class="back">SEARCHJOB 소개</a> · <a href="/app/" class="back">홈 화면에 설치</a> · <a href="/terms/" class="back">이용약관</a> · <a href="/privacy/" class="back">개인정보처리방침</a></p>
     <p>각 기업 공식 채용페이지에 공개된 공고만 모았습니다. 채용 플랫폼 전용 공고나 비공개 채용은 포함되지 않습니다.</p>
     <p style="margin-top:8px"><b>여러 직무 포함 가능</b> 표시는 공고 본문이 이미지로 게시되어 세부 직무를 원문에서 확인해야 하는 경우입니다.</p>
-    <p style="margin-top:8px">방문 통계를 위해 구글 애널리틱스(쿠키 사용)와 클라우드플레어 웹 애널리틱스를 씁니다. 회원가입이 없고 이름·연락처 같은 개인정보는 받지 않습니다.</p>
+    <p style="margin-top:8px">방문 통계를 위해 구글 애널리틱스(쿠키 사용)와 클라우드플레어 웹 애널리틱스를 씁니다. 로그인은 선택입니다. 로그인하면 카카오·네이버·구글이 알려 주는 회원번호와 별명만 받고, 이메일·전화번호·실명은 받지 않습니다.</p>
     {/* 문의처 (2026-11-03 대표님 지시). 모든 페이지 꼬리말에 들어갑니다. */}
     <p style="margin-top:8px"><b>문의처 : <a href="mailto:searchjob.kr@gmail.com">searchjob.kr@gmail.com</a></b></p>
   </footer>
@@ -187,6 +190,7 @@ const url = canonical ?? (site + Astro.url.pathname);
       else b.remove();
     });
   </script>
+  <script is:inline defer src="/member.js"></script>
   <script type="module" defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "4da0c82f0e654b77806a517d1b4f94ad"}'></script>
 </body>

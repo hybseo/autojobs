@@ -34,6 +34,7 @@ export const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS follows (
      user_id INTEGER NOT NULL,
      company_slug TEXT NOT NULL,
+     name TEXT,
      created_at INTEGER NOT NULL,
      PRIMARY KEY (user_id, company_slug)
    )`,

@@ -13,7 +13,7 @@
  *   POST /auth/logout                            로그아웃
  *   GET  /api/me                                 내 정보 + 팔로우·찜·저장검색·알림함
  *   POST /api/consent                            약관·개인정보 동의
- *   POST /api/follow  {slug, on}                 기업 팔로우 켜기/끄기
+ *   POST /api/follow  {slug, name, on}           기업 팔로우 켜기/끄기
  *   POST /api/bookmark {id, title, company, on}  공고 찜 켜기/끄기
  *   POST /api/search  {q, ind, on}               검색 저장 켜기/끄기
  *   POST /api/push/subscribe | /api/push/unsubscribe
@@ -102,7 +102,7 @@ async function me(req, env) {
 
   const db = env.DB;
   const [follows, bookmarks, searches, alerts, subs] = await Promise.all([
-    db.prepare('SELECT company_slug AS slug FROM follows WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
+    db.prepare('SELECT company_slug AS slug, name FROM follows WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
     db.prepare('SELECT job_id AS id, title, company FROM bookmarks WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
     db.prepare('SELECT q, ind FROM saved_searches WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
     db.prepare(
@@ -114,7 +114,7 @@ async function me(req, env) {
   return json({
     ...base,
     user: { nickname: user.nickname, provider: user.provider, consented: true },
-    follows: follows.results.map((r) => r.slug),
+    follows: follows.results,
     bookmarks: bookmarks.results,
     searches: searches.results,
     alerts: alerts.results,
@@ -137,8 +137,8 @@ async function follow(env, user, b) {
   if (!/^[a-z0-9][a-z0-9-]*$/i.test(slug)) return fail(400, 'slug');
   if (b.on) {
     if ((await count(env, 'follows', user.id)) >= MAX_FOLLOWS) return fail(400, `팔로우는 ${MAX_FOLLOWS}곳까지 가능합니다.`);
-    await env.DB.prepare('INSERT OR IGNORE INTO follows (user_id, company_slug, created_at) VALUES (?1, ?2, ?3)')
-      .bind(user.id, slug, now()).run();
+    await env.DB.prepare('INSERT OR IGNORE INTO follows (user_id, company_slug, name, created_at) VALUES (?1, ?2, ?3, ?4)')
+      .bind(user.id, slug, clean(b.name, 80), now()).run();
   } else {
     await env.DB.prepare('DELETE FROM follows WHERE user_id = ?1 AND company_slug = ?2').bind(user.id, slug).run();
   }
