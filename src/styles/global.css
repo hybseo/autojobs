@@ -455,9 +455,13 @@ footer b{color:var(--ink-2);font-weight:500}
 /* ── 회원 기능 (2026-11-05) ─────────────────────────────
  * 마이페이지, 팔로우·찜 단추, 약관 글. 스크립트는 public/member.js.
  */
-.login-link{font-size:13px;color:var(--ink-2);padding:8px 10px;border:1px solid #C9CFCB;border-radius:2px;
-  white-space:nowrap;background:#fff}
-.login-link:hover{color:var(--ink);border-color:var(--ink-3)}
+.login-link{font-size:13px;font-weight:600;color:#fff;padding:9px 14px;border:1px solid var(--steel);border-radius:2px;
+  white-space:nowrap;background:var(--steel)}
+.login-link:hover{color:#fff;filter:brightness(1.12)}
+.login-link.in{background:#fff;color:var(--steel)}
+.login-link.in:hover{color:var(--steel);background:#F3F6F8}
+.gnav a.gnav-my{margin-left:auto;font-weight:600;color:var(--steel)}
+.tabbar{display:none}
 .mem-bar{margin:10px 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .mem-btn{font-family:var(--sans);font-size:13.5px;padding:8px 14px;border:1px solid #C9CFCB;border-radius:2px;
   background:#fff;color:var(--ink);cursor:pointer}
@@ -506,6 +510,14 @@ footer b{color:var(--ink-2);font-weight:500}
 .legal-table th,.legal-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.6}
 .legal-table th{background:var(--surface)}
 @media (max-width:560px){
-  .login-link{padding:7px 9px;font-size:12.5px}
+  .login-link{padding:7px 10px;font-size:12.5px}
+  .gnav a.gnav-my{display:none}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;
+    border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    padding:7px 0 6px;font-size:11px;color:var(--ink-3)}
+  .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar a[aria-current="page"]{color:var(--brand);font-weight:600}
   .legal-table{display:block;overflow-x:auto}
 }

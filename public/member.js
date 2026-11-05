@@ -60,7 +60,9 @@
   /* ── 머리줄 로그인 링크 ── */
   function headerLink() {
     var a = document.getElementById('login-link');
-    if (a && flagged()) a.textContent = '마이페이지';
+    if (a && flagged()) { a.textContent = '마이페이지'; a.classList.add('in'); }
+    var t = document.getElementById('tab-my-label');
+    if (t && flagged()) t.textContent = '마이';
   }
 
   /* ── 기업 페이지: 팔로우 ── */
