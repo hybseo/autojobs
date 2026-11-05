@@ -149,7 +149,7 @@ const url = canonical ?? (site + Astro.url.pathname);
       {NAVS.map(([k, label, href]) => (
         <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>
       ))}
-      <a href="/my/" id="gnav-my" class="gnav-my" aria-current={nav === 'my' ? 'page' : undefined}>내 공간</a>
+      <a href="/my/" id="gnav-my" class="gnav-my" aria-current={nav === 'my' ? 'page' : undefined}>마이페이지</a>
     </div></nav>
   </header>
   <div class="scanbar"><div class="wrap" set:html={scanBar(D)} /></div>
@@ -191,12 +191,13 @@ const url = canonical ?? (site + Astro.url.pathname);
       else b.remove();
     });
   </script>
-  {/* 폰 아래 고정 메뉴(앱처럼). 넓은 화면에서는 CSS 로 숨깁니다. 「내 공간」은 로그인 전에는 로그인 화면으로 갑니다. */}
+  {/* 폰 아래 고정 메뉴(앱처럼). 넓은 화면에서는 CSS 로 숨깁니다. 「마이페이지」는 로그인 전에는 로그인 화면으로 갑니다. */}
   <nav class="tabbar" aria-label="하단 메뉴">
     <a href="/" aria-current={nav === 'home' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>홈</span></a>
     <a href="/jobs/" aria-current={nav === 'jobs' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg><span>공고</span></a>
     <a href="/companies/" aria-current={nav === 'companies' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16M14 10h5a1 1 0 0 1 1 1v10M8 8h2M8 12h2M8 16h2M4 21h16"/></svg><span>기업</span></a>
-    <a href="/my/" id="tab-my" aria-current={nav === 'my' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span id="tab-my-label">로그인</span></a>
+    <a href="/industry/" aria-current={nav === 'industries' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg><span>산업</span></a>
+    <a href="/my/" id="tab-my" aria-current={nav === 'my' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>마이페이지</span></a>
   </nav>
   <script is:inline defer src="/member.js"></script>
   <script type="module" defer src="https://static.cloudflareinsights.com/beacon.min.js"

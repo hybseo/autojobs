@@ -469,6 +469,7 @@ footer b{color:var(--ink-2);font-weight:500}
 .mem-btn.on{background:var(--steel);border-color:var(--steel);color:#fff}
 .mem-btn:disabled{opacity:.55;cursor:default}
 .mem-danger{color:var(--urgent);border-color:#E3B9B6}
+.mem-privacy{margin:14px 0 2px;font-size:14px;font-weight:600;color:var(--steel)}
 .mem-hint{font-size:12.5px;color:var(--ink-3)}
 .mem-page{padding-block:28px 48px;max-width:760px}
 .mem-lede{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin:10px 0 16px}
@@ -516,7 +517,7 @@ footer b{color:var(--ink-2);font-weight:500}
   .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;
     border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
   .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    padding:7px 0 6px;font-size:11px;color:var(--ink-3)}
+    padding:7px 0 6px;font-size:10.5px;letter-spacing:-.02em;color:var(--ink-3);white-space:nowrap}
   .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .tabbar a[aria-current="page"]{color:var(--brand);font-weight:600}
   .legal-table{display:block;overflow-x:auto}

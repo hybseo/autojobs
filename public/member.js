@@ -61,8 +61,7 @@
   function headerLink() {
     var a = document.getElementById('login-link');
     if (a && flagged()) { a.textContent = '마이페이지'; a.classList.add('in'); }
-    var t = document.getElementById('tab-my-label');
-    if (t && flagged()) t.textContent = '마이';
+
   }
 
   /* ── 기업 페이지: 팔로우 ── */
@@ -255,7 +254,8 @@
       }
     });
     root.appendChild(box);
-    root.appendChild(el('p', { class: 'mem-fine' }, '로그인하면 다음 화면에서 이용약관과 개인정보 수집·이용에 동의하는지 확인합니다. 동의하기 전에는 아무것도 저장되지 않습니다.'));
+    root.appendChild(el('p', { class: 'mem-privacy' }, '성명, 이메일, 전화번호 등 개인정보는 받지 않습니다.'));
+    root.appendChild(el('p', { class: 'mem-fine' }, '카카오·네이버·구글이 알려 주는 회원번호와 별명만 씁니다. 로그인하면 다음 화면에서 이용약관과 개인정보 수집·이용에 동의하는지 확인합니다. 동의하기 전에는 아무것도 저장되지 않습니다.'));
     var links = el('p', { class: 'mem-fine' });
     links.appendChild(el('a', { href: '/terms/' }, '이용약관'));
     links.appendChild(document.createTextNode(' · '));
