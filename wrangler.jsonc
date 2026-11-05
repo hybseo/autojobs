@@ -31,5 +31,23 @@
      * developers.cloudflare.com/workers/static-assets/routing/static-site-generation/
      */
     "not_found_handling": "404-page"
+  },
+
+  /*
+   * 회원 데이터베이스 (Cloudflare D1, 2026-11-05 대시보드에서 만듦)
+   * 이름 searchjob-members · 표는 worker/schema.js 가 처음 요청 때 스스로 만듭니다.
+   * database_id 는 대시보드 주소에서 확인한 실제 값입니다.
+   */
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "searchjob-members",
+      "database_id": "9ddda530-f54c-49cd-a472-3745f863410a"
+    }
+  ],
+
+  /* 로그인 후 돌아올 사이트 주소. 비밀이 아닌 공개 값이라 여기에 둡니다. */
+  "vars": {
+    "SITE_ORIGIN": "https://searchjob.co.kr"
   }
 }
