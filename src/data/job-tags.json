@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-05 · 진행중 6735건 중 요약 있는 6087건을 훑어",
-  "6058건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-06 · 진행중 6758건 중 요약 있는 6079건을 훑어",
+  "6050건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "mobis-132656": [
@@ -193,8 +193,8 @@
    "영어 점수"
   ],
   "greeting-kci-213190": [
-   "모터 설계·제어",
    "배송·운전",
+   "모터 설계·제어",
    "생산직·제조 현장",
    "물류·창고 운영"
   ],
@@ -14025,9 +14025,6 @@
    "금융 규제·AML",
    "계약·컴플라이언스"
   ],
-  "greenhouse-toss-8042416003": [
-   "준법감시·내부통제"
-  ],
   "greenhouse-toss-4696989003": [
    "구매·SCM"
   ],
@@ -14080,6 +14077,9 @@
   "greenhouse-toss-7922647003": [
    "계약·컴플라이언스",
    "LLM·생성형 AI"
+  ],
+  "greenhouse-toss-8042416003": [
+   "준법감시·내부통제"
   ],
   "greenhouse-toss-6600650003": [
    "MSA·아키텍처",
@@ -17862,9 +17862,6 @@
    "결산·세무",
    "SAP·ERP"
   ],
-  "greeting-dongkuk-242370": [
-   "생산직·제조 현장"
-  ],
   "greeting-dongsung-210413": [
    "화학합성·소재",
    "기타 외국어",
@@ -18326,12 +18323,6 @@
    "총무·사무환경",
    "물류·창고 운영",
    "SAP·ERP"
-  ],
-  "greeting-dexlevo-206211": [
-   "의학부·학술 MSL",
-   "브랜드 마케팅",
-   "경영기획·전략",
-   "영어 업무 가능"
   ],
   "greeting-dexlevo-206208": [
    "의료기기 영업",
@@ -19489,8 +19480,8 @@
    "Python"
   ],
   "greeting-seers-235933": [
-   "의료기기 인허가",
    "의학부·학술 MSL",
+   "의료기기 인허가",
    "디지털 헬스케어",
    "자산운용·트레이딩",
    "임상·인허가",
@@ -19703,7 +19694,6 @@
    "머신러닝"
   ],
   "greeting-buzzvil-233330": [
-   "산업기능요원·병역특례",
    "애드테크·광고 플랫폼",
    "결제·PG",
    "광고 운영·세일즈",
@@ -28688,26 +28678,6 @@
    "계약·컴플라이언스",
    "SAP·ERP"
   ],
-  "workday-3m-Senior-Research-Specialist-in-Polymer--Mechanics---Corporate-Research-Laboratory-Asia_R01163797": [
-   "장비 셋업·필드",
-   "Python"
-  ],
-  "workday-3m-Senior-Data-engineer--Corporate-Research-Laboratory-Asia_R01163796-1": [
-   "Windows 서버",
-   "MATLAB·Simulink",
-   "객체 스토리지",
-   "데이터 거버넌스",
-   "HTML·CSS",
-   "BI·대시보드",
-   "React·Next.js",
-   "NoSQL·캐시",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "머신러닝",
-   "AWS",
-   "SQL·데이터 추출",
-   "Python"
-  ],
   "workday-bdx-Sr-Customer-Quality-Specialist_R-545648-1": [
    "기타 외국어",
    "GMP·밸리데이션",
@@ -29429,6 +29399,35 @@
    "AI 에이전트",
    "SQL·데이터 추출"
   ],
+  "greeting-dongkuk-242370": [
+   "생산직·제조 현장"
+  ],
+  "greeting-dexlevo-206211": [
+   "의학부·학술 MSL",
+   "브랜드 마케팅",
+   "경영기획·전략",
+   "영어 업무 가능"
+  ],
+  "workday-3m-Senior-Research-Specialist-in-Polymer--Mechanics---Corporate-Research-Laboratory-Asia_R01163797": [
+   "장비 셋업·필드",
+   "Python"
+  ],
+  "workday-3m-Senior-Data-engineer--Corporate-Research-Laboratory-Asia_R01163796-1": [
+   "Windows 서버",
+   "MATLAB·Simulink",
+   "객체 스토리지",
+   "데이터 거버넌스",
+   "HTML·CSS",
+   "BI·대시보드",
+   "React·Next.js",
+   "NoSQL·캐시",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "머신러닝",
+   "AWS",
+   "SQL·데이터 추출",
+   "Python"
+  ],
   "ashby-42dot-6ca59e6b-09fd-437f-9f57-11b6d139388c": [
    "애자일·스크럼",
    "SDV·차량 SW 플랫폼",
@@ -29459,12 +29458,6 @@
    "CATIA·3D CAD",
    "총무·사무환경",
    "구매·SCM"
-  ],
-  "kc-group-132861": [
-   "배송·운전",
-   "WMS·창고관리",
-   "물류·창고 운영",
-   "SAP·ERP"
   ],
   "greeting-hyperaccel-238291": [
    "고속 인터페이스",
@@ -29563,28 +29556,6 @@
   "daewoong-c22da58823e91001": [
    "GMP·밸리데이션"
   ],
-  "daewoong-13454389734b100a0e43e40f32c40000": [
-   "연구기획·연구관리",
-   "신약·후보물질",
-   "임상·인허가"
-  ],
-  "daewoong-13454389734b100a0aee31478df30000": [
-   "기타 외국어",
-   "투자·M&A",
-   "재무·자금",
-   "SAP·ERP",
-   "경영기획·전략",
-   "영어 업무 가능"
-  ],
-  "daewoong-5d3a38d1d0fc1005c2447e7196560000": [
-   "의학부·학술 MSL",
-   "대외협력·대관"
-  ],
-  "daewoong-5d3a38d1d0fc10059ff52ffa9b2b0000": [
-   "세포·항체",
-   "임상·인허가",
-   "영어 업무 가능"
-  ],
   "daewoong-5d3a38d1d0fc10056dff7666ee650000": [
    "제약영업·MR"
   ],
@@ -29599,9 +29570,6 @@
    "이커머스 운영",
    "MD·상품기획",
    "콘텐츠·SNS 운영"
-  ],
-  "sf-gc-4570650": [
-   "신약·후보물질"
   ],
   "greenhouse-toss-7854102003": [
    "프로덕트 디자인"
@@ -29748,10 +29716,6 @@
    "RTOS·MCU",
    "Git·형상관리",
    "임베디드·펌웨어"
-  ],
-  "greeting-skshieldus-241387": [
-   "사무보조·어시스턴트",
-   "안전·보건 관리"
   ],
   "greeting-zimssa-243253": [
    "Slack·사내 협업",
@@ -30710,9 +30674,6 @@
    "언리얼 엔진"
   ],
   "daewoong-c6b043f18436100a074a26597d340000": [
-   "제약영업·MR"
-  ],
-  "daewoong-c67e8b84ebe910015a8cec9ac2ae0000": [
    "제약영업·MR"
   ],
   "daewoong-6c9a68ad65a41000bfd29a38c2eb0000": [
@@ -37893,13 +37854,13 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 618,
+   "count": 616,
    "link": true
   },
   "경영기획·전략": {
    "slug": "corporate-strategy",
    "cat": "업무 영역 — 인사·경영",
-   "count": 469,
+   "count": 468,
    "link": true
   },
   "C·C++": {
@@ -37914,16 +37875,16 @@
    "count": 403,
    "link": true
   },
-  "SAP·ERP": {
-   "slug": "sap-erp",
-   "cat": "업무 시스템",
-   "count": 386,
-   "link": true
-  },
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
    "count": 386,
+   "link": true
+  },
+  "SAP·ERP": {
+   "slug": "sap-erp",
+   "cat": "업무 시스템",
+   "count": 384,
    "link": true
   },
   "Kubernetes·Docker": {
@@ -38043,7 +38004,7 @@
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
-   "count": 211,
+   "count": 210,
    "link": true
   },
   "RDBMS": {
@@ -38169,7 +38130,7 @@
   "물류·창고 운영": {
    "slug": "warehouse-logistics",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 151,
+   "count": 150,
    "link": true
   },
   "브랜드 마케팅": {
@@ -38187,7 +38148,7 @@
   "임상·인허가": {
    "slug": "clinical-regulatory",
    "cat": "바이오·제약·화학",
-   "count": 147,
+   "count": 145,
    "link": true
   },
   "총무·사무환경": {
@@ -38223,7 +38184,7 @@
   "투자·M&A": {
    "slug": "m-a",
    "cat": "업무 영역 — 인사·경영",
-   "count": 131,
+   "count": 130,
    "link": true
   },
   "설비보전·정비": {
@@ -38412,15 +38373,15 @@
    "count": 92,
    "link": true
   },
-  "대외협력·대관": {
-   "slug": "government-relations",
-   "cat": "업무 영역 — 인사·경영",
-   "count": 91,
-   "link": true
-  },
   "보안관제·SOC": {
    "slug": "security-operations",
    "cat": "보안",
+   "count": 90,
+   "link": true
+  },
+  "대외협력·대관": {
+   "slug": "government-relations",
+   "cat": "업무 영역 — 인사·경영",
    "count": 90,
    "link": true
   },
@@ -38472,16 +38433,16 @@
    "count": 84,
    "link": true
   },
-  "안전·보건 관리": {
-   "slug": "safety-health",
-   "cat": "품질·안전·인증",
-   "count": 83,
-   "link": true
-  },
   "금융 규제·AML": {
    "slug": "aml",
    "cat": "금융·핀테크",
    "count": 83,
+   "link": true
+  },
+  "안전·보건 관리": {
+   "slug": "safety-health",
+   "cat": "품질·안전·인증",
+   "count": 82,
    "link": true
   },
   "SLAM·측위": {
@@ -38517,12 +38478,6 @@
   "WMS·창고관리": {
    "slug": "wms",
    "cat": "물류·유통 운영",
-   "count": 77,
-   "link": true
-  },
-  "기타 외국어": {
-   "slug": "other-languages",
-   "cat": "어학",
    "count": 76,
    "link": true
   },
@@ -38532,22 +38487,28 @@
    "count": 75,
    "link": true
   },
+  "기타 외국어": {
+   "slug": "other-languages",
+   "cat": "어학",
+   "count": 75,
+   "link": true
+  },
   "이커머스 운영": {
    "slug": "ecommerce-operations",
    "cat": "물류·유통 운영",
    "count": 75,
    "link": true
   },
-  "사무보조·어시스턴트": {
-   "slug": "office-assistant",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 74,
-   "link": true
-  },
   "프론트엔드 개발": {
    "slug": "frontend",
    "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
    "count": 74,
+   "link": true
+  },
+  "사무보조·어시스턴트": {
+   "slug": "office-assistant",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 73,
    "link": true
   },
   "디자인 시스템": {
@@ -38838,21 +38799,15 @@
    "count": 48,
    "link": true
   },
-  "제약영업·MR": {
-   "slug": "pharma-sales",
-   "cat": "바이오·제약·화학",
-   "count": 48,
-   "link": true
-  },
   "인지(Perception)": {
    "slug": "perception",
    "cat": "ADAS 세부",
    "count": 47,
    "link": true
   },
-  "산업기능요원·병역특례": {
-   "slug": "military-service-alternative",
-   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+  "제약영업·MR": {
+   "slug": "pharma-sales",
+   "cat": "바이오·제약·화학",
    "count": 47,
    "link": true
   },
@@ -38877,6 +38832,12 @@
   "운영 지원·오퍼레이션": {
    "slug": "operations-support",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
+   "count": 46,
+   "link": true
+  },
+  "산업기능요원·병역특례": {
+   "slug": "military-service-alternative",
+   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
    "count": 46,
    "link": true
   },
@@ -38958,12 +38919,6 @@
    "count": 42,
    "link": true
   },
-  "의학부·학술 MSL": {
-   "slug": "msl",
-   "cat": "업무 영역 — 의료·바이오",
-   "count": 42,
-   "link": true
-  },
   "아날로그·PMIC": {
    "slug": "pmic",
    "cat": "반도체 설계",
@@ -38997,6 +38952,12 @@
   "테크니컬 아티스트": {
    "slug": "technical-artist",
    "cat": "게임",
+   "count": 41,
+   "link": true
+  },
+  "의학부·학술 MSL": {
+   "slug": "msl",
+   "cat": "업무 영역 — 의료·바이오",
    "count": 41,
    "link": true
   },
@@ -39123,7 +39084,7 @@
   "배송·운전": {
    "slug": "delivery-driving",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
-   "count": 30,
+   "count": 29,
    "link": true
   },
   "BMS·배터리": {
@@ -39198,12 +39159,6 @@
    "count": 24,
    "link": true
   },
-  "신약·후보물질": {
-   "slug": "drug-discovery",
-   "cat": "바이오·제약·화학",
-   "count": 24,
-   "link": true
-  },
   "게임 서버": {
    "slug": "game-server",
    "cat": "게임",
@@ -39225,6 +39180,12 @@
   "보훈·장애인 채용": {
    "slug": "veterans-disability-hiring",
    "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+   "count": 22,
+   "link": true
+  },
+  "신약·후보물질": {
+   "slug": "drug-discovery",
+   "cat": "바이오·제약·화학",
    "count": 22,
    "link": true
   },
@@ -39276,15 +39237,15 @@
    "count": 20,
    "link": true
   },
-  "세포·항체": {
-   "slug": "cell-antibody",
-   "cat": "바이오·제약·화학",
-   "count": 20,
-   "link": true
-  },
   "여신·심사": {
    "slug": "credit-underwriting",
    "cat": "금융·핀테크",
+   "count": 19,
+   "link": true
+  },
+  "세포·항체": {
+   "slug": "cell-antibody",
+   "cat": "바이오·제약·화학",
    "count": 19,
    "link": true
   },
@@ -39414,15 +39375,15 @@
    "count": 14,
    "link": true
   },
-  "연구기획·연구관리": {
-   "slug": "research-planning",
-   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
-   "count": 14,
-   "link": true
-  },
   "공조·열관리": {
    "slug": "hvac-thermal",
    "cat": "자동차 부품·시스템",
+   "count": 13,
+   "link": true
+  },
+  "연구기획·연구관리": {
+   "slug": "research-planning",
+   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
    "count": 13,
    "link": true
   },
