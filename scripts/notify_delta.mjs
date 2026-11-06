@@ -70,13 +70,16 @@ const closing = jobs
 console.log(`기준일 ${jobsDoc.collectedAt} · 새 공고 ${fresh.length}건 · 마감 임박 ${closing.length}건`);
 if (dry) { console.log('(--dry) 보내지 않습니다.'); process.exit(0); }
 
-const headers = { Authorization: `Bearer ${SECRET}`, 'Content-Type': 'application/json' };
+const headers = { Authorization: `Bearer ${SECRET}`, 'Content-Type': 'application/json', 'User-Agent': 'searchjob-notify/1.0 (+https://searchjob.co.kr)', Accept: 'application/json' };
 async function call(path, body) {
   const r = await fetch(URL_BASE + path, { method: 'POST', headers, body: JSON.stringify(body) });
   const text = await r.text();
   let j = {};
   try { j = JSON.parse(text); } catch { /* 본문이 JSON 이 아님 */ }
-  if (!r.ok) throw new Error(`${path} → ${r.status} ${text.slice(0, 200)}`);
+  if (!r.ok) {
+    const plain = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 400);
+    throw new Error(`${path} → ${r.status} (cf-ray ${r.headers.get('cf-ray') || '-'}) ${plain}`);
+  }
   return j;
 }
 
