@@ -53,6 +53,7 @@
     return api('/api/me').then(function (r) {
       state = r.ok ? r.data : null;
       if (state && state.user) setFlag(true); else setFlag(false);
+      headerLink();
       return state;
     }).catch(function () { return null; });
   }
