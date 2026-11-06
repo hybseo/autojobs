@@ -297,13 +297,23 @@ def check_pages():
     # 오늘 마감인 공고. 상세에서 "마감" 으로 뜨면 안 됩니다.
     # 2026-09-11 에 실제로 그런 적이 있습니다.
     #
-    # 본문이 짧은 공고는 상세 페이지를 만들지 않습니다(job/[id].astro 참고).
-    # 삼성·현대모비스처럼 목록만 주고 본문을 안 주는 회사가 그렇습니다.
-    # 그런 공고를 열면 404 가 나는 것이 정상이므로 검사 대상에서 뺍니다.
+    # 상세 페이지는 「쓸 수 있는 요약」(안내문이 아니고 담당 업무가 한 줄이라도
+    # 있는 것)이 있는 공고에만 만들어집니다 (src/lib.js summaryOf 참고,
+    # 2026-11-02 변경). 요약이 없는 공고를 열면 404 가 나는 것이 정상이므로
+    # 검사 대상에서 뺍니다. 예전 기준(본문 50자 이상)으로 고르면 페이지가 없는
+    # 공고를 골라 거짓 실패가 납니다 (2026-11-06 hlcompany-132252).
+    try:
+        sums = (json.loads((ROOT / "src" / "data" / "summaries.json")
+                           .read_text(encoding="utf-8")).get("summaries") or {})
+    except Exception:
+        sums = {}
+
+    def has_page(x):
+        s = sums.get(x.get("id"))
+        return bool(s) and not s.get("skip") and bool(s.get("duties"))
+
     today = datetime.now(KST).strftime("%Y-%m-%d")
-    todays = [x for x in jobs
-              if x.get("closesAt") == today
-              and len(str(x.get("description") or "").strip()) >= 50]
+    todays = [x for x in jobs if x.get("closesAt") == today and has_page(x)]
     if todays:
         pages.append((f"/job/{todays[0]['id']}/", "오늘 마감 공고"))
     else:
