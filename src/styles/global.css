@@ -471,6 +471,11 @@ footer b{color:var(--ink-2);font-weight:500}
 .mem-danger{color:var(--urgent);border-color:#E3B9B6}
 .mem-privacy{margin:14px 0 2px;font-size:14px;font-weight:600;color:var(--steel)}
 .mem-hint{font-size:12.5px;color:var(--ink-3)}
+.mem-promo{display:flex;gap:10px;align-items:flex-start;background:#E8EFF3;border:1px solid #C9D8E0;border-radius:2px;
+  padding:11px 14px;margin:16px 0 14px;font-size:14px;line-height:1.7;color:var(--ink)}
+.mem-promo[hidden]{display:none}
+.mem-promo .bell{font-size:15px;line-height:1.6}
+.mem-promo a{color:var(--steel);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .mem-kw-sel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;min-height:4px}
 .mem-kw-panel{margin-top:12px;border:1px solid var(--line);background:#fff;padding:12px 14px}
 .mem-kw-find{width:100%;font-family:var(--sans);font-size:14px;padding:9px 11px;border:1px solid #C9CFCB;border-radius:2px;margin-bottom:10px}

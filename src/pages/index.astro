@@ -29,6 +29,13 @@ const desc = '기업 공식 채용페이지에 올라온 공고를 한곳에 모
     {/* 쪽 제목. 화면에는 그래프 제목이 맨 위라 글자로는 숨겨 둡니다.
         화면 읽기 프로그램과 검색엔진이 이 쪽이 무엇인지 알게 합니다. */}
     <h1 class="sr-only">기업 공식 채용공고 통합 검색 SEARCHJOB</h1>
+    {/* SNS 간편로그인 안내 (2026-11-06). 로그인한 브라우저(sj_member 표시)에서는 바로 숨깁니다.
+        member.js 가 로그인 상태를 서버에 확인해 다시 맞춥니다. 「회원가입」이라는 말은 쓰지 않습니다. */}
+    <div class="mem-promo" id="home-promo">
+      <span class="bell" aria-hidden="true">🔔</span>
+      <span><a href="/my/">SNS 간편로그인</a> 하시면 관심기업, 키워드 등 맞춤설정을 통해 새 공고를 알림으로 받을 수 있어요.</span>
+    </div>
+    <script is:inline>try{if(localStorage.getItem('sj_member')==='1')document.getElementById('home-promo').hidden=true;}catch(e){}</script>
     <Fragment set:html={viewHome(D)} />
   </main>
 </Base>

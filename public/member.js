@@ -509,7 +509,16 @@
     });
   }
 
+  /* 홈의 간편로그인 안내: 로그인한 회원에게는 숨깁니다. 표시만 믿지 않고 서버에 한 번 확인합니다
+     (로그인이 풀린 브라우저에 표시만 남았을 때 안내가 계속 숨지 않도록). */
+  function homePromo() {
+    var box = document.getElementById('home-promo');
+    if (!box) return;
+    if (flagged()) loadMe().then(function (s) { box.hidden = !!(s && s.user); });
+  }
+
   headerLink();
+  homePromo();
   if (path === '/my/' || path === '/my') myPage();
   else { companyButton(); jobButton(); searchButton(); }
 })();
