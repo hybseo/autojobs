@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-06 · 진행중 6758건 중 요약 있는 6091건을 훑어",
-  "6062건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-06 · 진행중 6857건 중 요약 있는 6093건을 훑어",
+  "6064건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "mobis-132656": [
@@ -655,6 +655,13 @@
    "기사 자격",
    "물류·창고 운영"
   ],
+  "lg-1001518": [
+   "보안관제·SOC",
+   "SoC·IP 설계",
+   "Azure·GCP",
+   "AWS",
+   "리눅스·서버 운영"
+  ],
   "lg-1002373": [
    "안전·보건 관리"
   ],
@@ -708,6 +715,15 @@
    "보안 자격증",
    "네트워크 보안·접근통제",
    "AWS"
+  ],
+  "lg-1002355": [
+   "보안 자격증",
+   "모의해킹·취약점진단",
+   "보안관제·SOC",
+   "Azure·GCP",
+   "제휴·사업개발",
+   "AWS",
+   "Python"
   ],
   "lg-1002344": [
    "M365·협업 환경",
@@ -2081,14 +2097,6 @@
    "ADAS·자율주행",
    "계약·컴플라이언스"
   ],
-  "ashby-42dot-9527b990-720f-45ea-9e18-055e0fbbf454": [
-   "PMO·프로젝트관리",
-   "Jira·협업툴",
-   "ADAS·자율주행",
-   "서비스 기획·PO",
-   "구매·SCM",
-   "영어 업무 가능"
-  ],
   "ashby-42dot-35e04a5b-278d-4e72-8a7d-21405ceb724a": [
    "차량 사이버보안",
    "보안 자격증",
@@ -2164,9 +2172,6 @@
    "ADAS·자율주행",
    "계약·컴플라이언스",
    "영어 업무 가능"
-  ],
-  "sk-R262380": [
-   "산업보건·간호"
   ],
   "sk-R262278": [
    "OLED·LCD 공정",
@@ -2564,15 +2569,6 @@
    "수출입·통관",
    "계약·컴플라이언스",
    "영어 업무 가능"
-  ],
-  "hanwha-20087": [
-   "배송·운전",
-   "품질검사·QC",
-   "시공·현장관리",
-   "정밀가공·용접",
-   "생산직·제조 현장",
-   "설비보전·정비",
-   "물류·창고 운영"
   ],
   "hanwha-20090": [
    "CATIA·3D CAD",
@@ -2996,6 +2992,9 @@
   "greeting-oci-234423": [
    "제약영업·MR"
   ],
+  "greeting-oci-233223": [
+   "제약영업·MR"
+  ],
   "greeting-oci-231578": [
    "제약영업·MR"
   ],
@@ -3311,12 +3310,6 @@
    "기술영업",
    "유니티",
    "계약·컴플라이언스"
-  ],
-  "greeting-fadu-242430": [
-   "영상·모션",
-   "프로덕트 디자인",
-   "Figma·UI 툴",
-   "Adobe 그래픽"
   ],
   "greeting-fadu-165374": [
    "메모리·스토리지",
@@ -5118,6 +5111,14 @@
    "RTL·Verilog",
    "SoC·IP 설계"
   ],
+  "greeting-hyperaccel-228654": [
+   "HBM·메모리 설계",
+   "FPGA",
+   "RTL·Verilog",
+   "고속 인터페이스",
+   "SoC·IP 설계",
+   "임베디드·펌웨어"
+  ],
   "greeting-hyperaccel-196727": [
    "RTL·Verilog",
    "NPU·AI 반도체",
@@ -5198,14 +5199,6 @@
    "LLM·생성형 AI",
    "Python"
   ],
-  "greeting-hyperaccel-228654": [
-   "HBM·메모리 설계",
-   "FPGA",
-   "RTL·Verilog",
-   "고속 인터페이스",
-   "SoC·IP 설계",
-   "임베디드·펌웨어"
-  ],
   "greeting-hyperaccel-210116": [
    "고속 인터페이스",
    "딥러닝·비전모델",
@@ -5225,12 +5218,6 @@
    "NPU·AI 반도체",
    "SoC·IP 설계",
    "제휴·사업개발"
-  ],
-  "taekwang-126880": [
-   "보험 보상·언더라이팅",
-   "사무보조·어시스턴트",
-   "총무·사무환경",
-   "영업기획·영업관리"
   ],
   "taekwang-132571": [
    "보험 보상·언더라이팅"
@@ -5779,16 +5766,6 @@
    "계약·컴플라이언스"
   ],
   "greeting-solusadvancedmaterials-243561": [
-   "OLED·LCD 공정",
-   "고객 성공·온보딩",
-   "조직문화·사내소통",
-   "인사기획·보상",
-   "대외협력·대관",
-   "채용·HR 운영",
-   "구매·SCM",
-   "SAP·ERP"
-  ],
-  "greeting-solusadvancedmaterials-243524": [
    "OLED·LCD 공정",
    "고객 성공·온보딩",
    "조직문화·사내소통",
@@ -6938,17 +6915,6 @@
    "LLM·생성형 AI",
    "Python"
   ],
-  "greeting-s2w-199550": [
-   "파인튜닝·정렬",
-   "멀티모달·VLM",
-   "RAG·검색증강",
-   "딥러닝·비전모델",
-   "머신러닝",
-   "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
   "greeting-ex-em-159696": [
    "파인튜닝·정렬",
    "RAG·검색증강",
@@ -7391,12 +7357,6 @@
    "Java·Spring",
    "고객상담·CS",
    "LLM·생성형 AI"
-  ],
-  "greeting-ecstel-229331": [
-   "B2B 영업",
-   "기술영업",
-   "공공사업·제안",
-   "영어 업무 가능"
   ],
   "greeting-ecstel-227960": [
    "기술영업",
@@ -7946,11 +7906,6 @@
    "제휴·사업개발",
    "경영기획·전략"
   ],
-  "greeting-kstd-lezhin-189797": [
-   "정산·수수료",
-   "결산·세무",
-   "SAP·ERP"
-  ],
   "greeting-kstd-lezhin-177546": [
    "웹툰·웹소설 편집",
    "Adobe 그래픽"
@@ -8305,15 +8260,6 @@
    "제휴·사업개발",
    "경영기획·전략"
   ],
-  "naver-30005656": [
-   "SLAM·측위",
-   "멀티모달·VLM",
-   "딥러닝·비전모델",
-   "머신러닝",
-   "C·C++",
-   "LLM·생성형 AI",
-   "Python"
-  ],
   "naver-30005660": [
    "부트로더·BSP",
    "임베디드 리눅스",
@@ -8326,6 +8272,15 @@
    "임베디드·펌웨어",
    "리눅스·서버 운영",
    "C·C++"
+  ],
+  "naver-30005656": [
+   "SLAM·측위",
+   "멀티모달·VLM",
+   "딥러닝·비전모델",
+   "머신러닝",
+   "C·C++",
+   "LLM·생성형 AI",
+   "Python"
   ],
   "naver-30005620": [
    "콘텐츠 검수·모니터링",
@@ -8866,10 +8821,6 @@
   "com2us-114838": [
    "게임 QA",
    "서비스 QA·검수"
-  ],
-  "com2us-118495": [
-   "엑셀 고급",
-   "결산·세무"
   ],
   "com2us-119510": [
    "번역·로컬라이제이션",
@@ -9467,11 +9418,6 @@
    "C·C++",
    "Python"
   ],
-  "nc-101390": [
-   "게임 기획·레벨",
-   "BI·대시보드",
-   "중국어"
-  ],
   "nc-101385": [
    "영상·모션",
    "유니티",
@@ -9549,10 +9495,6 @@
   "nc-101352": [
    "정부과제·국책과제",
    "Jira·협업툴"
-  ],
-  "nc-101349": [
-   "사내 복지 서비스",
-   "보훈·장애인 채용"
   ],
   "nc-101336": [
    "웹 표준·접근성",
@@ -9672,6 +9614,10 @@
    "게임 이펙트·애니메이션",
    "3D 그래픽 툴",
    "Adobe 그래픽"
+  ],
+  "nhn-4451561336936689203": [
+   "결제·PG",
+   "고객상담·CS"
   ],
   "nhn-4443061609033416712": [
    "무기체계",
@@ -10756,11 +10702,6 @@
    "게임 운영·라이브서비스",
    "콘텐츠·SNS 운영"
   ],
-  "shiftup-65dd262e5a": [
-   "게임 원화·컨셉아트",
-   "3D 그래픽 툴",
-   "언리얼 엔진"
-  ],
   "shiftup-2102ee542d": [
    "게임 QA",
    "게임 시나리오·내러티브",
@@ -11308,9 +11249,6 @@
   "hanmi-123538": [
    "생산직·제조 현장"
   ],
-  "daewoong-cbd22b6504691001": [
-   "GMP·밸리데이션"
-  ],
   "daewoong-c22da58823e9100174a12d2adf580001": [
    "신약·후보물질",
    "투자·M&A",
@@ -11577,13 +11515,6 @@
   "greeting-hugel-232894": [
    "생산직·제조 현장"
   ],
-  "greeting-hugel-226190": [
-   "투자·M&A",
-   "계약·컴플라이언스",
-   "공공사업·제안",
-   "제휴·사업개발",
-   "영어 업무 가능"
-  ],
   "greeting-hugel-224213": [
    "BI·대시보드",
    "투자·M&A",
@@ -11622,11 +11553,6 @@
   "greeting-pharmaresearch_hr-240596": [
    "제약영업·MR",
    "의료기기 영업"
-  ],
-  "greeting-pharmaresearch_hr-239293": [
-   "의료기기 인허가",
-   "임상·인허가",
-   "영어 업무 가능"
   ],
   "greeting-pharmaresearch_hr-238998": [
    "PR·홍보",
@@ -12853,13 +12779,6 @@
    "생산직·제조 현장",
    "ADAS·자율주행"
   ],
-  "greeting-neubility-215304": [
-   "게임 사업·퍼블리싱",
-   "B2B 영업",
-   "ADAS·자율주행",
-   "제휴·사업개발",
-   "경영기획·전략"
-  ],
   "greeting-neubility-210086": [
    "BMS·배터리",
    "모터 설계·제어",
@@ -13403,9 +13322,6 @@
    "계약·컴플라이언스",
    "영어 업무 가능"
   ],
-  "sf-gc-4610550": [
-   "제약영업·MR"
-  ],
   "sf-gc-4610950": [
    "약가·급여 등재",
    "대외협력·대관",
@@ -13417,11 +13333,11 @@
    "물류·창고 운영",
    "SAP·ERP"
   ],
-  "sf-gc-4611550": [
-   "GMP·밸리데이션"
-  ],
   "sf-gc-4611850": [
    "클린룸·설비",
+   "GMP·밸리데이션"
+  ],
+  "sf-gc-4611550": [
    "GMP·밸리데이션"
   ],
   "sf-gc-4607650": [
@@ -13450,17 +13366,17 @@
    "임상병리·진단검사",
    "고객상담·CS"
   ],
-  "sf-gc-4599050": [
-   "임상병리·진단검사",
-   "GMP·밸리데이션",
-   "영어 업무 가능"
-  ],
   "sf-gc-4599150": [
    "GMP·밸리데이션"
   ],
   "sf-gc-4598950": [
    "임상병리·진단검사",
    "임상·인허가"
+  ],
+  "sf-gc-4599050": [
+   "임상병리·진단검사",
+   "GMP·밸리데이션",
+   "영어 업무 가능"
   ],
   "sf-gc-4596950": [
    "GMP·밸리데이션",
@@ -13521,11 +13437,6 @@
    "안전·보건 관리",
    "계측·검사장비",
    "GMP·밸리데이션"
-  ],
-  "sf-gc-4576550": [
-   "임상병리·진단검사",
-   "시설관리·FM",
-   "임상·인허가"
   ],
   "sf-gc-4577150": [
    "신약·후보물질",
@@ -14077,10 +13988,6 @@
    "IT 헬프데스크·자산",
    "Jira·협업툴"
   ],
-  "greenhouse-toss-8000384003": [
-   "IT 헬프데스크·자산",
-   "리눅스·서버 운영"
-  ],
   "greenhouse-toss-7629197003": [
    "보훈·장애인 채용",
    "IT 헬프데스크·자산"
@@ -14590,8 +14497,8 @@
    "Python"
   ],
   "greenhouse-toss-6959638003": [
-   "보안관제·SOC",
    "게임 기획·레벨",
+   "보안관제·SOC",
    "네트워크 보안·접근통제",
    "계약·컴플라이언스"
   ],
@@ -14646,8 +14553,8 @@
   "greenhouse-toss-8047065003": [
    "금융 규제·AML",
    "보안 자격증",
-   "모의해킹·취약점진단",
    "대외협력·대관",
+   "모의해킹·취약점진단",
    "기사 자격",
    "결제·PG"
   ],
@@ -14670,9 +14577,6 @@
   "greenhouse-toss-7980102003": [
    "브랜드 마케팅",
    "콘텐츠·SNS 운영"
-  ],
-  "greenhouse-toss-7847411003": [
-   "브랜드 마케팅"
   ],
   "greenhouse-toss-8012925003": [
    "브랜드 마케팅",
@@ -15042,10 +14946,6 @@
    "SQL·데이터 추출"
   ],
   "greenhouse-toss-7788122003": [
-   "콘텐츠·SNS 운영"
-  ],
-  "greenhouse-toss-7994038003": [
-   "Adobe 그래픽",
    "콘텐츠·SNS 운영"
   ],
   "greenhouse-toss-6574124003": [
@@ -15568,11 +15468,6 @@
    "결제·PG",
    "ISMS·인증"
   ],
-  "greeting-kurly-216640": [
-   "변호사",
-   "대외협력·대관",
-   "계약·컴플라이언스"
-  ],
   "greeting-kurly-196953": [
    "교육과정 개발",
    "CRM 마케팅",
@@ -15690,13 +15585,6 @@
    "게임 시나리오·내러티브",
    "브랜드 마케팅"
   ],
-  "greeting-kurly-235881": [
-   "웹 표준·접근성",
-   "이커머스 운영",
-   "Figma·UI 툴",
-   "Adobe 그래픽",
-   "LLM·생성형 AI"
-  ],
   "greeting-kurly-234476": [
    "Figma·UI 툴",
    "Adobe 그래픽",
@@ -15723,17 +15611,6 @@
   "greeting-kurly-234472": [
    "이커머스 운영",
    "서비스 기획·PO"
-  ],
-  "greeting-kurly-197530": [
-   "실시간 처리",
-   "모니터링·관측",
-   "메시징·스트리밍",
-   "Azure·GCP",
-   "데이터 파이프라인",
-   "AWS",
-   "Kubernetes·Docker",
-   "SQL·데이터 추출",
-   "리눅스·서버 운영"
   ],
   "greeting-kurly-238713": [
    "BI·대시보드",
@@ -16365,11 +16242,6 @@
    "Adobe 그래픽",
    "MD·상품기획"
   ],
-  "glink-bucketplace-232635": [
-   "조직문화·사내소통",
-   "정산·수수료",
-   "고객상담·CS"
-  ],
   "glink-bucketplace-239690": [
    "애드테크·광고 플랫폼",
    "광고 운영·세일즈",
@@ -16577,8 +16449,8 @@
    "준법감시·내부통제",
    "금융 규제·AML",
    "보안 자격증",
-   "모의해킹·취약점진단",
    "대외협력·대관",
+   "모의해킹·취약점진단",
    "ISMS·인증",
    "정부과제·국책과제",
    "계약·컴플라이언스"
@@ -16632,10 +16504,6 @@
    "CRM 마케팅",
    "MD·상품기획",
    "콘텐츠·SNS 운영"
-  ],
-  "greeting-musinsa-241688": [
-   "GA·퍼포먼스 마케팅",
-   "구매·SCM"
   ],
   "greeting-musinsa-243332": [
    "MD·상품기획"
@@ -16715,6 +16583,15 @@
    "AWS",
    "SQL·데이터 추출",
    "Python"
+  ],
+  "greeting-musinsa-172721": [
+   "개발 리더십·테크리드",
+   "MSA·아키텍처",
+   "메시징·스트리밍",
+   "NoSQL·캐시",
+   "RDBMS",
+   "Java·Spring",
+   "AWS"
   ],
   "greeting-musinsa-229966": [
    "개발 리더십·테크리드",
@@ -17250,22 +17127,12 @@
    "MD·상품기획",
    "경영기획·전략"
   ],
-  "greeting-musinsa-238298": [
-   "MD·상품기획",
-   "구매·SCM"
-  ],
   "workday-yanolja-Product-Owner_R260297": [
    "SDV·차량 SW 플랫폼",
    "GA·퍼포먼스 마케팅",
    "서비스 기획·PO",
    "경영기획·전략",
    "영어 업무 가능"
-  ],
-  "kolon-KLS202610280001": [
-   "게임 원화·컨셉아트",
-   "재무·자금",
-   "결산·세무",
-   "SAP·ERP"
   ],
   "kolon-KLS202610290001": [
    "GMP·밸리데이션"
@@ -17282,10 +17149,6 @@
    "의학부·학술 MSL",
    "브랜드 마케팅"
   ],
-  "kolon-KLS202611020002": [
-   "생산직·제조 현장",
-   "물류·창고 운영"
-  ],
   "kolon-KLS202611020003": [
    "GMP·밸리데이션",
    "기사 자격",
@@ -17294,6 +17157,10 @@
   "kolon-KLS202611020001": [
    "생산직·제조 현장",
    "기사 자격",
+   "물류·창고 운영"
+  ],
+  "kolon-KLS202611020002": [
+   "생산직·제조 현장",
    "물류·창고 운영"
   ],
   "kolon-KIIK202609230001": [
@@ -17360,26 +17227,6 @@
    "리눅스·서버 운영",
    "C·C++"
   ],
-  "kakao-S4766": [
-   "네트워크 보안·접근통제",
-   "NoSQL·캐시",
-   "RDBMS",
-   "Git·형상관리",
-   "CI/CD·IaC",
-   "AWS",
-   "Kubernetes·Docker",
-   "SQL·데이터 추출"
-  ],
-  "kakao-S4761": [
-   "금융 규제·AML",
-   "보안 자격증"
-  ],
-  "kakao-P14559": [
-   "GPU·CUDA",
-   "추론 서빙·최적화",
-   "NPU·AI 반도체",
-   "LLM·생성형 AI"
-  ],
   "kakao-P14402": [
    "파인튜닝·정렬",
    "멀티모달·VLM",
@@ -17420,6 +17267,26 @@
    "데이터 파이프라인",
    "SQL·데이터 추출",
    "Python"
+  ],
+  "kakao-S4766": [
+   "네트워크 보안·접근통제",
+   "NoSQL·캐시",
+   "RDBMS",
+   "Git·형상관리",
+   "CI/CD·IaC",
+   "AWS",
+   "Kubernetes·Docker",
+   "SQL·데이터 추출"
+  ],
+  "kakao-S4761": [
+   "금융 규제·AML",
+   "보안 자격증"
+  ],
+  "kakao-P14559": [
+   "GPU·CUDA",
+   "추론 서빙·최적화",
+   "NPU·AI 반도체",
+   "LLM·생성형 AI"
   ],
   "kakao-S4757": [
    "데이터 모델링",
@@ -17466,14 +17333,6 @@
    "NoSQL·캐시",
    "RDBMS",
    "Java·Spring",
-   "Kubernetes·Docker"
-  ],
-  "kakao-S4729": [
-   "블록체인·가상자산",
-   "MSA·아키텍처",
-   "메시징·스트리밍",
-   "CI/CD·IaC",
-   "AWS",
    "Kubernetes·Docker"
   ],
   "kakao-S4732": [
@@ -17657,13 +17516,6 @@
   "kakao-S4736": [
    "정산·수수료"
   ],
-  "kakao-S4747": [
-   "애자일·스크럼",
-   "Slack·사내 협업",
-   "PMO·프로젝트관리",
-   "Jira·협업툴",
-   "서비스 기획·PO"
-  ],
   "kakao-P14540": [
    "식품 개발·R&D",
    "품질검사·QC",
@@ -17708,6 +17560,12 @@
    "광고 운영·세일즈",
    "서비스 기획·PO"
   ],
+  "kakao-S4665": [
+   "변호사",
+   "IR·공시",
+   "투자·M&A",
+   "계약·컴플라이언스"
+  ],
   "kakao-S4773": [
    "비서·임원지원",
    "총무·사무환경",
@@ -17734,12 +17592,6 @@
    "자산운용·트레이딩",
    "IR·공시",
    "영어 업무 가능"
-  ],
-  "kakao-S4665": [
-   "변호사",
-   "IR·공시",
-   "투자·M&A",
-   "계약·컴플라이언스"
   ],
   "kakao-P14578": [
    "교육과정 개발",
@@ -17905,12 +17757,6 @@
   "greeting-dongsung-210442": [
    "어카운트·거래처 관리",
    "중국어",
-   "영어 업무 가능"
-  ],
-  "greeting-dongsung-231808": [
-   "회계사",
-   "결산·세무",
-   "SAP·ERP",
    "영어 업무 가능"
   ],
   "greeting-dongsung-158398": [
@@ -19836,10 +19682,6 @@
   "greeting-travel-wallet-240877": [
    "제휴·사업개발"
   ],
-  "greeting-travel-wallet-239598": [
-   "심사·리스크 운영",
-   "금융 규제·AML"
-  ],
   "greeting-travel-wallet-238748": [
    "일본어"
   ],
@@ -21738,13 +21580,6 @@
    "AWS",
    "Kubernetes·Docker"
   ],
-  "greeting-healingpaper-239468": [
-   "와이어링 하네스",
-   "AI 에이전트",
-   "데이터 파이프라인",
-   "경영기획·전략",
-   "LLM·생성형 AI"
-  ],
   "greeting-healingpaper-176384": [
    "데이터 거버넌스",
    "데이터 모델링",
@@ -22636,12 +22471,6 @@
   "greeting-enki-236042": [
    "경영기획·전략"
   ],
-  "greeting-enki-237163": [
-   "iOS·Swift",
-   "모의해킹·취약점진단",
-   "리눅스·서버 운영",
-   "C·C++"
-  ],
   "greeting-enki-236065": [
    "MATLAB·Simulink",
    "신뢰성 평가",
@@ -22701,6 +22530,12 @@
   "greeting-enki-237036": [
    "iOS·Swift",
    "모의해킹·취약점진단",
+   "C·C++"
+  ],
+  "greeting-enki-237163": [
+   "iOS·Swift",
+   "모의해킹·취약점진단",
+   "리눅스·서버 운영",
    "C·C++"
   ],
   "greeting-enki-230911": [
@@ -23502,12 +23337,6 @@
    "재무·자금",
    "경영기획·전략"
   ],
-  "greeting-innospace-233912": [
-   "위성·발사체",
-   "어카운트·거래처 관리",
-   "제휴·사업개발",
-   "영어 업무 가능"
-  ],
   "greeting-innospace-233914": [
    "위성·발사체",
    "어카운트·거래처 관리",
@@ -23957,13 +23786,15 @@
    "LLM·생성형 AI",
    "Python"
   ],
+  "greeting-kakaomobility-232118": [
+   "기능안전 ISO 26262",
+   "대외협력·대관",
+   "임상·인허가",
+   "ADAS·자율주행"
+  ],
   "greeting-kakaomobility-243516": [
    "사무보조·어시스턴트",
    "안전·보건 관리"
-  ],
-  "greeting-kakaomobility-145541": [
-   "배송·운전",
-   "사무보조·어시스턴트"
   ],
   "greeting-kakaomobility-243388": [
    "보안관제·SOC",
@@ -23993,11 +23824,6 @@
    "SQL·데이터 추출",
    "Python"
   ],
-  "greeting-kakaomobility-239185": [
-   "엑셀 고급",
-   "사무보조·어시스턴트",
-   "고객상담·CS"
-  ],
   "greeting-kakaomobility-237154": [
    "IT 헬프데스크·자산",
    "총무·사무환경"
@@ -24019,12 +23845,6 @@
    "RDBMS",
    "Java·Spring",
    "Kubernetes·Docker"
-  ],
-  "greeting-kakaomobility-232118": [
-   "기능안전 ISO 26262",
-   "대외협력·대관",
-   "임상·인허가",
-   "ADAS·자율주행"
   ],
   "greeting-kakaomobility-229410": [
    "정산·수수료"
@@ -24240,19 +24060,6 @@
    "Figma·UI 툴",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영"
-  ],
-  "greeting-medistream-237080": [
-   "이커머스 운영",
-   "어카운트·거래처 관리",
-   "영업기획·영업관리",
-   "MD·상품기획",
-   "제휴·사업개발"
-  ],
-  "greeting-medistream-209316": [
-   "어카운트·거래처 관리",
-   "영업기획·영업관리",
-   "MD·상품기획",
-   "고객상담·CS"
   ],
   "greeting-medistream-232309": [
    "이커머스 운영",
@@ -25143,13 +24950,20 @@
   "greeting-sangjiship-240134": [
    "승선·해기사"
   ],
-  "greeting-skshieldus-141598": [
-   "소비자보호·민원",
+  "greeting-skshieldus-241422": [
+   "보안 자격증",
+   "보안관제·SOC",
    "기사 자격"
   ],
-  "greeting-skshieldus-241658": [
-   "TMS·배송",
-   "보안관제·SOC"
+  "greeting-skshieldus-117369": [
+   "금융 규제·AML",
+   "보안 자격증",
+   "모의해킹·취약점진단",
+   "ISMS·인증",
+   "Azure·GCP",
+   "계약·컴플라이언스",
+   "AWS",
+   "영어 업무 가능"
   ],
   "greeting-skshieldus-241184": [
    "보안관제·SOC",
@@ -25168,29 +24982,18 @@
    "제휴·사업개발",
    "LLM·생성형 AI"
   ],
-  "greeting-skshieldus-216102": [
-   "채용·HR 운영",
-   "브랜드 마케팅",
-   "콘텐츠·SNS 운영"
-  ],
-  "greeting-skshieldus-241422": [
-   "보안 자격증",
-   "보안관제·SOC",
-   "기사 자격"
+  "greeting-skshieldus-241658": [
+   "TMS·배송",
+   "보안관제·SOC"
   ],
   "greeting-skshieldus-241657": [
    "보안관제·SOC",
    "네트워크 보안·접근통제"
   ],
-  "greeting-skshieldus-117369": [
-   "금융 규제·AML",
-   "보안 자격증",
-   "모의해킹·취약점진단",
-   "ISMS·인증",
-   "Azure·GCP",
-   "계약·컴플라이언스",
-   "AWS",
-   "영어 업무 가능"
+  "greeting-skshieldus-216102": [
+   "채용·HR 운영",
+   "브랜드 마케팅",
+   "콘텐츠·SNS 운영"
   ],
   "greeting-skshieldus-232066": [
    "디자인 시스템",
@@ -25209,15 +25012,14 @@
    "기사 자격",
    "네트워크 보안·접근통제"
   ],
-  "greeting-skshieldus-240509": [
-   "보안관제·SOC",
-   "MLOps",
-   "RAG·검색증강",
-   "SoC·IP 설계",
-   "머신러닝",
-   "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI"
+  "greeting-skshieldus-241321": [
+   "모의해킹·취약점진단",
+   "Git·형상관리",
+   "CI/CD·IaC"
+  ],
+  "greeting-skshieldus-241387": [
+   "사무보조·어시스턴트",
+   "안전·보건 관리"
   ],
   "greeting-skshieldus-240538": [
    "파인튜닝·정렬",
@@ -25230,12 +25032,6 @@
    "LLM·생성형 AI",
    "Python"
   ],
-  "greeting-skshieldus-240548": [
-   "보안관제·SOC",
-   "딥러닝·비전모델",
-   "머신러닝",
-   "Python"
-  ],
   "greeting-skshieldus-240373": [
    "클라우드 보안"
   ],
@@ -25243,10 +25039,21 @@
    "게임 사업·퍼블리싱",
    "PMO·프로젝트관리"
   ],
-  "greeting-skshieldus-241321": [
-   "모의해킹·취약점진단",
-   "Git·형상관리",
-   "CI/CD·IaC"
+  "greeting-skshieldus-240548": [
+   "보안관제·SOC",
+   "딥러닝·비전모델",
+   "머신러닝",
+   "Python"
+  ],
+  "greeting-skshieldus-240509": [
+   "보안관제·SOC",
+   "MLOps",
+   "RAG·검색증강",
+   "SoC·IP 설계",
+   "머신러닝",
+   "Kubernetes·Docker",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI"
   ],
   "greeting-skshieldus-241509": [
    "박막·소재 분석",
@@ -25276,11 +25083,9 @@
   "greeting-skshieldus-243507": [
    "물리보안·출입통제"
   ],
-  "greeting-skshieldus-240508": [
+  "greeting-skshieldus-209717": [
    "모의해킹·취약점진단",
-   "ISMS·인증",
-   "Azure·GCP",
-   "AWS"
+   "보안관제·SOC"
   ],
   "greeting-skshieldus-107003": [
    "보안관제·SOC",
@@ -25304,9 +25109,11 @@
    "보안관제·SOC",
    "기사 자격"
   ],
-  "greeting-skshieldus-209717": [
+  "greeting-skshieldus-240508": [
    "모의해킹·취약점진단",
-   "보안관제·SOC"
+   "ISMS·인증",
+   "Azure·GCP",
+   "AWS"
   ],
   "greeting-skshieldus-215280": [
    "보안 자격증",
@@ -25648,8 +25455,8 @@
   ],
   "greeting-danbiedu-233441": [
    "교육과정 개발",
-   "문서 도구",
    "엑셀 고급",
+   "문서 도구",
    "영업기획·영업관리",
    "고객상담·CS"
   ],
@@ -25904,33 +25711,6 @@
    "임베디드·펌웨어",
    "C·C++"
   ],
-  "greeting-aceworks-208371": [
-   "신재생·ESS",
-   "테스트 자동화"
-  ],
-  "greeting-aceworks-231165": [
-   "자율주행 시뮬레이션",
-   "클린룸·설비",
-   "계측·검사장비",
-   "장비 셋업·필드"
-  ],
-  "greeting-aceworks-231149": [
-   "자율주행 시뮬레이션",
-   "차량통신 CAN·LIN",
-   "테스트 자동화",
-   "C·C++"
-  ],
-  "greeting-aceworks-214071": [
-   "차량통신 CAN·LIN",
-   "테스트 자동화",
-   "서비스 QA·검수",
-   "Jira·협업툴",
-   "REST API 설계",
-   "Git·형상관리",
-   "CI/CD·IaC",
-   "C·C++",
-   "Python"
-  ],
   "greeting-aceworks-205496": [
    "차량 제어 알고리즘",
    "경로계획·판단",
@@ -26003,11 +25783,6 @@
    "고객상담·CS",
    "경영기획·전략",
    "영어 업무 가능"
-  ],
-  "greeting-gintlab-235622": [
-   "사무보조·어시스턴트",
-   "정부과제·국책과제",
-   "ADAS·자율주행"
   ],
   "greeting-gintlab-233440": [
    "상용차·특장",
@@ -26459,10 +26234,6 @@
    "임상·인허가",
    "영어 업무 가능"
   ],
-  "greeting-vatechnetworks-216357": [
-   "IR·공시",
-   "결산·세무"
-  ],
   "greeting-vatechnetworks-216342": [
    "환자 케어·치료 지원",
    "C#·.NET",
@@ -26489,14 +26260,6 @@
    "안전·보건 관리",
    "기사 자격",
    "임상·인허가"
-  ],
-  "greeting-korgc-240014": [
-   "화학합성·소재",
-   "안전·보건 관리",
-   "수율·불량분석",
-   "기사 자격",
-   "PLC·산업제어",
-   "생산·공정관리"
   ],
   "greeting-korgc-233180": [
    "생산직·제조 현장",
@@ -26572,7 +26335,8 @@
   "greeting-finda-239497": [
    "소비자보호·민원",
    "준법감시·내부통제",
-   "대외협력·대관"
+   "대외협력·대관",
+   "계약·컴플라이언스"
   ],
   "greeting-finda-213655": [
    "소비자보호·민원",
@@ -26644,12 +26408,6 @@
    "SAP·ERP",
    "LLM·생성형 AI"
   ],
-  "greeting-finda-225668": [
-   "게임 시나리오·내러티브",
-   "브랜드 마케팅",
-   "콘텐츠·SNS 운영",
-   "경영기획·전략"
-  ],
   "greeting-finda-239161": [
    "그로스·A/B 테스트",
    "Salesforce·CRM",
@@ -26661,6 +26419,12 @@
    "SQL·데이터 추출"
   ],
   "greeting-finda-194938": [
+   "브랜드 마케팅",
+   "콘텐츠·SNS 운영",
+   "경영기획·전략"
+  ],
+  "greeting-finda-225668": [
+   "게임 시나리오·내러티브",
    "브랜드 마케팅",
    "콘텐츠·SNS 운영",
    "경영기획·전략"
@@ -27926,12 +27690,6 @@
   "workday-kla-SKBU-OMD-Customer-Support-Engineer_2642729": [
    "장비 셋업·필드"
   ],
-  "workday-kla-Engr--Field-Apps-1_2640749": [
-   "포토·리소그래피",
-   "수율·불량분석",
-   "공공사업·제안",
-   "장비 셋업·필드"
-  ],
   "workday-kla-SKBU-SFS-Customer-Support-Engineer_2636733-1": [
    "장비 셋업·필드"
   ],
@@ -27955,21 +27713,6 @@
    "식각(Etch)",
    "생산·공정관리",
    "장비 셋업·필드"
-  ],
-  "workday-kla-SBU-OMD-Customer-Engagement-Applications-Engineer_2641892": [
-   "포토·리소그래피",
-   "계측·검사장비",
-   "공공사업·제안",
-   "장비 셋업·필드"
-  ],
-  "workday-kla-SBU-LS-SWIFT-Customer-Engagement-Applications-Engineer------_2640168": [
-   "iOS·Swift",
-   "계측·검사장비",
-   "장비 셋업·필드",
-   "영어 업무 가능"
-  ],
-  "workday-kla-Field-Apps-Engr-for-BBP_2640171": [
-   "계측·검사장비"
   ],
   "workday-kla-Environmental--Health----Safety-Engineer_2640132-5": [
    "품질경영 ISO",
@@ -28299,13 +28042,6 @@
    "제조품질·QC",
    "서비스 기획·PO",
    "SAP·ERP"
-  ],
-  "workday-entegris-Engineer-II--Systems-Engineering_REQ-15049": [
-   "PLC·산업제어",
-   "SQL·데이터 추출"
-  ],
-  "workday-entegris-Senior-Engineer--Quality-Engineering--APS_REQ-14659": [
-   "영어 업무 가능"
   ],
   "workday-entegris-Advisor--Field-Services_REQ-14655": [
    "PLC·산업제어",
@@ -28693,6 +28429,26 @@
   "workday-airliquidehr-XMLNAME-----Young-Talent-Program----_R10029257-1": [
    "채용·HR 운영"
   ],
+  "workday-3m-Senior-Data-engineer--Corporate-Research-Laboratory-Asia_R01163796-1": [
+   "Windows 서버",
+   "MATLAB·Simulink",
+   "객체 스토리지",
+   "데이터 거버넌스",
+   "HTML·CSS",
+   "BI·대시보드",
+   "React·Next.js",
+   "NoSQL·캐시",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "머신러닝",
+   "AWS",
+   "SQL·데이터 추출",
+   "Python"
+  ],
+  "workday-3m-Senior-Research-Specialist-in-Polymer--Mechanics---Corporate-Research-Laboratory-Asia_R01163797": [
+   "장비 셋업·필드",
+   "Python"
+  ],
   "workday-3m-----Electronics-Vertical_R01169603": [
    "기술영업"
   ],
@@ -28866,9 +28622,6 @@
   ],
   "workday-danaher-Managing-Director--North-Asia---Korea_R1306040": [
    "임상병리·진단검사"
-  ],
-  "workday-philips-Korea-Imaging-Leader_591062": [
-   "제휴·사업개발"
   ],
   "workday-philips-Market-Procurement-Manager_593768": [
    "품질경영 ISO",
@@ -29130,16 +28883,6 @@
   "greenhouse-pubgcorporation-8836391002": [
    "게임 기획·레벨",
    "언리얼 엔진"
-  ],
-  "greenhouse-pubgcorporation-8623720002": [
-   "게임 서버",
-   "모니터링·관측",
-   "게임 운영·라이브서비스",
-   "Node.js·TypeScript",
-   "CI/CD·IaC",
-   "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "Python"
   ],
   "greenhouse-pubgcorporation-8006550002": [
    "개발 리더십·테크리드",
@@ -29452,6 +29195,307 @@
    "AI 에이전트",
    "SQL·데이터 추출"
   ],
+  "ashby-42dot-9527b990-720f-45ea-9e18-055e0fbbf454": [
+   "PMO·프로젝트관리",
+   "Jira·협업툴",
+   "ADAS·자율주행",
+   "서비스 기획·PO",
+   "구매·SCM",
+   "영어 업무 가능"
+  ],
+  "sk-R262380": [
+   "산업보건·간호"
+  ],
+  "hanwha-20087": [
+   "배송·운전",
+   "품질검사·QC",
+   "시공·현장관리",
+   "정밀가공·용접",
+   "생산직·제조 현장",
+   "설비보전·정비",
+   "물류·창고 운영"
+  ],
+  "greeting-fadu-242430": [
+   "영상·모션",
+   "프로덕트 디자인",
+   "Figma·UI 툴",
+   "Adobe 그래픽"
+  ],
+  "taekwang-126880": [
+   "보험 보상·언더라이팅",
+   "사무보조·어시스턴트",
+   "총무·사무환경",
+   "영업기획·영업관리"
+  ],
+  "greeting-solusadvancedmaterials-243524": [
+   "OLED·LCD 공정",
+   "고객 성공·온보딩",
+   "조직문화·사내소통",
+   "인사기획·보상",
+   "대외협력·대관",
+   "채용·HR 운영",
+   "구매·SCM",
+   "SAP·ERP"
+  ],
+  "greeting-s2w-199550": [
+   "파인튜닝·정렬",
+   "멀티모달·VLM",
+   "RAG·검색증강",
+   "딥러닝·비전모델",
+   "머신러닝",
+   "Kubernetes·Docker",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "greeting-ecstel-229331": [
+   "B2B 영업",
+   "기술영업",
+   "공공사업·제안",
+   "영어 업무 가능"
+  ],
+  "greeting-kstd-lezhin-189797": [
+   "정산·수수료",
+   "결산·세무",
+   "SAP·ERP"
+  ],
+  "shiftup-65dd262e5a": [
+   "게임 원화·컨셉아트",
+   "3D 그래픽 툴",
+   "언리얼 엔진"
+  ],
+  "daewoong-cbd22b6504691001": [
+   "GMP·밸리데이션"
+  ],
+  "greeting-hugel-226190": [
+   "투자·M&A",
+   "계약·컴플라이언스",
+   "공공사업·제안",
+   "제휴·사업개발",
+   "영어 업무 가능"
+  ],
+  "greeting-pharmaresearch_hr-239293": [
+   "의료기기 인허가",
+   "임상·인허가",
+   "영어 업무 가능"
+  ],
+  "greeting-neubility-215304": [
+   "게임 사업·퍼블리싱",
+   "B2B 영업",
+   "ADAS·자율주행",
+   "제휴·사업개발",
+   "경영기획·전략"
+  ],
+  "sf-gc-4610550": [
+   "제약영업·MR"
+  ],
+  "sf-gc-4576550": [
+   "임상병리·진단검사",
+   "시설관리·FM",
+   "임상·인허가"
+  ],
+  "greenhouse-toss-8000384003": [
+   "IT 헬프데스크·자산",
+   "리눅스·서버 운영"
+  ],
+  "greenhouse-toss-7847411003": [
+   "브랜드 마케팅"
+  ],
+  "greenhouse-toss-7994038003": [
+   "Adobe 그래픽",
+   "콘텐츠·SNS 운영"
+  ],
+  "greeting-kurly-216640": [
+   "변호사",
+   "대외협력·대관",
+   "계약·컴플라이언스"
+  ],
+  "greeting-kurly-235881": [
+   "웹 표준·접근성",
+   "이커머스 운영",
+   "Figma·UI 툴",
+   "Adobe 그래픽",
+   "LLM·생성형 AI"
+  ],
+  "greeting-kurly-197530": [
+   "실시간 처리",
+   "모니터링·관측",
+   "메시징·스트리밍",
+   "Azure·GCP",
+   "데이터 파이프라인",
+   "AWS",
+   "Kubernetes·Docker",
+   "SQL·데이터 추출",
+   "리눅스·서버 운영"
+  ],
+  "glink-bucketplace-232635": [
+   "조직문화·사내소통",
+   "정산·수수료",
+   "고객상담·CS"
+  ],
+  "greeting-musinsa-241688": [
+   "GA·퍼포먼스 마케팅",
+   "구매·SCM"
+  ],
+  "greeting-musinsa-238298": [
+   "MD·상품기획",
+   "구매·SCM"
+  ],
+  "kolon-KLS202610280001": [
+   "게임 원화·컨셉아트",
+   "재무·자금",
+   "결산·세무",
+   "SAP·ERP"
+  ],
+  "kakao-S4729": [
+   "블록체인·가상자산",
+   "MSA·아키텍처",
+   "메시징·스트리밍",
+   "CI/CD·IaC",
+   "AWS",
+   "Kubernetes·Docker"
+  ],
+  "kakao-S4747": [
+   "애자일·스크럼",
+   "Slack·사내 협업",
+   "PMO·프로젝트관리",
+   "Jira·협업툴",
+   "서비스 기획·PO"
+  ],
+  "greeting-dongsung-231808": [
+   "회계사",
+   "결산·세무",
+   "SAP·ERP",
+   "영어 업무 가능"
+  ],
+  "greeting-travel-wallet-239598": [
+   "심사·리스크 운영",
+   "금융 규제·AML"
+  ],
+  "greeting-healingpaper-239468": [
+   "와이어링 하네스",
+   "AI 에이전트",
+   "데이터 파이프라인",
+   "경영기획·전략",
+   "LLM·생성형 AI"
+  ],
+  "greeting-innospace-233912": [
+   "위성·발사체",
+   "어카운트·거래처 관리",
+   "제휴·사업개발",
+   "영어 업무 가능"
+  ],
+  "greeting-kakaomobility-145541": [
+   "배송·운전",
+   "사무보조·어시스턴트"
+  ],
+  "greeting-kakaomobility-239185": [
+   "엑셀 고급",
+   "사무보조·어시스턴트",
+   "고객상담·CS"
+  ],
+  "greeting-medistream-237080": [
+   "이커머스 운영",
+   "어카운트·거래처 관리",
+   "영업기획·영업관리",
+   "MD·상품기획",
+   "제휴·사업개발"
+  ],
+  "greeting-medistream-209316": [
+   "어카운트·거래처 관리",
+   "영업기획·영업관리",
+   "MD·상품기획",
+   "고객상담·CS"
+  ],
+  "greeting-skshieldus-141598": [
+   "소비자보호·민원",
+   "기사 자격"
+  ],
+  "greeting-aceworks-208371": [
+   "신재생·ESS",
+   "테스트 자동화"
+  ],
+  "greeting-aceworks-231165": [
+   "자율주행 시뮬레이션",
+   "클린룸·설비",
+   "계측·검사장비",
+   "장비 셋업·필드"
+  ],
+  "greeting-aceworks-231149": [
+   "자율주행 시뮬레이션",
+   "차량통신 CAN·LIN",
+   "테스트 자동화",
+   "C·C++"
+  ],
+  "greeting-aceworks-214071": [
+   "차량통신 CAN·LIN",
+   "테스트 자동화",
+   "서비스 QA·검수",
+   "Jira·협업툴",
+   "REST API 설계",
+   "Git·형상관리",
+   "CI/CD·IaC",
+   "C·C++",
+   "Python"
+  ],
+  "greeting-gintlab-235622": [
+   "사무보조·어시스턴트",
+   "정부과제·국책과제",
+   "ADAS·자율주행"
+  ],
+  "greeting-vatechnetworks-216357": [
+   "IR·공시",
+   "결산·세무"
+  ],
+  "greeting-korgc-240014": [
+   "화학합성·소재",
+   "안전·보건 관리",
+   "수율·불량분석",
+   "기사 자격",
+   "PLC·산업제어",
+   "생산·공정관리"
+  ],
+  "workday-kla-Engr--Field-Apps-1_2640749": [
+   "포토·리소그래피",
+   "수율·불량분석",
+   "공공사업·제안",
+   "장비 셋업·필드"
+  ],
+  "workday-kla-SBU-OMD-Customer-Engagement-Applications-Engineer_2641892": [
+   "포토·리소그래피",
+   "계측·검사장비",
+   "공공사업·제안",
+   "장비 셋업·필드"
+  ],
+  "workday-kla-SBU-LS-SWIFT-Customer-Engagement-Applications-Engineer------_2640168": [
+   "iOS·Swift",
+   "계측·검사장비",
+   "장비 셋업·필드",
+   "영어 업무 가능"
+  ],
+  "workday-kla-Field-Apps-Engr-for-BBP_2640171": [
+   "계측·검사장비"
+  ],
+  "workday-entegris-Engineer-II--Systems-Engineering_REQ-15049": [
+   "PLC·산업제어",
+   "SQL·데이터 추출"
+  ],
+  "workday-entegris-Senior-Engineer--Quality-Engineering--APS_REQ-14659": [
+   "영어 업무 가능"
+  ],
+  "workday-philips-Korea-Imaging-Leader_591062": [
+   "제휴·사업개발"
+  ],
+  "greenhouse-pubgcorporation-8623720002": [
+   "게임 서버",
+   "모니터링·관측",
+   "게임 운영·라이브서비스",
+   "Node.js·TypeScript",
+   "CI/CD·IaC",
+   "Kubernetes·Docker",
+   "리눅스·서버 운영",
+   "Python"
+  ],
   "greeting-dongkuk-242370": [
    "생산직·제조 현장"
   ],
@@ -29460,26 +29504,6 @@
    "브랜드 마케팅",
    "경영기획·전략",
    "영어 업무 가능"
-  ],
-  "workday-3m-Senior-Research-Specialist-in-Polymer--Mechanics---Corporate-Research-Laboratory-Asia_R01163797": [
-   "장비 셋업·필드",
-   "Python"
-  ],
-  "workday-3m-Senior-Data-engineer--Corporate-Research-Laboratory-Asia_R01163796-1": [
-   "Windows 서버",
-   "MATLAB·Simulink",
-   "객체 스토리지",
-   "데이터 거버넌스",
-   "HTML·CSS",
-   "BI·대시보드",
-   "React·Next.js",
-   "NoSQL·캐시",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "머신러닝",
-   "AWS",
-   "SQL·데이터 추출",
-   "Python"
   ],
   "ashby-42dot-6ca59e6b-09fd-437f-9f57-11b6d139388c": [
    "애자일·스크럼",
@@ -33027,15 +33051,6 @@
    "어카운트·거래처 관리",
    "기술영업",
    "장비 셋업·필드"
-  ],
-  "greeting-musinsa-172721": [
-   "개발 리더십·테크리드",
-   "MSA·아키텍처",
-   "메시징·스트리밍",
-   "NoSQL·캐시",
-   "RDBMS",
-   "Java·Spring",
-   "AWS"
   ],
   "greeting-musinsa-226997": [
    "결제·PG",
@@ -37895,7 +37910,7 @@
   "Python": {
    "slug": "python",
    "cat": "백엔드·언어",
-   "count": 732,
+   "count": 733,
    "link": true
   },
   "LLM·생성형 AI": {
@@ -37925,7 +37940,7 @@
   "리눅스·서버 운영": {
    "slug": "linux-server",
    "cat": "클라우드·인프라",
-   "count": 403,
+   "count": 404,
    "link": true
   },
   "SQL·데이터 추출": {
@@ -37949,19 +37964,19 @@
   "AWS": {
    "slug": "aws",
    "cat": "클라우드·인프라",
-   "count": 344,
+   "count": 346,
+   "link": true
+  },
+  "고객상담·CS": {
+   "slug": "cs",
+   "cat": "업무 영역 — 영업·고객",
+   "count": 327,
    "link": true
   },
   "콘텐츠·SNS 운영": {
    "slug": "content-sns",
    "cat": "마케팅·커머스",
    "count": 327,
-   "link": true
-  },
-  "고객상담·CS": {
-   "slug": "cs",
-   "cat": "업무 영역 — 영업·고객",
-   "count": 326,
    "link": true
   },
   "장비 셋업·필드": {
@@ -38003,13 +38018,13 @@
   "제휴·사업개발": {
    "slug": "business-development",
    "cat": "영업·사업개발",
-   "count": 247,
+   "count": 248,
    "link": true
   },
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 246,
+   "count": 245,
    "link": true
   },
   "MD·상품기획": {
@@ -38051,7 +38066,7 @@
   "계약·컴플라이언스": {
    "slug": "contract-compliance",
    "cat": "재무·회계·법무",
-   "count": 228,
+   "count": 229,
    "link": true
   },
   "재무·자금": {
@@ -38093,7 +38108,7 @@
   "중국어": {
    "slug": "chinese",
    "cat": "어학",
-   "count": 187,
+   "count": 186,
    "link": true
   },
   "NoSQL·캐시": {
@@ -38105,13 +38120,13 @@
   "Azure·GCP": {
    "slug": "azure-gcp",
    "cat": "클라우드·인프라",
-   "count": 172,
+   "count": 174,
    "link": true
   },
   "SoC·IP 설계": {
    "slug": "soc-design",
    "cat": "반도체 설계",
-   "count": 169,
+   "count": 170,
    "link": true
   },
   "AI 에이전트": {
@@ -38345,13 +38360,13 @@
   "BI·대시보드": {
    "slug": "bi-dashboard",
    "cat": "데이터·AI",
-   "count": 106,
+   "count": 105,
    "link": true
   },
   "결제·PG": {
    "slug": "payments",
    "cat": "금융·핀테크",
-   "count": 102,
+   "count": 103,
    "link": true
   },
   "고속 인터페이스": {
@@ -38414,10 +38429,10 @@
    "count": 94,
    "link": true
   },
-  "게임 기획·레벨": {
-   "slug": "game-design",
-   "cat": "게임",
-   "count": 93,
+  "보안관제·SOC": {
+   "slug": "security-operations",
+   "cat": "보안",
+   "count": 92,
    "link": true
   },
   "CRM 마케팅": {
@@ -38426,8 +38441,14 @@
    "count": 92,
    "link": true
   },
-  "보안관제·SOC": {
-   "slug": "security-operations",
+  "게임 기획·레벨": {
+   "slug": "game-design",
+   "cat": "게임",
+   "count": 92,
+   "link": true
+  },
+  "모의해킹·취약점진단": {
+   "slug": "penetration-testing",
    "cat": "보안",
    "count": 90,
    "link": true
@@ -38436,12 +38457,6 @@
    "slug": "government-relations",
    "cat": "업무 영역 — 인사·경영",
    "count": 90,
-   "link": true
-  },
-  "모의해킹·취약점진단": {
-   "slug": "penetration-testing",
-   "cat": "보안",
-   "count": 89,
    "link": true
   },
   "프로덕트 디자인": {
@@ -38462,6 +38477,12 @@
    "count": 88,
    "link": true
   },
+  "보안 자격증": {
+   "slug": "security-certification",
+   "cat": "보안",
+   "count": 86,
+   "link": true
+  },
   "ROS·로봇 SW": {
    "slug": "ros",
    "cat": "로봇·비전",
@@ -38474,28 +38495,22 @@
    "count": 86,
    "link": true
   },
-  "보안 자격증": {
-   "slug": "security-certification",
-   "cat": "보안",
-   "count": 85,
-   "link": true
-  },
   "정산·수수료": {
    "slug": "settlement",
    "cat": "업무 영역 — 인사·경영",
    "count": 84,
    "link": true
   },
+  "안전·보건 관리": {
+   "slug": "safety-health",
+   "cat": "품질·안전·인증",
+   "count": 83,
+   "link": true
+  },
   "금융 규제·AML": {
    "slug": "aml",
    "cat": "금융·핀테크",
    "count": 83,
-   "link": true
-  },
-  "안전·보건 관리": {
-   "slug": "safety-health",
-   "cat": "품질·안전·인증",
-   "count": 82,
    "link": true
   },
   "SLAM·측위": {
@@ -38552,16 +38567,16 @@
    "count": 75,
    "link": true
   },
+  "사무보조·어시스턴트": {
+   "slug": "office-assistant",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 74,
+   "link": true
+  },
   "프론트엔드 개발": {
    "slug": "frontend",
    "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
    "count": 74,
-   "link": true
-  },
-  "사무보조·어시스턴트": {
-   "slug": "office-assistant",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 73,
    "link": true
   },
   "디자인 시스템": {
@@ -38852,15 +38867,15 @@
    "count": 48,
    "link": true
   },
-  "인지(Perception)": {
-   "slug": "perception",
-   "cat": "ADAS 세부",
-   "count": 47,
-   "link": true
-  },
   "제약영업·MR": {
    "slug": "pharma-sales",
    "cat": "바이오·제약·화학",
+   "count": 48,
+   "link": true
+  },
+  "인지(Perception)": {
+   "slug": "perception",
+   "cat": "ADAS 세부",
    "count": 47,
    "link": true
   },
@@ -38954,12 +38969,6 @@
    "count": 42,
    "link": true
   },
-  "엑셀 고급": {
-   "slug": "advanced-excel",
-   "cat": "업무 시스템",
-   "count": 42,
-   "link": true
-  },
   "CPU·아키텍처": {
    "slug": "cpu",
    "cat": "운영체제·하드웨어",
@@ -38976,6 +38985,12 @@
    "slug": "medical-device-regulatory",
    "cat": "의료기기·헬스케어",
    "count": 42,
+   "link": true
+  },
+  "엑셀 고급": {
+   "slug": "advanced-excel",
+   "cat": "업무 시스템",
+   "count": 41,
    "link": true
   },
   "아날로그·PMIC": {
@@ -39224,16 +39239,16 @@
    "count": 23,
    "link": true
   },
-  "보훈·장애인 채용": {
-   "slug": "veterans-disability-hiring",
-   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
-   "count": 23,
-   "link": true
-  },
   "의료기기 설계": {
    "slug": "medical-device-design",
    "cat": "의료기기·헬스케어",
    "count": 23,
+   "link": true
+  },
+  "보훈·장애인 채용": {
+   "slug": "veterans-disability-hiring",
+   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+   "count": 22,
    "link": true
   },
   "신약·후보물질": {
@@ -39620,12 +39635,6 @@
    "count": 6,
    "link": true
   },
-  "사내 복지 서비스": {
-   "slug": "workplace-services",
-   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
-   "count": 6,
-   "link": true
-  },
   "셀 설계": {
    "slug": "battery-cell-design",
    "cat": "배터리 세부 (추가)",
@@ -39641,6 +39650,12 @@
   "반도체 소재": {
    "slug": "semiconductor-materials",
    "cat": "반도체 세부",
+   "count": 5,
+   "link": true
+  },
+  "사내 복지 서비스": {
+   "slug": "workplace-services",
+   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
    "count": 5,
    "link": true
   },
