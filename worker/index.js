@@ -22,6 +22,7 @@
  *   POST /api/account/delete                     회원 탈퇴
  *   POST /api/internal/new-jobs                  (비밀키) 새 공고 → 알림 대상 찾기
  *   POST /api/internal/flush                     (비밀키) 쌓인 알림을 폰으로 보내기
+ *   POST /api/internal/stats                     (비밀키) 회원 수 통계(숫자만, 이름·별명 없음)
  *
  * 필요한 설정은 docs 의 「회원기능 설정 안내」 에 있습니다.
  */
@@ -52,6 +53,9 @@ export default {
       }
       if (path === '/auth/logout' && req.method === 'POST') {
         if (!sameOrigin(req, env)) return fail(403, 'origin');
+        // 약관에 동의하지 않고 나가는 사람의 회원번호·별명은 바로 지웁니다.
+        const leaving = await currentUser(req, env);
+        if (leaving && !leaving.consented) await purgeUser(env, leaving.id);
         const clear = await logout(req, env);
         return json({ ok: true }, 200, { 'Set-Cookie': clear });
       }
@@ -69,7 +73,7 @@ export default {
 
       if (path === '/api/consent') return consent(env, user);
       if (path === '/api/account/delete') return deleteAccount(req, env, user);
-      // 동의 전에는 아무것도 저장하지 않습니다.
+      // 동의 전에는 팔로우·찜 같은 이용 정보를 저장하지 않습니다(회원번호·별명만 임시로 있음).
       if (!user.consented) return fail(403, '약관과 개인정보 수집에 동의해 주세요.');
 
       const body = await req.json().catch(() => ({}));
@@ -221,6 +225,21 @@ async function alertsRead(env, user) {
   return json({ ok: true });
 }
 
+// 회원 한 명의 모든 기록 삭제 (탈퇴·동의 없이 나감 공용)
+async function purgeUser(env, id) {
+  const db = env.DB;
+  await db.batch([
+    db.prepare('DELETE FROM push_subs WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM alerts WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM saved_searches WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM users WHERE id = ?1').bind(id),
+  ]);
+}
+
 async function deleteAccount(req, env, user) {
   const id = user.id;
   const db = env.DB;
@@ -247,6 +266,7 @@ async function internal(req, env, path) {
   const body = await req.json().catch(() => ({}));
   if (path === '/api/internal/new-jobs') return newJobs(env, body);
   if (path === '/api/internal/flush') return flush(env);
+  if (path === '/api/internal/stats') return stats(env);
   return fail(404, 'not found');
 }
 
@@ -345,6 +365,9 @@ async function newJobs(env, b) {
     db.prepare('DELETE FROM alerts WHERE created_at < ?1').bind(t - 60 * 86400),
     db.prepare('DELETE FROM processed_jobs WHERE at < ?1').bind(t - 120 * 86400),
     db.prepare('DELETE FROM sessions WHERE expires_at < ?1').bind(t),
+    // 동의하지 않고 하루가 지난 로그인 기록 (회원번호·별명만 있음)
+    db.prepare('DELETE FROM sessions WHERE user_id IN (SELECT id FROM users WHERE consent_at IS NULL AND last_login_at < ?1)').bind(t - 86400),
+    db.prepare('DELETE FROM users WHERE consent_at IS NULL AND last_login_at < ?1').bind(t - 86400),
   ]);
   const old = (await db.prepare('SELECT id FROM users WHERE last_login_at < ?1 LIMIT 50').bind(t - 365 * 86400).all()).results;
   for (const u of old) {
@@ -412,4 +435,51 @@ async function flush(env) {
     `SELECT COUNT(DISTINCT a.user_id) AS n FROM alerts a JOIN push_subs p ON p.user_id = a.user_id WHERE a.pushed = 0`,
   ).first();
   return json({ ok: true, sent, gone, remaining: rem ? rem.n : 0 });
+}
+
+
+/*
+ * 회원 수 통계 — 숫자만 돌려줍니다(이름·별명·번호는 나가지 않음).
+ * 가입자 = 약관에 동의한 회원(consent_at 있음). 동의 전 임시 기록은 pending 으로 따로 셉니다.
+ */
+async function stats(env) {
+  const db = env.DB;
+  const t = now();
+  const KST = 9 * 3600;
+  const dayStart = Math.floor((t + KST) / 86400) * 86400 - KST; // 오늘 0시(한국시간)
+  const one = async (sql, ...b) => (await db.prepare(sql).bind(...b).first()) || {};
+  const total = await one('SELECT COUNT(*) AS n FROM users WHERE consent_at IS NOT NULL');
+  const pending = await one('SELECT COUNT(*) AS n FROM users WHERE consent_at IS NULL');
+  const byProv = (await db.prepare('SELECT provider, COUNT(*) AS n FROM users WHERE consent_at IS NOT NULL GROUP BY provider').all()).results;
+  const today = await one('SELECT COUNT(*) AS n FROM users WHERE consent_at >= ?1', dayStart);
+  const week = await one('SELECT COUNT(*) AS n FROM users WHERE consent_at >= ?1', dayStart - 6 * 86400);
+  const active7 = await one('SELECT COUNT(*) AS n FROM users WHERE consent_at IS NOT NULL AND last_login_at >= ?1', t - 7 * 86400);
+  const pushUsers = await one('SELECT COUNT(DISTINCT user_id) AS n FROM push_subs');
+  const pushDevices = await one('SELECT COUNT(*) AS n FROM push_subs');
+  const usersWith = async (table) => (await one(`SELECT COUNT(DISTINCT user_id) AS n FROM ${table}`)).n || 0;
+  const rows = async (table) => (await one(`SELECT COUNT(*) AS n FROM ${table}`)).n || 0;
+  return json({
+    ok: true,
+    members: total.n || 0,
+    byProvider: Object.fromEntries(byProv.map((r) => [r.provider, r.n])),
+    signedUpToday: today.n || 0,
+    signedUpLast7Days: week.n || 0,
+    loggedInLast7Days: active7.n || 0,
+    pendingConsent: pending.n || 0,
+    pushUsers: pushUsers.n || 0,
+    pushDevices: pushDevices.n || 0,
+    usersUsing: {
+      follow: await usersWith('follows'),
+      bookmark: await usersWith('bookmarks'),
+      savedSearch: await usersWith('saved_searches'),
+      keyword: await usersWith('keywords'),
+    },
+    rows: {
+      follows: await rows('follows'),
+      bookmarks: await rows('bookmarks'),
+      savedSearches: await rows('saved_searches'),
+      keywords: await rows('keywords'),
+      alerts: await rows('alerts'),
+    },
+  });
 }

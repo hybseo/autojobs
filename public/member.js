@@ -274,7 +274,7 @@
     });
     root.appendChild(box);
     root.appendChild(el('p', { class: 'mem-privacy' }, '성명, 이메일, 전화번호 등 개인정보는 받지 않습니다.'));
-    root.appendChild(el('p', { class: 'mem-fine' }, '카카오·네이버·구글이 알려 주는 회원번호와 별명만 씁니다. 로그인하면 다음 화면에서 이용약관과 개인정보 수집·이용에 동의하는지 확인합니다. 동의하기 전에는 아무것도 저장되지 않습니다.'));
+    root.appendChild(el('p', { class: 'mem-fine' }, '카카오·네이버·구글이 알려 주는 회원번호와 별명만 씁니다. 로그인하면 다음 화면에서 이용약관과 개인정보 수집·이용에 동의하는지 확인합니다. 동의하기 전에는 회원번호와 별명만 잠시 두며, 동의하지 않고 나가면 바로 지웁니다.'));
     var links = el('p', { class: 'mem-fine' });
     links.appendChild(el('a', { href: '/terms/' }, '이용약관'));
     links.appendChild(document.createTextNode(' · '));
@@ -284,7 +284,7 @@
 
   function renderConsent(root, s) {
     root.appendChild(el('h1', { class: 'h1' }, (s.user.nickname || '회원') + '님, 환영합니다'));
-    root.appendChild(el('p', { class: 'mem-lede' }, '서비스를 쓰시려면 아래 내용에 동의해 주세요. 동의하지 않으시면 아무것도 저장되지 않습니다.'));
+    root.appendChild(el('p', { class: 'mem-lede' }, '서비스를 쓰시려면 아래 내용에 동의해 주세요. 동의하지 않고 나가시면 회원번호와 별명을 바로 지웁니다.'));
     var form = el('form', { class: 'mem-consent' });
     function check(id, html, hrefText, href) {
       var lab = el('label', { class: 'mem-chk' });

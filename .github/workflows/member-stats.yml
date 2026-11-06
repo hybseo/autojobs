@@ -1,0 +1,29 @@
+# 회원 수 통계 보기 (2026-11-06)
+# =====================================================================
+# 손으로 실행하는 작업입니다. 깃허브 → Actions → 「회원 통계」 → Run workflow.
+# 실행이 끝나면 「통계 보기」 단계의 기록에 숫자가 나옵니다(이름·별명은 나오지 않음).
+# 필요한 비밀키는 「회원 알림 발송」과 같습니다: NOTIFY_URL, NOTIFY_SECRET.
+name: 회원 통계
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 통계 보기
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+        run: node scripts/member_stats.mjs
