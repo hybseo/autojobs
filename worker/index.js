@@ -97,7 +97,10 @@ function sameOrigin(req, env) {
 
 async function me(req, env) {
   const providers = enabledProviders(env).map((p) => ({ id: p, label: PROVIDERS[p].label }));
-  const base = { providers, push: pushReady(env), vapid: env.VAPID_PUBLIC_KEY || null };
+  // 심사 중인 로그인 업체: 버튼만 「심사 중」으로 막습니다. /auth/{업체}/start 주소는 그대로 열려 있어
+  // 시험 계정(업체 쪽에 등록된 아이디)은 직접 주소로 로그인할 수 있습니다. 승인되면 이 값을 지웁니다.
+  const preview = String(env.PREVIEW_PROVIDERS || '').split(',').map((x) => x.trim()).filter(Boolean);
+  const base = { providers, preview, push: pushReady(env), vapid: env.VAPID_PUBLIC_KEY || null };
   const user = await currentUser(req, env);
   if (!user) return json({ ...base, user: null });
   if (!user.consented) return json({ ...base, user: { nickname: user.nickname, provider: user.provider, consented: false } });

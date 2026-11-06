@@ -259,10 +259,14 @@
     var box = el('div', { class: 'mem-login' });
     var all = [['kakao', '카카오'], ['naver', '네이버'], ['google', '구글']];
     var on = {};
+    var pre = {};
     ((s && s.providers) || []).forEach(function (x) { on[x.id] = true; });
+    ((s && s.preview) || []).forEach(function (id) { pre[id] = true; });
     all.forEach(function (x) {
       var id = x[0];
-      if (on[id]) {
+      if (on[id] && pre[id]) {
+        box.appendChild(el('span', { class: 'mem-prov mem-off', title: '업체의 승인 심사가 끝나면 열립니다' }, x[1] + ' (심사 중 · 곧 열립니다)'));
+      } else if (on[id]) {
         box.appendChild(el('a', { class: 'mem-prov mem-' + id, href: '/auth/' + id + '/start?next=' + encodeURIComponent(next) }, x[1] + '로 시작하기'));
       } else {
         box.appendChild(el('span', { class: 'mem-prov mem-off' }, x[1] + ' (준비 중)'));

@@ -48,6 +48,12 @@
 
   /* 로그인 후 돌아올 사이트 주소. 비밀이 아닌 공개 값이라 여기에 둡니다. */
   "vars": {
-    "SITE_ORIGIN": "https://searchjob.co.kr"
+    "SITE_ORIGIN": "https://searchjob.co.kr",
+    /*
+     * 심사 중인 로그인 업체 (2026-11-06). 네이버 로그인 검수요청을 낸 뒤 승인 전까지는
+     * 멤버관리에 등록한 아이디만 로그인되므로, 화면 버튼을 「심사 중」으로 막아 둡니다.
+     * 승인 메일이 오면 이 줄을 지우고 올리세요. 시험 계정은 /auth/naver/start 로 직접 로그인합니다.
+     */
+    "PREVIEW_PROVIDERS": "naver"
   }
 }
