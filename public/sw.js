@@ -26,14 +26,18 @@ self.addEventListener('push', function (event) {
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   var url = (event.notification.data && event.notification.data.url) || '/my/';
+  var full = new URL(url, self.location.origin).href;
   event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (list) {
+    // 이미 열린 서치잡 탭이 있으면 그 탭을 앞으로 가져와 해당 주소로 보냅니다.
+    // 주소 이동이 막히거나 실패하면(탭이 알림 담당이 아닐 때 등) 새 창으로 엽니다.
     for (var i = 0; i < list.length; i += 1) {
       var c = list[i];
       if (c.url.indexOf(self.location.origin) === 0 && 'focus' in c) {
-        if ('navigate' in c) c.navigate(url);
-        return c.focus();
+        return c.focus().then(function (w) {
+          return (w && 'navigate' in w) ? w.navigate(full) : self.clients.openWindow(full);
+        }).catch(function () { return self.clients.openWindow(full); });
       }
     }
-    return self.clients.openWindow(url);
-  }));
+    return self.clients.openWindow(full);
+  }).catch(function () { return self.clients.openWindow(full); }));
 });
