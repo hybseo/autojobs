@@ -68,12 +68,16 @@ let closing = jobs
   .map((j) => ({ id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '', days: daysLeft(j) }));
 
 // --test: 실제 공고 대신 시험용 새 공고만 보냅니다(알림이 폰·PC 로 오는지 확인용).
-//   · 토스를 팔로우한 회원에게 가는 공고 1건
+//   · TEST_SLUGS(쉼표로 구분, 기본 toss) 기업을 팔로우한 회원에게 가는 공고 기업당 1건
 //   · TEST_QUERY 가 있으면 그 검색어를 저장한 회원에게 가는 공고 1건
 if (process.argv.includes('--test')) {
   const stamp = Date.now();
   const q = (process.env.TEST_QUERY || '').trim();
-  fresh = [{ id: `test-follow-${stamp}`, title: '[알림 시험] 토스 새 공고가 올라왔습니다', co: '토스', slug: 'toss', ind: [] }];
+  const slugs = (process.env.TEST_SLUGS || 'toss').split(',').map((x) => x.trim()).filter(Boolean);
+  fresh = slugs.map((slug) => ({
+    id: `test-follow-${slug}-${stamp}`, title: `[알림 시험] ${coName[slug] || slug} 새 공고가 올라왔습니다`,
+    co: coName[slug] || slug, slug, ind: [],
+  }));
   if (q) fresh.push({ id: `test-search-${stamp}`, title: `[알림 시험] ${q} 관련 새 공고`, co: '시험회사', slug: 'test', ind: [] });
   closing = [];
 }
