@@ -511,6 +511,7 @@ footer b{color:var(--ink-2);font-weight:500}
 .mem-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .mem-sec{margin-top:30px}
 .mem-sec h2{font-size:16px;font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.mem-bk .mem-rl span:not(:only-child){color:var(--ink-3)}
 .mem-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
 .mem-rl{min-width:0}
 .mem-rl a,.mem-rl span{font-size:14px;font-weight:500;word-break:keep-all}

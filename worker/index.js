@@ -160,7 +160,7 @@ async function bookmark(env, user, b) {
   const id = clean(b.id, 60);
   if (!/^[A-Za-z0-9._-]+$/.test(id)) return fail(400, 'id');
   if (b.on) {
-    if ((await count(env, 'bookmarks', user.id)) >= MAX_BOOKMARKS) return fail(400, `찜은 ${MAX_BOOKMARKS}건까지 가능합니다.`);
+    if ((await count(env, 'bookmarks', user.id)) >= MAX_BOOKMARKS) return fail(400, `찜은 ${MAX_BOOKMARKS}건까지 가능합니다. 마이페이지에서 지난 찜을 삭제해 주세요.`);
     await env.DB.prepare('INSERT OR IGNORE INTO bookmarks (user_id, job_id, title, company, created_at) VALUES (?1, ?2, ?3, ?4, ?5)')
       .bind(user.id, id, clean(b.title, 200), clean(b.company, 80), now()).run();
   } else {

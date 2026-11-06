@@ -457,15 +457,34 @@
       });
     });
 
-    // 찜
+    // 찜 — 마감됐거나 내려간 공고는 「(마감된 공고입니다.)」로 표시하고 링크를 걸지 않습니다.
+    // 지금 열려 있는 공고 번호 목록(/open-jobs.json)과 맞춰 봅니다. 찜 자체는 지우지 않습니다(사용자가 직접 삭제).
     var sb = section(root, '찜한 공고 ' + s.bookmarks.length);
     if (!s.bookmarks.length) sb.appendChild(el('p', { class: 'mem-empty' }, '공고 페이지에서 「찜」을 누르면 여기에 모입니다.'));
-    s.bookmarks.forEach(function (b) {
-      listRow(sb, (b.company ? b.company + ' · ' : '') + (b.title || b.id), '/job/' + encodeURIComponent(b.id) + '/',
-        '마감이 지났거나 내려간 공고는 열리지 않을 수 있습니다', function (row) {
+    var bkBox = el('div', { class: 'mem-bk' });
+    sb.appendChild(bkBox);
+    function paintBookmarks(openSet) {
+      bkBox.textContent = '';
+      var list = s.bookmarks.map(function (b) { return { b: b, closed: !!openSet && !openSet[b.id] }; });
+      if (openSet) list.sort(function (x, y) { return (x.closed ? 1 : 0) - (y.closed ? 1 : 0); }); // 진행 중인 공고가 먼저
+      list.forEach(function (x) {
+        var b = x.b;
+        var text = (b.company ? b.company + ' · ' : '') + (b.title || b.id);
+        var remove = function (row) {
           api('/api/bookmark', { id: b.id, on: false }).then(function (r) { if (r.ok) row.remove(); });
-        });
-    });
+        };
+        if (x.closed) listRow(bkBox, text, null, '(마감된 공고입니다.)', remove);
+        else listRow(bkBox, text, '/job/' + encodeURIComponent(b.id) + '/', openSet ? '' : '마감이 지났거나 내려간 공고는 열리지 않을 수 있습니다', remove);
+      });
+    }
+    paintBookmarks(null);
+    if (s.bookmarks.length) {
+      fetch('/open-jobs.json').then(function (r) { return r.json(); }).then(function (d) {
+        var set = {};
+        (d.ids || []).forEach(function (id) { set[id] = true; });
+        paintBookmarks(set);
+      }).catch(function () { /* 목록을 못 받으면 예전처럼 링크로 둡니다 */ });
+    }
 
     // 저장 검색
     var ss = section(root, '알림 받는 검색 ' + s.searches.length);
