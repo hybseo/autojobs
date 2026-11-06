@@ -19,6 +19,7 @@
  * 사용: node scripts/notify_delta.mjs [--dry]   (--dry 는 보내지 않고 요약만 출력)
  */
 import fs from 'node:fs';
+import { rolesOf, roleName } from '../src/roles.js';
 
 const dry = process.argv.includes('--dry');
 const URL_BASE = (process.env.NOTIFY_URL || '').replace(/\/$/, '');
@@ -30,6 +31,7 @@ if (!dry && (!URL_BASE || !SECRET)) {
 
 const jobsDoc = JSON.parse(fs.readFileSync('src/data/jobs.json', 'utf8'));
 const registry = JSON.parse(fs.readFileSync('src/data/companies.json', 'utf8'));
+const TAG_BY_JOB = (JSON.parse(fs.readFileSync('src/data/job-tags.json', 'utf8')).tags) || {};
 const jobs = jobsDoc.jobs;
 
 // ── lib.js 와 같은 규칙 ──
@@ -62,6 +64,8 @@ let fresh = jobs
   .map((j) => ({
     id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '',
     slug: j.companySlug, ind: industriesOf(j),
+    // 「내 키워드」 알림용: 직무 이름과 기술·역량 태그 (사이트의 직무·태그와 같은 규칙)
+    role: rolesOf(j).map(roleName), tag: TAG_BY_JOB[j.id] || [],
   }));
 let closing = jobs
   .filter((j) => isOpen(j) && j.closesAt && daysLeft(j) >= 0 && daysLeft(j) <= 3)
@@ -78,6 +82,8 @@ if (process.argv.includes('--test')) {
     id: `test-follow-${slug}-${stamp}`, title: `[알림 시험] ${coName[slug] || slug} 새 공고가 올라왔습니다`,
     co: coName[slug] || slug, slug, ind: [],
   }));
+  const tk = (process.env.TEST_KEYWORDS || '').split(',').map((x) => x.trim()).filter(Boolean);
+  if (tk.length) fresh.push({ id: `test-keyword-${stamp}`, title: `[알림 시험] 키워드 ${tk.join('·')} 공고`, co: '시험회사', slug: 'test', ind: tk, role: tk, tag: tk });
   if (q) fresh.push({ id: `test-search-${stamp}`, title: `[알림 시험] ${q} 관련 새 공고`, co: '시험회사', slug: 'test', ind: [] });
   closing = [];
 }

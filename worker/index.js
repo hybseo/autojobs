@@ -16,6 +16,7 @@
  *   POST /api/follow  {slug, name, on}           기업 팔로우 켜기/끄기
  *   POST /api/bookmark {id, title, company, on}  공고 찜 켜기/끄기
  *   POST /api/search  {q, ind, on}               검색 저장 켜기/끄기
+ *   POST /api/keyword                            내 키워드(산업·직무·태그, 최대 3개) 등록·해제
  *   POST /api/push/subscribe | /api/push/unsubscribe
  *   POST /api/alerts/read                        알림함 비우기
  *   POST /api/account/delete                     회원 탈퇴
@@ -75,6 +76,7 @@ export default {
       if (path === '/api/follow') return follow(env, user, body);
       if (path === '/api/bookmark') return bookmark(env, user, body);
       if (path === '/api/search') return saveSearch(env, user, body);
+      if (path === '/api/keyword') return saveKeyword(env, user, body);
       if (path === '/api/push/subscribe') return subscribe(env, user, body);
       if (path === '/api/push/unsubscribe') return unsubscribe(env, user, body);
       if (path === '/api/alerts/read') return alertsRead(env, user);
@@ -101,7 +103,7 @@ async function me(req, env) {
   if (!user.consented) return json({ ...base, user: { nickname: user.nickname, provider: user.provider, consented: false } });
 
   const db = env.DB;
-  const [follows, bookmarks, searches, alerts, subs] = await Promise.all([
+  const [follows, bookmarks, searches, alerts, subs, keywords] = await Promise.all([
     db.prepare('SELECT company_slug AS slug, name FROM follows WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
     db.prepare('SELECT job_id AS id, title, company FROM bookmarks WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
     db.prepare('SELECT q, ind FROM saved_searches WHERE user_id = ?1 ORDER BY created_at DESC').bind(user.id).all(),
@@ -110,6 +112,7 @@ async function me(req, env) {
         WHERE user_id = ?1 ORDER BY created_at DESC, id DESC LIMIT 50`,
     ).bind(user.id).all(),
     db.prepare('SELECT COUNT(*) AS n FROM push_subs WHERE user_id = ?1').bind(user.id).first(),
+    db.prepare('SELECT kind, value FROM keywords WHERE user_id = ?1 ORDER BY created_at').bind(user.id).all(),
   ]);
   return json({
     ...base,
@@ -117,6 +120,7 @@ async function me(req, env) {
     follows: follows.results,
     bookmarks: bookmarks.results,
     searches: searches.results,
+    keywords: keywords.results,
     alerts: alerts.results,
     pushDevices: subs ? subs.n : 0,
   });
@@ -172,6 +176,23 @@ async function saveSearch(env, user, b) {
   return json({ ok: true });
 }
 
+const KW_KINDS = ['ind', 'role', 'tag'];
+const MAX_KEYWORDS = 3;
+
+async function saveKeyword(env, user, b) {
+  const kind = String(b.kind || '');
+  const value = clean(b.value, 40);
+  if (!KW_KINDS.includes(kind) || !value) return fail(400, '키워드가 올바르지 않습니다.');
+  if (b.on) {
+    if ((await count(env, 'keywords', user.id)) >= MAX_KEYWORDS) return fail(400, `내 키워드는 ${MAX_KEYWORDS}개까지 가능합니다.`);
+    await env.DB.prepare('INSERT OR IGNORE INTO keywords (user_id, kind, value, created_at) VALUES (?1, ?2, ?3, ?4)')
+      .bind(user.id, kind, value, now()).run();
+  } else {
+    await env.DB.prepare('DELETE FROM keywords WHERE user_id = ?1 AND kind = ?2 AND value = ?3').bind(user.id, kind, value).run();
+  }
+  return json({ ok: true });
+}
+
 async function subscribe(env, user, b) {
   const endpoint = clean(b.endpoint, 600);
   const p256dh = clean(b.keys?.p256dh, 200);
@@ -204,6 +225,7 @@ async function deleteAccount(req, env, user) {
     db.prepare('DELETE FROM push_subs WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM alerts WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM saved_searches WHERE user_id = ?1').bind(id),
+    db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(id),
@@ -254,6 +276,7 @@ async function newJobs(env, b) {
 
   if (todo.length) {
     const searches = (await db.prepare('SELECT user_id, q, ind FROM saved_searches').all()).results;
+    const kws = (await db.prepare('SELECT user_id, kind, value FROM keywords').all()).results;
     const stmts = [];
     for (const j of todo) {
       const id = String(j.id);
@@ -272,6 +295,16 @@ async function newJobs(env, b) {
         if (!words.every((w) => hay.includes(w))) continue;
         if (s.ind && !inds.includes(s.ind)) continue;
         targets.set(s.user_id, `저장 검색 「${[s.q, s.ind].filter(Boolean).join(' · ')}」`);
+      }
+      // 내 키워드: 산업·직무·태그 중 하나라도 맞으면 (사람마다 처음 맞은 것 하나만 이유로 적음)
+      const roleNames = Array.isArray(j.role) ? j.role.map(String) : [];
+      const tagNames = Array.isArray(j.tag) ? j.tag.map(String) : [];
+      for (const k of kws) {
+        if (targets.has(k.user_id)) continue;
+        const hit = k.kind === 'ind' ? inds.includes(k.value)
+          : k.kind === 'role' ? roleNames.includes(k.value)
+            : tagNames.includes(k.value);
+        if (hit) targets.set(k.user_id, `내 키워드 「${k.value}」`);
       }
       for (const [uid, reason] of targets) {
         stmts.push(db.prepare(
@@ -316,6 +349,7 @@ async function newJobs(env, b) {
       db.prepare('DELETE FROM push_subs WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM alerts WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM saved_searches WHERE user_id = ?1').bind(u.id),
+      db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(u.id),

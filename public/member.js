@@ -349,6 +349,88 @@
         .then(function () { pbtn.disabled = false; });
     });
 
+    // 내 키워드 (산업·직무·기술 태그 중 3개까지 — 하나라도 맞는 새 공고가 올라오면 알림)
+    var KW_MAX = 3;
+    var KW_LABEL = { ind: '산업', role: '직무', tag: '기술' };
+    var kws = (s.keywords || []).slice();
+    var sk = section(root, '내 키워드');
+    var kwTitle = sk.querySelector('h2');
+    var kwLede = el('p', { class: 'mem-lede' }, '관심 있는 산업·직무·기술을 3개까지 골라 두세요. 그중 하나라도 맞는 새 공고가 올라오면 알려 드립니다.');
+    var kwChips = el('div', { class: 'mem-kw-sel' });
+    var kwOpen = el('button', { type: 'button', class: 'mem-btn on' }, '＋ 키워드 고르기');
+    var kwPanel = el('div', { class: 'mem-kw-panel', hidden: '' });
+    sk.appendChild(kwLede); sk.appendChild(kwChips); sk.appendChild(kwOpen); sk.appendChild(kwPanel);
+    var kwData = null;
+    function kwHas(kind, value) { return kws.some(function (k) { return k.kind === kind && k.value === value; }); }
+    function kwToggle(kind, value, on) {
+      if (on && kws.length >= KW_MAX) return toast('내 키워드는 ' + KW_MAX + '개까지 고를 수 있습니다. 하나를 빼 주세요.');
+      return api('/api/keyword', { kind: kind, value: value, on: on }).then(function (r) {
+        if (r.status === 401) return toLogin();
+        if (!r.ok) return toast((r.data && r.data.error) || '저장하지 못했습니다.');
+        if (on) kws.push({ kind: kind, value: value });
+        else kws = kws.filter(function (k) { return !(k.kind === kind && k.value === value); });
+        paintKw();
+      });
+    }
+    function paintKw() {
+      kwTitle.textContent = '내 키워드 ' + kws.length + '/' + KW_MAX;
+      kwChips.textContent = '';
+      kws.forEach(function (k) {
+        var c = el('button', { type: 'button', class: 'chip', 'aria-pressed': 'true', title: '누르면 뺍니다' }, KW_LABEL[k.kind] + ' · ' + k.value + ' ✕');
+        c.addEventListener('click', function () { kwToggle(k.kind, k.value, false); });
+        kwChips.appendChild(c);
+      });
+      kwOpen.hidden = kws.length >= KW_MAX;
+      if (kws.length >= KW_MAX) kwPanel.hidden = true;
+      if (!kwPanel.hidden) paintPanel();
+    }
+    var kwFilter = '';
+    function paintPanel() {
+      kwPanel.textContent = '';
+      if (!kwData) { kwPanel.appendChild(el('p', { class: 'mem-fine' }, '불러오는 중…')); return; }
+      var find = el('input', { type: 'search', class: 'mem-kw-find', placeholder: '키워드 찾기 (예: 영업, Python)', value: kwFilter });
+      find.addEventListener('input', function () { kwFilter = find.value.trim(); paintList(); });
+      kwPanel.appendChild(find);
+      var list = el('div', { class: 'mem-kw-list' });
+      kwPanel.appendChild(list);
+      function group(title, items) {
+        var shown = items.filter(function (x) { return !kwFilter || x[0].toLowerCase().indexOf(kwFilter.toLowerCase()) >= 0; });
+        if (!shown.length) return;
+        list.appendChild(el('h3', null, title));
+        var box = el('div', { class: 'chips' });
+        shown.forEach(function (x) {
+          var on = kwHas(x.kind, x[0]);
+          var c = el('button', { type: 'button', class: 'chip', 'aria-pressed': on ? 'true' : 'false' }, x[0]);
+          c.appendChild(el('span', { class: 'n' }, String(x.n)));
+          c.addEventListener('click', function () { kwToggle(x.kind, x[0], !on); });
+          box.appendChild(c);
+        });
+        list.appendChild(box);
+      }
+      function paintList() {
+        list.textContent = '';
+        group('산업', kwData.ind.map(function (x) { return Object.assign([x[0]], { kind: 'ind', n: x[1] }); }));
+        group('직무', kwData.role.map(function (x) { return Object.assign([x[0]], { kind: 'role', n: x[1] }); }));
+        var cats = [];
+        kwData.tag.forEach(function (x) { if (cats.indexOf(x[1]) < 0) cats.push(x[1]); });
+        cats.forEach(function (cat) {
+          group('기술 · ' + cat, kwData.tag.filter(function (x) { return x[1] === cat; })
+            .map(function (x) { return Object.assign([x[0]], { kind: 'tag', n: x[2] }); }));
+        });
+        if (!list.firstChild) list.appendChild(el('p', { class: 'mem-fine' }, '찾는 키워드가 없습니다.'));
+      }
+      paintList();
+    }
+    kwOpen.addEventListener('click', function () {
+      kwPanel.hidden = !kwPanel.hidden;
+      kwOpen.textContent = kwPanel.hidden ? '＋ 키워드 고르기' : '닫기';
+      if (kwPanel.hidden) return;
+      paintPanel();
+      if (!kwData) fetch('/keywords.json').then(function (r) { return r.json(); }).then(function (d) { kwData = d; paintPanel(); })
+        .catch(function () { kwPanel.textContent = ''; kwPanel.appendChild(el('p', { class: 'mem-fine' }, '목록을 불러오지 못했습니다. 새로고침해 주세요.')); });
+    });
+    paintKw();
+
     // 알림함
     var sa = section(root, '새 소식');
     if (!s.alerts.length) sa.appendChild(el('p', { class: 'mem-empty' }, '아직 소식이 없습니다. 기업을 팔로우하거나 공고를 찜해 보세요.'));

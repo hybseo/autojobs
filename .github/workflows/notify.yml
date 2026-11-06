@@ -31,6 +31,10 @@ on:
         description: '시험용: 팔로우한 기업 슬러그 (쉼표로 구분, 예: toss,nexon)'
         type: string
         default: 'toss'
+      test_keywords:
+        description: '시험용: 「내 키워드」로 등록한 산업·직무·태그 이름 (쉼표로 구분)'
+        type: string
+        default: ''
       test_query:
         description: '시험용: 저장해 둔 검색어 (비우면 기업 팔로우 알림만)'
         type: string
@@ -63,6 +67,7 @@ jobs:
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
           TEST_QUERY: ${{ inputs.test_query }}
           TEST_SLUGS: ${{ inputs.test_slugs }}
+          TEST_KEYWORDS: ${{ inputs.test_keywords }}
           IS_TEST: ${{ inputs.test }}
         run: |
           if [ "$IS_TEST" = "true" ]; then node scripts/notify_delta.mjs --test; else node scripts/notify_delta.mjs; fi

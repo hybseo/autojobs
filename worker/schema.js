@@ -57,6 +57,15 @@ export const SCHEMA = [
      UNIQUE (user_id, q, ind)
    )`,
   `CREATE INDEX IF NOT EXISTS idx_ss_user ON saved_searches (user_id)`,
+  // 내 키워드 (산업·직무·기술 태그 중 최대 3개). kind: ind | role | tag
+  `CREATE TABLE IF NOT EXISTS keywords (
+     user_id INTEGER NOT NULL,
+     kind TEXT NOT NULL,
+     value TEXT NOT NULL,
+     created_at INTEGER NOT NULL,
+     PRIMARY KEY (user_id, kind, value)
+   )`,
+  `CREATE INDEX IF NOT EXISTS idx_kw_user ON keywords (user_id)`,
   // 알림 받을 브라우저. endpoint 는 브라우저가 준 주소(알림을 보낼 곳)입니다.
   `CREATE TABLE IF NOT EXISTS push_subs (
      endpoint TEXT PRIMARY KEY,
