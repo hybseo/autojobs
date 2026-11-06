@@ -22,6 +22,15 @@ on:
     workflows: ['공고 갱신']
     types: [completed]
   workflow_dispatch:
+    inputs:
+      test:
+        description: '시험 알림만 보내기 (실제 공고는 보내지 않음)'
+        type: boolean
+        default: false
+      test_query:
+        description: '시험용: 저장해 둔 검색어 (비우면 기업 팔로우 알림만)'
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -48,4 +57,7 @@ jobs:
         env:
           NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
-        run: node scripts/notify_delta.mjs
+          TEST_QUERY: ${{ inputs.test_query }}
+          IS_TEST: ${{ inputs.test }}
+        run: |
+          if [ "$IS_TEST" = "true" ]; then node scripts/notify_delta.mjs --test; else node scripts/notify_delta.mjs; fi

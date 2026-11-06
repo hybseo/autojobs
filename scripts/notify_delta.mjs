@@ -57,15 +57,26 @@ const daysLeft = (j) => (j.closesAt ? Math.ceil((parseDate(j.closesAt) - TODAY) 
 const coName = Object.fromEntries((registry.companies || []).map((c) => [c.slug, c.name]));
 
 const since = new Date(TODAY.getTime() - 2 * DAY).toISOString().slice(0, 10);
-const fresh = jobs
+let fresh = jobs
   .filter((j) => isOpen(j) && j.firstSeenAt && j.firstSeenAt >= since)
   .map((j) => ({
     id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '',
     slug: j.companySlug, ind: industriesOf(j),
   }));
-const closing = jobs
+let closing = jobs
   .filter((j) => isOpen(j) && j.closesAt && daysLeft(j) >= 0 && daysLeft(j) <= 3)
   .map((j) => ({ id: String(j.id), title: j.title, co: coName[j.companySlug] || j.company || '', days: daysLeft(j) }));
+
+// --test: 실제 공고 대신 시험용 새 공고만 보냅니다(알림이 폰·PC 로 오는지 확인용).
+//   · 토스를 팔로우한 회원에게 가는 공고 1건
+//   · TEST_QUERY 가 있으면 그 검색어를 저장한 회원에게 가는 공고 1건
+if (process.argv.includes('--test')) {
+  const stamp = Date.now();
+  const q = (process.env.TEST_QUERY || '').trim();
+  fresh = [{ id: `test-follow-${stamp}`, title: '[알림 시험] 토스 새 공고가 올라왔습니다', co: '토스', slug: 'toss', ind: [] }];
+  if (q) fresh.push({ id: `test-search-${stamp}`, title: `[알림 시험] ${q} 관련 새 공고`, co: '시험회사', slug: 'test', ind: [] });
+  closing = [];
+}
 
 console.log(`기준일 ${jobsDoc.collectedAt} · 새 공고 ${fresh.length}건 · 마감 임박 ${closing.length}건`);
 if (dry) { console.log('(--dry) 보내지 않습니다.'); process.exit(0); }
