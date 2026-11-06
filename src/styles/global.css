@@ -471,6 +471,18 @@ footer b{color:var(--ink-2);font-weight:500}
 .mem-danger{color:var(--urgent);border-color:#E3B9B6}
 .mem-privacy{margin:14px 0 2px;font-size:14px;font-weight:600;color:var(--steel)}
 .mem-hint{font-size:12.5px;color:var(--ink-3)}
+.head-row{display:block}
+.mem-slot{display:none}
+@media(min-width:960px){
+  .head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+  .mem-slot{display:block;text-align:right;max-width:420px}
+  .mem-slot .mem-bar{margin:6px 0 0;flex-direction:column;align-items:flex-end;gap:6px}
+  .mem-slot .mem-btn{font-size:14.5px;font-weight:600;padding:11px 20px;background:var(--steel);border-color:var(--steel);color:#fff}
+  .mem-slot .mem-btn:hover{filter:brightness(1.12);border-color:var(--steel)}
+  .mem-slot .mem-btn.on{background:#fff;color:var(--steel)}
+  .mem-slot .mem-btn.off{background:#fff;color:var(--ink-3);border-color:#C9CFCB;font-weight:500}
+  .mem-slot .mem-hint{text-align:right;line-height:1.5}
+}
 .mem-page{padding-block:28px 48px;max-width:760px}
 .mem-lede{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin:10px 0 16px}
 .mem-fine{font-size:12.5px;line-height:1.7;color:var(--ink-3);margin-top:12px}

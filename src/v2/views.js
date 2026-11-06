@@ -363,7 +363,7 @@ export function viewJobs(D, S) {
   always = spread(always, 3);
 
   if (f.day) S.tab = '마감';            // 그래프에서 날짜를 고르면 마감 쪽입니다
-  const head = `<h1 class="h1">공고 ${num(arr.length)}건</h1>`
+  const head = `<div class="head-row"><h1 class="h1">공고 ${num(arr.length)}건</h1><div id="mem-slot" class="mem-slot"></div></div>`
     + `<p class="sub">${arr.length !== all.length ? `전체 ${num(all.length)}건 가운데`
       : `${num(D.meta.watched)}개사 공식 채용페이지 · ${esc(D.meta.at)} 기준`}</p>`
     + (chosen.length ? `<div class="chips" style="margin-top:12px">${chosen.join('')}</div>` : '')

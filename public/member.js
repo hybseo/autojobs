@@ -132,31 +132,45 @@
     var b = el('button', { type: 'button', class: 'mem-btn' }, '🔔 이 검색 알림 받기');
     var hint = el('span', { class: 'mem-hint' }, '');
     wrap.appendChild(b); wrap.appendChild(hint);
-    app.parentNode.insertBefore(wrap, app);
     var saved = [];
+    var wide = window.matchMedia ? window.matchMedia('(min-width:960px)') : { matches: false };
     function cur() {
       var p = new URLSearchParams(location.search);
       return { q: (p.get('q') || '').trim(), ind: p.get('ind') || '' };
     }
+    /* PC: 제목 줄 오른쪽 칸(#mem-slot)에 붙입니다. 글이 다시 그려질 때마다 칸이 새로 생기므로 그때마다 옮깁니다.
+       모바일: 예전처럼 목록 바로 위. */
+    function place() {
+      var slot = document.getElementById('mem-slot');
+      if (wide.matches && slot) { if (wrap.parentNode !== slot) slot.appendChild(wrap); }
+      else if (wrap.parentNode !== app.parentNode || wrap.nextSibling !== app) app.parentNode.insertBefore(wrap, app);
+    }
     function paint() {
+      place();
       var c = cur();
-      if (!c.q && !c.ind) { wrap.hidden = true; return; }
+      var empty = !c.q && !c.ind;
+      if (empty && !wide.matches) { wrap.hidden = true; return; }
       wrap.hidden = false;
-      var on = saved.some(function (s) { return s.q === c.q && s.ind === c.ind; });
-      b.textContent = on ? '🔔 알림 받는 중 (해제)' : '🔔 이 검색 알림 받기';
+      var on = !empty && saved.some(function (s) { return s.q === c.q && s.ind === c.ind; });
+      b.textContent = on ? '🔔 알림 받는 중 ✓ (누르면 해제)' : '🔔 이 검색 알림 받기';
       b.classList.toggle('on', on);
-      hint.textContent = '검색어「' + [c.q, c.ind].filter(Boolean).join(' · ') + '」에 맞는 새 공고를 알려 드립니다. (검색어·산업만 반영)';
+      b.classList.toggle('off', empty);
+      hint.textContent = empty
+        ? '검색어를 입력하거나 산업을 고르면 켤 수 있습니다.'
+        : '검색어「' + [c.q, c.ind].filter(Boolean).join(' · ') + '」에 맞는 새 공고를 알려 드립니다. (검색어·산업만 반영)';
       b.dataset.on = on ? '1' : '';
     }
     if (flagged()) loadMe().then(function (s) { if (s && s.searches) { saved = s.searches; } paint(); });
     var tm = null;
     function later() { clearTimeout(tm); tm = setTimeout(paint, 350); }
-    new MutationObserver(later).observe(app, { childList: true });
+    new MutationObserver(function () { place(); later(); }).observe(app, { childList: true });
     document.addEventListener('input', later);
+    if (wide.addEventListener) wide.addEventListener('change', paint);
     paint();
     b.addEventListener('click', function () {
-      if (!flagged()) return toLogin();
       var c = cur();
+      if (!c.q && !c.ind) return toast('먼저 위 검색창에 검색어를 입력하거나 산업을 골라 주세요.');
+      if (!flagged()) return toLogin();
       var on = b.dataset.on === '1';
       api('/api/search', { q: c.q, ind: c.ind, on: !on }).then(function (r) {
         if (r.status === 401) return toLogin();
@@ -369,7 +383,7 @@
 
     // 저장 검색
     var ss = section(root, '알림 받는 검색 ' + s.searches.length);
-    if (!s.searches.length) ss.appendChild(el('p', { class: 'mem-empty' }, '공고 목록에서 검색한 뒤 「이 검색 알림 받기」를 누르면 여기에 모입니다.'));
+    if (!s.searches.length) ss.appendChild(el('p', { class: 'mem-empty' }, '공고 목록(공고 메뉴)에서 검색한 뒤, 결과 제목 오른쪽 위의 「🔔 이 검색 알림 받기」를 누르면 여기에 모입니다.'));
     s.searches.forEach(function (x) {
       var href = '/jobs/?' + new URLSearchParams(Object.assign({}, x.q ? { q: x.q } : {}, x.ind ? { ind: x.ind } : {})).toString();
       listRow(ss, [x.q, x.ind].filter(Boolean).join(' · '), href, '', function (row) {
