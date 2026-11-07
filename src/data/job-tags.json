@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-06 · 진행중 6857건 중 요약 있는 6173건을 훑어",
-  "6143건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-07 · 진행중 6848건 중 요약 있는 6166건을 훑어",
+  "6136건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "mobis-132656": [
@@ -511,8 +511,8 @@
    "Python"
   ],
   "greeting-hyundai-autoever-221287": [
-   "유니티",
    "PLC·산업제어",
+   "유니티",
    "RDBMS",
    "Java·Spring",
    "SQL·데이터 추출"
@@ -640,8 +640,8 @@
    "결산·세무"
   ],
   "greeting-kccglass-239979": [
-   "표면처리·도금",
    "화학합성·소재",
+   "표면처리·도금",
    "패키징·기판",
    "증착(CVD·PVD·ALD)",
    "생산·공정관리"
@@ -3222,8 +3222,8 @@
    "경영기획·전략"
   ],
   "greeting-enf-recruit-241928": [
-   "표면처리·도금",
    "화학합성·소재",
+   "표면처리·도금",
    "기술영업"
   ],
   "greeting-enf-recruit-241927": [
@@ -7075,8 +7075,8 @@
    "게임 사업·퍼블리싱",
    "수요예측·재고최적화",
    "데이터 모델링",
-   "멀티모달·VLM",
    "기사 자격",
+   "멀티모달·VLM",
    "MLOps",
    "PMO·프로젝트관리",
    "공공사업·제안",
@@ -11358,8 +11358,8 @@
   "sf-lscable-4610650": [
    "시설관리·FM",
    "WMS·창고관리",
-   "영어 점수",
-   "안전·보건 관리"
+   "안전·보건 관리",
+   "영어 점수"
   ],
   "sf-lscable-4587950": [
    "IT 헬프데스크·자산",
@@ -11461,8 +11461,8 @@
    "서비스 QA·검수"
   ],
   "daewoong-88c0346b59e51002": [
-   "분석·이화학",
    "화학합성·소재",
+   "분석·이화학",
    "품질검사·QC",
    "GMP·밸리데이션",
    "생산·공정관리"
@@ -13154,8 +13154,8 @@
    "생산직·제조 현장"
   ],
   "greeting-wirobotics-231740": [
-   "Salesforce·CRM",
    "품질검사·QC",
+   "Salesforce·CRM",
    "생산직·제조 현장",
    "CATIA·3D CAD",
    "물류·창고 운영",
@@ -13164,8 +13164,8 @@
    "SAP·ERP"
   ],
   "greeting-wirobotics-234990": [
-   "네트워크",
    "시설관리·FM",
+   "네트워크",
    "IT 헬프데스크·자산",
    "보안 자격증",
    "기사 자격",
@@ -17462,8 +17462,8 @@
    "연구 보조·실험 지원",
    "이차전지 소재·공정",
    "신재생·ESS",
-   "분석·이화학",
    "화학합성·소재",
+   "분석·이화학",
    "금형·사출",
    "생산직·제조 현장"
   ],
@@ -18378,8 +18378,8 @@
    "엑셀 고급",
    "Salesforce·CRM",
    "심사·리스크 운영",
-   "정산·수수료",
    "수율·불량분석",
+   "정산·수수료",
    "BI·대시보드",
    "영업기획·영업관리",
    "재무·자금",
@@ -19608,16 +19608,16 @@
    "영어 업무 가능"
   ],
   "greeting-proteina-237890": [
-   "세포·항체",
    "임상병리·진단검사",
+   "세포·항체",
    "신약·후보물질",
    "품질경영 ISO",
    "서비스 QA·검수",
    "임상·인허가"
   ],
   "greeting-proteina-237886": [
-   "세포·항체",
    "임상병리·진단검사",
+   "세포·항체",
    "신약·후보물질",
    "품질경영 ISO",
    "서비스 QA·검수",
@@ -23540,8 +23540,8 @@
    "물리보안·출입통제",
    "네트워크",
    "보안 자격증",
-   "멀티모달·VLM",
    "기사 자격",
+   "멀티모달·VLM",
    "딥러닝·비전모델"
   ],
   "greeting-hr-suprema-204962": [
@@ -24450,8 +24450,8 @@
   ],
   "greeting-medistream-190283": [
    "포장·패키지 디자인",
-   "영상·모션",
    "시공·현장관리",
+   "영상·모션",
    "프로덕트 디자인",
    "Figma·UI 툴",
    "Adobe 그래픽",
@@ -26935,8 +26935,8 @@
    "모니터링·관측",
    "B2B 영업",
    "기술영업",
-   "유니티",
    "PLC·산업제어",
+   "유니티",
    "영업기획·영업관리",
    "공공사업·제안",
    "제휴·사업개발"
@@ -29649,15 +29649,6 @@
   "sk-R262380": [
    "산업보건·간호"
   ],
-  "hanwha-20087": [
-   "배송·운전",
-   "품질검사·QC",
-   "시공·현장관리",
-   "정밀가공·용접",
-   "생산직·제조 현장",
-   "설비보전·정비",
-   "물류·창고 운영"
-  ],
   "greeting-fadu-242430": [
    "영상·모션",
    "프로덕트 디자인",
@@ -29732,11 +29723,6 @@
   "sf-gc-4610550": [
    "제약영업·MR"
   ],
-  "sf-gc-4576550": [
-   "임상병리·진단검사",
-   "시설관리·FM",
-   "임상·인허가"
-  ],
   "greenhouse-toss-8000384003": [
    "IT 헬프데스크·자산",
    "리눅스·서버 운영"
@@ -29784,12 +29770,6 @@
    "MD·상품기획",
    "구매·SCM"
   ],
-  "kolon-KLS202610280001": [
-   "게임 원화·컨셉아트",
-   "재무·자금",
-   "결산·세무",
-   "SAP·ERP"
-  ],
   "kakao-S4729": [
    "블록체인·가상자산",
    "MSA·아키텍처",
@@ -29804,12 +29784,6 @@
    "PMO·프로젝트관리",
    "Jira·협업툴",
    "서비스 기획·PO"
-  ],
-  "greeting-dongsung-231808": [
-   "회계사",
-   "결산·세무",
-   "SAP·ERP",
-   "영어 업무 가능"
   ],
   "greeting-travel-wallet-239598": [
    "심사·리스크 운영",
@@ -29850,10 +29824,6 @@
    "MD·상품기획",
    "고객상담·CS"
   ],
-  "greeting-skshieldus-141598": [
-   "소비자보호·민원",
-   "기사 자격"
-  ],
   "greeting-aceworks-208371": [
    "신재생·ESS",
    "테스트 자동화"
@@ -29889,14 +29859,6 @@
   "greeting-vatechnetworks-216357": [
    "IR·공시",
    "결산·세무"
-  ],
-  "greeting-korgc-240014": [
-   "화학합성·소재",
-   "안전·보건 관리",
-   "수율·불량분석",
-   "기사 자격",
-   "PLC·산업제어",
-   "생산·공정관리"
   ],
   "workday-kla-Engr--Field-Apps-1_2640749": [
    "포토·리소그래피",
@@ -29938,9 +29900,6 @@
    "Kubernetes·Docker",
    "리눅스·서버 운영",
    "Python"
-  ],
-  "greeting-dongkuk-242370": [
-   "생산직·제조 현장"
   ],
   "greeting-dexlevo-206211": [
    "의학부·학술 MSL",
@@ -32634,8 +32593,8 @@
    "구매·SCM"
   ],
   "greeting-dongsung-223364": [
-   "분석·이화학",
    "화학합성·소재",
+   "분석·이화학",
    "영어 업무 가능"
   ],
   "greeting-dongsung-151843": [
@@ -35662,8 +35621,8 @@
    "웹 성능 최적화",
    "계측·검사장비",
    "3D 그래픽 툴",
-   "유니티",
    "PLC·산업제어",
+   "유니티",
    "딥러닝·비전모델",
    "Python"
   ],
@@ -38365,7 +38324,7 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 630,
+   "count": 629,
    "link": true
   },
   "경영기획·전략": {
@@ -38389,7 +38348,7 @@
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 392,
+   "count": 390,
    "link": true
   },
   "SQL·데이터 추출": {
@@ -38443,7 +38402,7 @@
   "생산·공정관리": {
    "slug": "production-management",
    "cat": "인사·구매·운영",
-   "count": 289,
+   "count": 288,
    "link": true
   },
   "Java·Spring": {
@@ -38467,7 +38426,7 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 252,
+   "count": 250,
    "link": true
   },
   "MD·상품기획": {
@@ -38515,7 +38474,7 @@
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
-   "count": 216,
+   "count": 215,
    "link": true
   },
   "RDBMS": {
@@ -38593,7 +38552,7 @@
   "PLC·산업제어": {
    "slug": "plc",
    "cat": "임베디드·제어",
-   "count": 162,
+   "count": 161,
    "link": true
   },
   "유니티": {
@@ -38647,7 +38606,7 @@
   "물류·창고 운영": {
    "slug": "warehouse-logistics",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 152,
+   "count": 151,
    "link": true
   },
   "Jira·협업툴": {
@@ -38665,7 +38624,7 @@
   "임상·인허가": {
    "slug": "clinical-regulatory",
    "cat": "바이오·제약·화학",
-   "count": 147,
+   "count": 146,
    "link": true
   },
   "광고 운영·세일즈": {
@@ -38701,7 +38660,7 @@
   "설비보전·정비": {
    "slug": "equipment-maintenance",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 130,
+   "count": 129,
    "link": true
   },
   "추론 서빙·최적화": {
@@ -38839,7 +38798,7 @@
   "기사 자격": {
    "slug": "engineer-license",
    "cat": "품질·안전·인증",
-   "count": 98,
+   "count": 96,
    "link": true
   },
   "멀티모달·VLM": {
@@ -38902,12 +38861,6 @@
    "count": 91,
    "link": true
   },
-  "생산직·제조 현장": {
-   "slug": "production-operator",
-   "cat": "업무 영역 — 생산·품질·설비",
-   "count": 89,
-   "link": true
-  },
   "프로덕트 디자인": {
    "slug": "product-design",
    "cat": "업무 영역 — 디자인·콘텐츠 (2026-11-02 추가)",
@@ -38926,6 +38879,12 @@
    "count": 88,
    "link": true
   },
+  "생산직·제조 현장": {
+   "slug": "production-operator",
+   "cat": "업무 영역 — 생산·품질·설비",
+   "count": 87,
+   "link": true
+  },
   "ROS·로봇 SW": {
    "slug": "ros",
    "cat": "로봇·비전",
@@ -38935,7 +38894,7 @@
   "수율·불량분석": {
    "slug": "yield-analysis",
    "cat": "반도체 공정·장비",
-   "count": 86,
+   "count": 85,
    "link": true
   },
   "정산·수수료": {
@@ -38950,15 +38909,15 @@
    "count": 85,
    "link": true
   },
-  "안전·보건 관리": {
-   "slug": "safety-health",
-   "cat": "품질·안전·인증",
-   "count": 84,
-   "link": true
-  },
   "영어 점수": {
    "slug": "english-score",
    "cat": "어학",
+   "count": 83,
+   "link": true
+  },
+  "안전·보건 관리": {
+   "slug": "safety-health",
+   "cat": "품질·안전·인증",
    "count": 83,
    "link": true
   },
@@ -39058,12 +39017,6 @@
    "count": 72,
    "link": true
   },
-  "시설관리·FM": {
-   "slug": "facility-management",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 71,
-   "link": true
-  },
   "네트워크": {
    "slug": "networking",
    "cat": "클라우드·인프라",
@@ -39080,6 +39033,12 @@
    "slug": "rtl-verilog",
    "cat": "반도체 설계",
    "count": 71,
+   "link": true
+  },
+  "시설관리·FM": {
+   "slug": "facility-management",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 70,
    "link": true
   },
   "머신비전": {
@@ -39133,25 +39092,25 @@
   "게임 원화·컨셉아트": {
    "slug": "game-concept-art",
    "cat": "업무 영역 — 게임 제작",
-   "count": 63,
+   "count": 62,
    "link": true
   },
   "회계사": {
    "slug": "cpa",
    "cat": "재무·회계·법무",
-   "count": 62,
+   "count": 61,
    "link": true
   },
   "시공·현장관리": {
    "slug": "construction-management",
    "cat": "건설·플랜트",
-   "count": 62,
+   "count": 61,
    "link": true
   },
   "정밀가공·용접": {
    "slug": "machining-welding",
    "cat": "기구·해석",
-   "count": 62,
+   "count": 61,
    "link": true
   },
   "영상·모션": {
@@ -39292,12 +39251,6 @@
    "count": 50,
    "link": true
   },
-  "품질검사·QC": {
-   "slug": "quality-inspection",
-   "cat": "업무 영역 — 생산·품질·설비",
-   "count": 50,
-   "link": true
-  },
   "데이터 라벨링": {
    "slug": "data-labeling",
    "cat": "업무 영역 — 디자인·콘텐츠 (2026-11-02 추가)",
@@ -39314,6 +39267,12 @@
    "slug": "digital-health",
    "cat": "의료기기·헬스케어",
    "count": 50,
+   "link": true
+  },
+  "품질검사·QC": {
+   "slug": "quality-inspection",
+   "cat": "업무 영역 — 생산·품질·설비",
+   "count": 49,
    "link": true
   },
   "개발 리더십·테크리드": {
@@ -39595,18 +39554,18 @@
   "배송·운전": {
    "slug": "delivery-driving",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
-   "count": 30,
-   "link": true
-  },
-  "소비자보호·민원": {
-   "slug": "consumer-protection",
-   "cat": "업무 영역 — 금융 운영",
-   "count": 30,
+   "count": 29,
    "link": true
   },
   "BMS·배터리": {
    "slug": "bms",
    "cat": "전력·배터리",
+   "count": 29,
+   "link": true
+  },
+  "소비자보호·민원": {
+   "slug": "consumer-protection",
+   "cat": "업무 영역 — 금융 운영",
    "count": 29,
    "link": true
   },
@@ -39622,12 +39581,6 @@
    "count": 28,
    "link": true
   },
-  "화학합성·소재": {
-   "slug": "chemical-synthesis",
-   "cat": "바이오·제약·화학",
-   "count": 28,
-   "link": true
-  },
   "표면처리·도금": {
    "slug": "surface-plating",
    "cat": "기구·생산 세부",
@@ -39638,6 +39591,12 @@
    "slug": "analytical-chemistry",
    "cat": "바이오·제약·화학",
    "count": 28,
+   "link": true
+  },
+  "화학합성·소재": {
+   "slug": "chemical-synthesis",
+   "cat": "바이오·제약·화학",
+   "count": 27,
    "link": true
   },
   "신재생·ESS": {
@@ -39772,12 +39731,6 @@
    "count": 19,
    "link": true
   },
-  "임상병리·진단검사": {
-   "slug": "clinical-diagnostics",
-   "cat": "의료기기·헬스케어",
-   "count": 19,
-   "link": true
-  },
   "IATF 16949": {
    "slug": "iatf-16949",
    "cat": "자동차·전장",
@@ -39793,6 +39746,12 @@
   "Flutter·RN": {
    "slug": "flutter-rn",
    "cat": "프론트·모바일",
+   "count": 18,
+   "link": true
+  },
+  "임상병리·진단검사": {
+   "slug": "clinical-diagnostics",
+   "cat": "의료기기·헬스케어",
    "count": 18,
    "link": true
   },
