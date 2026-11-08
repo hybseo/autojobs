@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-07 · 진행중 6848건 중 요약 있는 6168건을 훑어",
-  "6138건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-08 · 진행중 6843건 중 요약 있는 6163건을 훑어",
+  "6134건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "mobis-132656": [
@@ -8153,8 +8153,8 @@
   "greeting-hecto-239748": [
    "M365·협업 환경",
    "IT 헬프데스크·자산",
-   "물류·창고 운영",
    "총무·사무환경",
+   "물류·창고 운영",
    "구매·SCM"
   ],
   "greeting-hecto-239627": [
@@ -12528,8 +12528,8 @@
   "workday-iljini-XMLNAME-----_R-464": [
    "안전·보건 관리",
    "기사 자격",
-   "물류·창고 운영",
-   "총무·사무환경"
+   "총무·사무환경",
+   "물류·창고 운영"
   ],
   "workday-iljini-XMLNAME-------_R-463": [
    "해외영업",
@@ -15118,8 +15118,8 @@
   ],
   "greenhouse-toss-5339477003": [
    "시설관리·FM",
-   "물류·창고 운영",
-   "총무·사무환경"
+   "총무·사무환경",
+   "물류·창고 운영"
   ],
   "greenhouse-toss-6219801003": [
    "운영 지원·오퍼레이션",
@@ -16643,8 +16643,8 @@
   ],
   "glink-bucketplace-235109": [
    "IT 헬프데스크·자산",
-   "물류·창고 운영",
-   "총무·사무환경"
+   "총무·사무환경",
+   "물류·창고 운영"
   ],
   "glink-bucketplace-234330": [
    "부동산·임대차",
@@ -18512,8 +18512,8 @@
    "물리보안·출입통제",
    "IT 헬프데스크·자산",
    "투자·M&A",
-   "물류·창고 운영",
    "총무·사무환경",
+   "물류·창고 운영",
    "SAP·ERP"
   ],
   "greeting-dexlevo-206208": [
@@ -25839,8 +25839,8 @@
   ],
   "greeting-danbiedu-233441": [
    "교육과정 개발",
-   "문서 도구",
    "엑셀 고급",
+   "문서 도구",
    "영업기획·영업관리",
    "고객상담·CS"
   ],
@@ -29631,25 +29631,11 @@
    "결산·세무",
    "영어 업무 가능"
   ],
-  "daewoong-68d68f99d81e1001b63a0a59aeae0000": [
-   "엑셀 고급",
-   "재무·자금",
-   "결산·세무",
-   "SAP·ERP"
-  ],
-  "daewoong-83867a4663da1001fc4dd9207dfb0000": [
-   "고객 성공·온보딩",
-   "총무·사무환경",
-   "SAP·ERP"
-  ],
   "daewoong-83867a4663da1001af1a711929a70000": [
    "IR·공시",
    "결산·세무",
    "SAP·ERP",
    "경영기획·전략"
-  ],
-  "kolon-KLS202610290001": [
-   "GMP·밸리데이션"
   ],
   "workday-kla-HR-Recruiter--Temporary-_2642968": [
    "고객 성공·온보딩",
@@ -29896,10 +29882,6 @@
   ],
   "workday-kla-Field-Apps-Engr-for-BBP_2640171": [
    "계측·검사장비"
-  ],
-  "workday-entegris-Engineer-II--Systems-Engineering_REQ-15049": [
-   "PLC·산업제어",
-   "SQL·데이터 추출"
   ],
   "workday-entegris-Senior-Engineer--Quality-Engineering--APS_REQ-14659": [
    "영어 업무 가능"
@@ -36952,8 +36934,8 @@
    "M365·협업 환경",
    "IT 헬프데스크·자산",
    "ISMS·인증",
-   "Jira·협업툴",
    "총무·사무환경",
+   "Jira·협업툴",
    "계약·컴플라이언스"
   ],
   "greeting-hugel-233974": [
@@ -38292,8 +38274,8 @@
    "시설관리·FM",
    "IT 헬프데스크·자산",
    "사무보조·어시스턴트",
-   "물류·창고 운영",
-   "총무·사무환경"
+   "총무·사무환경",
+   "물류·창고 운영"
   ],
   "greeting-s2w-209614": [
    "실시간 처리",
@@ -38364,13 +38346,13 @@
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 391,
+   "count": 389,
    "link": true
   },
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
-   "count": 388,
+   "count": 387,
    "link": true
   },
   "Kubernetes·Docker": {
@@ -38442,7 +38424,7 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 252,
+   "count": 251,
    "link": true
   },
   "MD·상품기획": {
@@ -38490,7 +38472,7 @@
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
-   "count": 216,
+   "count": 215,
    "link": true
   },
   "RDBMS": {
@@ -38565,16 +38547,16 @@
    "count": 163,
    "link": true
   },
-  "PLC·산업제어": {
-   "slug": "plc",
-   "cat": "임베디드·제어",
-   "count": 161,
-   "link": true
-  },
   "유니티": {
    "slug": "unity",
    "cat": "게임",
    "count": 161,
+   "link": true
+  },
+  "PLC·산업제어": {
+   "slug": "plc",
+   "cat": "임베디드·제어",
+   "count": 160,
    "link": true
   },
   "GA·퍼포먼스 마케팅": {
@@ -38625,16 +38607,16 @@
    "count": 151,
    "link": true
   },
-  "총무·사무환경": {
-   "slug": "general-affairs",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 151,
-   "link": true
-  },
   "Jira·협업툴": {
    "slug": "jira",
    "cat": "업무 시스템",
    "count": 151,
+   "link": true
+  },
+  "총무·사무환경": {
+   "slug": "general-affairs",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 150,
    "link": true
   },
   "임상·인허가": {
@@ -38808,7 +38790,7 @@
   "GMP·밸리데이션": {
    "slug": "gmp",
    "cat": "품질·안전·인증",
-   "count": 99,
+   "count": 98,
    "link": true
   },
   "기사 자격": {
@@ -39393,12 +39375,6 @@
    "count": 42,
    "link": true
   },
-  "엑셀 고급": {
-   "slug": "advanced-excel",
-   "cat": "업무 시스템",
-   "count": 42,
-   "link": true
-  },
   "CPU·아키텍처": {
    "slug": "cpu",
    "cat": "운영체제·하드웨어",
@@ -39421,6 +39397,12 @@
    "slug": "medical-device-regulatory",
    "cat": "의료기기·헬스케어",
    "count": 42,
+   "link": true
+  },
+  "엑셀 고급": {
+   "slug": "advanced-excel",
+   "cat": "업무 시스템",
+   "count": 41,
    "link": true
   },
   "아날로그·PMIC": {
@@ -39543,12 +39525,6 @@
    "count": 32,
    "link": true
   },
-  "고객 성공·온보딩": {
-   "slug": "customer-success",
-   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
-   "count": 32,
-   "link": true
-  },
   "모터 설계·제어": {
    "slug": "motor-control",
    "cat": "전력·배터리",
@@ -39558,6 +39534,12 @@
   "패키징·기판": {
    "slug": "packaging-substrate",
    "cat": "반도체 공정·장비",
+   "count": 31,
+   "link": true
+  },
+  "고객 성공·온보딩": {
+   "slug": "customer-success",
+   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
    "count": 31,
    "link": true
   },
