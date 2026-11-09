@@ -31,11 +31,12 @@ import {
   PROVIDERS, enabledProviders, startLogin, finishLogin, currentUser, logout, originOf,
 } from './auth.js';
 import { pushReady, sendPush } from './push.js';
-import { json, fail, now, clean, safeEqual } from './util.js';
+import { json, fail, now, clean, safeEqual, allowedPushEndpoint } from './util.js';
 
 const MAX_FOLLOWS = 200;
 const MAX_BOOKMARKS = 500;
 const MAX_SEARCHES = 20;
+const MAX_DEVICES = 10; // 한 회원이 알림을 받을 수 있는 기기 수. 넘으면 가장 오래된 기기부터 지웁니다.
 const FLUSH_BATCH = 20; // 한 번에 보낼 사람 수 (Worker 무료 한도: 바깥 호출 50회/실행)
 
 export default {
@@ -204,13 +205,18 @@ async function subscribe(env, user, b) {
   const endpoint = clean(b.endpoint, 600);
   const p256dh = clean(b.keys?.p256dh, 200);
   const auth = clean(b.keys?.auth, 100);
-  // 알림 서버 주소는 https 만 받습니다.
-  if (!/^https:\/\//.test(endpoint) || !p256dh || !auth) return fail(400, 'subscription');
+  // 알림 서버 주소는 브라우저 회사의 알림 서버만 받습니다 (util.js allowedPushEndpoint 참고).
+  if (!allowedPushEndpoint(endpoint) || !p256dh || !auth) return fail(400, 'subscription');
   // 같은 기기를 다른 계정으로 쓰는 경우 주인이 바뀝니다.
   await env.DB.prepare(
     `INSERT INTO push_subs (endpoint, user_id, p256dh, auth, created_at) VALUES (?1, ?2, ?3, ?4, ?5)
-     ON CONFLICT (endpoint) DO UPDATE SET user_id = ?2, p256dh = ?3, auth = ?4`,
+     ON CONFLICT (endpoint) DO UPDATE SET user_id = ?2, p256dh = ?3, auth = ?4, created_at = ?5`,
   ).bind(endpoint, user.id, p256dh, auth, now()).run();
+  // 기기가 너무 많으면 오래된 것부터 지웁니다.
+  await env.DB.prepare(
+    `DELETE FROM push_subs WHERE user_id = ?1 AND endpoint NOT IN
+       (SELECT endpoint FROM push_subs WHERE user_id = ?1 ORDER BY created_at DESC, rowid DESC LIMIT ?2)`,
+  ).bind(user.id, MAX_DEVICES).run();
   return json({ ok: true });
 }
 

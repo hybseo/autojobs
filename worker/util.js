@@ -53,10 +53,17 @@ export function cookie(name, value, opts = {}) {
   return parts.join('; ');
 }
 
+/* 보안 헤더 (2026-11-09). API 응답이 다른 형식으로 해석되거나 남의 화면 안에 끼워지는 것을 막습니다. */
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'DENY',
+};
+
 export const json = (data, status = 200, headers = {}) =>
   new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...headers },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...SECURITY_HEADERS, ...headers },
   });
 
 export const fail = (status, message) => json({ error: message }, status);
@@ -73,3 +80,27 @@ export const now = () => Math.floor(Date.now() / 1000);
 
 /* 글자 길이를 줄이고 앞뒤 공백을 걷어냅니다. */
 export const clean = (v, max) => String(v ?? '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max);
+
+/*
+ * 웹푸시 알림 주소는 브라우저 회사의 알림 서버만 받습니다 (2026-11-09).
+ *
+ * 예전에는 https 로 시작하면 무엇이든 받았습니다. 그러면 가입한 사람이 아무 주소나
+ * 넣어서 우리 서버가 그 주소로 요청을 보내게 만들 수 있었습니다.
+ * 실제 알림 서버는 아래 네 곳뿐입니다.
+ *   크롬·엣지(안드로이드 포함)  fcm.googleapis.com
+ *   파이어폭스                  updates.push.services.mozilla.com
+ *   사파리·아이폰               web.push.apple.com
+ *   윈도 알림                   *.notify.windows.com
+ * 새 브라우저가 다른 서버를 쓰기 시작하면 여기에 한 줄 더하면 됩니다.
+ */
+const PUSH_HOSTS = ['fcm.googleapis.com', 'updates.push.services.mozilla.com', 'web.push.apple.com'];
+const PUSH_SUFFIXES = ['.notify.windows.com', '.push.services.mozilla.com', '.push.apple.com'];
+
+export function allowedPushEndpoint(raw) {
+  let u;
+  try { u = new URL(String(raw || '')); } catch (e) { return false; }
+  if (u.protocol !== 'https:' || u.username || u.password) return false;
+  if (u.port && u.port !== '443') return false;
+  const h = u.hostname.toLowerCase();
+  return PUSH_HOSTS.includes(h) || PUSH_SUFFIXES.some((x) => h.endsWith(x));
+}
