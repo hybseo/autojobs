@@ -31,12 +31,32 @@
     return n;
   }
 
+  /* 구글 애널리틱스 이벤트 (2026-11-09).
+     누가 했는지는 보내지 않습니다. 무엇을 했는지만 셉니다. 개인을 알아볼 수
+     있는 값(회원번호·별명·검색어·공고 제목)은 넣지 않고, 기업 slug·종류처럼
+     공개된 값만 넣습니다. gtag 가 없으면(차단 등) 조용히 넘어갑니다. */
+  function track(name, params) {
+    try { if (typeof window.gtag === 'function') window.gtag('event', name, Object.assign({ transport_type: 'beacon' }, params || {})); } catch (e) { /* 무시 */ }
+  }
+  function trackApi(url, body, r) {
+    if (!r || !r.ok || !body) return;
+    if (url === '/api/follow' && body.on) track('follow_company', { company: String(body.slug || '') });
+    else if (url === '/api/bookmark' && body.on) track('bookmark_job');
+    else if (url === '/api/search' && body.on) track('save_search');
+    else if (url === '/api/keyword' && body.on) track('add_keyword', { kind: String(body.kind || '') });
+    else if (url === '/api/consent') track('sign_up');
+  }
+
   function api(url, body) {
     var opt = body === undefined
       ? { credentials: 'same-origin' }
       : { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
     return fetch(url, opt).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, status: r.status, data: j }; });
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        var res = { ok: r.ok, status: r.status, data: j };
+        trackApi(url, body, res);
+        return res;
+      });
     });
   }
 
@@ -203,7 +223,7 @@
       });
     }).then(function (sub) {
       var j = sub.toJSON();
-      return api('/api/push/subscribe', { endpoint: j.endpoint, keys: j.keys });
+      return api('/api/push/subscribe', { endpoint: j.endpoint, keys: j.keys }).then(function (r) { if (r && r.ok) track('enable_push'); return r; });
     });
   }
   function disablePush() {
@@ -267,7 +287,9 @@
       if (on[id] && pre[id]) {
         box.appendChild(el('span', { class: 'mem-prov mem-off', title: '업체의 승인 심사가 끝나면 열립니다' }, x[1] + ' (심사 중 · 곧 열립니다)'));
       } else if (on[id]) {
-        box.appendChild(el('a', { class: 'mem-prov mem-' + id, href: '/auth/' + id + '/start?next=' + encodeURIComponent(next) }, x[1] + '로 시작하기'));
+        var la = el('a', { class: 'mem-prov mem-' + id, href: '/auth/' + id + '/start?next=' + encodeURIComponent(next) }, x[1] + '로 시작하기');
+        la.addEventListener('click', function () { track('login_click', { provider: id }); });
+        box.appendChild(la);
       } else {
         box.appendChild(el('span', { class: 'mem-prov mem-off' }, x[1] + ' (준비 중)'));
       }
