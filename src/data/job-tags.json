@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-10 · 진행중 6750건 중 요약 있는 6136건을 훑어",
-  "6103건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-10 · 진행중 6750건 중 요약 있는 6141건을 훑어",
+  "6108건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "hlcompany-46525": [
@@ -8439,8 +8439,8 @@
    "경영기획·전략"
   ],
   "greeting-nearthlab-187888": [
-   "CAE·구조해석",
    "치공구·자동화설비",
+   "CAE·구조해석",
    "금형·사출",
    "드론·UAV",
    "SLAM·측위",
@@ -8448,8 +8448,8 @@
    "생산·공정관리"
   ],
   "greeting-nearthlab-176625": [
-   "CAE·구조해석",
    "치공구·자동화설비",
+   "CAE·구조해석",
    "금형·사출",
    "드론·UAV",
    "SLAM·측위",
@@ -8458,8 +8458,8 @@
   ],
   "greeting-nearthlab-209155": [
    "열·유동 해석",
-   "CAE·구조해석",
    "치공구·자동화설비",
+   "CAE·구조해석",
    "금형·사출",
    "드론·UAV",
    "CATIA·3D CAD"
@@ -11717,6 +11717,11 @@
    "생산직·제조 현장",
    "SAP·ERP"
   ],
+  "workday-iljini-XMLNAME-----_R-467": [
+   "CAE·구조해석",
+   "정밀가공·용접",
+   "CATIA·3D CAD"
+  ],
   "workday-iljini-XMLNAME-----_R-466": [
    "전기공사·전계장",
    "와이어링 하네스",
@@ -11761,8 +11766,8 @@
    "3D 그래픽 툴"
   ],
   "workday-iljini-XMLNAME------_R-450": [
-   "CAE·구조해석",
    "MATLAB·Simulink",
+   "CAE·구조해석",
    "기사 자격",
    "Python"
   ],
@@ -12792,8 +12797,8 @@
    "의학부·학술 MSL",
    "B2B 영업",
    "임상·인허가",
-   "일본어",
    "어카운트·거래처 관리",
+   "일본어",
    "중국어",
    "제휴·사업개발"
   ],
@@ -13031,8 +13036,8 @@
    "수처리·환경설비",
    "측정·검교정",
    "BMS·배터리",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시설관리·FM",
    "GMP·밸리데이션",
    "설비보전·정비",
@@ -22602,8 +22607,8 @@
    "식각(Etch)",
    "해외영업",
    "기술영업",
-   "일본어",
    "어카운트·거래처 관리",
+   "일본어",
    "중국어"
   ],
   "greeting-kcpartstech1-235223": [
@@ -25463,6 +25468,11 @@
    "임상·인허가",
    "생산·공정관리"
   ],
+  "greeting-voronoi-156837": [
+   "임상·인허가",
+   "재무·자금",
+   "구매·SCM"
+  ],
   "greeting-vatechnetworks-243811": [
    "심사·리스크 운영",
    "해외영업",
@@ -25539,8 +25549,8 @@
    "CATIA·3D CAD"
   ],
   "greeting-vatechnetworks-241946": [
-   "CAE·구조해석",
-   "MATLAB·Simulink"
+   "MATLAB·Simulink",
+   "CAE·구조해석"
   ],
   "greeting-vatechnetworks-241945": [
    "사출 금형",
@@ -26837,8 +26847,8 @@
    "대외협력·대관",
    "채용·HR 운영",
    "투자·M&A",
-   "일본어",
    "어카운트·거래처 관리",
+   "일본어",
    "영업기획·영업관리",
    "재무·자금",
    "MD·상품기획",
@@ -27307,6 +27317,16 @@
    "CMP·세정",
    "증착(CVD·PVD·ALD)",
    "식각(Etch)",
+   "장비 셋업·필드"
+  ],
+  "workday-kla-Engr--Prod-Install-2_2640625": [
+   "일본어",
+   "장비 셋업·필드"
+  ],
+  "workday-kla-Mgr--Product-Install_2642930": [
+   "장비 셋업·필드"
+  ],
+  "workday-kla-Mgr--Product-Install_2642924-2": [
    "장비 셋업·필드"
   ],
   "workday-kla-Division-Regional-Development-Applications-Engineer---_2638217-2": [
@@ -27853,8 +27873,8 @@
   ],
   "workday-valeo-VIE-R-D-Engineer---AI---Automotive-Engineering-Tools-H-F_REQ2026080792": [
    "BMS·배터리",
-   "CAE·구조해석",
    "MATLAB·Simulink",
+   "CAE·구조해석",
    "머신러닝",
    "Python"
   ],
@@ -28671,8 +28691,8 @@
    "이차전지 소재·공정",
    "IATF 16949",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시공·현장관리",
    "설비보전·정비"
   ],
@@ -28758,8 +28778,8 @@
   "greenhouse-factorialenergy-6133097004": [
    "셀 설계",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "제조품질·QC",
    "수율·불량분석",
    "CATIA·3D CAD"
@@ -30214,8 +30234,8 @@
   "greeting-storelink-237995": [
    "CRM 마케팅",
    "광고 운영·세일즈",
-   "일본어",
    "어카운트·거래처 관리",
+   "일본어",
    "공공사업·제안",
    "콘텐츠·SNS 운영"
   ],
@@ -38012,8 +38032,8 @@
    "서비스 QA·검수",
    "게임 운영·라이브서비스",
    "Jira·협업툴",
-   "일본어",
    "유니티",
+   "일본어",
    "중국어",
    "Git·형상관리"
   ],
@@ -38318,22 +38338,22 @@
    "count": 330,
    "link": true
   },
+  "장비 셋업·필드": {
+   "slug": "equipment-field-service",
+   "cat": "반도체 세부",
+   "count": 324,
+   "link": true
+  },
   "콘텐츠·SNS 운영": {
    "slug": "content-sns",
    "cat": "마케팅·커머스",
    "count": 324,
    "link": true
   },
-  "장비 셋업·필드": {
-   "slug": "equipment-field-service",
-   "cat": "반도체 세부",
-   "count": 321,
-   "link": true
-  },
   "구매·SCM": {
    "slug": "scm",
    "cat": "인사·구매·운영",
-   "count": 313,
+   "count": 314,
    "link": true
   },
   "CI/CD·IaC": {
@@ -38417,7 +38437,7 @@
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
-   "count": 218,
+   "count": 219,
    "link": true
   },
   "RDBMS": {
@@ -38516,16 +38536,16 @@
    "count": 157,
    "link": true
   },
+  "일본어": {
+   "slug": "japanese",
+   "cat": "어학",
+   "count": 157,
+   "link": true
+  },
   "어카운트·거래처 관리": {
    "slug": "account-management",
    "cat": "업무 영역 — 영업·고객",
    "count": 157,
-   "link": true
-  },
-  "일본어": {
-   "slug": "japanese",
-   "cat": "어학",
-   "count": 156,
    "link": true
   },
   "기술영업": {
@@ -38564,16 +38584,16 @@
    "count": 148,
    "link": true
   },
+  "임상·인허가": {
+   "slug": "clinical-regulatory",
+   "cat": "바이오·제약·화학",
+   "count": 147,
+   "link": true
+  },
   "광고 운영·세일즈": {
    "slug": "ad-operations",
    "cat": "업무 영역 — 영업·고객",
    "count": 147,
-   "link": true
-  },
-  "임상·인허가": {
-   "slug": "clinical-regulatory",
-   "cat": "바이오·제약·화학",
-   "count": 146,
    "link": true
   },
   "Node.js·TypeScript": {
@@ -38654,6 +38674,12 @@
    "count": 116,
    "link": true
   },
+  "CATIA·3D CAD": {
+   "slug": "catia-3d-cad",
+   "cat": "기구·해석",
+   "count": 115,
+   "link": true
+  },
   "ISMS·인증": {
    "slug": "isms",
    "cat": "보안",
@@ -38664,12 +38690,6 @@
    "slug": "messaging-streaming",
    "cat": "백엔드·언어",
    "count": 115,
-   "link": true
-  },
-  "CATIA·3D CAD": {
-   "slug": "catia-3d-cad",
-   "cat": "기구·해석",
-   "count": 114,
    "link": true
   },
   "SDV·차량 SW 플랫폼": {
@@ -39062,6 +39082,12 @@
    "count": 59,
    "link": true
   },
+  "정밀가공·용접": {
+   "slug": "machining-welding",
+   "cat": "기구·해석",
+   "count": 59,
+   "link": true
+  },
   "HTML·CSS": {
    "slug": "html-css",
    "cat": "웹·API",
@@ -39071,12 +39097,6 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
-   "count": 58,
-   "link": true
-  },
-  "정밀가공·용접": {
-   "slug": "machining-welding",
-   "cat": "기구·해석",
    "count": 58,
    "link": true
   },
@@ -39386,6 +39406,12 @@
    "count": 39,
    "link": true
   },
+  "CAE·구조해석": {
+   "slug": "cae",
+   "cat": "기구·해석",
+   "count": 39,
+   "link": true
+  },
   "웹소켓·실시간": {
    "slug": "websocket-realtime",
    "cat": "웹·API",
@@ -39413,12 +39439,6 @@
   "MATLAB·Simulink": {
    "slug": "matlab-simulink",
    "cat": "임베디드·제어",
-   "count": 38,
-   "link": true
-  },
-  "CAE·구조해석": {
-   "slug": "cae",
-   "cat": "기구·해석",
    "count": 38,
    "link": true
   },

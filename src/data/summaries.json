@@ -135939,6 +135939,112 @@
     "측정기 정확도 관리(캘리브레이션) 개념 이해, 리튬이온/리튬메탈 배터리 관련 학문적 배경"
    ],
    "loc": "Cheonan, South Korea"
+  },
+  "hlcompany-133920": {
+   "skip": "업무 내용·자격 요건 없이 접수 절차와 제출 서류 안내만 있는 공고"
+  },
+  "workday-iljini-XMLNAME-----_R-467": {
+   "gist": "차단기 주요 구성품의 구조 설계와 2D/3D 도면 작성을 맡을 일진전기 차단기개발팀 담당자 (관련 전공 학사 이상, 경력 5년 이상)",
+   "duties": [
+    "차단기 주요 구성품 구조 설계 및 2D/3D 제작 도면 작성",
+    "구조 강성·변형·간섭·조립성 등을 고려한 설계 검토",
+    "구조 해석 기반 설계 개선 반영",
+    "시제품 제작·조립·시험 중 설계 기술 지원, 시험 결과 분석 및 구조 개선안 도출",
+    "설계 변경 이력 관리 및 표준 구조 설계 데이터 정리"
+   ],
+   "quals": [
+    "기계공학·기계설계·메카트로닉스 등 관련 전공 학사 이상",
+    "3D 또는 2D CAD 관련 실무 경험자",
+    "구조 강성, 변형, 진동 및 제조 공정(가공, 용접, 조립 등) 이해도 소유",
+    "총 경력 5년 이상 — Solid Edge 또는 Solidworks 중 1종 이상 구조 설계 및 2D CAD(Autocad 등) 사용 경험, 기계 부품 조립 구조·공차·간섭 검토 경험 포함"
+   ],
+   "prefs": [
+    "전력기기(차단기, GIS 등) 구조 설계-개발 시험 경험 5년 이상",
+    "구조 해석 결과를 설계에 반영한 경험",
+    "대형 중량물, 압력 용기, 전기 절연 구조 설계 경험"
+   ],
+   "loc": ""
+  },
+  "greeting-voronoi-156837": {
+   "gist": "글로벌 임상시험의 실행·관리와 TMF 운영, CRO/벤더 관리를 맡을 보로노이 Senior Clinical Trial Manager (임상시험 관리 경력 5년 이상, Waltham MA 하이브리드)",
+   "duties": [
+    "Study start-up, site activation, 환자 모집 등 글로벌 임상시험 사이트 운영 주도",
+    "financial disclosures, FDA 1572, GCP, protocol amendment, IRB/IEC 제출 등 규제 문서의 개발·검토·추적 관리",
+    "Site Visit Report(SQV, SIV, IMV, COV) 검토를 통한 프로토콜 준수·품질 관리 및 사이트 이슈 해결",
+    "CRO, 중앙검사실, 영상 벤더 등 외부 임상시험 협력사 관리와 예산·마일스톤·인보이스 검토",
+    "TMF/eTMF 유지관리, QC·정합성 검토, 내부 리뷰 및 규제기관 실사 대응 준비"
+   ],
+   "quals": [
+    "생명과학·간호 등 관련 전공 학사 이상(상위 학위 우대)",
+    "제약·바이오 업계 또는 CRO에서 임상시험 관리 경력 5년 이상",
+    "종양학 임상시험(초기 1/2상, 글로벌 또는 미국, IND 하) 관리 경험",
+    "CRO·벤더·예산 관리 경험, ICH/GCP·FDA 규정 지식 및 CTMS/EDC/eTMF(Veeva Vault 등) 실무 경험"
+   ],
+   "prefs": [],
+   "loc": "Waltham, MA (Greater Boston Area) | Hybrid (주 2일 출근)"
+  },
+  "workday-kla-Engr--Prod-Install-2_2640625": {
+   "gist": "KLA 반도체 장비의 설치·검증과 고객 지원을 담당할 Product Install 엔지니어 (BSEE 또는 동등 경력, 관련 산업 경력 약 5년)",
+   "duties": [
+    "신규 구매 장비의 설치 및 업그레이드 수행",
+    "고객과 사전 설치 회의를 통해 요구사항을 정의하고 Plan of Action 수립·실행·검증",
+    "KLA 규격에 맞춰 장비를 설치하고 절차에 따른 conformance testing 수행",
+    "복잡한 시스템 이슈를 7-step problem solving 등 방법으로 분석·해결해 KLA 규격과 고객 요구사항 충족",
+    "고객·지역·공장 리소스 간 프로젝트 에스컬레이션 관리, Warranty Signoff 진행, 설치 비정합 문서화와 상태 리포팅"
+   ],
+   "quals": [
+    "BSEE 또는 동등한 관련 경력",
+    "관련 산업 경력 약 5년",
+    "KLA 자격 인증 취득 및 유지",
+    "KLA 장비 관련 사전 경험, 해외 출장 가능 및 관련 서류 확보 가능",
+    "영어 외 현지어(비미국 지역) 구사 가능"
+   ],
+   "prefs": [
+    "일본어 구사 가능자",
+    "Microsoft Office 활용 능력",
+    "복잡한 시스템 트러블슈팅과 분석적 문제해결 역량"
+   ],
+   "loc": ""
+  },
+  "workday-kla-Mgr--Product-Install_2642930": {
+   "gist": "KLA 장비 설치 엔지니어(PIE) 조직을 관리하며 설치 일정·품질·고객 만족을 책임질 Product Install 매니저 (반도체 장비 지원 경력 8년 이상)",
+   "duties": [
+    "KLA 제품의 고객사 설치 일정 수립과 전체 설치 프로세스 관리",
+    "해외 장기 파견하는 Product Install Engineer(PIE) 조직 직접 관리 및 방향 제시",
+    "Cost of Install, Install Cycle time, On-Time Install 등 전략 목표 달성을 위한 리소스 관리",
+    "PIE 1:1·성과 리뷰·교육·인증 관리, 채용 및 인사 조치 수행",
+    "설치 중 에스컬레이션 관리, SAM 주관, 경영진 보고자료 작성·발표 및 Product Life Cycle팀 참여"
+   ],
+   "quals": [
+    "BS 학위 및 관련 경력",
+    "반도체 산업용 자본장비 지원 경력 8년 이상",
+    "명확하고 간결한 서면·구두 커뮤니케이션 능력과 우수한 발표 역량",
+    "고객 요구를 이해하는 대인관계·커뮤니케이션 역량"
+   ],
+   "prefs": [
+    "글로벌 기업에서 Product Install Manager로 2년 이상 경력"
+   ],
+   "loc": ""
+  },
+  "workday-kla-Mgr--Product-Install_2642924-2": {
+   "gist": "KLA 장비 설치 엔지니어(PIE) 조직을 관리하며 설치 일정·품질·고객 만족을 책임질 Product Install 매니저 (반도체 장비 지원 경력 8년 이상)",
+   "duties": [
+    "KLA 제품의 고객사 설치 일정 수립과 전체 설치 프로세스 관리",
+    "해외 장기 파견하는 Product Install Engineer(PIE) 조직 직접 관리 및 방향 제시",
+    "Cost of Install, Install Cycle time, On-Time Install 등 전략 목표 달성을 위한 리소스 관리",
+    "PIE 1:1·성과 리뷰·교육·인증 관리, 채용 및 인사 조치 수행",
+    "설치 중 에스컬레이션 관리, SAM 주관, 경영진 보고자료 작성·발표 및 Product Life Cycle팀 참여"
+   ],
+   "quals": [
+    "BS 학위 및 관련 경력",
+    "반도체 산업용 자본장비 지원 경력 8년 이상",
+    "명확하고 간결한 서면·구두 커뮤니케이션 능력과 우수한 발표 역량",
+    "고객 요구를 이해하는 대인관계·커뮤니케이션 역량"
+   ],
+   "prefs": [
+    "글로벌 기업에서 Product Install Manager로 2년 이상 경력"
+   ],
+   "loc": ""
   }
  }
 }
