@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-11 · 진행중 6756건 중 요약 있는 6152건을 훑어",
-  "6120건에 태그가 붙었습니다 (99.5%)."
+  "만든 날 2026-11-11 · 진행중 6756건 중 요약 있는 6156건을 훑어",
+  "6124건에 태그가 붙었습니다 (99.5%)."
  ],
  "tags": {
   "hlcompany-46525": [
@@ -3038,8 +3038,8 @@
    "HBM·메모리 설계",
    "고속 인터페이스",
    "B2B 영업",
-   "기술영업",
    "유니티",
+   "기술영업",
    "어카운트·거래처 관리",
    "계약·컴플라이언스"
   ],
@@ -4930,6 +4930,10 @@
   "taekwang-122488": [
    "정산·수수료"
   ],
+  "taekwang-134099": [
+   "보험 계리",
+   "보훈·장애인 채용"
+  ],
   "taekwang-133222": [
    "영업기획·영업관리"
   ],
@@ -5699,6 +5703,13 @@
    "대외협력·대관",
    "채용·HR 운영"
   ],
+  "greeting-lsmaterials-recruit-244293": [
+   "보훈·장애인 채용",
+   "영어 점수",
+   "기사 자격",
+   "설비보전·정비",
+   "생산·공정관리"
+  ],
   "greeting-lsmaterials-recruit-243627": [
    "전극·조립 공정",
    "이차전지 소재·공정",
@@ -6252,6 +6263,15 @@
   "greeting-autocrypt-86773": [
    "모의해킹·취약점진단"
   ],
+  "greeting-autocrypt-244296": [
+   "AUTOSAR",
+   "차량통신 CAN·LIN",
+   "영어 점수",
+   "RTOS·MCU",
+   "기술영업",
+   "임베디드·펌웨어",
+   "영어 업무 가능"
+  ],
   "greeting-autocrypt-240288": [
    "ADAS·자율주행"
   ],
@@ -6647,8 +6667,8 @@
    "게임 사업·퍼블리싱",
    "수요예측·재고최적화",
    "데이터 모델링",
-   "기사 자격",
    "멀티모달·VLM",
+   "기사 자격",
    "MLOps",
    "PMO·프로젝트관리",
    "공공사업·제안",
@@ -10858,8 +10878,8 @@
   "sf-lscable-4610650": [
    "시설관리·FM",
    "WMS·창고관리",
-   "영어 점수",
-   "안전·보건 관리"
+   "안전·보건 관리",
+   "영어 점수"
   ],
   "hpsp-64": [
    "안전·보건 관리",
@@ -20932,8 +20952,8 @@
   "greeting-pfct-232307": [
    "데이터 거버넌스",
    "PMO·프로젝트관리",
-   "기술영업",
    "유니티",
+   "기술영업",
    "Azure·GCP",
    "공공사업·제안",
    "제휴·사업개발",
@@ -22609,8 +22629,8 @@
   ],
   "greeting-bhsn-240261": [
    "Salesforce·CRM",
-   "기술영업",
    "유니티",
+   "기술영업",
    "어카운트·거래처 관리",
    "GA·퍼포먼스 마케팅",
    "영업기획·영업관리",
@@ -22896,8 +22916,8 @@
    "물리보안·출입통제",
    "네트워크",
    "보안 자격증",
-   "기사 자격",
    "멀티모달·VLM",
+   "기사 자격",
    "딥러닝·비전모델"
   ],
   "greeting-hr-suprema-204962": [
@@ -25295,8 +25315,8 @@
    "Slack·사내 협업",
    "이커머스 운영",
    "수율·불량분석",
-   "기사 자격",
    "테스트 자동화",
+   "기사 자격",
    "서비스 QA·검수",
    "Figma·UI 툴",
    "Jira·협업툴",
@@ -26381,8 +26401,8 @@
    "Salesforce·CRM",
    "모니터링·관측",
    "B2B 영업",
-   "기술영업",
    "유니티",
+   "기술영업",
    "영업기획·영업관리",
    "PLC·산업제어",
    "공공사업·제안",
@@ -27498,6 +27518,10 @@
    "채용·HR 운영",
    "구매·SCM"
   ],
+  "workday-kla-Customer-Support-Engineer_2638910": [
+   "계측·검사장비",
+   "장비 셋업·필드"
+  ],
   "workday-kla-Engr--Prod-Install-2_2640625": [
    "일본어",
    "장비 셋업·필드"
@@ -28105,8 +28129,8 @@
    "장비 셋업·필드"
   ],
   "workday-generalmotors-GM----_JR-202623905-1": [
-   "영어 점수",
    "안전·보건 관리",
+   "영어 점수",
    "BI·대시보드",
    "결산·세무",
    "SQL·데이터 추출",
@@ -38335,7 +38359,7 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 626,
+   "count": 627,
    "link": true
   },
   "경영기획·전략": {
@@ -38389,7 +38413,7 @@
   "장비 셋업·필드": {
    "slug": "equipment-field-service",
    "cat": "반도체 세부",
-   "count": 325,
+   "count": 326,
    "link": true
   },
   "콘텐츠·SNS 운영": {
@@ -38413,7 +38437,7 @@
   "생산·공정관리": {
    "slug": "production-management",
    "cat": "인사·구매·운영",
-   "count": 289,
+   "count": 290,
    "link": true
   },
   "Java·Spring": {
@@ -38455,7 +38479,7 @@
   "임베디드·펌웨어": {
    "slug": "embedded-firmware",
    "cat": "임베디드·제어",
-   "count": 246,
+   "count": 247,
    "link": true
   },
   "계약·컴플라이언스": {
@@ -38587,7 +38611,7 @@
   "기술영업": {
    "slug": "technical-sales",
    "cat": "영업·사업개발",
-   "count": 156,
+   "count": 157,
    "link": true
   },
   "유니티": {
@@ -38683,19 +38707,19 @@
   "설비보전·정비": {
    "slug": "equipment-maintenance",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 128,
+   "count": 129,
+   "link": true
+  },
+  "RTOS·MCU": {
+   "slug": "rtos-mcu",
+   "cat": "임베디드·제어",
+   "count": 124,
    "link": true
   },
   "B2B 영업": {
    "slug": "b2b-sales",
    "cat": "영업·사업개발",
    "count": 124,
-   "link": true
-  },
-  "RTOS·MCU": {
-   "slug": "rtos-mcu",
-   "cat": "임베디드·제어",
-   "count": 123,
    "link": true
   },
   "정부과제·국책과제": {
@@ -38809,7 +38833,7 @@
   "기사 자격": {
    "slug": "engineer-license",
    "cat": "품질·안전·인증",
-   "count": 96,
+   "count": 97,
    "link": true
   },
   "멀티모달·VLM": {
@@ -38836,16 +38860,16 @@
    "count": 95,
    "link": true
   },
+  "계측·검사장비": {
+   "slug": "metrology-inspection",
+   "cat": "반도체 공정·장비",
+   "count": 94,
+   "link": true
+  },
   "모의해킹·취약점진단": {
    "slug": "penetration-testing",
    "cat": "보안",
    "count": 94,
-   "link": true
-  },
-  "계측·검사장비": {
-   "slug": "metrology-inspection",
-   "cat": "반도체 공정·장비",
-   "count": 93,
    "link": true
   },
   "GPU·CUDA": {
@@ -38938,6 +38962,12 @@
    "count": 82,
    "link": true
   },
+  "영어 점수": {
+   "slug": "english-score",
+   "cat": "어학",
+   "count": 82,
+   "link": true
+  },
   "게임 이펙트·애니메이션": {
    "slug": "game-effects-animation",
    "cat": "업무 영역 — 게임 제작",
@@ -38953,12 +38983,6 @@
   "수출입·통관": {
    "slug": "trade-customs",
    "cat": "인사·구매·운영",
-   "count": 80,
-   "link": true
-  },
-  "영어 점수": {
-   "slug": "english-score",
-   "cat": "어학",
    "count": 80,
    "link": true
   },
@@ -39214,6 +39238,12 @@
    "count": 55,
    "link": true
   },
+  "차량통신 CAN·LIN": {
+   "slug": "can-lin",
+   "cat": "자동차·전장",
+   "count": 53,
+   "link": true
+  },
   "파인튜닝·정렬": {
    "slug": "fine-tuning",
    "cat": "LLM 세부",
@@ -39224,12 +39254,6 @@
    "slug": "data-governance",
    "cat": "데이터 엔지니어링 세부",
    "count": 53,
-   "link": true
-  },
-  "차량통신 CAN·LIN": {
-   "slug": "can-lin",
-   "cat": "자동차·전장",
-   "count": 52,
    "link": true
   },
   "드론·UAV": {
@@ -39658,6 +39682,12 @@
    "count": 24,
    "link": true
   },
+  "보훈·장애인 채용": {
+   "slug": "veterans-disability-hiring",
+   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+   "count": 23,
+   "link": true
+  },
   "노무사": {
    "slug": "labor-attorney",
    "cat": "재무·회계·법무",
@@ -39667,12 +39697,6 @@
   "Vue·Nuxt": {
    "slug": "vue-nuxt",
    "cat": "프론트·모바일",
-   "count": 21,
-   "link": true
-  },
-  "보훈·장애인 채용": {
-   "slug": "veterans-disability-hiring",
-   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
    "count": 21,
    "link": true
   },
@@ -39724,6 +39748,12 @@
    "count": 20,
    "link": true
   },
+  "AUTOSAR": {
+   "slug": "autosar",
+   "cat": "자동차·전장",
+   "count": 19,
+   "link": true
+  },
   "여신·심사": {
    "slug": "credit-underwriting",
    "cat": "금융·핀테크",
@@ -39740,12 +39770,6 @@
    "slug": "tms",
    "cat": "물류·유통 운영",
    "count": 19,
-   "link": true
-  },
-  "AUTOSAR": {
-   "slug": "autosar",
-   "cat": "자동차·전장",
-   "count": 18,
    "link": true
   },
   "모듈·팩 설계": {
@@ -40078,6 +40102,12 @@
    "count": 4,
    "link": true
   },
+  "보험 계리": {
+   "slug": "actuarial",
+   "cat": "금융·핀테크",
+   "count": 4,
+   "link": true
+  },
   "보험 보상·언더라이팅": {
    "slug": "insurance-claims",
    "cat": "업무 영역 — 금융 운영",
@@ -40093,12 +40123,6 @@
   "차량 제어 알고리즘": {
    "slug": "vehicle-control",
    "cat": "ADAS 세부",
-   "count": 3,
-   "link": true
-  },
-  "보험 계리": {
-   "slug": "actuarial",
-   "cat": "금융·핀테크",
    "count": 3,
    "link": true
   },
