@@ -6366,24 +6366,24 @@
   {
    "name": "현대자동차",
    "slug": "hyundai-motor",
-   "ats": "none",
-   "code": "talent.hyundai.com",
+   "ats": "hkmc",
+   "code": "hyundai",
    "industry": [
     "자동차부품"
    ],
-   "enabled": false,
-   "note": "2026-11-13 완성차 추가 조사. 공식 채용 사이트 talent.hyundai.com/apply/applyList.hc (그날 진행중 55건). 목록 페이지가 NetFunnel 접속 대기열을 거쳐야 열립니다 — 첫 요청이 503, 대기열 통과 표시(nfGubnC)를 붙인 재요청에서야 공고가 그려지고, 대기열 없이 받은 HTML 에는 공고가 0건입니다. 대기열은 접속 제어 장치라 우회하지 않기로 하고 비활성으로 둡니다. 되살리려면 대기열을 정상 통과하는 브라우저 수집 방식을 대표님과 먼저 정하세요."
+   "enabled": true,
+   "note": "완성차. 2026-11-13 대표님 지시로 추가. 자체 채용 사이트 talent.hyundai.com. 채용 화면은 NetFunnel 접속 대기열을 거쳐 열리지만, 화면이 쓰는 목록·상세 API(/api/rec/AP-HM-FO-02700·02800)는 대기열 뒤에 있지 않아 비로그인 방문자와 같은 헤더(X-HKMC-SERVICE: HM, 빈 X-HKMC-TOKEN)로 받습니다. 대기열을 건너뛰는 코드는 없습니다. 같은 날 진행중 55건. 자세한 내용은 scripts/adapters/hkmc.py. 완성차 분류가 없어 자동차부품으로 넣었습니다."
   },
   {
    "name": "기아",
    "slug": "kia",
-   "ats": "none",
-   "code": "career.kia.com",
+   "ats": "hkmc",
+   "code": "kia",
    "industry": [
     "자동차부품"
    ],
-   "enabled": false,
-   "note": "2026-11-13 완성차 추가 조사. 공식 채용 사이트 career.kia.com(기아 탤런트 라운지). 현대차와 같은 NetFunnel 대기열(main/netFunnel.kc)을 거쳐 들어갑니다. 공고 목록 API(/api/rec/AP-KM-FO-02700)를 같은 주소에서 그대로 불러도 400 이 돌아옵니다(사이트 세션이 필요한 것으로 보임). 대기열·세션을 우회하지 않기로 하고 비활성으로 둡니다."
+   "enabled": true,
+   "note": "완성차. 2026-11-13 대표님 지시로 추가. 자체 채용 사이트 career.kia.com(기아 탤런트 라운지). 현대차와 같은 채용 시스템이라 같은 어댑터(hkmc)를 씁니다. 기아는 목록 API 도 헤더(X-HKMC-SERVICE: KM, 빈 토큰)가 없으면 400 입니다. 같은 날 진행중 11건(본사 기준). 완성차 분류가 없어 자동차부품으로 넣었습니다."
   },
   {
    "name": "KG모빌리티",
