@@ -62,6 +62,11 @@ const idx = (D) => {
   return x;
 };
 export const roleName = (D, c) => idx(D).role[c] || c;
+/* 공고에 보여줄 회사 이름. 그룹 통합 채용(LG그룹·삼성 등)은 기업 페이지 이름이
+   그룹이라 모든 공고가 「LG그룹」으로 찍혔습니다(2026-11-13 대표님 지적).
+   그런 기업은 공고 자신의 회사명(계열사)을 쓰고, 나머지는 기업 이름 그대로입니다.
+   기업 페이지 제목·주소는 건드리지 않습니다. */
+export const coLabel = (co, j) => (co && co.g && j && j.n ? j.n : (co ? co.n : (j && j.n) || ''));
 export const coOf = (D, slug, fallback) =>
   idx(D).co[slug] || { s: slug, n: fallback || slug, i: [], o: 0, x: 0, w: 0, b: '' };
 
@@ -103,8 +108,9 @@ export function card(D, j, hidden = false) {
   const foot = `<span class="dd${hot(j) ? ' hot' : ''}">${ddText(j)}</span>`
     + `<span>${j.cl ? `${md(j.cl)} 마감` : (j.f ? `${md(j.f)} 등록` : '')}</span>`
     + (bare ? '<span class="ext">회사 공고 ↗</span>' : (tg ? `<span class="tg">${tg}</span>` : ''));
-  const inner = `<div class="co"><span class="av">${esc(initial(co.n))}</span>`
-    + `<b>${esc(co.n)}</b>${ind ? `<span>· ${esc(ind)}</span>` : ''}</div>`
+  const cn = coLabel(co, j);
+  const inner = `<div class="co"><span class="av">${esc(initial(cn))}</span>`
+    + `<b>${esc(cn)}</b>${ind ? `<span>· ${esc(ind)}</span>` : ''}</div>`
     + `<h3>${esc(j.t)}</h3>`
     + `<div class="ch">${ch.join('')}</div>`
     + sum
@@ -462,8 +468,8 @@ export function viewJob(D, j, opt = {}) {
       + '</div>';
   }
   body += `<div class="paper jhead"><h1>${esc(j.t)}</h1><div class="ch">${ch.join('')}</div>`
-    + `<div class="coline"><span class="av">${esc(initial(co.n))}</span><div>`
-    + `<div class="nm"><a href="${coHref(j.c)}">${esc(co.n)}</a></div>`
+    + `<div class="coline"><span class="av">${esc(initial(coLabel(co, j)))}</span><div>`
+    + `<div class="nm"><a href="${coHref(j.c)}">${esc(coLabel(co, j))}</a></div>`
     + (co.b ? `<div class="bio">${esc(co.b)}</div>` : '')
     + '</div></div>'
     + `<div class="mdd"><b class="${live && hot(j) ? 'hot' : ''}">${dLabel}</b><span>${when}</span></div>`

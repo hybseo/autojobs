@@ -14,7 +14,9 @@ export async function GET() {
     meta: D.meta,
     industries: D.industries,
     roles: D.roles,
-    companies: D.companies.map((c) => ({ s: c.s, n: c.n, i: c.i })),
+    /* g: 그룹 통합 채용 표시. 카드가 그룹 이름 대신 계열사 이름을 쓰게 합니다
+       (2026-11-13, views.js coLabel). 그룹일 때만 넣어 용량을 아낍니다. */
+    companies: D.companies.map((c) => (c.g ? { s: c.s, n: c.n, i: c.i, g: 1 } : { s: c.s, n: c.n, i: c.i })),
     tagIndex: D.tagIndex,
     jobs: openJobs().map((j) => toRow(j, false)),
     scans: [],

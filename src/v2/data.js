@@ -108,6 +108,9 @@ export const getData = () => {
       x: closedBy[c.slug] || 0,
       w: newBy[c.slug] || 0,
       b: INTRO[name] || '',
+      /* 그룹 통합 채용(LG·삼성 등) 표시 — 1 이면 공고마다 계열사 이름이 다릅니다.
+         카드와 상세는 이 값이 있을 때 공고 자신의 회사명(j.n)을 보여줍니다. */
+      g: (r.affiliates || r.affiliateIndustry || r.splitByTitle) ? 1 : 0,
     };
   }).sort((a, b) => b.o - a.o || a.n.localeCompare(b.n, 'ko'));
 
