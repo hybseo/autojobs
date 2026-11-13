@@ -30,4 +30,12 @@ console.log(`오늘 가입: ${s.signedUpToday}명 · 최근 7일 가입: ${s.sig
 console.log(`동의 전 임시 기록: ${s.pendingConsent}건 (하루 지나면 자동 삭제)`);
 console.log(`알림 켠 회원: ${s.pushUsers}명 (기기 ${s.pushDevices}대)`);
 console.log(`기능을 쓰는 회원 — 팔로우 ${s.usersUsing.follow}명 · 찜 ${s.usersUsing.bookmark}명 · 검색 알림 ${s.usersUsing.savedSearch}명 · 내 키워드 ${s.usersUsing.keyword}명`);
+const cr = s.companyRequests;
+if (cr) {
+  console.log(`기업 등록 요청: 최근 24시간 ${cr.last24h}건 · 누적 ${cr.total}건`);
+  for (const r of cr.recent || []) {
+    const d = new Date((r.at + 9 * 3600) * 1000).toISOString().slice(5, 16).replace('T', ' ');
+    console.log(`  · ${d} ${r.company} — ${r.url}`);
+  }
+}
 console.log(`저장된 항목 — 팔로우 ${s.rows.follows} · 찜 ${s.rows.bookmarks} · 검색 ${s.rows.savedSearches} · 키워드 ${s.rows.keywords} · 새 소식 ${s.rows.alerts}`);

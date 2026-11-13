@@ -31,7 +31,7 @@ import {
   PROVIDERS, enabledProviders, startLogin, finishLogin, currentUser, logout, originOf,
 } from './auth.js';
 import { pushReady, sendPush } from './push.js';
-import { json, fail, now, clean, safeEqual, allowedPushEndpoint } from './util.js';
+import { json, fail, now, clean, safeEqual, allowedPushEndpoint, sha256Hex } from './util.js';
 
 const MAX_FOLLOWS = 200;
 const MAX_BOOKMARKS = 500;
@@ -69,6 +69,10 @@ export default {
       // 이하 쓰기 요청은 같은 사이트에서 온 것만 받습니다.
       if (req.method !== 'POST') return fail(405, 'method');
       if (!sameOrigin(req, env)) return fail(403, 'origin');
+
+      // 기업 채용담당자의 채용페이지 등록 요청 — 로그인 없이 받습니다.
+      if (path === '/api/company-request') return companyRequest(req, env);
+
       const user = await currentUser(req, env);
       if (!user) return fail(401, '로그인이 필요합니다.');
 
@@ -448,9 +452,49 @@ async function flush(env) {
  * 회원 수 통계 — 숫자만 돌려줍니다(이름·별명·번호는 나가지 않음).
  * 가입자 = 약관에 동의한 회원(consent_at 있음). 동의 전 임시 기록은 pending 으로 따로 셉니다.
  */
+/*
+ * 기업 채용담당자의 「채용페이지 등록 요청」 (2026-11-13 대표님 지시)
+ *
+ * 받는 것: 회사명·채용페이지 주소(필수)·담당자 이메일(필수, 결과 회신용)·이름·메모(선택).
+ * 막는 것: 자동 입력 프로그램(숨은 칸 website 에 값이 있으면 조용히 성공처럼 답하고 버림),
+ *          같은 접속 주소에서 하루 5건 넘게 보내기. 접속 주소는 해시만 저장합니다.
+ * 결과는 매일 아침 회원 통계 보고(stats)에 「기업 등록 요청」으로 함께 나갑니다.
+ */
+const REQ_PER_DAY = 5;
+async function companyRequest(req, env) {
+  const b = await req.json().catch(() => ({}));
+  if (clean(b.website, 200)) return json({ ok: true });   // 숨은 칸 — 사람은 채우지 않습니다
+  const company = clean(b.company, 80);
+  const url = clean(b.url, 300);
+  const email = clean(b.email, 120);
+  const name = clean(b.name, 40);
+  const message = clean(String(b.message ?? '').replace(/\r?\n/g, ' '), 1000);
+  if (company.length < 2) return fail(400, '회사명을 적어 주세요.');
+  let u;
+  try { u = new URL(url); } catch { u = null; }
+  if (!u || !/^https?:$/.test(u.protocol) || !u.hostname.includes('.')) return fail(400, '채용페이지 주소를 http(s):// 로 시작하는 전체 주소로 적어 주세요.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(400, '회신받을 이메일을 확인해 주세요.');
+  if (b.agree !== true) return fail(400, '개인정보 수집·이용에 동의해 주세요.');
+
+  const ip = req.headers.get('CF-Connecting-IP') || '';
+  const ipHash = ip ? (await sha256Hex(`${ip}|${env.NOTIFY_SECRET || 'searchjob'}`)).slice(0, 32) : '';
+  const t = now();
+  if (ipHash) {
+    const r = await env.DB.prepare('SELECT COUNT(*) AS n FROM company_requests WHERE ip_hash = ?1 AND created_at >= ?2')
+      .bind(ipHash, t - 86400).first();
+    if (r && r.n >= REQ_PER_DAY) return fail(429, '오늘은 요청을 더 받을 수 없습니다. 내일 다시 보내 주시거나 이메일로 연락해 주세요.');
+  }
+  await env.DB.prepare(
+    'INSERT INTO company_requests (company, career_url, email, name, message, ip_hash, created_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)',
+  ).bind(company, u.href.slice(0, 300), email, name || null, message || null, ipHash || null, t).run();
+  return json({ ok: true });
+}
+
 async function stats(env) {
   const db = env.DB;
   const t = now();
+  // 등록 요청은 1년이 지나면 지웁니다(개인정보처리방침 3번).
+  await db.prepare('DELETE FROM company_requests WHERE created_at < ?1').bind(t - 365 * 86400).run();
   const KST = 9 * 3600;
   const dayStart = Math.floor((t + KST) / 86400) * 86400 - KST; // 오늘 0시(한국시간)
   const one = async (sql, ...b) => (await db.prepare(sql).bind(...b).first()) || {};
@@ -479,6 +523,13 @@ async function stats(env) {
       bookmark: await usersWith('bookmarks'),
       savedSearch: await usersWith('saved_searches'),
       keyword: await usersWith('keywords'),
+    },
+    companyRequests: {
+      last24h: (await one('SELECT COUNT(*) AS n FROM company_requests WHERE created_at >= ?1', t - 86400)).n || 0,
+      total: (await one('SELECT COUNT(*) AS n FROM company_requests')).n || 0,
+      // 최근 7일 요청의 회사명·주소만(이메일·이름은 보고에 넣지 않습니다. D1 콘솔에서 확인).
+      recent: (await db.prepare('SELECT company, career_url AS url, created_at AS at FROM company_requests WHERE created_at >= ?1 ORDER BY created_at DESC LIMIT 20')
+        .bind(t - 7 * 86400).all()).results,
     },
     rows: {
       follows: await rows('follows'),
