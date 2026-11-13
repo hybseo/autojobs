@@ -545,4 +545,17 @@ footer b{color:var(--ink-2);font-weight:500}
   .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .tabbar a[aria-current="page"]{color:var(--brand);font-weight:600}
   .legal-table{display:block;overflow-x:auto}
+  /*
+   * 공고 상세의 「회사 공고로 이동」 바(.mbar)가 하단 탭바와 똑같이
+   * bottom:0 에 고정돼 있어, z-index 가 낮은 .mbar 가 탭바(z-index:50)
+   * 밑에 완전히 가려졌습니다 (2026-11-13 대표님 신고 — "지원하기 버튼이
+   * 안 보인다"). 탭바는 회원 기능을 넣으면서 나중에 생겼고, 그때 이미
+   * 있던 .mbar 를 고려하지 않았습니다.
+   *
+   * 탭바 높이(58px, 위 body 여백과 같은 값)만큼 .mbar 를 올려 탭바
+   * 위에 겹치지 않게 둡니다. 공고 본문도 두 바를 합친 높이만큼
+   * 아래 여백을 더 둬야 글자가 가려지지 않습니다.
+   */
+  .mbar{bottom:calc(58px + env(safe-area-inset-bottom,0px))}
+  main.jobpage{padding-bottom:calc(96px + 58px)}
 }
