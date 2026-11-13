@@ -339,6 +339,55 @@ def strip_html(s):
     return re.sub(r"\n{2,}", "\n", html.unescape(s)).strip()
 
 
+DETAIL_GAP = 0.5   # 공고 화면 요청 사이 쉬는 시간(초)
+
+NEXT_DATA = re.compile(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S)
+
+
+def _deadline(x):
+    """endAt(또는 reception.endAt) → 한국 날짜. 없으면 예전 칸, 그것도 없으면 상시."""
+    from datetime import datetime, timedelta, timezone
+    raw = x.get("endAt") or (x.get("reception") or {}).get("endAt")
+    if raw:
+        try:
+            t = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+            if t.tzinfo is None:
+                t = t.replace(tzinfo=timezone.utc)
+            d = t.astimezone(timezone(timedelta(hours=9))).date().isoformat()
+            return "" if int(d[:4]) >= 2100 else d
+        except ValueError:
+            return _date(raw)
+    return _date(x.get("deadlineValue"))
+
+
+def _body(url):
+    """공고 화면을 받아 본문 HTML 을 꺼냅니다.
+
+    화면이 서버에서 완성돼 오고(Next.js), 본문은
+    __NEXT_DATA__ → props.pageProps.jobPosting.content 에 HTML 로 들어 있습니다.
+    2026-11-13 메가존클라우드·보령에서 확인. 실패하면 빈 문자열(원문으로 보냄).
+    """
+    host = url.split("/")[2]
+    req = urllib.request.Request(url, headers={
+        "Accept": "text/html,application/xhtml+xml",
+        "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+        "User-Agent": UA,
+        "Referer": f"https://{host}/",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=25) as r:
+            page = r.read().decode("utf-8", "replace")
+        m = NEXT_DATA.search(page)
+        if not m:
+            return ""
+        jp = (((json.loads(m.group(1)).get("props") or {}).get("pageProps") or {})
+              .get("jobPosting") or {})
+        return str(jp.get("content") or "")
+    except Exception as e:
+        print(f"      · 본문 실패 {url}: {e}")
+        return ""
+
+
 def list_open(company, include_pool=False):
     """진행중 공고만 골라 돌려줍니다. probe 용으로 밖에서도 씁니다.
 
@@ -349,10 +398,19 @@ def list_open(company, include_pool=False):
     time.sleep(5)
     _, cid = _split_code(company["code"])
     base = _base(company)
-    q = urllib.parse.urlencode({"companyId": cid, "page": 1, "countPerPage": 100})
-    j = _get(f"{base}{API}?{q}")
-
-    rows = j.get("results") or []
+    # 여러 쪽을 받습니다 (2026-11-13). 전에는 첫 100건만 받아 메가존클라우드
+    # 225건 중 100건만 들어왔습니다. count 를 보고 끝까지 넘깁니다.
+    rows, page, total = [], 1, None
+    while page <= 20:
+        q = urllib.parse.urlencode({"companyId": cid, "page": page, "countPerPage": 100})
+        j = _get(f"{base}{API}?{q}")
+        got = j.get("results") or []
+        rows += got
+        total = j.get("count")
+        if not got or len(got) < 100 or (total and len(rows) >= int(total)):
+            break
+        page += 1
+        time.sleep(1)
     if not rows:
         print(f"  ! ninehire({company['slug']}): 공고가 비어 있습니다. "
               f"companyId 가 맞는지 확인하세요.")
@@ -383,9 +441,15 @@ def fetch(company):
         if not rid:
             continue
 
-        # 상세 주소가 공고마다 다르지 않습니다. 목록으로 보냅니다.
+        # 공고별 주소 (2026-11-13 확인). 목록의 addressKey 가 공고마다 다르고
+        #   {base}/job_posting/{addressKey}
+        # 가 그 공고 화면입니다. siteURL 은 회사 공통 값이라 그 주소는 404 였습니다.
+        key = str(x.get("addressKey") or "").strip()
         site = str(x.get("siteURL") or "").strip()
-        url = f"{base}/{site}" if site else f"{base}/recruit"
+        url = (f"{base}/job_posting/{key}" if key
+               else (f"{base}/{site}" if site else f"{base}/recruit"))
+        body = _body(url) if key else ""
+        time.sleep(DETAIL_GAP)
 
         # 고용형태는 배열입니다. 정규직이 아니면 제목에 표시합니다.
         title = str(x.get("externalTitle") or x.get("title") or "").strip()
@@ -407,14 +471,16 @@ def fetch(company):
             "career": _career(x.get("career")),
             # 게시일을 주지 않습니다.
             "postedAt": "",
-            # deadlineValue 가 null 이면 상시채용입니다.
-            "closesAt": _date(x.get("deadlineValue")),
+            # 마감일 (2026-11-13). deadlineValue 칸이 없어지고 endAt 이 생겼습니다.
+            # endAt 은 UTC 라 한국 날짜로 바꿉니다(2026-11-29T14:59:59Z → 11-29).
+            # open_ended·until_filled 는 마감일이 없어 상시채용입니다.
+            "closesAt": _deadline(x),
             "dday": None,
             "multiRole": False,
             "sourceTitle": "",
             "sourceUrl": url,
-            # 목록에 본문이 없고 공고별 상세 주소도 없습니다. 원문으로 보냅니다.
-            "description": "",
+            # 공고 화면(__NEXT_DATA__)의 본문 HTML. 못 받으면 비워 원문으로 보냅니다.
+            "description": body,
         })
 
     return jobs
