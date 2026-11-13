@@ -60,6 +60,29 @@ CAREER = {"경력": "경력", "신입": "신입", "신입/경력": "신입/경�
 # 근무지가 이 값이면 지명이 아니라 빈칸으로 둡니다.
 NO_PLACE = {"", "기타", "기타지역", "직무별 상이", "전국"}
 
+# 사업장 이름 → 지역 (2026-11-13 첫 수집에서 66건 중 40건 근무지가 비어 추가).
+# 사업장 이름만으로는 지역 정리기(loc_normalize)가 지역을 못 읽습니다.
+# 소재지가 널리 알려진 사업장만 적습니다. 모르는 이름은 지어내지 않고 그대로 둡니다.
+SITE_REGION = (
+    (r"울산", "울산"),
+    (r"남양", "경기 화성"),
+    (r"화성", "경기 화성"),
+    (r"의왕", "경기 의왕"),
+    (r"마북", "경기 용인"),
+    (r"광명|소하", "경기 광명"),
+    (r"아산", "충남 아산"),
+    (r"전주", "전북 전주"),
+    (r"광주", "광주"),
+    (r"양재|서울|압구정|성수", "서울"),
+)
+
+
+def _region(place):
+    for pat, region in SITE_REGION:
+        if re.search(pat, place):
+            return region
+    return place
+
 SECTIONS = (("aboutTeamNtc", "조직소개"), ("privJdDtl", "직무상세"),
             ("privMustReq", "지원자격"), ("prefReq", "우대사항"),
             ("etc", "기타"))
@@ -195,7 +218,7 @@ def fetch(company):
             "company": company["name"],
             "companySlug": slug,
             "title": _text(x.get("recuNoticeNm")),
-            "location": "" if place in NO_PLACE else place,
+            "location": "" if place in NO_PLACE else _region(place),
             "career": CAREER.get(chan, "무관"),
             "postedAt": _ymd(x.get("applyStartDt")),
             "closesAt": _ymd(x.get("applyEndDt")),
