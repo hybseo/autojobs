@@ -287,6 +287,7 @@ def keep_recently_closed(fresh):
     today_s = today.isoformat()
 
     kept, expired = [], 0
+    redirect_adds = {}
     for j in old:
         # 이번에도 잡혔으면 살아 있는 공고입니다. 새 것으로 갱신됩니다.
         if j.get("id") in have:
@@ -319,6 +320,9 @@ def keep_recently_closed(fresh):
 
         if days > KEEP_DAYS:
             expired += 1
+            slug = (j.get("companySlug") or "").strip()
+            if slug:
+                redirect_adds[j.get("id")] = slug
             continue
 
         j = dict(j)
@@ -331,6 +335,7 @@ def keep_recently_closed(fresh):
               f"(오늘 {fresh_gone}건 신규, 최대 {KEEP_DAYS}일)")
     if expired:
         print(f"  · 보관 기간이 끝난 공고 {expired}건을 내보냅니다")
+    record_redirects(redirect_adds)
     return fresh + kept
 
 
@@ -342,6 +347,50 @@ ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
 OUT = ROOT / "src" / "data" / "jobs.json"
 SCANS = ROOT / "src" / "data" / "scans.json"
+REDIRECTS = ROOT / "src" / "data" / "job-redirects.json"
+
+
+def record_redirects(adds):
+    """보관 기간(KEEP_DAYS)이 끝나 jobs.json 에서 완전히 빠지는 공고를
+    여기에 영구히 적습니다 (2026-11-13).
+
+    왜 필요한가
+    -----------
+    공고 데이터는 60일만 들고 있지만, 구글이 그 주소를 찾아오는 건 그보다
+    더 오래갈 수 있습니다(실제로 44일째 재크롤링된 사례가 있습니다). 60일을
+    더 늘려도 언젠가는 지워야 하므로 같은 일이 반복됩니다.
+
+    그래서 공고 내용은 지우되, "이 주소는 이 회사로 보낸다"는 한 줄만
+    영원히 남깁니다. 본문을 다 들고 있는 것보다 훨씬 가볍고, build_redirects.mjs
+    가 빌드 때 이 파일을 읽어 dist/_redirects 에 301 줄로 더합니다.
+
+    한 번 적은 뒤에는 지우지 않습니다. 회사가 나중에 수집을 끄거나 사라져도
+    여기엔 그대로 둡니다 — build_redirects.mjs 가 그때 가서 회사 페이지가
+    실제로 있는지 다시 확인하고, 없으면 홈으로 보냅니다.
+    """
+    if not adds:
+        return
+    try:
+        doc = json.loads(REDIRECTS.read_text(encoding="utf-8")) if REDIRECTS.exists() else None
+    except Exception as e:
+        print(f"      ! job-redirects.json 을 읽지 못해 새로 만듭니다: {e}")
+        doc = None
+    if not isinstance(doc, dict) or not isinstance(doc.get("redirects"), dict):
+        doc = {
+            "_readme": [
+                "마감 보관 기간(60일)이 끝나 jobs.json 에서 완전히 빠진 공고의",
+                "영구 기록입니다. 열쇠는 공고 id, 값은 그때 그 공고의 회사 slug 입니다.",
+                "scripts/fetch_jobs.py 의 record_redirects() 가 적고, scripts/",
+                "build_redirects.mjs 가 빌드 때 읽어 /job/{id}/ → /company/{slug}/",
+                "301 넘겨보내기를 만듭니다. 지우지 마세요 — 지우면 그 주소가 다시 404 가 됩니다.",
+            ],
+            "redirects": {},
+        }
+    doc["redirects"].update(adds)
+    REDIRECTS.write_text(
+        json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=False),
+        encoding="utf-8")
+    print(f"  · 영구 이동 기록 {len(adds)}건 추가 (누적 {len(doc['redirects'])}건)")
 
 
 def record_scan(jobs, day):
