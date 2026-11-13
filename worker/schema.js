@@ -91,6 +91,21 @@ export const SCHEMA = [
   `CREATE INDEX IF NOT EXISTS idx_alerts_user ON alerts (user_id, created_at DESC)`,
   `CREATE INDEX IF NOT EXISTS idx_alerts_unpushed ON alerts (pushed, user_id)`,
   // 이미 알림 대상으로 처리한 공고. 같은 공고로 알림이 두 번 가지 않게 합니다.
+  /* 기업 채용담당자의 「채용페이지 등록 요청」 (2026-11-13). 로그인과 무관합니다.
+     회사명·채용페이지 주소·담당자 이메일(회신용)·이름(선택)·메모(선택)만 받고,
+     같은 사람의 반복 요청을 막으려고 접속 주소의 해시(원래 주소는 저장하지 않음)를 둡니다.
+     처리 뒤 1년이 지나면 지웁니다(stats 호출 때). 개인정보처리방침과 맞춰 두었습니다. */
+  `CREATE TABLE IF NOT EXISTS company_requests (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     company TEXT NOT NULL,
+     career_url TEXT NOT NULL,
+     email TEXT NOT NULL,
+     name TEXT,
+     message TEXT,
+     ip_hash TEXT,
+     created_at INTEGER NOT NULL
+   )`,
+  `CREATE INDEX IF NOT EXISTS company_requests_at ON company_requests(created_at)`,
   `CREATE TABLE IF NOT EXISTS processed_jobs (
      job_id TEXT PRIMARY KEY,
      at INTEGER NOT NULL
