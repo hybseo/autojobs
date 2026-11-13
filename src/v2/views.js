@@ -67,6 +67,11 @@ export const roleName = (D, c) => idx(D).role[c] || c;
    그런 기업은 공고 자신의 회사명(계열사)을 쓰고, 나머지는 기업 이름 그대로입니다.
    기업 페이지 제목·주소는 건드리지 않습니다. */
 export const coLabel = (co, j) => (co && co.g && j && j.n ? j.n : (co ? co.n : (j && j.n) || ''));
+/* 산업 표시 이름 (2026-11-13 대표님 지시). 완성차(현대·기아·GM·르노)를 넣으면서
+   「자동차부품」을 「자동차/자동차부품」으로 보이게 합니다. 데이터·주소(/industry/auto-parts/)·
+   필터 값은 그대로 「자동차부품」이고 화면 글자만 바꿉니다. lib.js 의 INDUSTRY_LABEL 과 같게 두세요. */
+const IND_LABEL = { '자동차부품': '자동차/자동차부품' };
+export const indLabel = (n) => IND_LABEL[n] || n;
 export const coOf = (D, slug, fallback) =>
   idx(D).co[slug] || { s: slug, n: fallback || slug, i: [], o: 0, x: 0, w: 0, b: '' };
 
@@ -110,7 +115,7 @@ export function card(D, j, hidden = false) {
     + (bare ? '<span class="ext">회사 공고 ↗</span>' : (tg ? `<span class="tg">${tg}</span>` : ''));
   const cn = coLabel(co, j);
   const inner = `<div class="co"><span class="av">${esc(initial(cn))}</span>`
-    + `<b>${esc(cn)}</b>${ind ? `<span>· ${esc(ind)}</span>` : ''}</div>`
+    + `<b>${esc(cn)}</b>${ind ? `<span>· ${esc(indLabel(ind))}</span>` : ''}</div>`
     + `<h3>${esc(j.t)}</h3>`
     + `<div class="ch">${ch.join('')}</div>`
     + sum
@@ -230,7 +235,7 @@ export function viewHome(D) {
   }).join('');
 
   const inds = D.industries.slice().sort((a, b) => b.c - a.c).map((i) =>
-    `<a class="tile" href="/industry/${esc(i.s)}/"><span class="t">${esc(i.n)}</span>`
+    `<a class="tile" href="/industry/${esc(i.s)}/"><span class="t">${esc(indLabel(i.n))}</span>`
     + `<span class="n">${num(i.c)}${i.w ? `<span class="w">오늘 +${i.w}</span>` : ''}</span></a>`).join('');
 
   const today = D.jobs.filter((j) => j.cl === m.at);
@@ -337,7 +342,7 @@ export function viewJobs(D, S) {
     if (cur && ks.indexOf(cur) < 0) ks.unshift(cur);
     return `<div><h4>${title}</h4><div class="f">`
       + ks.map((k) => `<button data-f="${key}" data-v="${esc(k)}" aria-pressed="${cur === k}">`
-        + `<span>${esc(k)}</span><span class="n">${num(m[k] || 0)}</span></button>`).join('')
+        + `<span>${esc(key === 'ind' ? indLabel(k) : k)}</span><span class="n">${num(m[k] || 0)}</span></button>`).join('')
       + (cur ? `<button data-f="${key}" data-v="" style="color:var(--steel)">선택 해제</button>` : '')
       + '</div></div>';
   };
@@ -352,7 +357,7 @@ export function viewJobs(D, S) {
   ['ind', 'tag', 'car', 'reg', 'role', 'co', 'day', 'recent'].forEach((k) => {
     if (!f[k]) return;
     const label = k === 'co' ? coOf(D, f[k]).n : k === 'role' ? roleName(D, f[k])
-      : k === 'day' ? `${ymd(f[k])} 마감` : k === 'recent' ? '최근 7일 신규' : f[k];
+      : k === 'day' ? `${ymd(f[k])} 마감` : k === 'recent' ? '최근 7일 신규' : k === 'ind' ? indLabel(f[k]) : f[k];
     chosen.push(`<button class="chip" aria-pressed="true" data-f="${k}" data-v="">${esc(label)} ✕</button>`);
   });
   if (S.q.trim()) chosen.unshift(`<button class="chip" aria-pressed="true" data-q="">「${esc(S.q.trim())}」 ✕</button>`);
@@ -422,7 +427,7 @@ export function viewJob(D, j, opt = {}) {
   if (sameCo) doors.push([coHref(j.c), `${co.n}의 다른 공고`, sameCo]);
   if (j.i[0] && j.r[0]) {
     const n1 = D.jobs.filter((x) => x.i.indexOf(j.i[0]) >= 0 && x.r.indexOf(j.r[0]) >= 0).length;
-    if (n1) doors.push([jobsHref({ ind: j.i[0], role: j.r[0] }), `${j.i[0]} × ${roleName(D, j.r[0])}`, n1]);
+    if (n1) doors.push([jobsHref({ ind: j.i[0], role: j.r[0] }), `${indLabel(j.i[0])} × ${roleName(D, j.r[0])}`, n1]);
   }
   j.g.slice(0, 3).forEach((t) => {
     const n2 = (D.tagIndex[t] || {}).n || 0;
@@ -456,7 +461,7 @@ export function viewJob(D, j, opt = {}) {
 
   const ind0 = j.i[0];
   let body = '<div><div class="crumb">'
-    + (ind0 ? `<a href="${indHref(D, ind0)}">${esc(ind0)}</a>` : '')
+    + (ind0 ? `<a href="${indHref(D, ind0)}">${esc(indLabel(ind0))}</a>` : '')
     + (ind0 && j.r[0] ? ' › ' : '')
     + (j.r[0] ? `<a href="${roleHref(j.r[0])}">${esc(roleName(D, j.r[0]))}</a>` : '')
     + '</div>';
@@ -526,7 +531,7 @@ export function viewCompanies(D, S = { sort: 'dl', ind: null, q: '', n: 9999 }) 
 
   const rows = cs.map((c) => `<a class="row" href="${coHref(c.s)}" data-o="${c.o}" data-w="${c.w}" data-ind="${esc((c.i || []).join('|'))}" data-n="${esc(`${c.n} ${c.b || ''}`.toLowerCase())}">`
     + `<span class="av">${esc(initial(c.n))}</span>`
-    + `<span class="nm">${esc(c.n)} <span class="in">${esc((c.i || [])[0] || '')}</span>`
+    + `<span class="nm">${esc(c.n)} <span class="in">${esc(indLabel((c.i || [])[0] || ''))}</span>`
     + `${c.b ? `<span class="bio">${esc(c.b)}</span>` : ''}</span>`
     + `<span class="rt">${c.o ? `<span class="n">${num(c.o)}</span>${c.w ? `<span class="w">오늘 +${c.w}</span>` : ''}`
       : '<span class="z">공고 없음</span>'}</span></a>`).join('');
@@ -546,7 +551,7 @@ export function viewCompanies(D, S = { sort: 'dl', ind: null, q: '', n: 9999 }) 
     + '</span></div>'
     + '<div class="chips" style="margin-bottom:12px">'
     + Object.keys(cInd).sort((a, b) => cInd[b] - cInd[a]).map((i) =>
-      `<button class="chip" data-ind="${esc(i)}" aria-pressed="${S.ind === i}">${esc(i)}<span class="n">${cInd[i]}</span></button>`).join('')
+      `<button class="chip" data-ind="${esc(i)}" aria-pressed="${S.ind === i}">${esc(indLabel(i))}<span class="n">${cInd[i]}</span></button>`).join('')
     + '</div>'
     + `<div class="rows" id="coRows">${rows}</div>`;
 }
@@ -560,10 +565,10 @@ export function viewCompany(D, slug) {
   const fresh = mine.filter((j) => j.f === D.meta.at);
   const sorted = mine.slice().sort(byDl);
   return '<div class="crumb">'
-    + ((c.i || [])[0] ? `<a href="${indHref(D, c.i[0])}">← ${esc(c.i[0])}</a>` : '<a href="/companies/">← 기업</a>')
+    + ((c.i || [])[0] ? `<a href="${indHref(D, c.i[0])}">← ${esc(indLabel(c.i[0]))}</a>` : '<a href="/companies/">← 기업</a>')
     + '</div>'
     + `<div class="paper"><h1 class="h1">${esc(c.n)}</h1>`
-    + `<p class="sub">${esc((c.i || []).join(' · ') || '산업 미분류')}</p>`
+    + `<p class="sub">${esc((c.i || []).map(indLabel).join(' · ') || '산업 미분류')}</p>`
     + (c.b ? `<p style="margin-top:12px;font-size:13.5px;color:var(--ink-2);line-height:1.7">${esc(c.b)}</p>` : '')
     + '</div>'
     + '<div class="statrow">'
@@ -586,7 +591,7 @@ export function viewCompany(D, slug) {
 /* ── 산업 · 직무 ───────────────────────────────────── */
 export function viewIndustries(D) {
   const rows = D.industries.slice().sort((a, b) => b.c - a.c).map((i) => `<a class="row" href="/industry/${esc(i.s)}/">`
-    + `<span class="nm">${esc(i.n)}<span class="bio">${i.k}개 기업</span></span>`
+    + `<span class="nm">${esc(indLabel(i.n))}<span class="bio">${i.k}개 기업</span></span>`
     + `<span class="rt"><span class="n">${num(i.c)}</span>${i.w ? `<span class="w">오늘 +${i.w}</span>` : ''}</span></a>`).join('');
   return `<h1 class="h1">산업</h1><p class="sub">공고 수는 진행중 기준 · ${esc(D.meta.at)}</p>`
     + `<div class="rows" style="margin-top:16px">${rows}</div>`
@@ -632,7 +637,7 @@ export function viewIndustry(D, name) {
     + `<div class="chips">${topKeys(cRole, 12).map((r) => `<a class="chip" href="${jobsHref({ ind: name, role: r })}">${esc(roleName(D, r))}`
       + `<span class="n">${cRole[r]}</span></a>`).join('')}</div></section>`;
   return '<div class="crumb"><a href="/industry/">← 산업</a></div>'
-    + scopeView(D, `${name} 채용`, `진행중 공고 · ${esc(D.meta.at)} 기준`, arr, extra);
+    + scopeView(D, `${indLabel(name)} 채용`, `진행중 공고 · ${esc(D.meta.at)} 기준`, arr, extra);
 }
 export function viewRole(D, code) {
   const arr = D.jobs.filter((j) => j.r.indexOf(code) >= 0);

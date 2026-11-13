@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { indLabel } from '../v2/views.js';
 import {
   openJobs, companyPages, techPages, industriesOf, industrySlug, COLLECTED_AT,
 } from '../lib.js';
@@ -62,7 +63,7 @@ const desc = '찾으시는 페이지가 없습니다. 끝난 공고일 수 있�
     <div class="section-h">산업으로 찾기</div>
     <div class="chips">
       {inds.map(([n, c]) => (
-        <a class="chip" href={`/industry/${industrySlug(n)}/`}>{n}<span class="n">{c}</span></a>
+        <a class="chip" href={`/industry/${industrySlug(n)}/`}>{indLabel(n)}<span class="n">{c}</span></a>
       ))}
     </div>
 

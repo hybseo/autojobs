@@ -1,6 +1,6 @@
 ---
 import { getData } from '../../v2/data.js';
-import { viewIndustry } from '../../v2/views.js';
+import { viewIndustry, indLabel } from '../../v2/views.js';
 import Base from '../../layouts/Base.astro';
 import { industries, byIndustry, byDeadline, isAlways, COLLECTED_AT, jobTags, tagInfo } from '../../lib.js';
 
@@ -50,8 +50,9 @@ const topTechs = Object.entries(techCount)
 const alwaysN = jobs.filter(isAlways).length;
 const deadlineN = jobs.length - alwaysN;
 
-const title = `${ind.name} 채용공고 | SEARCHJOB`;
-const desc = `${ind.name} 분야 기업 ${cos.length}곳의 공식 채용페이지에 올라온 공고를 모았습니다. `
+const label = indLabel(ind.name);   // 화면 이름 (자동차부품 → 자동차/자동차부품)
+const title = `${label} 채용공고 | SEARCHJOB`;
+const desc = `${label} 분야 기업 ${cos.length}곳의 공식 채용페이지에 올라온 공고를 모았습니다. `
   + `흩어진 채용정보를 한눈에 검색하고 원문으로 바로 이동하세요.`;
 
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
