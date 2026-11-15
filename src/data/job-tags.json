@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-14 · 진행중 7363건 중 요약 있는 6715건을 훑어",
-  "6666건에 태그가 붙었습니다 (99.3%)."
+  "만든 날 2026-11-15 · 진행중 7359건 중 요약 있는 6713건을 훑어",
+  "6664건에 태그가 붙었습니다 (99.3%)."
  ],
  "tags": {
   "hlcompany-46525": [
@@ -7441,8 +7441,8 @@
   ],
   "greeting-kstd-lezhin-236364": [
    "웹툰·웹소설 편집",
-   "Figma·UI 툴",
-   "브랜드 마케팅"
+   "브랜드 마케팅",
+   "Figma·UI 툴"
   ],
   "greeting-kstd-lezhin-235969": [
    "웹툰·웹소설 편집",
@@ -8004,8 +8004,8 @@
   ],
   "naver-30005684": [
    "일본어",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "LLM·생성형 AI"
   ],
   "naver-30005674": [
@@ -10314,232 +10314,6 @@
   "neowiz-2f718f75-1e42-45b8-8697-ac264657782b": [
    "사내 복지 서비스",
    "보훈·장애인 채용"
-  ],
-  "shiftup-39f8c81037": [
-   "테크니컬 아티스트",
-   "게임 이펙트·애니메이션",
-   "유니티"
-  ],
-  "shiftup-5345a0695d": [
-   "프로덕트 디자인",
-   "유니티"
-  ],
-  "shiftup-8a776f29b5": [
-   "게임 시나리오·내러티브"
-  ],
-  "shiftup-48eb0f039e": [
-   "게임 서버",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "Kubernetes·Docker",
-   "C·C++",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
-  "shiftup-2ad91eaaad": [
-   "게임 시나리오·내러티브",
-   "언리얼 엔진"
-  ],
-  "shiftup-bcc19e98e3": [
-   "언리얼 엔진"
-  ],
-  "shiftup-71b0f6e1eb": [
-   "언리얼 엔진"
-  ],
-  "shiftup-250a0a555f": [
-   "Slack·사내 협업",
-   "게임 운영·라이브서비스",
-   "Jira·협업툴",
-   "중국어",
-   "Git·형상관리",
-   "영어 업무 가능"
-  ],
-  "shiftup-67cd9b2515": [
-   "웹 표준·접근성",
-   "영상·모션",
-   "브랜드 마케팅",
-   "Adobe 그래픽",
-   "제휴·사업개발",
-   "영어 업무 가능"
-  ],
-  "shiftup-c4fed67d99": [
-   "게임 원화·컨셉아트",
-   "게임 운영·라이브서비스",
-   "콘텐츠·SNS 운영"
-  ],
-  "shiftup-2102ee542d": [
-   "게임 QA",
-   "게임 시나리오·내러티브",
-   "게임 기획·레벨",
-   "언리얼 엔진",
-   "콘텐츠·SNS 운영"
-  ],
-  "shiftup-250a0a555f-2": [
-   "Slack·사내 협업",
-   "Jira·협업툴",
-   "일본어",
-   "중국어",
-   "콘텐츠·SNS 운영"
-  ],
-  "shiftup-d02cd56154": [
-   "게임 원화·컨셉아트",
-   "유니티"
-  ],
-  "shiftup-344050f2f2": [
-   "게임 원화·컨셉아트",
-   "3D 그래픽 툴",
-   "언리얼 엔진"
-  ],
-  "shiftup-d444e7d59b": [
-   "IR·공시",
-   "결산·세무"
-  ],
-  "shiftup-2c3ea45723": [
-   "게임 원화·컨셉아트",
-   "3D 그래픽 툴",
-   "Adobe 그래픽"
-  ],
-  "shiftup-f3af98a562": [
-   "정산·수수료",
-   "재무·자금",
-   "결산·세무",
-   "고객상담·CS",
-   "SAP·ERP"
-  ],
-  "shiftup-5345a0695d-2": [
-   "프로덕트 디자인",
-   "언리얼 엔진"
-  ],
-  "shiftup-3d14ebc003": [
-   "3D 그래픽 툴",
-   "언리얼 엔진",
-   "Adobe 그래픽"
-  ],
-  "shiftup-1fd9db222b": [
-   "테크니컬 아티스트",
-   "게임 이펙트·애니메이션",
-   "3D 그래픽 툴",
-   "언리얼 엔진"
-  ],
-  "shiftup-9b063cdcd2": [
-   "테크니컬 아티스트",
-   "3D 그래픽 툴",
-   "언리얼 엔진",
-   "C·C++",
-   "Python"
-  ],
-  "shiftup-7ceb3d45c0": [
-   "게임 기획·레벨",
-   "언리얼 엔진",
-   "콘텐츠·SNS 운영"
-  ],
-  "shiftup-d71fac997f": [
-   "테크니컬 아티스트",
-   "유니티"
-  ],
-  "shiftup-f917b6a01d": [
-   "언리얼 엔진",
-   "유니티",
-   "서비스 기획·PO"
-  ],
-  "shiftup-18133f6b68": [
-   "테크니컬 아티스트",
-   "3D 그래픽 툴",
-   "언리얼 엔진",
-   "C·C++",
-   "Python"
-  ],
-  "shiftup-9a59301216": [
-   "게임 시나리오·내러티브",
-   "언리얼 엔진"
-  ],
-  "shiftup-5eda593f52": [
-   "게임 이펙트·애니메이션"
-  ],
-  "shiftup-1f7ef50a79": [
-   "게임 원화·컨셉아트"
-  ],
-  "shiftup-d02cd56154-2": [
-   "게임 원화·컨셉아트",
-   "게임 기획·레벨"
-  ],
-  "shiftup-8d1ba139d0": [
-   "게임 원화·컨셉아트",
-   "3D 그래픽 툴"
-  ],
-  "shiftup-1d532c544b": [
-   "게임 기획·레벨",
-   "언리얼 엔진",
-   "임베디드·펌웨어"
-  ],
-  "shiftup-fe6257c309": [
-   "iOS·Swift",
-   "언리얼 엔진",
-   "유니티",
-   "Java·Spring",
-   "C·C++"
-  ],
-  "shiftup-328bda64d1": [
-   "게임 서버",
-   "채용·HR 운영",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "Kubernetes·Docker",
-   "C·C++",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
-  "shiftup-57e37447bc": [
-   "게임 서버",
-   "채용·HR 운영",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "Kubernetes·Docker",
-   "C·C++",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
-  "shiftup-8a776f29b5-2": [
-   "게임 시나리오·내러티브"
-  ],
-  "shiftup-2a2b46610d": [
-   "게임 서버",
-   "Android·Kotlin",
-   "REST API 설계",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "Kubernetes·Docker",
-   "C·C++",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
-  "shiftup-9e884ce23a": [
-   "게임 서버",
-   "Android·Kotlin",
-   "REST API 설계",
-   "데이터 파이프라인",
-   "Git·형상관리",
-   "Kubernetes·Docker",
-   "C·C++",
-   "리눅스·서버 운영",
-   "LLM·생성형 AI",
-   "Python"
-  ],
-  "shiftup-683b09a62d": [
-   "게임 운영·라이브서비스",
-   "Java·Spring",
-   "C·C++"
-  ],
-  "shiftup-6db30cf754": [
-   "게임 서버",
-   "NoSQL·캐시",
-   "RDBMS",
-   "Java·Spring",
-   "C·C++"
   ],
   "soop-ALWAYS-2194-112": [
    "GraphQL·gRPC",
@@ -13872,8 +13646,8 @@
   "ninehire-a69cf490-7e7a-11": [
    "M365·협업 환경",
    "웹 표준·접근성",
-   "HTML·CSS",
    "Salesforce·CRM",
+   "HTML·CSS",
    "IT 헬프데스크·자산",
    "RDBMS",
    "재무·자금",
@@ -14990,8 +14764,8 @@
   ],
   "greenhouse-toss-5748739003": [
    "문서 도구",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽"
   ],
   "greenhouse-toss-7626141003": [
@@ -15214,8 +14988,8 @@
    "결산·세무"
   ],
   "greenhouse-toss-7985134003": [
-   "정산·수수료",
    "BI·대시보드",
+   "정산·수수료",
    "결산·세무",
    "SQL·데이터 추출",
    "SAP·ERP"
@@ -15509,8 +15283,8 @@
    "SQL·데이터 추출"
   ],
   "greenhouse-toss-7913976003": [
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽"
   ],
   "greenhouse-toss-6253400003": [
@@ -20562,8 +20336,8 @@
    "심사·리스크 운영",
    "Salesforce·CRM",
    "수율·불량분석",
-   "정산·수수료",
    "BI·대시보드",
+   "정산·수수료",
    "영업기획·영업관리",
    "재무·자금",
    "SQL·데이터 추출",
@@ -22344,8 +22118,8 @@
   "greeting-nextsecurities-234282": [
    "스타일링·의상",
    "영상·모션",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽"
   ],
   "greeting-nextsecurities-239724": [
@@ -22488,8 +22262,8 @@
   ],
   "greeting-nextsecurities-234280": [
    "그로스·A/B 테스트",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽"
   ],
   "greeting-nextsecurities-172327": [
@@ -24294,8 +24068,8 @@
    "재무·자금"
   ],
   "greeting-orangesquare-233989": [
-   "정산·수수료",
    "BI·대시보드",
+   "정산·수수료",
    "GA·퍼포먼스 마케팅",
    "MD·상품기획",
    "콘텐츠·SNS 운영"
@@ -24748,8 +24522,8 @@
   "greeting-wrtn-227428": [
    "영상·모션",
    "일본어",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영",
    "LLM·생성형 AI"
@@ -24790,8 +24564,8 @@
   ],
   "greeting-wrtn-218408": [
    "영상·모션",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영",
    "LLM·생성형 AI"
@@ -24820,8 +24594,8 @@
   "greeting-wrtn-229316": [
    "영상·모션",
    "웹툰·웹소설 편집",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영",
    "LLM·생성형 AI"
@@ -25960,8 +25734,8 @@
    "운영 지원·오퍼레이션",
    "영상·모션",
    "광고 운영·세일즈",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "콘텐츠·SNS 운영"
   ],
   "greeting-kakaopay-244247": [
@@ -26812,8 +26586,8 @@
    "경영기획·전략"
   ],
   "greeting-umoh-67513": [
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "고객상담·CS"
   ],
   "greeting-huvitz-244508": [
@@ -26964,8 +26738,8 @@
    "디자인 시스템",
    "3D 그래픽 툴",
    "일본어",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "공공사업·제안"
   ],
   "greeting-realworld-217725": [
@@ -31846,6 +31620,232 @@
   "kia-2026N586": [
    "고객상담·CS"
   ],
+  "shiftup-39f8c81037": [
+   "테크니컬 아티스트",
+   "게임 이펙트·애니메이션",
+   "유니티"
+  ],
+  "shiftup-5345a0695d": [
+   "프로덕트 디자인",
+   "유니티"
+  ],
+  "shiftup-8a776f29b5": [
+   "게임 시나리오·내러티브"
+  ],
+  "shiftup-48eb0f039e": [
+   "게임 서버",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "Kubernetes·Docker",
+   "C·C++",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "shiftup-2ad91eaaad": [
+   "게임 시나리오·내러티브",
+   "언리얼 엔진"
+  ],
+  "shiftup-bcc19e98e3": [
+   "언리얼 엔진"
+  ],
+  "shiftup-71b0f6e1eb": [
+   "언리얼 엔진"
+  ],
+  "shiftup-250a0a555f": [
+   "Slack·사내 협업",
+   "게임 운영·라이브서비스",
+   "Jira·협업툴",
+   "중국어",
+   "Git·형상관리",
+   "영어 업무 가능"
+  ],
+  "shiftup-67cd9b2515": [
+   "웹 표준·접근성",
+   "영상·모션",
+   "브랜드 마케팅",
+   "Adobe 그래픽",
+   "제휴·사업개발",
+   "영어 업무 가능"
+  ],
+  "shiftup-c4fed67d99": [
+   "게임 원화·컨셉아트",
+   "게임 운영·라이브서비스",
+   "콘텐츠·SNS 운영"
+  ],
+  "shiftup-2102ee542d": [
+   "게임 QA",
+   "게임 시나리오·내러티브",
+   "게임 기획·레벨",
+   "언리얼 엔진",
+   "콘텐츠·SNS 운영"
+  ],
+  "shiftup-250a0a555f-2": [
+   "Slack·사내 협업",
+   "Jira·협업툴",
+   "일본어",
+   "중국어",
+   "콘텐츠·SNS 운영"
+  ],
+  "shiftup-d02cd56154": [
+   "게임 원화·컨셉아트",
+   "유니티"
+  ],
+  "shiftup-344050f2f2": [
+   "게임 원화·컨셉아트",
+   "3D 그래픽 툴",
+   "언리얼 엔진"
+  ],
+  "shiftup-d444e7d59b": [
+   "IR·공시",
+   "결산·세무"
+  ],
+  "shiftup-2c3ea45723": [
+   "게임 원화·컨셉아트",
+   "3D 그래픽 툴",
+   "Adobe 그래픽"
+  ],
+  "shiftup-f3af98a562": [
+   "정산·수수료",
+   "재무·자금",
+   "결산·세무",
+   "고객상담·CS",
+   "SAP·ERP"
+  ],
+  "shiftup-5345a0695d-2": [
+   "프로덕트 디자인",
+   "언리얼 엔진"
+  ],
+  "shiftup-3d14ebc003": [
+   "3D 그래픽 툴",
+   "언리얼 엔진",
+   "Adobe 그래픽"
+  ],
+  "shiftup-1fd9db222b": [
+   "테크니컬 아티스트",
+   "게임 이펙트·애니메이션",
+   "3D 그래픽 툴",
+   "언리얼 엔진"
+  ],
+  "shiftup-9b063cdcd2": [
+   "테크니컬 아티스트",
+   "3D 그래픽 툴",
+   "언리얼 엔진",
+   "C·C++",
+   "Python"
+  ],
+  "shiftup-7ceb3d45c0": [
+   "게임 기획·레벨",
+   "언리얼 엔진",
+   "콘텐츠·SNS 운영"
+  ],
+  "shiftup-d71fac997f": [
+   "테크니컬 아티스트",
+   "유니티"
+  ],
+  "shiftup-f917b6a01d": [
+   "언리얼 엔진",
+   "유니티",
+   "서비스 기획·PO"
+  ],
+  "shiftup-18133f6b68": [
+   "테크니컬 아티스트",
+   "3D 그래픽 툴",
+   "언리얼 엔진",
+   "C·C++",
+   "Python"
+  ],
+  "shiftup-9a59301216": [
+   "게임 시나리오·내러티브",
+   "언리얼 엔진"
+  ],
+  "shiftup-5eda593f52": [
+   "게임 이펙트·애니메이션"
+  ],
+  "shiftup-1f7ef50a79": [
+   "게임 원화·컨셉아트"
+  ],
+  "shiftup-d02cd56154-2": [
+   "게임 원화·컨셉아트",
+   "게임 기획·레벨"
+  ],
+  "shiftup-8d1ba139d0": [
+   "게임 원화·컨셉아트",
+   "3D 그래픽 툴"
+  ],
+  "shiftup-1d532c544b": [
+   "게임 기획·레벨",
+   "언리얼 엔진",
+   "임베디드·펌웨어"
+  ],
+  "shiftup-fe6257c309": [
+   "iOS·Swift",
+   "언리얼 엔진",
+   "유니티",
+   "Java·Spring",
+   "C·C++"
+  ],
+  "shiftup-328bda64d1": [
+   "게임 서버",
+   "채용·HR 운영",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "Kubernetes·Docker",
+   "C·C++",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "shiftup-57e37447bc": [
+   "게임 서버",
+   "채용·HR 운영",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "Kubernetes·Docker",
+   "C·C++",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "shiftup-8a776f29b5-2": [
+   "게임 시나리오·내러티브"
+  ],
+  "shiftup-2a2b46610d": [
+   "게임 서버",
+   "Android·Kotlin",
+   "REST API 설계",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "Kubernetes·Docker",
+   "C·C++",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "shiftup-9e884ce23a": [
+   "게임 서버",
+   "Android·Kotlin",
+   "REST API 설계",
+   "데이터 파이프라인",
+   "Git·형상관리",
+   "Kubernetes·Docker",
+   "C·C++",
+   "리눅스·서버 운영",
+   "LLM·생성형 AI",
+   "Python"
+  ],
+  "shiftup-683b09a62d": [
+   "게임 운영·라이브서비스",
+   "Java·Spring",
+   "C·C++"
+  ],
+  "shiftup-6db30cf754": [
+   "게임 서버",
+   "NoSQL·캐시",
+   "RDBMS",
+   "Java·Spring",
+   "C·C++"
+  ],
   "ashby-42dot-0e5078ea-5516-4f3e-b2ec-751cbd607017": [
    "데이터 라벨링",
    "파인튜닝·정렬",
@@ -31860,9 +31860,6 @@
    "재무·자금",
    "제휴·사업개발",
    "경영기획·전략"
-  ],
-  "greeting-alvogenkorea-158751": [
-   "GMP·밸리데이션"
   ],
   "workday-dongwha-XMLNAME-------_R1100-9": [
    "IATF 16949",
@@ -32237,14 +32234,6 @@
   ],
   "workday-philips-Sales-account-manager_590204": [
    "어카운트·거래처 관리"
-  ],
-  "workday-viatris-Sr-FFE-Specialist--2-Year-Contract-_R5675320": [
-   "데이터 거버넌스",
-   "Salesforce·CRM",
-   "BI·대시보드",
-   "브랜드 마케팅",
-   "SQL·데이터 추출",
-   "LLM·생성형 AI"
   ],
   "greeting-kci-239933": [
    "차량통신 CAN·LIN",
@@ -34494,8 +34483,8 @@
   ],
   "ashby-42dot-30844a12-5bd1-4bed-aeed-1736940825e6": [
    "조직문화·사내소통",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "콘텐츠·SNS 운영"
   ],
   "ashby-42dot-b978d8d8-ba22-44c9-a760-90dc6c9e22c5": [
@@ -38140,8 +38129,8 @@
   "greeting-konai-232582": [
    "포장·패키지 디자인",
    "영상·모션",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽"
   ],
   "nhn-4403891035250586475": [
@@ -39359,8 +39348,8 @@
   "greeting-analogai-227928": [
    "디자인 시스템",
    "IR·공시",
-   "Figma·UI 툴",
    "브랜드 마케팅",
+   "Figma·UI 툴",
    "Adobe 그래픽",
    "LLM·생성형 AI"
   ],
@@ -40514,8 +40503,8 @@
   "greeting-kurly-227589": [
    "영상·모션",
    "프로덕트 디자인",
-   "Figma·UI 툴",
-   "브랜드 마케팅"
+   "브랜드 마케팅",
+   "Figma·UI 툴"
   ],
   "greeting-rebellions-101840": [
    "가상화·오픈스택",
@@ -41888,7 +41877,7 @@
   "LLM·생성형 AI": {
    "slug": "llm-ai",
    "cat": "데이터·AI",
-   "count": 728,
+   "count": 727,
    "link": true
   },
   "경영기획·전략": {
@@ -41924,7 +41913,7 @@
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
-   "count": 422,
+   "count": 421,
    "link": true
   },
   "Kubernetes·Docker": {
@@ -42140,7 +42129,7 @@
   "브랜드 마케팅": {
    "slug": "brand-marketing",
    "cat": "마케팅·커머스",
-   "count": 168,
+   "count": 167,
    "link": true
   },
   "물류·창고 운영": {
@@ -42347,27 +42336,27 @@
    "count": 114,
    "link": true
   },
-  "GMP·밸리데이션": {
-   "slug": "gmp",
-   "cat": "품질·안전·인증",
-   "count": 114,
-   "link": true
-  },
   "보안관제·SOC": {
    "slug": "security-operations",
    "cat": "보안",
    "count": 113,
    "link": true
   },
-  "BI·대시보드": {
-   "slug": "bi-dashboard",
-   "cat": "데이터·AI",
-   "count": 110,
+  "GMP·밸리데이션": {
+   "slug": "gmp",
+   "cat": "품질·안전·인증",
+   "count": 113,
    "link": true
   },
   "정산·수수료": {
    "slug": "settlement",
    "cat": "업무 영역 — 인사·경영",
+   "count": 109,
+   "link": true
+  },
+  "BI·대시보드": {
+   "slug": "bi-dashboard",
+   "cat": "데이터·AI",
    "count": 109,
    "link": true
   },
@@ -42665,12 +42654,6 @@
    "count": 65,
    "link": true
   },
-  "Salesforce·CRM": {
-   "slug": "salesforce-crm",
-   "cat": "업무 시스템",
-   "count": 65,
-   "link": true
-  },
   "디바이스 드라이버": {
    "slug": "device-driver",
    "cat": "임베디드 세부",
@@ -42692,6 +42675,12 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
+   "count": 64,
+   "link": true
+  },
+  "Salesforce·CRM": {
+   "slug": "salesforce-crm",
+   "cat": "업무 시스템",
    "count": 64,
    "link": true
   },
@@ -42770,7 +42759,7 @@
   "데이터 거버넌스": {
    "slug": "data-governance",
    "cat": "데이터 엔지니어링 세부",
-   "count": 59,
+   "count": 58,
    "link": true
   },
   "게임 원화·컨셉아트": {
