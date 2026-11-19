@@ -38,4 +38,6 @@ if (cr) {
     console.log(`  · ${d} ${r.company} — ${r.url}`);
   }
 }
+const er = s.errorReports;
+if (er) console.log(`오류 신고: 최근 24시간 버튼 ${er.manual24h}건 · 자동 기록 ${er.auto24h}건 · 보관 중 ${er.total}건 (내용은 「오류 신고」 작업으로 확인)`);
 console.log(`저장된 항목 — 팔로우 ${s.rows.follows} · 찜 ${s.rows.bookmarks} · 검색 ${s.rows.savedSearches} · 키워드 ${s.rows.keywords} · 새 소식 ${s.rows.alerts}`);

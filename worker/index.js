@@ -23,6 +23,9 @@
  *   POST /api/internal/new-jobs                  (비밀키) 새 공고 → 알림 대상 찾기
  *   POST /api/internal/flush                     (비밀키) 쌓인 알림을 폰으로 보내기
  *   POST /api/internal/stats                     (비밀키) 회원 수 통계(숫자만, 이름·별명 없음)
+ *   POST /api/error-report                       오류 신고·화면 오류 자동 기록 (로그인 불필요)
+ *   POST /api/error-report/note                  방금 보낸 오류 신고에 한마디 덧붙이기 (1시간 안)
+ *   POST /api/internal/error-reports             (비밀키) 최근 오류 신고 내용 — 매일 점검용
  *
  * 필요한 설정은 docs 의 「회원기능 설정 안내」 에 있습니다.
  */
@@ -31,7 +34,7 @@ import {
   PROVIDERS, enabledProviders, startLogin, finishLogin, currentUser, logout, originOf,
 } from './auth.js';
 import { pushReady, sendPush } from './push.js';
-import { json, fail, now, clean, safeEqual, allowedPushEndpoint, sha256Hex } from './util.js';
+import { json, fail, now, clean, safeEqual, allowedPushEndpoint, sha256Hex, randomToken } from './util.js';
 
 const MAX_FOLLOWS = 200;
 const MAX_BOOKMARKS = 500;
@@ -72,6 +75,9 @@ export default {
 
       // 기업 채용담당자의 채용페이지 등록 요청 — 로그인 없이 받습니다.
       if (path === '/api/company-request') return companyRequest(req, env);
+      // 오류 신고 — 로그인 없이 받고, 회원 번호도 받지 않습니다.
+      if (path === '/api/error-report') return errorReport(req, env);
+      if (path === '/api/error-report/note') return errorNote(req, env);
 
       const user = await currentUser(req, env);
       if (!user) return fail(401, '로그인이 필요합니다.');
@@ -277,6 +283,7 @@ async function internal(req, env, path) {
   if (path === '/api/internal/new-jobs') return newJobs(env, body);
   if (path === '/api/internal/flush') return flush(env);
   if (path === '/api/internal/stats') return stats(env);
+  if (path === '/api/internal/error-reports') return errorReportsDump(env, body);
   return fail(404, 'not found');
 }
 
@@ -493,6 +500,7 @@ async function companyRequest(req, env) {
 async function stats(env) {
   const db = env.DB;
   const t = now();
+  await db.prepare('DELETE FROM error_reports WHERE created_at < ?1').bind(t - REPORT_KEEP).run();
   // 등록 요청은 1년이 지나면 지웁니다(개인정보처리방침 3번).
   await db.prepare('DELETE FROM company_requests WHERE created_at < ?1').bind(t - 365 * 86400).run();
   const KST = 9 * 3600;
@@ -531,6 +539,11 @@ async function stats(env) {
       recent: (await db.prepare('SELECT company, career_url AS url, created_at AS at FROM company_requests WHERE created_at >= ?1 ORDER BY created_at DESC LIMIT 20')
         .bind(t - 7 * 86400).all()).results,
     },
+    errorReports: {
+      manual24h: (await one("SELECT COUNT(*) AS n FROM error_reports WHERE kind = 'manual' AND created_at >= ?1", t - 86400)).n || 0,
+      auto24h: (await one("SELECT COUNT(*) AS n FROM error_reports WHERE kind = 'auto' AND created_at >= ?1", t - 86400)).n || 0,
+      total: (await one('SELECT COUNT(*) AS n FROM error_reports')).n || 0,
+    },
     rows: {
       follows: await rows('follows'),
       bookmarks: await rows('bookmarks'),
@@ -538,5 +551,114 @@ async function stats(env) {
       keywords: await rows('keywords'),
       alerts: await rows('alerts'),
     },
+  });
+}
+
+
+/*
+ * 오류 신고 (2026-11-20 대표님 지시)
+ * ---------------------------------------------------------------------
+ * 이용자는 버튼만 누르고 아무것도 고르거나 적지 않습니다. 원인은 함께 온 정보로 우리가 찾습니다.
+ *   kind=manual  「오류 신고」 버튼을 눌러 보낸 것
+ *   kind=auto    화면 오류가 나서 자동으로 보낸 것 (한 방문에 같은 오류는 한 번만)
+ * 받는 것: 페이지 주소·제목, 브라우저 정보, 화면 크기, 화면 오류 기록(최대 10개),
+ *          최근 동작(최대 20개: 연 페이지·누른 메뉴·검색어·필터), 덧붙인 말(선택, 나중에 /note 로).
+ * 받지 않는 것: 회원 번호·별명, 접속 주소 원본(해시만), 입력 칸에 적은 이메일 등.
+ * 막는 것: 같은 접속 주소에서 하루 버튼 신고 10건·자동 기록 20건 초과, 같은 오류 하루 1번 넘게 자동 기록.
+ * 30일이 지나면 지웁니다. 개인정보처리방침 1·3번과 맞춰 두었습니다.
+ */
+const REPORT_KEEP = 30 * 86400;
+const REPORT_MANUAL_PER_DAY = 10;
+const REPORT_AUTO_PER_DAY = 20;
+
+function slimList(list, max, spec) {
+  if (!Array.isArray(list)) return [];
+  return list.slice(-max).map((x) => {
+    const o = {};
+    for (const [k, n] of Object.entries(spec)) {
+      if (x && x[k] !== undefined && x[k] !== null && x[k] !== '') o[k] = clean(x[k], n);
+    }
+    return o;
+  }).filter((o) => Object.keys(o).length);
+}
+
+async function reportIpHash(req, env) {
+  const ip = req.headers.get('CF-Connecting-IP') || '';
+  return ip ? (await sha256Hex(`report|${ip}|${env.NOTIFY_SECRET || 'searchjob'}`)).slice(0, 32) : '';
+}
+
+async function errorReport(req, env) {
+  const raw = await req.text();
+  if (raw.length > 30000) return fail(413, '보낼 내용이 너무 깁니다.');
+  let b;
+  try { b = JSON.parse(raw); } catch { return fail(400, 'bad request'); }
+  const kind = b.kind === 'auto' ? 'auto' : 'manual';
+  const page = clean(b.page, 300);
+  if (!page.startsWith('/')) return fail(400, 'page');
+  const errors = slimList(b.errors, 10, { t: 10, m: 300, src: 200, st: 800, at: 30 });
+  const actions = slimList(b.actions, 20, { t: 10, v: 200, at: 30 });
+  const sig = kind === 'auto' ? clean(b.sig, 300) : '';
+  if (kind === 'auto' && !errors.length) return json({ ok: true, skipped: true });
+
+  const db = env.DB;
+  const t = now();
+  const ipHash = await reportIpHash(req, env);
+  if (ipHash) {
+    const r = await db.prepare('SELECT COUNT(*) AS n FROM error_reports WHERE ip_hash = ?1 AND kind = ?2 AND created_at >= ?3')
+      .bind(ipHash, kind, t - 86400).first();
+    const cap = kind === 'auto' ? REPORT_AUTO_PER_DAY : REPORT_MANUAL_PER_DAY;
+    if (r && r.n >= cap) {
+      if (kind === 'auto') return json({ ok: true, skipped: true });
+      return fail(429, '오늘은 신고를 더 받을 수 없습니다. searchjob.kr@gmail.com 으로 알려 주세요.');
+    }
+    if (kind === 'auto' && sig) {
+      const dup = await db.prepare('SELECT 1 FROM error_reports WHERE ip_hash = ?1 AND sig = ?2 AND created_at >= ?3 LIMIT 1')
+        .bind(ipHash, sig, t - 86400).first();
+      if (dup) return json({ ok: true, skipped: true });
+    }
+  }
+  const token = kind === 'manual' ? randomToken(16) : '';
+  const res = await db.prepare(
+    `INSERT INTO error_reports (kind, page, title, ua, screen, errors, actions, sig, token_hash, ip_hash, created_at)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)`,
+  ).bind(
+    kind, page, clean(b.title, 150) || null, clean(b.ua, 300) || null, clean(b.scr, 40) || null,
+    JSON.stringify(errors), JSON.stringify(actions), sig || null,
+    token ? await sha256Hex(token) : null, ipHash || null, t,
+  ).run();
+  const id = res && res.meta ? res.meta.last_row_id : null;
+  return json(kind === 'manual' ? { ok: true, id, token } : { ok: true });
+}
+
+/* 버튼 신고 뒤 「더 알려주실 게 있으면」 칸에 적은 말을 덧붙입니다. 보낸 그 브라우저만(토큰), 1시간 안, 한 번만. */
+async function errorNote(req, env) {
+  const b = await req.json().catch(() => ({}));
+  const id = Number(b.id);
+  const token = clean(b.token, 64);
+  const note = clean(String(b.note ?? '').replace(/\r?\n/g, ' '), 500);
+  if (!Number.isInteger(id) || !token || !note) return fail(400, 'bad request');
+  const r = await env.DB.prepare(
+    'UPDATE error_reports SET note = ?1 WHERE id = ?2 AND token_hash = ?3 AND note IS NULL AND created_at >= ?4',
+  ).bind(note, id, await sha256Hex(token), now() - 3600).run();
+  if (!r || !r.meta || !r.meta.changes) return fail(404, '덧붙일 신고를 찾지 못했습니다.');
+  return json({ ok: true });
+}
+
+/* 매일 점검용(비밀키). 지난 since(초, 기본 26시간) 이후 신고 전체. 접속 주소 해시·토큰은 내보내지 않습니다. */
+async function errorReportsDump(env, b) {
+  const db = env.DB;
+  const t = now();
+  await db.prepare('DELETE FROM error_reports WHERE created_at < ?1').bind(t - REPORT_KEEP).run();
+  const hours = Math.min(Math.max(Number(b.hours) || 26, 1), 24 * 30);
+  const rows = (await db.prepare(
+    `SELECT id, kind, page, title, ua, screen, errors, actions, note, sig, created_at AS at
+       FROM error_reports WHERE created_at >= ?1 ORDER BY created_at DESC LIMIT 300`,
+  ).bind(t - hours * 3600).all()).results;
+  const parse = (v) => { try { return JSON.parse(v || '[]'); } catch { return []; } };
+  return json({
+    ok: true,
+    hours,
+    total: (await db.prepare('SELECT COUNT(*) AS n FROM error_reports').first()).n || 0,
+    reports: rows.map((r) => ({ ...r, errors: parse(r.errors), actions: parse(r.actions) })),
   });
 }

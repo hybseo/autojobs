@@ -161,6 +161,8 @@ const url = canonical ?? (site + Astro.url.pathname);
     <p>각 기업 공식 채용페이지에 공개된 공고만 모았습니다. 채용 플랫폼 전용 공고나 비공개 채용은 포함되지 않습니다.</p>
     <p style="margin-top:8px"><b>여러 직무 포함 가능</b> 표시는 공고 본문이 이미지로 게시되어 세부 직무를 원문에서 확인해야 하는 경우입니다.</p>
     <p style="margin-top:8px">방문 통계를 위해 구글 애널리틱스(쿠키 사용)와 클라우드플레어 웹 애널리틱스를 씁니다. 로그인은 선택입니다. 로그인하면 카카오·네이버·구글이 알려 주는 회원번호와 별명만 받고, 이메일·전화번호·실명은 받지 않습니다.</p>
+    {/* 오류 신고 안내 (2026-11-20). 버튼 누를 때 무엇이 가는지 미리 알립니다. public/report.js 와 맞춰 둡니다. */}
+    <p style="margin-top:8px">화면 오른쪽 아래 「오류 신고」를 누르면 보던 페이지 주소, 기기·브라우저 종류, 화면 오류 기록, 최근 누른 메뉴·검색어가 함께 전송됩니다. 화면 오류가 나면 자동으로도 기록됩니다. 회원 정보는 보내지 않으며 30일 뒤 삭제합니다.</p>
     {/* 문의처 (2026-11-03 대표님 지시). 모든 페이지 꼬리말에 들어갑니다. */}
     <p style="margin-top:8px"><b>문의처 : <a href="mailto:searchjob.kr@gmail.com">searchjob.kr@gmail.com</a></b></p>
   </footer>
@@ -200,6 +202,8 @@ const url = canonical ?? (site + Astro.url.pathname);
     <a href="/my/" id="tab-my" aria-current={nav === 'my' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>마이페이지</span></a>
   </nav>
   <script is:inline defer src="/member.js"></script>
+  {/* 오류 신고 버튼 + 화면 오류 자동 기록 (2026-11-20). 내용은 public/report.js 주석 참고. */}
+  <script is:inline defer src="/report.js"></script>
   <script type="module" defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "4da0c82f0e654b77806a517d1b4f94ad"}'></script>
 </body>

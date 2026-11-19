@@ -106,6 +106,28 @@ export const SCHEMA = [
      created_at INTEGER NOT NULL
    )`,
   `CREATE INDEX IF NOT EXISTS company_requests_at ON company_requests(created_at)`,
+  /* 오류 신고 (2026-11-20 대표님 지시). 화면 오른쪽 아래 「오류 신고」 버튼(public/report.js)과
+     화면 오류 자동 기록이 여기에 쌓입니다. 로그인과 무관하고 회원 번호는 받지 않습니다.
+     받는 것: 페이지 주소·제목, 브라우저 정보, 화면 크기, 화면 오류 기록, 최근 동작(누른 메뉴·검색어·필터),
+     덧붙인 말(선택). 반복 신고를 막으려고 접속 주소의 해시만 둡니다(원래 주소는 저장하지 않음).
+     30일이 지나면 지웁니다(stats·error-reports 호출 때). 개인정보처리방침 1·3번과 맞춰 두었습니다. */
+  `CREATE TABLE IF NOT EXISTS error_reports (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     kind TEXT NOT NULL,
+     page TEXT NOT NULL,
+     title TEXT,
+     ua TEXT,
+     screen TEXT,
+     errors TEXT,
+     actions TEXT,
+     note TEXT,
+     sig TEXT,
+     token_hash TEXT,
+     ip_hash TEXT,
+     created_at INTEGER NOT NULL
+   )`,
+  `CREATE INDEX IF NOT EXISTS error_reports_at ON error_reports(created_at)`,
+  `CREATE INDEX IF NOT EXISTS error_reports_ip ON error_reports(ip_hash, created_at)`,
   `CREATE TABLE IF NOT EXISTS processed_jobs (
      job_id TEXT PRIMARY KEY,
      at INTEGER NOT NULL

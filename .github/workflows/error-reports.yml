@@ -1,0 +1,37 @@
+# 오류 신고 가져오기 (2026-11-20)
+# =====================================================================
+# 손으로(또는 매일 점검하는 Claude 예약 작업이) 실행합니다.
+# 깃허브 → Actions → 「오류 신고」 → Run workflow.
+# 저장소가 공개라 이 기록(로그)은 누구나 볼 수 있으므로, 신고 내용은 암호화해서만 찍고
+# 건수만 평문으로 나옵니다(공개 열쇠로 잠금, 여는 열쇠는 깃허브에 없음). 자세한 설명은 scripts/error_reports.mjs 첫머리.
+# 필요한 비밀키: NOTIFY_URL, NOTIFY_SECRET(회원 알림 발송과 같음). 새로 등록할 비밀키는 없습니다.
+name: 오류 신고
+
+on:
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: '몇 시간 치를 볼지 (기본 26)'
+        required: false
+        default: '26'
+
+permissions:
+  contents: read
+
+jobs:
+  reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 오류 신고 가져오기
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+          HOURS: ${{ inputs.hours }}
+        run: node scripts/error_reports.mjs
