@@ -106,6 +106,37 @@ export const SCHEMA = [
      created_at INTEGER NOT NULL
    )`,
   `CREATE INDEX IF NOT EXISTS company_requests_at ON company_requests(created_at)`,
+  /* 레벨 진단 (2026-11-20 대표님 결정). 자세한 설명은 worker/level.js 첫머리.
+     level_members: 저장 동의 시각, 결과 받을 이메일(선택, 확인 메일로 확인된 것만 사용).
+     level_runs: 진단 한 번 = 한 줄. snap 은 입력 화면을 다시 채우는 데 쓰는 입력 내용, result 는 레벨·항목 점수.
+     회원당 최근 20회만 둡니다. 탈퇴하면 둘 다 지웁니다. 실명·연락처(전화)는 받지 않습니다. */
+  `CREATE TABLE IF NOT EXISTS level_members (
+     user_id INTEGER PRIMARY KEY,
+     consent_at INTEGER,
+     email TEXT,
+     email_verified_at INTEGER,
+     email_token_hash TEXT,
+     email_token_exp INTEGER
+   )`,
+  `CREATE INDEX IF NOT EXISTS level_members_token ON level_members(email_token_hash)`,
+  `CREATE TABLE IF NOT EXISTS level_runs (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     user_id INTEGER NOT NULL,
+     created_at INTEGER NOT NULL,
+     duty TEXT,
+     rank TEXT,
+     level INTEGER,
+     snap TEXT,
+     result TEXT
+   )`,
+  `CREATE INDEX IF NOT EXISTS level_runs_user ON level_runs(user_id, created_at)`,
+  /* 보낸 메일 기록 — 하루 발송 한도를 세는 데만 씀. 이틀 뒤 지움. 주소는 남기지 않음. */
+  `CREATE TABLE IF NOT EXISTS mail_log (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     user_id INTEGER,
+     kind TEXT,
+     created_at INTEGER NOT NULL
+   )`,
   /* 오류 신고 (2026-11-20 대표님 지시). 화면 오른쪽 아래 「오류 신고」 버튼(public/report.js)과
      화면 오류 자동 기록이 여기에 쌓입니다. 로그인과 무관하고 회원 번호는 받지 않습니다.
      받는 것: 페이지 주소·제목, 브라우저 정보, 화면 크기, 화면 오류 기록, 최근 동작(누른 메뉴·검색어·필터),

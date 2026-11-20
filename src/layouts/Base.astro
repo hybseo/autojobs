@@ -147,7 +147,7 @@ const url = canonical ?? (site + Astro.url.pathname);
     </div>
     <nav class="gnav" aria-label="사이트 메뉴"><div class="wrap">
       {NAVS.map(([k, label, href]) => (
-        <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}</a>
+        <a href={href} aria-current={nav === k ? 'page' : undefined}>{label}{k === 'level' && <span class="nav-new">NEW</span>}</a>
       ))}
       <a href="/my/" id="gnav-my" class="gnav-my" aria-current={nav === 'my' ? 'page' : undefined}>마이페이지</a>
     </div></nav>

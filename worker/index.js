@@ -23,6 +23,10 @@
  *   POST /api/internal/new-jobs                  (비밀키) 새 공고 → 알림 대상 찾기
  *   POST /api/internal/flush                     (비밀키) 쌓인 알림을 폰으로 보내기
  *   POST /api/internal/stats                     (비밀키) 회원 수 통계(숫자만, 이름·별명 없음)
+ *   GET  /api/level                              레벨 진단 화면 상태(로그인·동의·지난 입력·기록·이메일)
+ *   GET  /api/level/verify?t=                    결과 받을 이메일 확인 링크
+ *   POST /api/level/consent | save | delete      레벨 진단 저장 동의 · 저장 · 기록 삭제
+ *   POST /api/level/email | email/remove | send  결과 받을 이메일 등록·삭제 · 결과 메일 보내기
  *   POST /api/error-report                       오류 신고·화면 오류 자동 기록 (로그인 불필요)
  *   POST /api/error-report/note                  방금 보낸 오류 신고에 한마디 덧붙이기 (1시간 안)
  *   POST /api/internal/error-reports             (비밀키) 최근 오류 신고 내용 — 매일 점검용
@@ -35,6 +39,7 @@ import {
 } from './auth.js';
 import { pushReady, sendPush } from './push.js';
 import { json, fail, now, clean, safeEqual, allowedPushEndpoint, sha256Hex, randomToken } from './util.js';
+import { levelState, levelConsent, levelSave, levelDelete, levelPurgeStatements, levelEmail, levelVerify, levelSend, levelEmailRemove, levelStats } from './level.js';
 
 const MAX_FOLLOWS = 200;
 const MAX_BOOKMARKS = 500;
@@ -68,6 +73,9 @@ export default {
 
       // ── 내 정보 (로그인 전에도 호출: 어떤 로그인이 열려 있는지 알려 줌) ──
       if (path === '/api/me' && req.method === 'GET') return me(req, env);
+      // 레벨 진단: 화면 상태(로그인 전에도 호출 — 로그인 안내를 띄우려고), 이메일 확인 링크
+      if (path === '/api/level' && req.method === 'GET') return levelState(env, await currentUser(req, env));
+      if (path === '/api/level/verify' && req.method === 'GET') return levelVerify(req, env);
 
       // 이하 쓰기 요청은 같은 사이트에서 온 것만 받습니다.
       if (req.method !== 'POST') return fail(405, 'method');
@@ -95,6 +103,12 @@ export default {
       if (path === '/api/push/subscribe') return subscribe(env, user, body);
       if (path === '/api/push/unsubscribe') return unsubscribe(env, user, body);
       if (path === '/api/alerts/read') return alertsRead(env, user);
+      if (path === '/api/level/consent') return levelConsent(env, user);
+      if (path === '/api/level/save') return levelSave(env, user, body);
+      if (path === '/api/level/delete') return levelDelete(env, user, body);
+      if (path === '/api/level/email') return levelEmail(req, env, user, body);
+      if (path === '/api/level/email/remove') return levelEmailRemove(env, user);
+      if (path === '/api/level/send') return levelSend(req, env, user, body);
       return fail(404, 'not found');
     } catch (e) {
       console.error('worker error', e && e.stack ? e.stack : e);
@@ -251,6 +265,7 @@ async function purgeUser(env, id) {
     db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(id),
+    ...levelPurgeStatements(db, id),
     db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM users WHERE id = ?1').bind(id),
   ]);
@@ -266,6 +281,7 @@ async function deleteAccount(req, env, user) {
     db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(id),
+    ...levelPurgeStatements(db, id),
     db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(id),
     db.prepare('DELETE FROM users WHERE id = ?1').bind(id),
   ]);
@@ -395,6 +411,7 @@ async function newJobs(env, b) {
       db.prepare('DELETE FROM keywords WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM bookmarks WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM follows WHERE user_id = ?1').bind(u.id),
+      ...levelPurgeStatements(db, u.id),
       db.prepare('DELETE FROM sessions WHERE user_id = ?1').bind(u.id),
       db.prepare('DELETE FROM users WHERE id = ?1').bind(u.id),
     ]);
@@ -539,6 +556,7 @@ async function stats(env) {
       recent: (await db.prepare('SELECT company, career_url AS url, created_at AS at FROM company_requests WHERE created_at >= ?1 ORDER BY created_at DESC LIMIT 20')
         .bind(t - 7 * 86400).all()).results,
     },
+    level: await levelStats(db, t),
     errorReports: {
       manual24h: (await one("SELECT COUNT(*) AS n FROM error_reports WHERE kind = 'manual' AND created_at >= ?1", t - 86400)).n || 0,
       auto24h: (await one("SELECT COUNT(*) AS n FROM error_reports WHERE kind = 'auto' AND created_at >= ?1", t - 86400)).n || 0,

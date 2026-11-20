@@ -588,3 +588,14 @@ footer b{color:var(--ink-2);font-weight:500}
   .sjr-btn{font-size:11.5px;padding:7px 10px}
 }
 @media print{#sj-report{display:none}}
+
+/* 상단 메뉴 「레벨 진단」 NEW 표시 (2026-11-20). 몇 주 뒤 Base.astro 에서 지우면 됩니다. */
+.nav-new{display:inline-block;margin-left:4px;font-size:9.5px;font-weight:700;line-height:1;color:#fff;background:var(--brand);border-radius:3px;padding:2px 3px;vertical-align:2px;letter-spacing:.02em}
+/* 홈의 레벨 진단 안내 카드 (2026-11-20) */
+.lv-promo{display:flex;gap:14px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);
+  border-left:3px solid var(--steel);border-radius:2px;padding:12px 14px;margin:0 0 14px;color:var(--ink);text-decoration:none}
+.lv-promo:hover{border-color:var(--steel)}
+.lv-promo-t{display:flex;flex-direction:column;gap:2px;font-size:13.5px;line-height:1.6;color:var(--ink-2);min-width:0;word-break:keep-all;overflow-wrap:anywhere}
+.lv-promo-t b{font-size:15px;color:var(--ink)}
+.lv-promo-go{flex:none;font-weight:700;color:var(--steel);font-size:14px;white-space:nowrap}
+@media (max-width:560px){.lv-promo{flex-direction:column;align-items:flex-start;gap:6px}}

@@ -38,6 +38,8 @@ if (cr) {
     console.log(`  · ${d} ${r.company} — ${r.url}`);
   }
 }
+const lv = s.level;
+if (lv) console.log(`레벨 진단: 저장 동의 회원 ${lv.members}명 · 최근 24시간 진단 ${lv.runs24h}회 (전체 ${lv.runsTotal}회) · 결과 메일 등록 ${lv.emails}명 · 24시간 발송 ${lv.mails24h}통`);
 const er = s.errorReports;
 if (er) console.log(`오류 신고: 최근 24시간 버튼 ${er.manual24h}건 · 자동 기록 ${er.auto24h}건 · 보관 중 ${er.total}건 (내용은 「오류 신고」 작업으로 확인)`);
 console.log(`저장된 항목 — 팔로우 ${s.rows.follows} · 찜 ${s.rows.bookmarks} · 검색 ${s.rows.savedSearches} · 키워드 ${s.rows.keywords} · 새 소식 ${s.rows.alerts}`);

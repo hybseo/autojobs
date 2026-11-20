@@ -295,7 +295,9 @@
       }
     });
     root.appendChild(box);
-    root.appendChild(el('p', { class: 'mem-privacy' }, '성명, 이메일, 전화번호 등 개인정보는 받지 않습니다.'));
+    root.appendChild(el('p', { class: 'mem-privacy' }, '로그인할 때 성명, 이메일, 전화번호는 받지 않습니다.'));
+    // 2026-11-20 레벨 진단: 진단 입력 내용은 처음 진단할 때 따로 동의를 받아 저장, 이메일은 「결과를 이메일로 받기」를 신청한 경우에만.
+    root.appendChild(el('p', { class: 'mem-fine' }, '레벨 진단을 이용하시면 처음 진단할 때 따로 동의를 받아 입력 내용과 결과를 계정에 저장합니다. 이메일은 진단 결과를 메일로 받겠다고 신청하신 경우에만 받습니다.'));
     root.appendChild(el('p', { class: 'mem-fine' }, '카카오·네이버·구글이 알려 주는 회원번호와 별명만 씁니다. 로그인하면 다음 화면에서 이용약관과 개인정보 수집·이용에 동의하는지 확인합니다. 동의하기 전에는 회원번호와 별명만 잠시 두며, 동의하지 않고 나가면 바로 지웁니다.'));
     var links = el('p', { class: 'mem-fine' });
     links.appendChild(el('a', { href: '/terms/' }, '이용약관'));
@@ -518,6 +520,40 @@
       });
     });
 
+    // 레벨 진단 (2026-11-20) — 기록은 이 화면을 열 때 /api/level 에서 따로 받습니다.
+    var lv = section(root, '내 레벨 진단');
+    lv.appendChild(el('p', { class: 'mem-empty' }, '불러오는 중…'));
+    function paintLevel() {
+      api('/api/level').then(function (r) {
+        var d = r.data || {};
+        while (lv.childNodes.length > 1) lv.removeChild(lv.lastChild);
+        var hist = (r.ok && d.history) || [];
+        if (!hist.length) {
+          var p = el('p', { class: 'mem-empty' }, '아직 진단 기록이 없습니다. ');
+          p.appendChild(el('a', { href: '/level/' }, '내 경력 레벨 진단 하러 가기 →'));
+          lv.appendChild(p);
+        }
+        hist.forEach(function (h) {
+          listRow(lv, '레벨 ' + h.level + ' · ' + (h.duty || ''), '/level/?go=1', dateOf(h.at) + ' 진단 · ' + (h.rank || '') + ' 기준', function (row) {
+            api('/api/level/delete', { id: h.id }).then(function (x) { if (x.ok) row.remove(); });
+          });
+        });
+        if (d.email) lv.appendChild(el('p', { class: 'mem-empty' }, '결과 받는 이메일: ' + d.email.addr + (d.email.verified ? '' : ' (확인 전)')));
+        if (hist.length || d.levelConsent || d.email) {
+          var acts = el('div', { class: 'mem-acts' });
+          var again = el('a', { class: 'mem-btn on', href: '/level/?go=1' }, '다시 진단하기');
+          var wipe = el('button', { type: 'button', class: 'mem-btn mem-danger' }, '진단 기록·이메일 모두 지우기');
+          wipe.addEventListener('click', function () {
+            if (!window.confirm('레벨 진단 기록과 결과 받는 이메일을 모두 지웁니다. 되돌릴 수 없습니다. 지울까요?')) return;
+            api('/api/level/delete', {}).then(function (x) { if (x.ok) paintLevel(); else toast('지우지 못했습니다. 잠시 뒤 다시 시도해 주세요.'); });
+          });
+          acts.appendChild(again); acts.appendChild(wipe);
+          lv.appendChild(acts);
+        }
+      });
+    }
+    paintLevel();
+
     // 계정
     var sc = section(root, '계정');
     var out = el('button', { type: 'button', class: 'mem-btn' }, '로그아웃');
@@ -526,7 +562,7 @@
     });
     var del = el('button', { type: 'button', class: 'mem-btn mem-danger' }, '회원 탈퇴');
     del.addEventListener('click', function () {
-      if (!window.confirm('탈퇴하면 팔로우·찜·저장 검색·알림 정보가 모두 즉시 삭제되며 되돌릴 수 없습니다. 탈퇴할까요?')) return;
+      if (!window.confirm('탈퇴하면 팔로우·찜·저장 검색·알림·레벨 진단 정보가 모두 즉시 삭제되며 되돌릴 수 없습니다. 탈퇴할까요?')) return;
       disablePush().catch(function () {}).then(function () { return api('/api/account/delete', {}); }).then(function (r) {
         if (!r.ok) return toast('탈퇴 처리에 실패했습니다. 잠시 뒤 다시 시도해 주세요.');
         setFlag(false); location.href = '/?bye=1';

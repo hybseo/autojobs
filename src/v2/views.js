@@ -198,7 +198,8 @@ export function balance(arr, maxRun) {
 const byDl = (a, b) => (a.al ? 99999 : a.d) - (b.al ? 99999 : b.d);
 
 /* ── 머리 (모든 쪽) ────────────────────────────────── */
-export const NAVS = [['home', '홈', '/'], ['jobs', '공고', '/jobs/'], ['companies', '기업', '/companies/'],
+// 'level' 레벨 진단은 2026-11-20 추가(대표님: 상단 메뉴 + 홈 카드, 하단 탭바는 그대로). 처음 한동안 NEW 표시(Base.astro).
+export const NAVS = [['home', '홈', '/'], ['jobs', '공고', '/jobs/'], ['level', '레벨 진단', '/level/'], ['companies', '기업', '/companies/'],
   ['industries', '산업', '/industry/'], ['roles', '직무', '/role/'], ['techs', '기술', '/tech/'],
   ['scan', '점검 기록', '/scan/']];
 
