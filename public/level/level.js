@@ -797,3 +797,14 @@ function renderMail(){
   }
   const off=$('#lvMailOff'); if(off) off.onclick=async()=>{const r=await api('/api/level/email/remove',{});if(r.ok){ME.email=null;renderMail()}};
 }
+/* 결과지 샘플 보기: 「진단 시작하기」 옆 버튼 → 샘플 4장을 화면 위에 띄움. 닫기·바깥 누르기·Esc 로 닫힘 */
+(function(){
+  const dlg=document.getElementById('lv-sample'), btn=document.getElementById('sampleBtn'); if(!dlg||!btn) return;
+  const open=()=>{dlg.hidden=false;dlg.scrollTop=0;document.body.style.overflow='hidden';document.getElementById('sampleClose').focus()};
+  const close=()=>{dlg.hidden=true;document.body.style.overflow='';btn.focus()};
+  btn.addEventListener('click',open);
+  document.getElementById('sampleClose').addEventListener('click',close);
+  document.getElementById('sampleStart').addEventListener('click',()=>{close();gateStart()});
+  dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)close()});
+})();

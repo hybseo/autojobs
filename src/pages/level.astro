@@ -38,16 +38,6 @@ import Base from '../layouts/Base.astro';
       </div>
     </section>
     <section class="lv-card">
-      <h2>이런 결과지를 받습니다 <span class="small muted">(예시)</span></h2>
-      <p class="small muted">가상 인물(하드웨어엔지니어 · 경력 16년 · 상장 부품사 재직)을 실제로 진단한 결과의 일부입니다. 누르면 크게 볼 수 있습니다.</p>
-      <div class="lv-samples">
-        <figure><a href="/level/sample-1.webp" target="_blank" rel="noopener"><img src="/level/sample-1.webp" width="1000" height="884" loading="lazy" alt="예시 결과지: 레벨 4 중견 핵심권과 학교·회사 경력·평균 근속·기술 일치도 요소별 현황"></a><figcaption>① 레벨과 요소별 현황</figcaption></figure>
-        <figure><a href="/level/sample-2.webp" target="_blank" rel="noopener"><img src="/level/sample-2.webp" width="1000" height="664" loading="lazy" alt="예시 결과지: 1번과 2번을 함께 하면 레벨 5가 된다는 성장 포인트"></a><figcaption>② 성장 포인트</figcaption></figure>
-        <figure><a href="/level/sample-3.webp" target="_blank" rel="noopener"><img src="/level/sample-3.webp" width="1000" height="1358" loading="lazy" alt="예시 결과지: 기술별 다음 단계 학습 방법, 이력서에 남길 것, 0~3개월·3~12개월 로드맵"></a><figcaption>③ 러닝 플랜 · 기간별 로드맵</figcaption></figure>
-        <figure><a href="/level/sample-4.webp" target="_blank" rel="noopener"><img src="/level/sample-4.webp" width="1000" height="474" loading="lazy" alt="예시 결과지: 지금 회사에 남을 때와 대기업·상장사·비상장으로 옮길 때 3년 뒤 레벨 비교"></a><figcaption>④ 커리어 코칭 · 3년 뒤 경로별 레벨</figcaption></figure>
-      </div>
-    </section>
-    <section class="lv-card">
       <h2>이런 진단입니다</h2>
       <ul class="il">
         <li>같은 직무 안에서 내 경력의 시장 가치를 1~6 레벨로 객관적으로 보여드립니다.</li>
@@ -76,7 +66,7 @@ import Base from '../layouts/Base.astro';
       </ul>
     </section>
     <div class="start">
-      <button type="button" class="primary" id="startBtn">진단 시작하기</button>
+      <div class="lv-startbtns"><button type="button" class="primary" id="startBtn">진단 시작하기</button><button type="button" id="sampleBtn">결과지 샘플 보기</button></div>
       <span class="small muted">SNS 간편로그인 후 시작합니다 · 약 5~10분 걸립니다</span>
     </div>
   </div>
@@ -150,6 +140,20 @@ import Base from '../layouts/Base.astro';
   <div id="result" hidden style="display:flex;flex-direction:column;gap:16px"></div>
 </div>
 
+
+  {/* 결과지 샘플 (2026-11-20 대표님: 시작 화면에 바로 띄우지 말고 「진단 시작하기」 옆 버튼으로).
+      가상 인물의 실제 진단 결과를 찍은 이미지입니다. 결과 화면 디자인이 바뀌면 public/level/sample-1~4.webp 도 다시 찍어야 합니다. */}
+  <div id="lv-sample" hidden role="dialog" aria-modal="true" aria-labelledby="lvSampleT">
+    <div class="lv-sbox">
+      <div class="lv-shead"><h2 id="lvSampleT">결과지 샘플 <span class="small muted">(예시)</span></h2><button type="button" id="sampleClose">닫기 ✕</button></div>
+      <p class="small muted">가상 인물(하드웨어엔지니어 · 경력 16년 · 상장 부품사 재직)을 실제로 진단한 결과의 일부입니다. 실제 결과지는 입력하신 내용에 맞춰 나옵니다.</p>
+      <figure><a href="/level/sample-1.webp" target="_blank" rel="noopener"><img loading="lazy" src="/level/sample-1.webp" width="1000" height="884" alt="예시 결과지: 레벨 4 중견 핵심권과 학교·회사 경력·평균 근속·기술 일치도 요소별 현황"></a><figcaption>① 레벨과 요소별 현황</figcaption></figure>
+      <figure><a href="/level/sample-2.webp" target="_blank" rel="noopener"><img loading="lazy" src="/level/sample-2.webp" width="1000" height="664" alt="예시 결과지: 1번과 2번을 함께 하면 레벨 5가 된다는 성장 포인트"></a><figcaption>② 성장 포인트</figcaption></figure>
+      <figure><a href="/level/sample-3.webp" target="_blank" rel="noopener"><img loading="lazy" src="/level/sample-3.webp" width="1000" height="1358" alt="예시 결과지: 기술별 다음 단계 학습 방법, 이력서에 남길 것, 0~3개월·3~12개월 로드맵"></a><figcaption>③ 러닝 플랜 · 기간별 로드맵</figcaption></figure>
+      <figure><a href="/level/sample-4.webp" target="_blank" rel="noopener"><img loading="lazy" src="/level/sample-4.webp" width="1000" height="474" alt="예시 결과지: 지금 회사에 남을 때와 대기업·상장사·비상장으로 옮길 때 3년 뒤 레벨 비교"></a><figcaption>④ 커리어 코칭 · 3년 뒤 경로별 레벨</figcaption></figure>
+      <div class="lv-sfoot"><button type="button" class="primary" id="sampleStart">진단 시작하기</button></div>
+    </div>
+  </div>
   </main>
   <script is:inline src="/level/level.js" defer></script>
 </Base>
