@@ -99,3 +99,8 @@
   Cache-Control: public, max-age=300
 /privacy/
   Cache-Control: public, max-age=300
+
+# 빌드 표시 (2026-11-21) — 휴대폰에서 화면으로 돌아올 때 공고가 갱신됐는지 보는 작은 파일.
+# 항상 새로 확인해야 하므로 저장하지 않습니다.
+/version.json
+  Cache-Control: no-store

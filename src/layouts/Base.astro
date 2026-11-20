@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ldJson } from '../lib.js';
 import { getData } from '../v2/data.js';
 import { NAVS, scanBar } from '../v2/views.js';
+import { BUILD } from '../v2/build.js';
 /*
  * nav  — 메뉴에서 밑줄을 그을 칸 (home·jobs·companies·industries·roles·techs·scan)
  * q    — 검색창에 미리 넣어 둘 글자 (/jobs/?q= 로 들어왔을 때)
@@ -201,6 +202,37 @@ const url = canonical ?? (site + Astro.url.pathname);
     <a href="/industry/" aria-current={nav === 'industries' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg><span>산업</span></a>
     <a href="/my/" id="tab-my" aria-current={nav === 'my' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>마이페이지</span></a>
   </nav>
+  {/*
+    돌아왔을 때 최신 화면으로 (2026-11-21 대표님 지시)
+    휴대폰은 나갔다 들어오면 마지막에 보던 화면을 그대로 다시 보여 줍니다. 어제 열어 둔 목록이면
+    마감된 공고가 남고 새 공고가 안 보입니다. 그래서 화면으로 돌아올 때 /version.json 만 받아
+    이 화면을 지은 뒤 사이트가 다시 지어졌으면(공고 갱신 등) 자동으로 새로고침합니다.
+    - 갱신이 없으면 아무 일도 하지 않습니다(마지막 화면 그대로).
+    - 입력하던 내용이 날아가면 안 되는 화면(레벨 진단·마이페이지·채용페이지 등록 요청)은 제외합니다.
+    - 같은 새 빌드로는 한 번만 새로고침합니다(혹시 옛 화면이 다시 와도 무한 반복하지 않게).
+    - 확인은 1분에 한 번까지만 합니다.
+  */}
+  <script is:inline define:vars={{ SJ_BUILD: BUILD }}>
+    (function () {
+      if (/^\/(level|my|request)(\/|$)/.test(location.pathname)) return;
+      var busy = false, last = 0, KEY = 'sj_reloaded_for';
+      function check() {
+        if (busy || Date.now() - last < 60000) return;
+        busy = true; last = Date.now();
+        fetch('/version.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+          busy = false;
+          if (!j || !j.b || j.b === SJ_BUILD) return;
+          var done = ''; try { done = sessionStorage.getItem(KEY) || ''; } catch (e) { /* 무시 */ }
+          if (done === j.b) return;
+          try { sessionStorage.setItem(KEY, j.b); } catch (e) { /* 무시 */ }
+          location.reload();
+        }).catch(function () { busy = false; });
+      }
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') check(); });
+      window.addEventListener('pageshow', function (e) { if (e.persisted) check(); });
+      window.addEventListener('focus', check);
+    })();
+  </script>
   <script is:inline defer src="/member.js"></script>
   {/* 오류 신고 버튼 + 화면 오류 자동 기록 (2026-11-20). 내용은 public/report.js 주석 참고. */}
   <script is:inline defer src="/report.js"></script>
