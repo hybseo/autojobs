@@ -154,7 +154,7 @@
 #lv .lv-samples img{display:block;width:100%;height:220px;object-fit:cover;object-position:left top}
 #lv .lv-samples figcaption{font-size:13px;color:var(--muted)}
 @media (min-width:640px){
-  #lv .lv-samples{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible;padding-bottom:0}
+  #lv .lv-samples{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible;padding-bottom:0}
   #lv .lv-samples figure{flex:none;min-width:0}
-  #lv .lv-samples img{height:190px}
+  #lv .lv-samples img{height:200px}
 }
