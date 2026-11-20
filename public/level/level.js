@@ -769,17 +769,27 @@ function restore(s){
   $('#engTest').value=s.engTest||''; $('#engTest').dispatchEvent(new Event('change')); $('#engScore').value=s.engScore||''; if(s.opic)$('#opic').value=s.opic;
   $('#natlic').checked=!!s.natlic;
 }
+/* 결과 메일용 한 줄 요약. 화면의 「1번만 해도 …」는 바로 아래 성장 포인트 목록을 가리키지만
+   메일에는 그 목록이 없으므로 「성장 포인트 1번(무엇)만 해도 …」로 풀어 씁니다. */
+function mailConcl(){
+  const n=document.querySelector('#result .concl'); if(!n) return '';
+  const t=n.textContent.trim();
+  const titles=[...document.querySelectorAll('#result ol.gp > li .gph b')].map(b=>b.textContent.replace(/\s*\([^)]*\)/g,'').trim());
+  if(!/^\d+번/.test(t)) return t;
+  return '성장 포인트 '+t.replace(/(\d+)번/g,(m,k)=>titles[k-1]?`${k}번(${titles[k-1]})`:m);
+}
 /* 진단 직후: 저장 → 지난 레벨 비교, 이름 줄, 이메일 칸 */
 async function afterResult(c,r){
   renderWho();
   if(r.gate&&r.gate.length) return; // 레벨 미산정(필수 자격증 미등록) — 저장하지 않음
   const res={duty:c.duty,sub:r.sub||'',rank:r.rank,level:r.level,raw:r.raw,items:r.items,
-    concl:(()=>{const n=document.querySelector('#result .concl');return n?n.textContent.trim():''})(),
+    concl:mailConcl(),
     strengths:(()=>{const n=[...document.querySelectorAll('#result p.small b')].find(b=>b.textContent==='강점');return n?n.parentNode.textContent.replace(/^강점\s*·\s*/,'').trim():''})()};
   const s=await api('/api/level/save',{snap:snapshot(),result:res});
   const ch=$('#lvChange');
   if(!s.ok){ch.className='lv-change warn';ch.textContent='결과를 저장하지 못했습니다. 화면의 결과는 그대로 보실 수 있습니다.';ch.hidden=false;return}
   lastRunId=s.data.id;
+  try{if(lastRunId)history.replaceState(null,'','/level/?run='+lastRunId)}catch(e){} // 새로고침해도 이 결과가 보이게
   if(ME){ME.last={id:s.data.id,at:Math.floor(Date.now()/1000),snap:snapshot()};}
   const p=s.data.prev;
   if(p){const d=r.level-p.level, same=p.duty===c.duty;
@@ -814,7 +824,7 @@ function renderMail(){
   }else{
     box.innerHTML=`<h2>결과를 이메일로 받기 <span class="small muted">(선택)</span></h2>
       <p class="small">이메일 주소를 적으시면 이 결과를 바로 보내 드립니다. 주소는 기억해 두었다가 다음 진단부터는 버튼 한 번으로 보내 드립니다.</p>
-      <div class="lv-mailrow"><label class="lv-f" style="flex:1 1 220px">이메일<input type="email" id="lvEmail" autocomplete="email" placeholder="name@example.com" value="${esc(em?em.addr:'')}"></label><button type="button" class="primary" id="lvAsk">결과 메일 받기</button></div>
+      <div class="lv-mailrow"><label class="lv-f" style="flex:1 1 220px">이메일<input type="email" id="lvEmail" autocomplete="email" placeholder="name@example.com" value="${esc(em?em.addr:'')}"></label><button type="button" class="primary" id="lvAsk">결과 메일 받기</button>${em?'<button type="button" id="lvEditCancel">취소</button>':''}</div>
       <div class="lv-mailask" id="lvConfirm" hidden><p><b id="lvConfirmAddr"></b> 으로 보낼까요?</p><div class="actions"><button type="button" class="primary" id="lvGo">보내기</button><button type="button" id="lvFix">주소 고치기</button></div></div>
       <p class="small muted">결과 메일만 보내며 광고 메일은 보내지 않습니다. 이메일은 언제든 지울 수 있습니다. <a href="/privacy/" target="_blank" rel="noopener">개인정보처리방침</a></p><p class="small" id="lvMailMsg" hidden></p>`;
     const okMail=v=>/^[^\s@<>"',;]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}$/.test(v);
@@ -828,6 +838,7 @@ function renderMail(){
       if(r.ok){ME.email={addr:r.data.to};renderMail.edit=false;renderMail();msg(`${esc(r.data.to)} 로 보냈습니다. 메일함을 확인해 주세요.`)}
       else{$('#lvConfirm').hidden=true;$('#lvGo').disabled=false;$('#lvFix').disabled=false;$('#lvAsk').disabled=false;$('#lvEmail').readOnly=false;msg(esc(r.data.error||'보내지 못했습니다.'))}};
   }
+  const cx=$('#lvEditCancel'); if(cx) cx.onclick=()=>{renderMail.edit=false;renderMail()};
   const off=$('#lvMailOff'); if(off) off.onclick=async()=>{const r=await api('/api/level/email/remove',{});if(r.ok){ME.email=null;renderMail.edit=false;renderMail()}};
 }
 /* 결과지 샘플 보기: 「진단 시작하기」 옆 버튼 → 샘플 4장을 화면 위에 띄움. 닫기·바깥 누르기·Esc 로 닫힘 */
