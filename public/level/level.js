@@ -7,7 +7,9 @@
  *   - 처음 한 번 「레벨 진단 입력 내용 저장·이용」 동의
  *   - 진단할 때마다 입력·결과 저장(서버 worker/level.js), 다시 오면 지난 입력을 채우고 지난 레벨과 비교
  *   - 결과지에 표시할 이름(선택) — 화면과 메일에만 쓰고 서버에 저장하지 않음(이 브라우저에만 기억)
- *   - 결과를 이메일로 받기(선택) — 확인 메일로 주소를 확인한 뒤에만 보냄. 서버 설정 전에는 「준비 중」
+ *   - 결과를 이메일로 받기(선택) — 주소를 적으면 「이 주소로 보낼까요?」로 한 번 더 확인한 뒤 바로 보냄(주소는 기억).
+ *     서버 설정 전에는 「준비 중」
+ *   - /level/?run=번호 — 지난 진단 한 회차의 결과 화면을 다시 엶(결과 메일·마이페이지 기록에서 연결)
  * 기준 데이터: /level/duty_data.json(직무별 기술·자격증), /level/univ.json(대학 구분)
  */
 const NOW={y:2026,m:11};
@@ -670,16 +672,37 @@ function api(url,body){
   const opt=body===undefined?{credentials:'same-origin'}:{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)};
   return fetch(url,opt).then(r=>r.json().catch(()=>({})).then(d=>({ok:r.ok,status:r.status,data:d}))).catch(()=>({ok:false,status:0,data:{}}));
 }
-const here=()=>'/level/?go=1';
+let nextUrl='/level/?go=1';
+const here=()=>nextUrl;
 const fmtDate=sec=>{const d=new Date(sec*1000);return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`};
 function setFlag(){try{localStorage.setItem('sj_member','1')}catch(e){}
   const a=document.getElementById('login-link'); if(a){a.textContent='마이페이지';a.classList.add('in')}} // 머리줄 「로그인」도 바로 「마이페이지」로 (member.js 와 같은 방식)
 function boot(){
   const q=new URLSearchParams(location.search);
-  const mail=q.get('mail');
-  if(mail){const t={ok:'이메일 주소가 확인됐습니다. 가장 최근 진단 결과를 보내 드렸습니다.',verified:'이메일 주소가 확인됐습니다. 진단 결과 화면의 「이메일로 보내기」를 누르면 결과를 보내 드립니다.',expired:'확인 링크가 만료됐습니다. 결과 화면에서 이메일을 다시 등록해 주세요.',bad:'이메일 확인에 실패했습니다. 다시 시도해 주세요.'}[mail];
-    if(t){const n=$('#lvFlash');n.textContent=t;n.hidden=false}}
-  if(q.get('go')==='1') gateStart();
+  const run=q.get('run');
+  if(run&&/^\d+$/.test(run)) viewRun(run);
+  else if(q.get('go')==='1') gateStart();
+}
+/* 지난 진단 한 회차의 결과 화면 — 결과 메일의 「레벨 진단 결과 보기」, 마이페이지 기록에서 엽니다.
+   저장한 입력 내용으로 결과 화면을 다시 그립니다(다시 저장하지 않음). 로그인이 안 돼 있으면 로그인 후 돌아옵니다. */
+async function viewRun(id){
+  nextUrl='/level/?run='+id;
+  $('#intro').hidden=true;
+  const r=await api('/api/level');
+  if(!r.ok){showGate('fail');return}
+  ME=r.data;
+  if(!ME.user){showGate('login');return}
+  setFlag();
+  if(!ME.consented){location.href='/my/?next='+encodeURIComponent(here());return}
+  const x=await api('/api/level/run?id='+id);
+  if(!x.ok||!x.data.snap){showGate('norun');return}
+  try{restore(x.data.snap)}catch(e){console.error(e);showGate('norun');return}
+  openForm.done=true;
+  const c=collect(); sortEntries(c); const res=evaluate(c); render(c,res);
+  $('#lvGate').hidden=true;$('#form').hidden=true;$('#result').hidden=false;$('#ttl').textContent='레벨 진단 결과';
+  renderWho(); lastRunId=x.data.id;
+  const ch=$('#lvChange'); if(ch){ch.className='lv-change';ch.innerHTML=`${fmtDate(x.data.at)}에 진단한 결과입니다. 입력을 바꿔 다시 진단하려면 아래 「입력 수정」을 눌러 주세요.`;ch.hidden=false}
+  renderMail(); window.scrollTo(0,0);
 }
 /* 「진단 시작하기」: 로그인 → 사이트 약관 동의 → 레벨 진단 저장 동의 → 입력 화면(지난 입력 채움) */
 async function gateStart(){
@@ -701,6 +724,8 @@ function showGate(kind){
       <p>레벨 진단은 서치잡 회원 전용입니다. 카카오·네이버·구글 중 하나로 로그인하시면 이 화면으로 돌아와 바로 진단을 시작합니다.</p>
       <p class="small muted">로그인할 때는 회원번호와 별명만 받고, 성명·전화번호는 받지 않습니다. 진단 결과는 본인 계정에 저장되어 다음에 다시 진단할 때 지난 결과와 비교해 볼 수 있습니다.</p>
       <div class="actions"><a class="lv-btn" href="/my/?next=${encodeURIComponent(here())}">SNS 간편로그인</a><button type="button" id="gateBack">안내로 돌아가기</button></div></section>`;
+  }else if(kind==='norun'){
+    g.innerHTML=`<section class="lv-card"><h2>이 진단 결과를 찾지 못했습니다</h2><p>기록이 지워졌거나 다른 계정으로 로그인하셨을 수 있습니다. 진단 기록은 마이페이지에서 볼 수 있습니다.</p><div class="actions"><a class="lv-btn" href="/level/?go=1">진단 시작하기</a><a class="lv-btn" href="/my/" style="background:#fff;color:inherit;border:1px solid var(--line,#DDE1DE)">마이페이지</a></div></section>`;
   }else if(kind==='consent'){
     g.innerHTML=`<section class="lv-card"><h2>${esc((ME.user&&ME.user.nickname)||'회원')}님, 시작하기 전에 한 가지만 확인해 주세요</h2>
       <p>진단에 입력하신 학력·경력·기술·자격증·영어와 진단 결과를 회원님 계정에 저장합니다. 다음에 다시 진단할 때 지난 입력을 불러오고 레벨 변화를 보여 드리는 데 씁니다.</p>
@@ -777,25 +802,33 @@ function renderMail(){
   const box=$('#lvMail'); if(!box||!ME)return;
   box.hidden=false;
   const msg=t=>{const m=$('#lvMailMsg');m.innerHTML=t;m.hidden=false};
+  const nameNow=()=>$('#lvName')?$('#lvName').value.trim():'';
   if(!ME.mail){box.innerHTML=`<h2>결과를 이메일로 받기</h2><p class="small muted">준비 중입니다. 곧 열립니다. 그 전까지는 아래 「인쇄·PDF로 저장」으로 결과를 보관하실 수 있습니다.</p>`;return}
   const em=ME.email;
-  if(em&&em.verified){
+  if(em&&!renderMail.edit){
     box.innerHTML=`<h2>결과를 이메일로 받기</h2><p class="small"><b>${esc(em.addr)}</b> 로 이 결과를 보내 드립니다.</p>
-      <div class="actions"><button type="button" class="primary" id="lvSend">이메일로 보내기</button><button type="button" class="link" id="lvMailOff">이메일 지우기</button></div><p class="small" id="lvMailMsg" hidden></p>`;
-    $('#lvSend').onclick=async()=>{if(!lastRunId)return;$('#lvSend').disabled=true;const r=await api('/api/level/send',{id:lastRunId,name:$('#lvName')?$('#lvName').value.trim():''});
-      msg(r.ok?`${esc(r.data.to)} 로 보냈습니다.`:esc(r.data.error||'보내지 못했습니다.'));if(!r.ok)$('#lvSend').disabled=false};
+      <div class="actions"><button type="button" class="primary" id="lvSend">이메일로 보내기</button><button type="button" class="link" id="lvMailEdit">주소 바꾸기</button><button type="button" class="link" id="lvMailOff">이메일 지우기</button></div><p class="small" id="lvMailMsg" hidden></p>`;
+    $('#lvSend').onclick=async()=>{if(!lastRunId){msg('결과를 저장한 뒤에 보낼 수 있습니다.');return}$('#lvSend').disabled=true;const r=await api('/api/level/send',{id:lastRunId,name:nameNow()});
+      msg(r.ok?`${esc(r.data.to)} 로 보냈습니다. 메일함을 확인해 주세요.`:esc(r.data.error||'보내지 못했습니다.'));if(!r.ok)$('#lvSend').disabled=false};
+    $('#lvMailEdit').onclick=()=>{renderMail.edit=true;renderMail()};
   }else{
     box.innerHTML=`<h2>결과를 이메일로 받기 <span class="small muted">(선택)</span></h2>
-      <p class="small">이메일 주소를 적으시면 확인 메일을 보내 드립니다. 확인 링크를 누르면 이 결과를 바로 보내 드리고, 다음 진단부터는 버튼 한 번으로 받으실 수 있습니다.</p>
-      ${em&&!em.verified?`<p class="small muted">${esc(em.addr)} 로 보낸 확인 메일을 아직 누르지 않으셨습니다. 메일이 없으면 다시 보내 주세요.</p>`:''}
-      <div class="lv-mailrow"><label class="lv-f" style="flex:1 1 220px">이메일<input type="email" id="lvEmail" autocomplete="email" placeholder="name@example.com" value="${esc(em?em.addr:'')}"></label><button type="button" class="primary" id="lvVerify">확인 메일 받기</button></div>
+      <p class="small">이메일 주소를 적으시면 이 결과를 바로 보내 드립니다. 주소는 기억해 두었다가 다음 진단부터는 버튼 한 번으로 보내 드립니다.</p>
+      <div class="lv-mailrow"><label class="lv-f" style="flex:1 1 220px">이메일<input type="email" id="lvEmail" autocomplete="email" placeholder="name@example.com" value="${esc(em?em.addr:'')}"></label><button type="button" class="primary" id="lvAsk">결과 메일 받기</button></div>
+      <div class="lv-mailask" id="lvConfirm" hidden><p><b id="lvConfirmAddr"></b> 으로 보낼까요?</p><div class="actions"><button type="button" class="primary" id="lvGo">보내기</button><button type="button" id="lvFix">주소 고치기</button></div></div>
       <p class="small muted">결과 메일만 보내며 광고 메일은 보내지 않습니다. 이메일은 언제든 지울 수 있습니다. <a href="/privacy/" target="_blank" rel="noopener">개인정보처리방침</a></p><p class="small" id="lvMailMsg" hidden></p>`;
-    $('#lvVerify').onclick=async()=>{const v=$('#lvEmail').value.trim();if(!v){msg('이메일 주소를 적어 주세요.');return}
-      $('#lvVerify').disabled=true;const r=await api('/api/level/email',{email:v});
-      if(r.ok){ME.email={addr:v.toLowerCase(),verified:false};msg(`${esc(v)} 로 확인 메일을 보냈습니다. 메일의 「이 주소가 맞습니다」를 눌러 주세요.`)}
-      else{msg(esc(r.data.error||'보내지 못했습니다.'));$('#lvVerify').disabled=false}};
+    const okMail=v=>/^[^\s@<>"',;]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}$/.test(v);
+    $('#lvAsk').onclick=()=>{const v=$('#lvEmail').value.trim();$('#lvMailMsg').hidden=true;
+      if(!okMail(v)){msg('이메일 주소를 다시 확인해 주세요.');return}
+      if(!lastRunId){msg('결과를 저장한 뒤에 보낼 수 있습니다.');return}
+      $('#lvConfirmAddr').textContent=v;$('#lvConfirm').hidden=false;$('#lvAsk').disabled=true;$('#lvEmail').readOnly=true;$('#lvGo').focus()};
+    $('#lvFix').onclick=()=>{$('#lvConfirm').hidden=true;$('#lvAsk').disabled=false;$('#lvEmail').readOnly=false;$('#lvEmail').focus()};
+    $('#lvGo').onclick=async()=>{const v=$('#lvEmail').value.trim();$('#lvGo').disabled=true;$('#lvFix').disabled=true;
+      const r=await api('/api/level/email',{email:v,id:lastRunId,name:nameNow()});
+      if(r.ok){ME.email={addr:r.data.to};renderMail.edit=false;renderMail();msg(`${esc(r.data.to)} 로 보냈습니다. 메일함을 확인해 주세요.`)}
+      else{$('#lvConfirm').hidden=true;$('#lvGo').disabled=false;$('#lvFix').disabled=false;$('#lvAsk').disabled=false;$('#lvEmail').readOnly=false;msg(esc(r.data.error||'보내지 못했습니다.'))}};
   }
-  const off=$('#lvMailOff'); if(off) off.onclick=async()=>{const r=await api('/api/level/email/remove',{});if(r.ok){ME.email=null;renderMail()}};
+  const off=$('#lvMailOff'); if(off) off.onclick=async()=>{const r=await api('/api/level/email/remove',{});if(r.ok){ME.email=null;renderMail.edit=false;renderMail()}};
 }
 /* 결과지 샘플 보기: 「진단 시작하기」 옆 버튼 → 샘플 4장을 화면 위에 띄움. 닫기·바깥 누르기·Esc 로 닫힘 */
 (function(){

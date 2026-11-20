@@ -24,9 +24,10 @@
  *   POST /api/internal/flush                     (비밀키) 쌓인 알림을 폰으로 보내기
  *   POST /api/internal/stats                     (비밀키) 회원 수 통계(숫자만, 이름·별명 없음)
  *   GET  /api/level                              레벨 진단 화면 상태(로그인·동의·지난 입력·기록·이메일)
- *   GET  /api/level/verify?t=                    결과 받을 이메일 확인 링크
+ *   GET  /api/level/run?id=                      지난 진단 한 회차(결과 화면 다시 보기)
+ *   GET  /api/level/verify                       (예전 확인 메일 링크 — 레벨 진단 화면으로 보냄)
  *   POST /api/level/consent | save | delete      레벨 진단 저장 동의 · 저장 · 기록 삭제
- *   POST /api/level/email | email/remove | send  결과 받을 이메일 등록·삭제 · 결과 메일 보내기
+ *   POST /api/level/email | email/remove | send  결과 메일 받기(주소 기억+발송)·주소 삭제·기억한 주소로 보내기
  *   POST /api/error-report                       오류 신고·화면 오류 자동 기록 (로그인 불필요)
  *   POST /api/error-report/note                  방금 보낸 오류 신고에 한마디 덧붙이기 (1시간 안)
  *   POST /api/internal/error-reports             (비밀키) 최근 오류 신고 내용 — 매일 점검용
@@ -39,7 +40,7 @@ import {
 } from './auth.js';
 import { pushReady, sendPush } from './push.js';
 import { json, fail, now, clean, safeEqual, allowedPushEndpoint, sha256Hex, randomToken } from './util.js';
-import { levelState, levelConsent, levelSave, levelDelete, levelPurgeStatements, levelEmail, levelVerify, levelSend, levelEmailRemove, levelStats } from './level.js';
+import { levelState, levelConsent, levelSave, levelDelete, levelPurgeStatements, levelEmail, levelVerify, levelRun, levelSend, levelEmailRemove, levelStats } from './level.js';
 
 const MAX_FOLLOWS = 200;
 const MAX_BOOKMARKS = 500;
@@ -76,6 +77,7 @@ export default {
       // 레벨 진단: 화면 상태(로그인 전에도 호출 — 로그인 안내를 띄우려고), 이메일 확인 링크
       if (path === '/api/level' && req.method === 'GET') return levelState(env, await currentUser(req, env));
       if (path === '/api/level/verify' && req.method === 'GET') return levelVerify(req, env);
+      if (path === '/api/level/run' && req.method === 'GET') return levelRun(env, await currentUser(req, env), url.searchParams.get('id'));
 
       // 이하 쓰기 요청은 같은 사이트에서 온 것만 받습니다.
       if (req.method !== 'POST') return fail(405, 'method');

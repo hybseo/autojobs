@@ -534,11 +534,11 @@
           lv.appendChild(p);
         }
         hist.forEach(function (h) {
-          listRow(lv, '레벨 ' + h.level + ' · ' + (h.duty || ''), '/level/?go=1', dateOf(h.at) + ' 진단 · ' + (h.rank || '') + ' 기준', function (row) {
+          listRow(lv, '레벨 ' + h.level + ' · ' + (h.duty || ''), '/level/?run=' + h.id, dateOf(h.at) + ' 진단 · ' + (h.rank || '') + ' 기준', function (row) {
             api('/api/level/delete', { id: h.id }).then(function (x) { if (x.ok) row.remove(); });
           });
         });
-        if (d.email) lv.appendChild(el('p', { class: 'mem-empty' }, '결과 받는 이메일: ' + d.email.addr + (d.email.verified ? '' : ' (확인 전)')));
+        if (d.email) lv.appendChild(el('p', { class: 'mem-empty' }, '결과 받는 이메일: ' + d.email.addr));
         if (hist.length || d.levelConsent || d.email) {
           var acts = el('div', { class: 'mem-acts' });
           var again = el('a', { class: 'mem-btn on', href: '/level/?go=1' }, '다시 진단하기');

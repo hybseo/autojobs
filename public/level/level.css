@@ -162,3 +162,7 @@
 #lv .lv-sbox figcaption{font-size:14px;font-weight:600;color:var(--ink);order:-1}
 #lv .lv-sfoot{display:flex;justify-content:center;padding:6px 0 4px}
 @media (max-width:560px){#lv #lv-sample{padding:0}#lv .lv-sbox{border-radius:0;padding:14px}#lv .lv-shead{top:0}}
+/* 결과 메일: 「이 주소로 보낼까요?」 확인 칸 */
+#lv .lv-mailask{margin:10px 0 4px;padding:12px 14px;border-radius:8px;background:#E7EEF2}
+#lv .lv-mailask p{margin:0 0 6px}
+#lv .lv-mailask .actions{margin-top:6px}

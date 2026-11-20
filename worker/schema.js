@@ -107,7 +107,8 @@ export const SCHEMA = [
    )`,
   `CREATE INDEX IF NOT EXISTS company_requests_at ON company_requests(created_at)`,
   /* 레벨 진단 (2026-11-20 대표님 결정). 자세한 설명은 worker/level.js 첫머리.
-     level_members: 저장 동의 시각, 결과 받을 이메일(선택, 확인 메일로 확인된 것만 사용).
+     level_members: 저장 동의 시각, 결과 받을 이메일(선택, 화면에서 한 번 더 확인 후 기억).
+       email_token_* 는 예전 확인 메일 방식의 칸으로 지금은 비워 둡니다(2026-11-20).
      level_runs: 진단 한 번 = 한 줄. snap 은 입력 화면을 다시 채우는 데 쓰는 입력 내용, result 는 레벨·항목 점수.
      회원당 최근 20회만 둡니다. 탈퇴하면 둘 다 지웁니다. 실명·연락처(전화)는 받지 않습니다. */
   `CREATE TABLE IF NOT EXISTS level_members (

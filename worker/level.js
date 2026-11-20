@@ -9,8 +9,11 @@
  *   - 진단할 때마다 입력 내용과 결과를 회원번호에 저장합니다. 회원당 최근 20회까지.
  *     다시 오면 지난 입력을 채워 주고, 지난 레벨과 비교해 보여 줍니다.
  *   - 실명·연락처는 받지 않습니다. 결과지에 적는 이름(선택)은 화면과 메일에만 쓰고 저장하지 않습니다.
- *   - 이메일(선택): 「결과를 이메일로 받기」를 고른 회원만. 확인 메일의 링크를 눌러야 등록되고,
- *     등록된 주소로만 결과를 보냅니다(오타로 남에게 학력·경력이 가는 것을 막음).
+ *   - 이메일(선택): 「결과를 이메일로 받기」를 고른 회원만. 결과 화면에서 주소를 적으면
+ *     「이 주소로 보낼까요?」를 한 번 더 보여 주고(오타 방지), 누르면 바로 결과를 보냅니다.
+ *     (2026-11-20 대표님 결정: 확인 메일 → 메일함 → 다시 돌아오는 단계는 번거로워 없앰)
+ *     주소는 기억해 두고 다음 진단부터는 버튼 한 번으로 보냅니다.
+ *     메일의 「레벨 진단 결과 보기」는 그 회차 결과 화면(/level/?run=번호)을 엽니다.
  *     보내는 것은 진단 결과뿐입니다(광고성 메일 아님 — 공고 추천 등은 따로 수신 동의가 필요).
  *   - 기업 등 외부에는 제공하지 않습니다. 인재검색을 열 때 공개 동의를 따로 받습니다.
  *   - 탈퇴하면 진단 기록·이메일을 바로 지웁니다. 진단 기록만 지울 수도 있습니다.
@@ -20,13 +23,12 @@
  *   「준비 중」으로 나옵니다. 추측한 주소로 보내지 않기 위해 기본값을 두지 않았습니다.
  *   하루 MAIL_PER_DAY 통을 넘으면 그날은 보내지 않습니다(무료 한도 보호).
  */
-import { json, fail, now, clean, randomToken, sha256Hex } from './util.js';
+import { json, fail, now, clean } from './util.js';
 import { originOf } from './auth.js';
 
 const KEEP_RUNS = 20;
-const MAIL_PER_DAY = 95; // Resend 무료 하루 100통 — 확인 메일 여유분을 남김
+const MAIL_PER_DAY = 95; // Resend 무료 하루 100통 — 여유분을 남김
 const MAIL_PER_USER_DAY = 5;
-const VERIFY_HOURS = 24;
 const LV_NAME = { 6: '대기업 핵심권', 5: '대기업 도전권', 4: '중견 핵심권', 3: '중견 도전권', 2: '중소 핵심권', 1: '성장 단계' };
 
 export const mailReady = (env) => !!(env.RESEND_API_KEY && env.MAIL_FROM);
@@ -55,9 +57,20 @@ export async function levelState(env, user) {
     levelConsent: !!(m && m.consent_at),
     history: runs,
     last,
-    email: m && m.email ? { addr: m.email, verified: !!m.email_verified_at } : null,
+    email: m && m.email ? { addr: m.email } : null,
     mail: mailReady(env),
   });
+}
+
+/* GET /api/level/run?id= — 지난 진단 한 회차(결과 화면을 다시 그리는 데 쓰는 입력 내용). 본인 것만. */
+export async function levelRun(env, user, id) {
+  if (!user) return fail(401, '로그인이 필요합니다.');
+  const r = await env.DB.prepare('SELECT id, created_at AS at, snap FROM level_runs WHERE id = ?1 AND user_id = ?2')
+    .bind(Number(id) || 0, user.id).first();
+  if (!r) return fail(404, '이 진단 기록을 찾지 못했습니다.');
+  let snap = null;
+  try { snap = JSON.parse(r.snap); } catch { snap = null; }
+  return json({ id: r.id, at: r.at, snap });
 }
 
 /* POST /api/level/consent */
@@ -139,7 +152,8 @@ async function mailBudget(env, userId) {
 async function sendMail(env, userId, kind, to, subject, html, text) {
   let r;
   try {
-    r = await fetch('https://api.resend.com/emails', {
+    // MAIL_API 는 로컬 시험용(가짜 메일 서버). 실제 사이트에는 설정하지 않아 Resend 로 갑니다.
+    r = await fetch(env.MAIL_API || 'https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: env.MAIL_FROM, to: [to], subject, html, text }),
@@ -171,73 +185,53 @@ function resultMail(run, name, origin) {
     : [['학교', r.items.school], ['회사 경력', r.items.co], ['평균 근속', r.items.ten], ['기술 일치도', r.items.tech]];
   const dots = (v) => (v == null ? '평가 제외' : '●'.repeat(Math.round(v / 2)) + '○'.repeat(5 - Math.round(v / 2)));
   const d = new Date(run.at * 1000 + 9 * 3600 * 1000).toISOString().slice(0, 10).replace(/-/g, '.');
+  const link = `${origin}/level/?run=${run.id}`;
   const inner = `<p style="font-size:14px;color:#4B5158;margin:0">${who} 레벨 진단 결과 · ${d}</p>
 <p style="font-size:15px;margin:6px 0 2px">${esc(r.duty)} · ${esc(r.rank)} 기준</p>
 <p style="margin:0"><span style="font-size:44px;font-weight:700;color:#2D5F7C">${r.level}</span> <b style="font-size:18px">${LV_NAME[r.level] || ''}</b></p>
 <table style="border-collapse:collapse;margin:14px 0;font-size:14px">${items.map(([k, v]) => `<tr><td style="padding:4px 14px 4px 0;color:#4B5158">${k}</td><td style="color:#2D5F7C;letter-spacing:2px">${dots(v)}</td></tr>`).join('')}</table>
 ${r.strengths ? `<p style="margin:0 0 8px"><b>강점</b> · ${esc(r.strengths)}</p>` : ''}
 ${r.concl ? `<p style="background:#E7EEF2;border-radius:8px;padding:10px 12px;margin:0">${esc(r.concl)}</p>` : ''}
-<p style="margin:16px 0 0"><a href="${origin}/level/?go=1" style="display:inline-block;background:#2D5F7C;color:#fff;text-decoration:none;border-radius:8px;padding:10px 16px">성장 포인트·러닝 플랜·커리어 코칭 전체 보기</a></p>
+<p style="margin:16px 0 0"><a href="${link}" style="display:inline-block;background:#2D5F7C;color:#fff;text-decoration:none;border-radius:8px;padding:10px 16px">레벨 진단 결과 보기</a></p>
 <p style="font-size:12px;color:#858B92;margin-top:14px">평가 항목이 제한적입니다. 정해진 몇 가지 항목만으로 평가하며 실제 업무 성과·프로젝트 경험·리더십·대인 역량은 반영하지 못합니다. 결과는 참고로만 활용해 주세요.</p>`;
-  const text = `${name ? name + ' 님의 ' : ''}레벨 진단 결과 (${d})\n${r.duty} · ${r.rank} 기준\n레벨 ${r.level} ${LV_NAME[r.level] || ''}\n${items.map(([k, v]) => `${k}: ${dots(v)}`).join('\n')}\n${r.concl || ''}\n\n전체 보기: ${origin}/level/?go=1\n\n이 메일은 서치잡 레벨 진단에서 결과를 이메일로 받기를 신청하신 분께만 보냅니다.`;
+  const text = `${name ? name + ' 님의 ' : ''}레벨 진단 결과 (${d})\n${r.duty} · ${r.rank} 기준\n레벨 ${r.level} ${LV_NAME[r.level] || ''}\n${items.map(([k, v]) => `${k}: ${dots(v)}`).join('\n')}\n${r.concl || ''}\n\n레벨 진단 결과 보기: ${link}\n\n이 메일은 서치잡 레벨 진단에서 결과를 이메일로 받기를 신청하신 분께만 보냅니다.`;
   return { subject: `[서치잡] ${name ? name + ' 님의 ' : ''}레벨 진단 결과 — 레벨 ${r.level} ${LV_NAME[r.level] || ''}`, html: frame(inner, origin), text };
 }
 
-/* POST /api/level/email { email } — 주소를 받고 확인 메일을 보냅니다. */
+/* POST /api/level/email { email, id, name } — 화면에서 「이 주소로 보낼까요?」에 「보내기」를 누르면 부릅니다.
+   주소를 기억하고 그 회차 결과를 바로 보냅니다. name 은 메일에만 쓰고 저장하지 않습니다. */
 export async function levelEmail(req, env, user, b) {
   if (!mailReady(env)) return fail(503, '이메일 받기는 준비 중입니다.');
   const m = await member(env, user.id);
   if (!m || !m.consent_at) return fail(403, '레벨 진단 저장에 동의해 주세요.');
   const email = clean(b.email, 254).toLowerCase();
   if (!okEmail(email)) return fail(400, '이메일 주소를 확인해 주세요.');
+  const run = await env.DB.prepare('SELECT id, created_at AS at, result FROM level_runs WHERE id = ?1 AND user_id = ?2')
+    .bind(Number(b.id) || 0, user.id).first();
+  if (!run) return fail(404, '보낼 진단 결과를 찾지 못했습니다.');
   const over = await mailBudget(env, user.id);
   if (over) return fail(429, over);
-  const token = randomToken(24);
+  const mail = resultMail(run, clean(b.name, 20) || user.nickname, originOf(req, env));
+  const ok = await sendMail(env, user.id, 'result', email, mail.subject, mail.html, mail.text);
+  if (!ok) return fail(502, '메일을 보내지 못했습니다. 주소를 확인하시고 잠시 뒤 다시 시도해 주세요.');
   await env.DB.prepare(
-    `UPDATE level_members SET email = ?1, email_verified_at = NULL, email_token_hash = ?2, email_token_exp = ?3 WHERE user_id = ?4`,
-  ).bind(email, await sha256Hex(token), now() + VERIFY_HOURS * 3600, user.id).run();
-  const origin = originOf(req, env);
-  const link = `${origin}/api/level/verify?t=${encodeURIComponent(token)}`;
-  const html = frame(`<p style="font-size:16px"><b>이메일 주소 확인</b></p>
-<p>레벨 진단 결과를 받을 주소로 <b>${esc(email)}</b> 를 등록하려고 합니다. 맞으시면 아래 버튼을 눌러 주세요. 누르시면 방금 진단한 결과를 바로 보내 드립니다.</p>
-<p><a href="${link}" style="display:inline-block;background:#2D5F7C;color:#fff;text-decoration:none;border-radius:8px;padding:10px 16px">이 주소가 맞습니다</a></p>
-<p style="font-size:13px;color:#4B5158">본인이 신청하지 않았다면 이 메일을 무시하세요. 링크는 ${VERIFY_HOURS}시간 뒤 사라집니다.</p>`, origin);
-  const sent = await sendMail(env, user.id, 'verify', email, '[서치잡] 이메일 주소를 확인해 주세요', html,
-    `레벨 진단 결과를 받을 주소로 ${email} 를 등록하려고 합니다. 맞으면 아래 링크를 눌러 주세요.\n${link}\n본인이 신청하지 않았다면 무시하세요.`);
-  if (!sent) return fail(502, '메일을 보내지 못했습니다. 잠시 뒤 다시 시도해 주세요.');
-  return json({ ok: true });
+    'UPDATE level_members SET email = ?1, email_verified_at = ?2, email_token_hash = NULL, email_token_exp = NULL WHERE user_id = ?3',
+  ).bind(email, now(), user.id).run();
+  return json({ ok: true, to: email });
 }
 
-/* GET /api/level/verify?t= — 확인 메일의 링크. 확인되면 최근 결과를 바로 보냅니다. */
+/* GET /api/level/verify — 예전 방식(확인 메일)의 링크. 이제 쓰지 않으므로 레벨 진단 화면으로 보냅니다. */
 export async function levelVerify(req, env) {
-  const origin = originOf(req, env);
-  const back = (q) => Response.redirect(`${origin}/level/?mail=${q}`, 302);
-  const t = new URL(req.url).searchParams.get('t') || '';
-  if (!t || !mailReady(env)) return back('bad');
-  const m = await env.DB.prepare('SELECT * FROM level_members WHERE email_token_hash = ?1').bind(await sha256Hex(t)).first();
-  if (!m || !m.email) return back('bad');
-  if (m.email_token_exp < now()) return back('expired');
-  await env.DB.prepare('UPDATE level_members SET email_verified_at = ?1, email_token_hash = NULL, email_token_exp = NULL WHERE user_id = ?2')
-    .bind(now(), m.user_id).run();
-  const run = await env.DB.prepare('SELECT created_at AS at, result FROM level_runs WHERE user_id = ?1 ORDER BY created_at DESC, id DESC LIMIT 1')
-    .bind(m.user_id).first();
-  // 확인되면 최근 결과를 바로 보냅니다. 못 보냈으면(한도·발송 실패) 「확인됨」만 알리고 결과 화면의 버튼으로 보내게 합니다.
-  let sent = false;
-  if (run && !(await mailBudget(env, m.user_id))) {
-    const u = await env.DB.prepare('SELECT nickname FROM users WHERE id = ?1').bind(m.user_id).first();
-    const mail = resultMail(run, u && u.nickname, origin);
-    sent = await sendMail(env, m.user_id, 'result', m.email, mail.subject, mail.html, mail.text);
-  }
-  return back(sent ? 'ok' : 'verified');
+  return Response.redirect(`${originOf(req, env)}/level/`, 302);
 }
 
 /* POST /api/level/send { id, name } — 등록된 주소로 결과를 보냅니다. name 은 메일에만 쓰고 저장하지 않습니다. */
 export async function levelSend(req, env, user, b) {
   if (!mailReady(env)) return fail(503, '이메일 받기는 준비 중입니다.');
   const m = await member(env, user.id);
-  if (!m || !m.email || !m.email_verified_at) return fail(400, '먼저 이메일 주소를 확인해 주세요.');
-  const run = await env.DB.prepare('SELECT created_at AS at, result FROM level_runs WHERE id = ?1 AND user_id = ?2')
-    .bind(Number(b.id), user.id).first();
+  if (!m || !m.email) return fail(400, '먼저 이메일 주소를 적어 주세요.');
+  const run = await env.DB.prepare('SELECT id, created_at AS at, result FROM level_runs WHERE id = ?1 AND user_id = ?2')
+    .bind(Number(b.id) || 0, user.id).first();
   if (!run) return fail(404, '보낼 진단 결과를 찾지 못했습니다.');
   const over = await mailBudget(env, user.id);
   if (over) return fail(429, over);
@@ -260,7 +254,7 @@ export async function levelStats(db, t) {
     members: (await one('SELECT COUNT(*) AS n FROM level_members WHERE consent_at IS NOT NULL')).n || 0,
     runs24h: (await one('SELECT COUNT(*) AS n FROM level_runs WHERE created_at >= ?1', t - 86400)).n || 0,
     runsTotal: (await one('SELECT COUNT(*) AS n FROM level_runs')).n || 0,
-    emails: (await one('SELECT COUNT(*) AS n FROM level_members WHERE email_verified_at IS NOT NULL')).n || 0,
+    emails: (await one('SELECT COUNT(*) AS n FROM level_members WHERE email IS NOT NULL')).n || 0,
     mails24h: (await one('SELECT COUNT(*) AS n FROM mail_log WHERE created_at >= ?1', t - 86400)).n || 0,
   };
 }
