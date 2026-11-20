@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-20 · 진행중 7473건 중 요약 있는 6804건을 훑어",
-  "6746건에 태그가 붙었습니다 (99.1%)."
+  "만든 날 2026-11-20 · 진행중 7473건 중 요약 있는 6815건을 훑어",
+  "6757건에 태그가 붙었습니다 (99.1%)."
  ],
  "tags": {
   "mobis-134813": [
@@ -11590,6 +11590,9 @@
   "greeting-dentium-149838": [
    "의료기기 영업"
   ],
+  "greeting-dentium-146309": [
+   "의료기기 영업"
+  ],
   "greeting-dentium-145078": [
    "의료기기 영업"
   ],
@@ -12923,6 +12926,11 @@
    "임상·인허가",
    "어카운트·거래처 관리",
    "재무·자금"
+  ],
+  "greeting-hyundaipharm-245702": [
+   "의학부·학술 MSL",
+   "제약영업·MR",
+   "어카운트·거래처 관리"
   ],
   "greeting-hyundaipharm-244076": [
    "결산·세무"
@@ -21287,8 +21295,8 @@
   ],
   "greeting-seers-239235": [
    "엑셀 고급",
-   "의료기기 영업",
    "Salesforce·CRM",
+   "의료기기 영업",
    "데이터 모델링",
    "영업기획·영업관리",
    "경영기획·전략"
@@ -24877,8 +24885,8 @@
    "생산·공정관리"
   ],
   "greeting-kcpartstech1-231141": [
-   "CMP·세정",
    "DFT·테스트",
+   "CMP·세정",
    "표면처리·도금",
    "식각(Etch)",
    "클린룸·설비",
@@ -25998,8 +26006,8 @@
   ],
   "greeting-linqalpha-228284": [
    "Flutter·RN",
-   "자산운용·트레이딩",
    "가상화·오픈스택",
+   "자산운용·트레이딩",
    "HTML·CSS",
    "디자인 시스템",
    "프론트엔드 개발",
@@ -27702,6 +27710,9 @@
    "재무·자금",
    "구매·SCM"
   ],
+  "greeting-vatechnetworks-245704": [
+   "의료기기 설계"
+  ],
   "greeting-vatechnetworks-244418": [
    "카메라·이미지 센서",
    "정부과제·국책과제"
@@ -28773,6 +28784,10 @@
    "신약·후보물질",
    "임상·인허가"
   ],
+  "workday-samyang--1----_R1440": [
+   "생산직·제조 현장",
+   "설비보전·정비"
+  ],
   "workday-samyang------_R1427": [
    "구매·SCM"
   ],
@@ -29579,6 +29594,23 @@
    "장비 셋업·필드",
    "영어 업무 가능"
   ],
+  "workday-entegris-Cleanroom-Technician_REQ-16101": [
+   "CMP·세정",
+   "장비 셋업·필드"
+  ],
+  "workday-entegris-Cleanroom-Technician_REQ-16102": [
+   "CMP·세정",
+   "장비 셋업·필드"
+  ],
+  "workday-entegris-Cleanroom-Technician_REQ-16103": [
+   "CMP·세정",
+   "장비 셋업·필드"
+  ],
+  "workday-entegris-Specialist--Field-Applications_REQ-15940": [
+   "CMP·세정",
+   "식각(Etch)",
+   "수율·불량분석"
+  ],
   "workday-entegris-EHS-Sr-Specialist--FSE---Sales-Support_REQ-16017": [
    "제조품질·QC",
    "안전·보건 관리",
@@ -29639,8 +29671,8 @@
   "workday-entegris-Director-of-Markets-and-Technology_REQ-15703": [
    "반도체 소재",
    "증착(CVD·PVD·ALD)",
-   "식각(Etch)",
    "HBM·메모리 설계",
+   "식각(Etch)",
    "유니티",
    "제휴·사업개발",
    "생산·공정관리",
@@ -30181,8 +30213,8 @@
   "workday-danaher-Manufacturing-Supervisor_R1313683": [
    "수요예측·재고최적화",
    "클린룸·설비",
-   "수율·불량분석",
    "안전·보건 관리",
+   "수율·불량분석",
    "GMP·밸리데이션",
    "설비보전·정비",
    "생산·공정관리",
@@ -30226,6 +30258,9 @@
    "어카운트·거래처 관리",
    "영업기획·영업관리",
    "기술영업"
+  ],
+  "workday-alcon-Pasante-de-Asuntos-Regulatrios_R-2026-51100": [
+   "임상·인허가"
   ],
   "workday-alcon-Strategic-Planning-Manager_R-2026-50981": [
    "B2B 영업",
@@ -30271,6 +30306,11 @@
    "서비스 QA·검수",
    "생산·공정관리",
    "영어 업무 가능"
+  ],
+  "workday-gsk-Oncology-NPI-Lead--Lung-Cancer-Launch-Lead-_451789": [
+   "물리설계·PnR",
+   "자산운용·트레이딩",
+   "브랜드 마케팅"
   ],
   "workday-gsk-Oncology--Hematology--Brand-Manager_451779": [
    "물리설계·PnR"
@@ -31010,6 +31050,15 @@
    "급여·노무",
    "사무보조·어시스턴트",
    "결산·세무"
+  ],
+  "hmc-2026N5273": [
+   "보훈·장애인 채용",
+   "급여·노무",
+   "인사기획·보상",
+   "사무보조·어시스턴트",
+   "총무·사무환경",
+   "결산·세무",
+   "SAP·ERP"
   ],
   "hmc-2026N5266": [
    "배송·운전",
@@ -40418,8 +40467,8 @@
   "greeting-lululab-236347": [
    "산업보건·간호",
    "의학부·학술 MSL",
-   "의료기기 영업",
    "Salesforce·CRM",
+   "의료기기 영업",
    "B2B 영업",
    "영업기획·영업관리",
    "기술영업"
@@ -42630,7 +42679,7 @@
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 447,
+   "count": 448,
    "link": true
   },
   "C·C++": {
@@ -42672,7 +42721,7 @@
   "장비 셋업·필드": {
    "slug": "equipment-field-service",
    "cat": "반도체 세부",
-   "count": 340,
+   "count": 343,
    "link": true
   },
   "Java·Spring": {
@@ -42714,7 +42763,7 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 281,
+   "count": 282,
    "link": true
   },
   "Git·형상관리": {
@@ -42816,7 +42865,7 @@
   "어카운트·거래처 관리": {
    "slug": "account-management",
    "cat": "업무 영역 — 영업·고객",
-   "count": 191,
+   "count": 192,
    "link": true
   },
   "AI 에이전트": {
@@ -42870,19 +42919,19 @@
   "브랜드 마케팅": {
    "slug": "brand-marketing",
    "cat": "마케팅·커머스",
-   "count": 165,
+   "count": 166,
    "link": true
   },
   "총무·사무환경": {
    "slug": "general-affairs",
    "cat": "업무 영역 — 운영·지원",
-   "count": 164,
+   "count": 165,
    "link": true
   },
   "임상·인허가": {
    "slug": "clinical-regulatory",
    "cat": "바이오·제약·화학",
-   "count": 164,
+   "count": 165,
    "link": true
   },
   "Node.js·TypeScript": {
@@ -42954,7 +43003,7 @@
   "설비보전·정비": {
    "slug": "equipment-maintenance",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 138,
+   "count": 139,
    "link": true
   },
   "메시징·스트리밍": {
@@ -43158,13 +43207,13 @@
   "사무보조·어시스턴트": {
    "slug": "office-assistant",
    "cat": "업무 영역 — 운영·지원",
-   "count": 96,
+   "count": 97,
    "link": true
   },
   "인사기획·보상": {
    "slug": "hr-compensation",
    "cat": "업무 영역 — 인사·경영",
-   "count": 95,
+   "count": 96,
    "link": true
   },
   "CRM 마케팅": {
@@ -43179,15 +43228,15 @@
    "count": 93,
    "link": true
   },
-  "안전·보건 관리": {
-   "slug": "safety-health",
-   "cat": "품질·안전·인증",
-   "count": 89,
-   "link": true
-  },
   "수율·불량분석": {
    "slug": "yield-analysis",
    "cat": "반도체 공정·장비",
+   "count": 90,
+   "link": true
+  },
+  "안전·보건 관리": {
+   "slug": "safety-health",
+   "cat": "품질·안전·인증",
    "count": 89,
    "link": true
   },
@@ -43221,6 +43270,12 @@
    "count": 87,
    "link": true
   },
+  "생산직·제조 현장": {
+   "slug": "production-operator",
+   "cat": "업무 영역 — 생산·품질·설비",
+   "count": 86,
+   "link": true
+  },
   "WMS·창고관리": {
    "slug": "wms",
    "cat": "물류·유통 운영",
@@ -43230,12 +43285,6 @@
   "데이터 모델링": {
    "slug": "data-modeling",
    "cat": "데이터 엔지니어링 세부",
-   "count": 85,
-   "link": true
-  },
-  "생산직·제조 현장": {
-   "slug": "production-operator",
-   "cat": "업무 영역 — 생산·품질·설비",
    "count": 85,
    "link": true
   },
@@ -43416,7 +43465,13 @@
   "의료기기 영업": {
    "slug": "medical-device-sales",
    "cat": "업무 영역 — 영업·고객",
-   "count": 64,
+   "count": 65,
+   "link": true
+  },
+  "급여·노무": {
+   "slug": "payroll-labor",
+   "cat": "인사·구매·운영",
+   "count": 63,
    "link": true
   },
   "디바이스 드라이버": {
@@ -43434,12 +43489,6 @@
   "품질검사·QC": {
    "slug": "quality-inspection",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 62,
-   "link": true
-  },
-  "급여·노무": {
-   "slug": "payroll-labor",
-   "cat": "인사·구매·운영",
    "count": 62,
    "link": true
   },
@@ -43461,15 +43510,27 @@
    "count": 60,
    "link": true
   },
+  "식각(Etch)": {
+   "slug": "etch",
+   "cat": "반도체 공정·장비",
+   "count": 60,
+   "link": true
+  },
   "게임 시나리오·내러티브": {
    "slug": "game-narrative",
    "cat": "업무 영역 — 게임 제작",
    "count": 59,
    "link": true
   },
-  "식각(Etch)": {
-   "slug": "etch",
-   "cat": "반도체 공정·장비",
+  "제약영업·MR": {
+   "slug": "pharma-sales",
+   "cat": "바이오·제약·화학",
+   "count": 59,
+   "link": true
+  },
+  "의학부·학술 MSL": {
+   "slug": "msl",
+   "cat": "업무 영역 — 의료·바이오",
    "count": 59,
    "link": true
   },
@@ -43497,15 +43558,9 @@
    "count": 58,
    "link": true
   },
-  "제약영업·MR": {
-   "slug": "pharma-sales",
-   "cat": "바이오·제약·화학",
-   "count": 58,
-   "link": true
-  },
-  "의학부·학술 MSL": {
-   "slug": "msl",
-   "cat": "업무 영역 — 의료·바이오",
+  "자산운용·트레이딩": {
+   "slug": "asset-management",
+   "cat": "금융·핀테크",
    "count": 58,
    "link": true
   },
@@ -43518,12 +43573,6 @@
   "운영 지원·오퍼레이션": {
    "slug": "operations-support",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
-   "count": 57,
-   "link": true
-  },
-  "자산운용·트레이딩": {
-   "slug": "asset-management",
-   "cat": "금융·핀테크",
    "count": 57,
    "link": true
   },
@@ -43809,6 +43858,12 @@
    "count": 37,
    "link": true
   },
+  "보훈·장애인 채용": {
+   "slug": "veterans-disability-hiring",
+   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+   "count": 36,
+   "link": true
+  },
   "준법감시·내부통제": {
    "slug": "compliance-internal-control",
    "cat": "업무 영역 — 인사·경영",
@@ -43819,12 +43874,6 @@
    "slug": "blockchain",
    "cat": "금융·핀테크",
    "count": 36,
-   "link": true
-  },
-  "보훈·장애인 채용": {
-   "slug": "veterans-disability-hiring",
-   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
-   "count": 35,
    "link": true
   },
   "분석·이화학": {
@@ -43911,6 +43960,12 @@
    "count": 26,
    "link": true
   },
+  "CMP·세정": {
+   "slug": "cmp-clean",
+   "cat": "반도체 공정·장비",
+   "count": 26,
+   "link": true
+  },
   "여행·숙박 서비스": {
    "slug": "travel-hospitality",
    "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
@@ -43956,12 +44011,6 @@
   "전력변환·인버터": {
    "slug": "power-conversion",
    "cat": "전력·배터리",
-   "count": 22,
-   "link": true
-  },
-  "CMP·세정": {
-   "slug": "cmp-clean",
-   "cat": "반도체 공정·장비",
    "count": 22,
    "link": true
   },
@@ -44028,7 +44077,7 @@
   "물리설계·PnR": {
    "slug": "physical-design",
    "cat": "반도체 설계",
-   "count": 18,
+   "count": 19,
    "link": true
   },
   "부트로더·BSP": {
@@ -44049,6 +44098,12 @@
    "count": 18,
    "link": true
   },
+  "의료기기 설계": {
+   "slug": "medical-device-design",
+   "cat": "의료기기·헬스케어",
+   "count": 18,
+   "link": true
+  },
   "임상 교육·어플리케이션": {
    "slug": "clinical-application-specialist",
    "cat": "업무 영역 — 의료·바이오",
@@ -44064,12 +44119,6 @@
   "IATF 16949": {
    "slug": "iatf-16949",
    "cat": "자동차·전장",
-   "count": 17,
-   "link": true
-  },
-  "의료기기 설계": {
-   "slug": "medical-device-design",
-   "cat": "의료기기·헬스케어",
    "count": 17,
    "link": true
   },
