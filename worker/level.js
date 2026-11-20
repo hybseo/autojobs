@@ -256,5 +256,12 @@ export async function levelStats(db, t) {
     runsTotal: (await one('SELECT COUNT(*) AS n FROM level_runs')).n || 0,
     emails: (await one('SELECT COUNT(*) AS n FROM level_members WHERE email IS NOT NULL')).n || 0,
     mails24h: (await one('SELECT COUNT(*) AS n FROM mail_log WHERE created_at >= ?1', t - 86400)).n || 0,
+    // 레벨 분포(2026-11-21 대표님 요청) — 회원마다 가장 최근 진단의 레벨만 세어 숫자로만 냅니다.
+    // 누가·어떤 경력인지는 내지 않습니다(진단 기록은 본인만 본다고 안내했으므로).
+    byLevel: ((await db.prepare(
+      `SELECT level, COUNT(*) AS n FROM level_runs r
+        WHERE id = (SELECT id FROM level_runs WHERE user_id = r.user_id ORDER BY created_at DESC, id DESC LIMIT 1)
+        GROUP BY level ORDER BY level`,
+    ).all()).results || []).map((x) => [x.level, x.n]),
   };
 }
