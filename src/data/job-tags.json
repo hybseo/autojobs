@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-21 · 진행중 7469건 중 요약 있는 6823건을 훑어",
-  "6765건에 태그가 붙었습니다 (99.1%)."
+  "만든 날 2026-11-21 · 진행중 7469건 중 요약 있는 6824건을 훑어",
+  "6766건에 태그가 붙었습니다 (99.2%)."
  ],
  "tags": {
   "mobis-134813": [
@@ -385,8 +385,8 @@
   ],
   "greeting-hyundai-autoever-232234": [
    "Java·Spring",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-hyundai-autoever-231922": [
    "Windows 서버",
@@ -563,8 +563,8 @@
   ],
   "greeting-kccglass-239979": [
    "화학합성·소재",
-   "표면처리·도금",
    "패키징·기판",
+   "표면처리·도금",
    "증착(CVD·PVD·ALD)",
    "생산·공정관리"
   ],
@@ -574,8 +574,8 @@
   ],
   "greeting-kccglass-229228": [
    "Java·Spring",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "kpgroup-133620": [
    "화학합성·소재"
@@ -949,8 +949,8 @@
    "PMO·프로젝트관리",
    "PLC·산업제어",
    "Java·Spring",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "lg-1002184": [
    "Azure·GCP",
@@ -2624,8 +2624,8 @@
    "정부과제·국책과제",
    "Java·Spring",
    "구매·SCM",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "hanwha-20210": [
    "사무보조·어시스턴트",
@@ -2701,8 +2701,8 @@
    "데이터 파이프라인",
    "머신러닝",
    "Kubernetes·Docker",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI"
   ],
   "hanwha-20196": [
@@ -5148,6 +5148,19 @@
    "Android·Kotlin",
    "PLC·산업제어",
    "SQL·데이터 추출"
+  ],
+  "greeting-seojinsystem-245833": [
+   "프레스 금형",
+   "사출 금형",
+   "표면처리·도금",
+   "금형·사출",
+   "정밀가공·용접",
+   "CATIA·3D CAD",
+   "결산·세무",
+   "생산·공정관리",
+   "구매·SCM",
+   "SAP·ERP",
+   "영어 업무 가능"
   ],
   "greeting-seojinsystem-245822": [
    "공차·GD&T",
@@ -8156,8 +8169,8 @@
    "회계사",
    "BI·대시보드",
    "재무·자금",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략"
   ],
   "greeting-nearthlab-99112": [
@@ -13337,8 +13350,8 @@
    "수처리·환경설비",
    "측정·검교정",
    "BMS·배터리",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시설관리·FM",
    "GMP·밸리데이션",
    "설비보전·정비",
@@ -14800,8 +14813,8 @@
    "BI·대시보드",
    "정산·수수료",
    "결산·세무",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greenhouse-toss-6434513003": [
    "투자·M&A",
@@ -15867,8 +15880,8 @@
   ],
   "greeting-kurly-240778": [
    "결산·세무",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-kurly-244702": [
    "결제·PG",
@@ -16178,8 +16191,8 @@
    "물류·창고 운영",
    "데이터 파이프라인",
    "구매·SCM",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI"
   ],
   "glink-bucketplace-195786": [
@@ -16469,16 +16482,16 @@
    "투자·M&A",
    "재무·자금",
    "결산·세무",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략"
   ],
   "glink-bucketplace-244581": [
    "투자·M&A",
    "재무·자금",
    "결산·세무",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략"
   ],
   "glink-bucketplace-159524": [
@@ -16496,8 +16509,8 @@
    "결제·PG",
    "데이터 파이프라인",
    "결산·세무",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -16765,8 +16778,8 @@
   "greeting-musinsa-240782": [
    "투자·M&A",
    "재무·자금",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략"
   ],
   "greeting-musinsa-244510": [
@@ -17022,8 +17035,8 @@
   "greeting-musinsa-243059": [
    "결제·PG",
    "서비스 기획·PO",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-musinsa-231729": [
    "그로스·A/B 테스트",
@@ -17081,8 +17094,8 @@
    "물류·창고 운영",
    "생산·공정관리",
    "구매·SCM",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI"
   ],
   "greeting-musinsa-183840": [
@@ -17270,8 +17283,8 @@
   ],
   "greeting-musinsa-190940": [
    "재무·자금",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-musinsa-223397": [
    "브랜드 마케팅",
@@ -17688,8 +17701,8 @@
    "데이터 파이프라인",
    "구매·SCM",
    "Kubernetes·Docker",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "Python"
   ],
   "ninehire-fa709220-ac3d-11": [
@@ -17729,8 +17742,8 @@
    "데이터 파이프라인",
    "Azure·GCP",
    "구매·SCM",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "AWS",
    "Python"
   ],
@@ -19260,8 +19273,8 @@
    "WMS·창고관리",
    "BI·대시보드",
    "구매·SCM",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "kakao-P14542": [
    "배송·운전",
@@ -19269,8 +19282,8 @@
    "BI·대시보드",
    "물류·창고 운영",
    "구매·SCM",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "kakao-P14583": [
    "운영 지원·오퍼레이션",
@@ -19602,8 +19615,8 @@
    "재무·자금",
    "결산·세무",
    "구매·SCM",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "영어 업무 가능"
   ],
   "greeting-dongsung-244363": [
@@ -20151,8 +20164,8 @@
    "WMS·창고관리",
    "BI·대시보드",
    "서비스 기획·PO",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략",
    "LLM·생성형 AI"
   ],
@@ -20164,8 +20177,8 @@
    "프로덕트 디자인",
    "BI·대시보드",
    "서비스 기획·PO",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략",
    "LLM·생성형 AI",
    "영어 업무 가능"
@@ -20179,8 +20192,8 @@
    "정산·수수료",
    "영업기획·영업관리",
    "재무·자금",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "경영기획·전략"
   ],
   "greeting-arobot4all-162017": [
@@ -21078,8 +21091,8 @@
    "RDBMS",
    "Java·Spring",
    "고객상담·CS",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI"
   ],
   "greeting-weavers-240116": [
@@ -21087,8 +21100,8 @@
    "Jira·협업툴",
    "영업기획·영업관리",
    "고객상담·CS",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI"
   ],
   "greeting-weavers-235522": [
@@ -22029,8 +22042,8 @@
    "Azure·GCP",
    "Git·형상관리",
    "결산·세무",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-nextsecurities-224216": [
    "정산·수수료",
@@ -30700,8 +30713,8 @@
    "이차전지 소재·공정",
    "IATF 16949",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시공·현장관리",
    "설비보전·정비"
   ],
@@ -30759,14 +30772,14 @@
    "PLC·산업제어",
    "생산·공정관리",
    "구매·SCM",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greenhouse-factorialenergy-6133097004": [
    "셀 설계",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "제조품질·QC",
    "수율·불량분석",
    "CATIA·3D CAD"
@@ -32369,8 +32382,8 @@
    "결산·세무",
    "콘텐츠·SNS 운영",
    "고객상담·CS",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-mycle-238109": [
    "프론트엔드 개발",
@@ -32813,8 +32826,8 @@
    "GA·퍼포먼스 마케팅",
    "데이터 파이프라인",
    "Azure·GCP",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "Python"
   ],
   "ninehire-37e12660-36dd-11": [
@@ -32954,8 +32967,8 @@
   "greeting-pfct-239407": [
    "재무·자금",
    "결산·세무",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -34636,8 +34649,8 @@
    "생산·공정관리",
    "Java·Spring",
    "구매·SCM",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-mycle-240792": [
    "CRM 마케팅",
@@ -34963,8 +34976,8 @@
    "생산·공정관리",
    "Java·Spring",
    "C·C++",
-   "SAP·ERP",
    "SQL·데이터 추출",
+   "SAP·ERP",
    "Python"
   ],
   "greeting-kccglass-241992": [
@@ -36887,8 +36900,8 @@
   ],
   "greenhouse-toss-7701589003": [
    "PR·홍보",
-   "금형·사출",
    "게임 시나리오·내러티브",
+   "금형·사출",
    "콘텐츠·SNS 운영"
   ],
   "greenhouse-toss-7809324003": [
@@ -38700,8 +38713,8 @@
    "수율·불량분석",
    "BI·대시보드",
    "고객상담·CS",
-   "SAP·ERP",
-   "SQL·데이터 추출"
+   "SQL·데이터 추출",
+   "SAP·ERP"
   ],
   "greeting-fadu-235215": [
    "메모리·스토리지",
@@ -42653,7 +42666,7 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 773,
+   "count": 774,
    "link": true
   },
   "LLM·생성형 AI": {
@@ -42683,7 +42696,7 @@
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 450,
+   "count": 451,
    "link": true
   },
   "SQL·데이터 추출": {
@@ -42719,7 +42732,7 @@
   "구매·SCM": {
    "slug": "scm",
    "cat": "인사·구매·운영",
-   "count": 351,
+   "count": 352,
    "link": true
   },
   "CI/CD·IaC": {
@@ -42743,7 +42756,7 @@
   "생산·공정관리": {
    "slug": "production-management",
    "cat": "인사·구매·운영",
-   "count": 318,
+   "count": 319,
    "link": true
   },
   "공공사업·제안": {
@@ -42767,7 +42780,7 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 283,
+   "count": 284,
    "link": true
   },
   "MD·상품기획": {
@@ -43046,16 +43059,16 @@
    "count": 130,
    "link": true
   },
+  "CATIA·3D CAD": {
+   "slug": "catia-3d-cad",
+   "cat": "기구·해석",
+   "count": 128,
+   "link": true
+  },
   "언리얼 엔진": {
    "slug": "unreal-engine",
    "cat": "게임",
    "count": 128,
-   "link": true
-  },
-  "CATIA·3D CAD": {
-   "slug": "catia-3d-cad",
-   "cat": "기구·해석",
-   "count": 127,
    "link": true
   },
   "네트워크 보안·접근통제": {
@@ -43412,6 +43425,12 @@
    "count": 68,
    "link": true
   },
+  "정밀가공·용접": {
+   "slug": "machining-welding",
+   "cat": "기구·해석",
+   "count": 67,
+   "link": true
+  },
   "품질경영 ISO": {
    "slug": "iso-quality",
    "cat": "품질·안전·인증",
@@ -43421,12 +43440,6 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
-   "count": 66,
-   "link": true
-  },
-  "정밀가공·용접": {
-   "slug": "machining-welding",
-   "cat": "기구·해석",
    "count": 66,
    "link": true
   },
@@ -43532,6 +43545,12 @@
    "count": 60,
    "link": true
   },
+  "금형·사출": {
+   "slug": "mold-injection",
+   "cat": "기구·해석",
+   "count": 59,
+   "link": true
+  },
   "게임 시나리오·내러티브": {
    "slug": "game-narrative",
    "cat": "업무 영역 — 게임 제작",
@@ -43548,12 +43567,6 @@
    "slug": "pharma-sales",
    "cat": "바이오·제약·화학",
    "count": 59,
-   "link": true
-  },
-  "금형·사출": {
-   "slug": "mold-injection",
-   "cat": "기구·해석",
-   "count": 58,
    "link": true
   },
   "자산운용·트레이딩": {
@@ -43940,16 +43953,16 @@
    "count": 29,
    "link": true
   },
+  "표면처리·도금": {
+   "slug": "surface-plating",
+   "cat": "기구·생산 세부",
+   "count": 29,
+   "link": true
+  },
   "경로계획·판단": {
    "slug": "path-planning",
    "cat": "ADAS 세부",
    "count": 29,
-   "link": true
-  },
-  "표면처리·도금": {
-   "slug": "surface-plating",
-   "cat": "기구·생산 세부",
-   "count": 28,
    "link": true
   },
   "BMS·배터리": {
@@ -44318,6 +44331,12 @@
    "count": 7,
    "link": true
   },
+  "사출 금형": {
+   "slug": "injection-mold",
+   "cat": "기구·생산 세부",
+   "count": 7,
+   "link": true
+  },
   "산업용 가스": {
    "slug": "industrial-gas",
    "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
@@ -44345,12 +44364,6 @@
   "식품 개발·R&D": {
    "slug": "food-rnd",
    "cat": "식품·화장품·소비재",
-   "count": 6,
-   "link": true
-  },
-  "사출 금형": {
-   "slug": "injection-mold",
-   "cat": "기구·생산 세부",
    "count": 6,
    "link": true
   },
@@ -44468,6 +44481,12 @@
    "count": 2,
    "link": true
   },
+  "프레스 금형": {
+   "slug": "press-die",
+   "cat": "기구·생산 세부",
+   "count": 2,
+   "link": true
+  },
   "전극·조립 공정": {
    "slug": "electrode-assembly",
    "cat": "배터리 세부",
@@ -44513,12 +44532,6 @@
   "커넥터·단자": {
    "slug": "connector-terminal",
    "cat": "자동차 부품·시스템",
-   "count": 1,
-   "link": false
-  },
-  "프레스 금형": {
-   "slug": "press-die",
-   "cat": "기구·생산 세부",
    "count": 1,
    "link": false
   }
