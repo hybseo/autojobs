@@ -525,6 +525,14 @@ function careerCoach(c,r){
 }
 const RANGE={6:['대기업 전반','대기업 상위 그룹·핵심 직무','—'],5:['상장사·외국계·공공기관, 대기업 일부','대기업','대기업 상위 그룹'],4:['상장사·외국계·공공기관','대기업 일부','대기업'],
   3:['비상장 우량 기업, 상장사 일부','상장사·외국계·공공기관','대기업'],2:['비상장 기업','상장사 일부','상장사·외국계·공공기관'],1:['비상장 기업','비상장 우량 기업','상장사']};
+/* 연차가 긴 경력자 안내 (2026-11-23 대표님 확정). 나이는 받지 않고 레벨에도 넣지 않습니다(연령 차별 소지).
+   대신 총 경력 20년·25년을 기준으로 시장 현실과 현실적인 경로를 커리어 코칭에 안내합니다. */
+function seniorNote(r){
+  const y=r.totalY||0;
+  if(y>=25) return `<div class="lv-senior"><p class="small"><b>경력 25년 이상이면</b> 같은 레벨이라도 실무 포지션 공고의 문은 좁아지는 것이 현실입니다. 대신 경험 자체가 무기가 되는 자리가 열립니다.</p><ul class="il small"><li>중견·중소기업의 임원, 본부장, 공장장</li><li>전문위원, 기술 자문</li><li>지금 일하는 업계의 협력사·고객사로 이동</li></ul><p class="small">레벨은 지금 경력이 가진 가치를 보여 줍니다. 어느 자리를 노릴지는 이 경로들을 함께 놓고 정하세요.</p></div>`;
+  if(y>=20) return `<div class="lv-senior"><p class="small"><b>경력 20년이 넘으면</b> 채용 시장의 문이 달라집니다. 공개 채용 공고는 주로 실무 책임자 자리를 뽑고, 그 위 자리는 공고 없이 추천이나 헤드헌팅으로 채우는 경우가 많습니다. 지원서를 많이 내는 것보다 아래 세 가지가 더 효과적입니다.</p><ul class="il small"><li>헤드헌터와 꾸준히 연락을 이어 두기</li><li>업계 사람들에게 지금 하는 일과 강점을 알려 두기</li><li>이력서를 맡았던 조직 규모와 성과 중심으로 다듬기</li></ul></div>`;
+  return '';
+}
 function coachHTML(c,r){
   const type=typeOf(c,r), pts=growthPoints(c,r), lp=learningPlan(c,r,pts), cc=careerCoach(c,r), rg=RANGE[r.level];
   const link=t=>{const sl=D.slugs[t];return sl?` <a class="small" href="https://searchjob.co.kr/tech/${sl}/" target="_blank" rel="noopener">공고 보기</a>`:''};
@@ -550,12 +558,14 @@ function coachHTML(c,r){
   </section>`:''}
   <section class="lv-card"><h2>커리어 코칭</h2>
     ${cc.notes.map(n=>`<p class="small">${n}</p>`).join('')}
+    ${seniorNote(r)}
     ${cc.scen.length?`<div><p class="small muted">3년 뒤 모습 (기술·영어는 지금과 같다고 가정)</p>
       <table class="lv-sc"><thead><tr><th>경로</th><th>회사 경력</th><th>평균 근속</th><th>레벨</th></tr></thead><tbody>
       ${cc.scen.map(([lab,x])=>`<tr><td>${esc(lab)}</td><td><span class="lv-dt">${dotTxt(x.items.co)}</span></td><td>${x.tenY!=null?x.tenY.toFixed(1)+'년':'-'}</td><td><b>${x.level}</b> ${LV[x.level][0]}</td></tr>`).join('')}</tbody></table></div>`:''}
   </section>
   <section class="lv-card"><h2>지금 지원하기 좋은 범위</h2>
     <div class="rg"><div><span class="small muted">안정권</span><b>${rg[0]}</b></div><div><span class="small muted">도전권</span><b>${rg[1]}</b></div><div><span class="small muted">준비 후 도전</span><b>${rg[2]}</b></div></div>
+    ${(r.totalY||0)>=25?'<p class="small">경력 25년 이상은 공고 지원보다 추천·헤드헌팅으로 자리를 옮기는 경우가 많습니다. 공고와 함께 이 경로도 꼭 활용하세요.</p>':''}
     <p class="small muted">회사 급은 채용시장의 평균적인 평가 기준이며, 직무·포지션에 따라 달라질 수 있습니다. <a href="https://searchjob.co.kr/" target="_blank" rel="noopener">서치잡에서 공고 보기</a></p>
   </section>
 `;

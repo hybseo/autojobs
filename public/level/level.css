@@ -166,3 +166,7 @@
 #lv .lv-mailask{margin:10px 0 4px;padding:12px 14px;border-radius:8px;background:#E7EEF2}
 #lv .lv-mailask p{margin:0 0 6px}
 #lv .lv-mailask .actions{margin-top:6px}
+/* 연차가 긴 경력자 안내 (2026-11-23) */
+#lv .lv-senior{margin:12px 0 4px;padding:12px 14px;border-radius:8px;background:#F4F1EA}
+#lv .lv-senior p{margin:0 0 6px}
+#lv .lv-senior ul{margin:4px 0 8px}
