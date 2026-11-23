@@ -276,6 +276,13 @@
     root.appendChild(el('h1', { class: 'h1' }, '로그인'));
     root.appendChild(el('p', { class: 'mem-lede' }, '관심 기업을 팔로우하고 공고를 찜하면, 새 공고와 마감 임박 소식을 알려 드립니다. 이메일·전화번호는 받지 않습니다.'));
     if (err && ERR[err]) root.appendChild(el('p', { class: 'mem-err' }, ERR[err]));
+    // 2026-11-23 앱 안 브라우저(링크드인·인스타·카카오톡 등)면 바깥 브라우저로 안내 — public/inapp.js
+    var IA = window.SJInApp && window.SJInApp.inApp ? window.SJInApp : null;
+    if (IA) {
+      root.appendChild(IA.banner());
+      track('inapp_login_view', { app: IA.id });
+      IA.autoOpen();
+    }
     var box = el('div', { class: 'mem-login' });
     var all = [['kakao', '카카오'], ['naver', '네이버'], ['google', '구글']];
     var on = {};
@@ -284,7 +291,9 @@
     ((s && s.preview) || []).forEach(function (id) { pre[id] = true; });
     all.forEach(function (x) {
       var id = x[0];
-      if (on[id] && pre[id]) {
+      if (IA && id === 'google' && on[id]) {
+        box.appendChild(el('span', { class: 'mem-prov mem-off', title: '구글은 앱 안 브라우저에서 로그인을 막습니다' }, '구글 (브라우저에서 열면 쓸 수 있습니다)'));
+      } else if (on[id] && pre[id]) {
         box.appendChild(el('span', { class: 'mem-prov mem-off', title: '업체의 승인 심사가 끝나면 열립니다' }, x[1] + ' (심사 중 · 곧 열립니다)'));
       } else if (on[id]) {
         var la = el('a', { class: 'mem-prov mem-' + id, href: '/auth/' + id + '/start?next=' + encodeURIComponent(next) }, x[1] + '로 시작하기');

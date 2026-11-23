@@ -242,6 +242,7 @@ const url = canonical ?? (site + Astro.url.pathname);
       window.addEventListener('focus', check);
     })();
   </script>
+  <script is:inline defer src="/inapp.js"></script>
   <script is:inline defer src="/member.js"></script>
   {/* 오류 신고 버튼 + 화면 오류 자동 기록 (2026-11-20). 내용은 public/report.js 주석 참고. */}
   <script is:inline defer src="/report.js"></script>

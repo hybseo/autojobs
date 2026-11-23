@@ -599,3 +599,11 @@ footer b{color:var(--ink-2);font-weight:500}
 .lv-promo-t b{font-size:15px;color:var(--ink)}
 .lv-promo-go{flex:none;font-weight:700;color:var(--steel);font-size:14px;white-space:nowrap}
 @media (max-width:560px){.lv-promo{flex-direction:column;align-items:flex-start;gap:6px}}
+
+/* 앱 안 브라우저 안내 (2026-11-23) — public/inapp.js */
+.sj-inapp{margin:0 0 16px;padding:14px 16px;border-radius:6px;background:#FFF4E5;border:1px solid #F1C48A}
+.sj-inapp-h{margin:0 0 6px;font-weight:700;font-size:15px;color:#7A4A00;word-break:keep-all}
+.sj-inapp-p{margin:0 0 10px;font-size:14px;line-height:1.55;color:#4B3A1E;word-break:keep-all}
+.sj-inapp-row{display:flex;gap:8px;flex-wrap:wrap}
+.sj-inapp-btn{display:inline-block;padding:10px 14px;border-radius:4px;background:#2D5F7C;color:#fff;font-weight:600;font-size:14px;text-decoration:none}
+.sj-inapp-copy{padding:10px 14px;border-radius:4px;border:1px solid #C9CED2;background:#fff;font-size:14px;cursor:pointer}
