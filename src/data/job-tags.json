@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-23 · 진행중 7304건 중 요약 있는 6707건을 훑어",
-  "6652건에 태그가 붙었습니다 (99.2%)."
+  "만든 날 2026-11-23 · 진행중 7304건 중 요약 있는 6721건을 훑어",
+  "6665건에 태그가 붙었습니다 (99.2%)."
  ],
  "tags": {
   "mobis-134813": [
@@ -579,6 +579,14 @@
    "제휴·사업개발",
    "구매·SCM"
   ],
+  "kpgroup-135213": [
+   "고객 성공·온보딩",
+   "엑셀 고급",
+   "급여·노무",
+   "채용·HR 운영",
+   "총무·사무환경",
+   "SAP·ERP"
+  ],
   "lg-1002035": [
    "웹소켓·실시간",
    "Azure·GCP",
@@ -604,8 +612,8 @@
    "보안관제·SOC",
    "SoC·IP 설계",
    "Azure·GCP",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "lg-1001623": [
    "보안 자격증",
@@ -664,16 +672,16 @@
    "모니터링·관측",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "lg-1002392": [
    "Node.js·TypeScript",
    "AI 에이전트",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -682,8 +690,8 @@
    "RAG·검색증강",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "lg-1002394": [
@@ -749,6 +757,40 @@
   ],
   "lg-1000553": [
    "정밀가공·용접"
+  ],
+  "lg-1002427": [
+   "장비 셋업·필드"
+  ],
+  "lg-1002428": [
+   "정밀가공·용접",
+   "생산·공정관리",
+   "구매·SCM",
+   "SAP·ERP",
+   "경영기획·전략"
+  ],
+  "lg-1002429": [
+   "PMO·프로젝트관리",
+   "구매·SCM"
+  ],
+  "lg-1002430": [
+   "경로계획·판단",
+   "AMR·AGV",
+   "매니퓰레이터·모션제어",
+   "ROS·로봇 SW",
+   "리눅스·서버 운영"
+  ],
+  "lg-1002432": [
+   "AMR·AGV",
+   "PLC·산업제어",
+   "C·C++"
+  ],
+  "lg-1002433": [
+   "Vue·Nuxt",
+   "웹소켓·실시간",
+   "HTML·CSS",
+   "React·Next.js",
+   "Node.js·TypeScript",
+   "REST API 설계"
   ],
   "lg-1002386": [
    "M365·협업 환경",
@@ -913,8 +955,8 @@
    "RDBMS",
    "Azure·GCP",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "lg-1001854": [
    "Java·Spring",
@@ -1180,8 +1222,8 @@
    "RDBMS",
    "머신러닝",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-stradvision-234290": [
    "객체 스토리지",
@@ -1190,8 +1232,8 @@
    "Java·Spring",
    "Kubernetes·Docker",
    "C·C++",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -1718,8 +1760,8 @@
    "머신러닝",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ashby-42dot-1e9ed01b-3428-40d7-9b81-8f398263b96c": [
@@ -2098,6 +2140,9 @@
    "기사 자격",
    "생산·공정관리"
   ],
+  "sk-R262548": [
+   "사무보조·어시스턴트"
+  ],
   "sk-R260562": [
    "통신 현장·선로"
   ],
@@ -2414,8 +2459,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "영어 업무 가능",
    "Python"
   ],
@@ -2453,8 +2498,8 @@
    "ADAS·자율주행",
    "Azure·GCP",
    "Git·형상관리",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "영어 업무 가능",
    "Python"
   ],
@@ -2509,8 +2554,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "hanwha-20207": [
@@ -3095,8 +3140,8 @@
    "네트워크",
    "네트워크 보안·접근통제",
    "Jira·협업툴",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "recruiterv1-koreazinc-74418": [
    "배송·운전",
@@ -3824,8 +3869,8 @@
    "Python"
   ],
   "greeting-rebellions-101166": [
-   "웹소켓·실시간",
    "CPU·아키텍처",
+   "웹소켓·실시간",
    "GPU·CUDA",
    "NPU·AI 반도체",
    "C·C++",
@@ -4261,8 +4306,8 @@
    "CI/CD·IaC",
    "Kubernetes·Docker",
    "C·C++",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -4720,8 +4765,8 @@
    "네트워크 보안·접근통제",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-dno-227362": [
    "자율주행 시뮬레이션",
@@ -5212,8 +5257,8 @@
    "해외영업",
    "회로설계·PCB",
    "어카운트·거래처 관리",
-   "생산·공정관리",
    "공공사업·제안",
+   "생산·공정관리",
    "구매·SCM",
    "영어 업무 가능"
   ],
@@ -5741,8 +5786,8 @@
    "Azure·GCP",
    "머신러닝",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "greeting-deepnoid-229354": [
@@ -5974,8 +6019,8 @@
    "REST API 설계",
    "딥러닝·비전모델",
    "Git·형상관리",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-vunohire-242193": [
@@ -6519,8 +6564,8 @@
    "모니터링·관측",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-ex-em-230788": [
    "모니터링·관측",
@@ -6581,8 +6626,8 @@
    "모니터링·관측",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-ex-em-240450": [
    "파인튜닝·정렬",
@@ -6634,8 +6679,8 @@
    "Azure·GCP",
    "Git·형상관리",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "webzen-120589": [
@@ -6767,8 +6812,8 @@
    "모니터링·관측",
    "Azure·GCP",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-estfamily-204268": [
@@ -6812,8 +6857,8 @@
    "Git·형상관리",
    "Java·Spring",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-ecstel-230258": [
    "Node.js·TypeScript",
@@ -7106,8 +7151,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -7617,8 +7662,8 @@
    "모니터링·관측",
    "ISMS·인증",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-hecto-222922": [
@@ -7852,8 +7897,8 @@
    "조직문화·사내소통",
    "생산직·제조 현장",
    "인사기획·보상",
-   "채용·HR 운영",
-   "투자·M&A"
+   "투자·M&A",
+   "채용·HR 운영"
   ],
   "greeting-nearthlab-219792": [
    "세무사",
@@ -8167,8 +8212,8 @@
    "리눅스·서버 운영"
   ],
   "greeting-nearthlab-186230": [
-   "웹소켓·실시간",
    "CPU·아키텍처",
+   "웹소켓·실시간",
    "드론·UAV",
    "GraphQL·gRPC",
    "머신비전",
@@ -9499,8 +9544,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "nexon-10457": [
@@ -9973,6 +10018,9 @@
    "게임 이펙트·애니메이션",
    "언리얼 엔진"
   ],
+  "neowiz-26609f88-d91e-4087-a803-43b3d15f7b31": [
+   "PR·홍보"
+  ],
   "neowiz-c67b3931-fbcb-4071-a696-9ba85b779eaf": [
    "브랜드 마케팅"
   ],
@@ -10332,8 +10380,8 @@
    "ISMS·인증",
    "Azure·GCP",
    "Git·형상관리",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "soop-ALWAYS-2376-112": [
@@ -11577,8 +11625,8 @@
    "Azure·GCP",
    "Git·형상관리",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-dentium-96668": [
    "결산·세무",
@@ -12372,8 +12420,8 @@
   ],
   "angel-50": [
    "경로계획·판단",
-   "매니퓰레이터·모션제어",
    "데이터 라벨링",
+   "매니퓰레이터·모션제어",
    "멀티모달·VLM",
    "ROS·로봇 SW",
    "데이터 파이프라인",
@@ -13038,8 +13086,8 @@
    "수처리·환경설비",
    "측정·검교정",
    "BMS·배터리",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시설관리·FM",
    "GMP·밸리데이션",
    "설비보전·정비",
@@ -13517,14 +13565,14 @@
   "greenhouse-toss-4071151003": [
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greenhouse-toss-4773317003": [
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greenhouse-toss-7858223003": [
    "조직문화·사내소통",
@@ -15033,8 +15081,8 @@
    "CI/CD·IaC",
    "Kubernetes·Docker",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greenhouse-daangn-6081125003": [
@@ -15409,8 +15457,8 @@
   ],
   "greeting-kurly-215236": [
    "개발 리더십·테크리드",
-   "디자인 시스템",
    "WMS·창고관리",
+   "디자인 시스템",
    "이커머스 운영",
    "프론트엔드 개발",
    "테스트 자동화",
@@ -15420,8 +15468,8 @@
    "CI/CD·IaC"
   ],
   "greeting-kurly-215234": [
-   "디자인 시스템",
    "WMS·창고관리",
+   "디자인 시스템",
    "이커머스 운영",
    "프론트엔드 개발",
    "React·Next.js",
@@ -15607,8 +15655,8 @@
    "계약·컴플라이언스",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-gccompany-223723": [
@@ -15794,8 +15842,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "glink-bucketplace-199336": [
@@ -15881,8 +15929,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "glink-bucketplace-234818": [
@@ -16327,8 +16375,8 @@
    "메시징·스트리밍",
    "추론 서빙·최적화",
    "머신러닝",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "greeting-musinsa-202445": [
@@ -17039,8 +17087,8 @@
    "머신러닝",
    "Git·형상관리",
    "Java·Spring",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -17115,8 +17163,8 @@
    "AI 에이전트",
    "Azure·GCP",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "ninehire-248af1a0-cd1c-11": [
@@ -17167,8 +17215,8 @@
    "계약·컴플라이언스",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-1fa5c910-c5e4-11": [
@@ -17242,8 +17290,8 @@
    "Node.js·TypeScript",
    "REST API 설계",
    "Java·Spring",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-81456b00-b264-11": [
    "정산·수수료"
@@ -17446,8 +17494,8 @@
    "계약·컴플라이언스",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-10411720-a84f-11": [
    "MLOps",
@@ -17568,15 +17616,15 @@
   "ninehire-04605b50-9f80-11": [
    "모니터링·관측",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-20108060-9b74-11": [
    "심사·리스크 운영",
    "영업기획·영업관리",
    "제휴·사업개발",
-   "생산·공정관리",
    "공공사업·제안",
+   "생산·공정관리",
    "영어 업무 가능"
   ],
   "ninehire-822cccb0-97a8-11": [
@@ -17736,8 +17784,8 @@
    "Azure·GCP",
    "고객상담·CS",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-08cf7f90-7910-11": [
    "정산·수수료",
@@ -17859,8 +17907,8 @@
    "기술영업",
    "계약·컴플라이언스",
    "제휴·사업개발",
-   "생산·공정관리",
    "공공사업·제안",
+   "생산·공정관리",
    "구매·SCM",
    "SAP·ERP",
    "경영기획·전략"
@@ -17889,8 +17937,8 @@
    "네트워크",
    "Azure·GCP",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-d5846f50-4e81-11": [
@@ -17899,8 +17947,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "영어 업무 가능"
   ],
   "ninehire-01a544c0-4922-11": [
@@ -17911,23 +17959,23 @@
    "보안 자격증",
    "ISMS·인증",
    "계약·컴플라이언스",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-933b1560-4920-11": [
    "모니터링·관측",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-0dd67b90-491f-11": [
    "모니터링·관측",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-ab6c4460-491b-11": [
    "CI/CD·IaC",
@@ -18099,8 +18147,8 @@
    "보안관제·SOC",
    "MSA·아키텍처",
    "Azure·GCP",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-56b7e920-07e3-11": [
@@ -18111,8 +18159,8 @@
    "보안 자격증",
    "Azure·GCP",
    "C·C++",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-ba2afe70-07de-11": [
@@ -18141,8 +18189,8 @@
    "보안 자격증",
    "네트워크 보안·접근통제",
    "Azure·GCP",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "영어 업무 가능"
   ],
   "ninehire-31ebca30-07d9-11": [
@@ -18151,8 +18199,8 @@
    "보안 자격증",
    "네트워크 보안·접근통제",
    "Azure·GCP",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-94a413a0-07d7-11": [
@@ -18169,8 +18217,8 @@
    "클라우드 보안",
    "네트워크 보안·접근통제",
    "Azure·GCP",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-23453ef0-071e-11": [
@@ -18208,8 +18256,8 @@
    "데이터 파이프라인",
    "Azure·GCP",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "ninehire-1b06a7b0-fcb0-11": [
@@ -18294,22 +18342,22 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-5f30b7d0-e79f-11": [
    "메모리·스토리지",
    "데이터 모델링",
    "RDBMS",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-9bc978d0-dfa7-11": [
    "네트워크",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-09b2daf0-d4de-11": [
@@ -18406,8 +18454,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "ninehire-77a55660-3159-11": [
@@ -18541,8 +18589,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "kakao-S4777": [
@@ -18785,6 +18833,13 @@
    "RDBMS",
    "Java·Spring",
    "Kubernetes·Docker"
+  ],
+  "kakao-S4794": [
+   "엑셀 고급",
+   "CRM 마케팅",
+   "서비스 기획·PO",
+   "SQL·데이터 추출",
+   "경영기획·전략"
   ],
   "kakao-P14590": [
    "MD·상품기획"
@@ -20057,16 +20112,16 @@
    "기사 자격",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-ahnlabcloudmate-224807": [
    "Azure·GCP",
    "공공사업·제안",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-ahnlabcloudmate-218578": [
    "네트워크 보안·접근통제",
@@ -20099,16 +20154,16 @@
    "Azure·GCP",
    "공공사업·제안",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-ahnlabcloudmate-184690": [
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-portone-6735": [
    "GraphQL·gRPC",
@@ -20373,8 +20428,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-interxlab-230971": [
    "설비보전·정비",
@@ -20489,8 +20544,8 @@
    "LLM·생성형 AI"
   ],
   "greeting-interxlab-174285": [
-   "매니퓰레이터·모션제어",
    "데이터 라벨링",
+   "매니퓰레이터·모션제어",
    "머신비전",
    "정부과제·국책과제",
    "PLC·산업제어",
@@ -20531,8 +20586,8 @@
    "네트워크 보안·접근통제",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-mycle-231842": [
    "Node.js·TypeScript",
@@ -20900,8 +20955,8 @@
    "ISMS·인증",
    "Azure·GCP",
    "장비 셋업·필드",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-proteina-223409": [
    "광학 설계",
@@ -21198,8 +21253,8 @@
    "Git·형상관리",
    "Java·Spring",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-kcp-225893": [
    "결제·PG",
@@ -21532,8 +21587,8 @@
    "네트워크 보안·접근통제",
    "ISMS·인증",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-nextsecurities-235012": [
    "소비자보호·민원",
@@ -22028,8 +22083,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-featuring-216335": [
    "광고 운영·세일즈",
@@ -22293,6 +22348,13 @@
    "서비스 기획·PO",
    "영어 업무 가능"
   ],
+  "greeting-emocog-hr-245847": [
+   "디지털 헬스케어",
+   "품질경영 ISO",
+   "임상·인허가",
+   "콘텐츠·SNS 운영",
+   "경영기획·전략"
+  ],
   "greeting-emocog-hr-236630": [
    "박막·소재 분석",
    "약가·급여 등재",
@@ -22439,8 +22501,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-lululab-191131": [
@@ -22530,8 +22592,8 @@
    "모니터링·관측",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-lawcompany-238304": [
    "B2B 영업",
@@ -22586,8 +22648,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -23670,8 +23732,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "greeting-sianalytics-230943": [
@@ -23781,8 +23843,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-wrtn-240274": [
@@ -24147,8 +24209,8 @@
    "Node.js·TypeScript",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-enki-236052": [
    "메시징·스트리밍",
@@ -24291,8 +24353,8 @@
    "Node.js·TypeScript",
    "NoSQL·캐시",
    "REST API 설계",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-cashwalk12-187923": [
    "산업기능요원·병역특례",
@@ -24407,8 +24469,8 @@
    "급여·노무",
    "인사기획·보상",
    "정산·수수료",
-   "채용·HR 운영",
    "투자·M&A",
+   "채용·HR 운영",
    "SAP·ERP",
    "경영기획·전략"
   ],
@@ -24716,8 +24778,8 @@
    "CI/CD·IaC",
    "Kubernetes·Docker",
    "C·C++",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-hr-suprema-230178": [
@@ -24791,8 +24853,8 @@
    "임베디드 리눅스",
    "REST API 설계",
    "임베디드·펌웨어",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-hr-suprema-183769": [
    "GPU·CUDA",
@@ -25140,8 +25202,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-kakaopay-243552": [
@@ -26193,8 +26255,8 @@
    "Azure·GCP",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-realworld-227579": [
@@ -27036,8 +27098,8 @@
    "모니터링·관측",
    "ISMS·인증",
    "Azure·GCP",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-sionicai-244188": [
    "RAG·검색증강",
@@ -27321,6 +27383,12 @@
    "재무·자금",
    "구매·SCM"
   ],
+  "greeting-vatechnetworks-245843": [
+   "UX 리서치",
+   "HTML·CSS",
+   "디자인 시스템",
+   "Figma·UI 툴"
+  ],
   "greeting-vatechnetworks-245704": [
    "의료기기 설계"
   ],
@@ -27542,8 +27610,8 @@
    "보안 자격증",
    "네트워크 보안·접근통제",
    "Azure·GCP",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-korgc-233180": [
@@ -27621,8 +27689,8 @@
    "Azure·GCP",
    "계약·컴플라이언스",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-finda-213079": [
    "실시간 처리",
@@ -27853,8 +27921,8 @@
    "계약·컴플라이언스",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-finda-243486": [
    "프로덕트 디자인",
@@ -27992,8 +28060,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-onepredict-200866": [
@@ -28312,6 +28380,13 @@
    "여행·숙박 서비스",
    "SDV·차량 SW 플랫폼"
   ],
+  "workday-dongwha-XMLNAME----------5-10-_R1455": [
+   "이차전지 소재·공정",
+   "신재생·ESS",
+   "영업기획·영업관리",
+   "결산·세무",
+   "영어 업무 가능"
+  ],
   "workday-dongwha-XMLNAME----------6-11-_R1449": [
    "해외영업",
    "B2B 영업",
@@ -28377,8 +28452,8 @@
    "영어 점수",
    "해외영업",
    "대외협력·대관",
-   "채용·HR 운영",
    "투자·M&A",
+   "채용·HR 운영",
    "일본어",
    "어카운트·거래처 관리",
    "영업기획·영업관리",
@@ -29333,8 +29408,8 @@
   ],
   "workday-entegris-Senior-Engineer--Control-Systems-Engineering_REQ-14669": [
    "포토마스크",
-   "매니퓰레이터·모션제어",
    "가상화·오픈스택",
+   "매니퓰레이터·모션제어",
    "제조품질·QC",
    "안전·보건 관리",
    "PLC·산업제어",
@@ -29729,8 +29804,8 @@
   "workday-danaher-MSAT---Scientist-ll_R1320944": [
    "GMP·밸리데이션",
    "기술영업",
-   "생산·공정관리",
-   "공공사업·제안"
+   "공공사업·제안",
+   "생산·공정관리"
   ],
   "workday-danaher-Leica-Nanotechnology-Sales-Manager_R1310477-1": [
    "Salesforce·CRM",
@@ -29753,8 +29828,8 @@
    "품질검사·QC",
    "GMP·밸리데이션",
    "PLC·산업제어",
-   "생산·공정관리",
    "공공사업·제안",
+   "생산·공정관리",
    "장비 셋업·필드"
   ],
   "workday-danaher-BP-Hardware-Field-Application-Specialist_R1318061": [
@@ -29992,8 +30067,8 @@
    "RDBMS",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greenhouse-bluehole-8509520002": [
@@ -30135,8 +30210,8 @@
    "이차전지 소재·공정",
    "IATF 16949",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "시공·현장관리",
    "설비보전·정비"
   ],
@@ -30200,8 +30275,8 @@
   "greenhouse-factorialenergy-6133097004": [
    "셀 설계",
    "치공구·자동화설비",
-   "정밀가공·용접",
    "클린룸·설비",
+   "정밀가공·용접",
    "제조품질·QC",
    "수율·불량분석",
    "CATIA·3D CAD"
@@ -30342,8 +30417,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greenhouse-otter-8888293002": [
@@ -30900,8 +30975,8 @@
    "Java·Spring",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "hmc-2026N2386": [
    "물리보안·출입통제",
@@ -30938,8 +31013,8 @@
    "REST API 설계",
    "Git·형상관리",
    "C·C++",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "hmc-2026N2104": [
    "Vue·Nuxt",
@@ -31318,8 +31393,8 @@
    "PMO·프로젝트관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-mobilinthire-242880": [
    "정산·수수료",
@@ -32315,8 +32390,8 @@
    "Git·형상관리",
    "Java·Spring",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "ninehire-8c53d880-22ba-11": [
    "Vue·Nuxt",
@@ -32401,8 +32476,8 @@
    "클린룸·설비",
    "인사기획·보상",
    "CATIA·3D CAD",
-   "채용·HR 운영",
    "투자·M&A",
+   "채용·HR 운영",
    "재무·자금",
    "생산·공정관리",
    "경영기획·전략"
@@ -32742,8 +32817,8 @@
    "RDBMS",
    "Git·형상관리",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-cashwalk12-30827": [
    "Android·Kotlin",
@@ -33369,8 +33444,8 @@
    "메시징·스트리밍",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-mangoboost-224442": [
    "메모리·스토리지",
@@ -33650,8 +33725,8 @@
    "조직문화·사내소통",
    "인사기획·보상",
    "정산·수수료",
-   "채용·HR 운영",
    "투자·M&A",
+   "채용·HR 운영",
    "SAP·ERP",
    "경영기획·전략"
   ],
@@ -33764,8 +33839,8 @@
    "NoSQL·캐시",
    "RDBMS",
    "C·C++",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-crowdworks-232824": [
    "문서 도구",
@@ -33891,8 +33966,8 @@
    "Azure·GCP",
    "Java·Spring",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI"
   ],
   "greeting-bhsn-240261": [
@@ -34054,8 +34129,8 @@
   "greeting-masangsoft-92118": [
    "React·Next.js",
    "서비스 기획·PO",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-masangsoft-92045": [
    "게임 운영·라이브서비스",
@@ -34264,8 +34339,8 @@
    "Git·형상관리",
    "Java·Spring",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-interxlab-197294": [
@@ -34327,8 +34402,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-dozn-181632": [
    "결제·PG",
@@ -34955,8 +35030,8 @@
    "Azure·GCP",
    "Kubernetes·Docker",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "glink-bucketplace-232635": [
    "조직문화·사내소통",
@@ -35214,8 +35289,8 @@
    "NoSQL·캐시",
    "RDBMS",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-cmesairobotics-233104": [
    "머신러닝",
@@ -35658,8 +35733,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-enki-226461": [
    "데이터 모델링",
@@ -35671,8 +35746,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-enki-226456": [
    "디자인 시스템",
@@ -35683,8 +35758,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-enki-226458": [
    "데이터 모델링",
@@ -35695,8 +35770,8 @@
    "RDBMS",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-kcpartstech1-239050": [
    "생산·공정관리"
@@ -35712,8 +35787,8 @@
    "MSA·아키텍처",
    "임상·인허가",
    "계약·컴플라이언스",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-medistream-217443": [
    "Vue·Nuxt",
@@ -35970,8 +36045,8 @@
    "ISMS·인증",
    "계약·컴플라이언스",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-musinsa-218024": [
@@ -36239,8 +36314,8 @@
    "모니터링·관측",
    "Azure·GCP",
    "CI/CD·IaC",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greenhouse-krafton-8908460002": [
@@ -37196,8 +37271,8 @@
    "ISMS·인증",
    "RDBMS",
    "SQL·데이터 추출",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-thinkware-235991": [
    "CPU·아키텍처",
@@ -37290,8 +37365,8 @@
    "임베디드·펌웨어",
    "CI/CD·IaC",
    "C·C++",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "LLM·생성형 AI",
    "Python"
   ],
@@ -37829,8 +37904,8 @@
   "greeting-hecto-232937": [
    "ISMS·인증",
    "RDBMS",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greenhouse-krafton-8725187002": [
@@ -37983,8 +38058,8 @@
    "Azure·GCP",
    "머신러닝",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-realworld-195939": [
@@ -38799,8 +38874,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-weavers-234595": [
@@ -38974,8 +39049,8 @@
    "Git·형상관리",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-kakaomobility-163951": [
@@ -39647,8 +39722,8 @@
    "Azure·GCP",
    "장비 셋업·필드",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "nexon-10338": [
    "게임 사업·퍼블리싱",
@@ -40006,8 +40081,8 @@
    "모니터링·관측",
    "CI/CD·IaC",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-onepredict-200869": [
    "BI·대시보드",
@@ -40505,8 +40580,8 @@
    "Azure·GCP",
    "계약·컴플라이언스",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-vatechnetworks-239603": [
    "물류·창고 운영",
@@ -41515,8 +41590,8 @@
    "네트워크 보안·접근통제",
    "Azure·GCP",
    "Kubernetes·Docker",
-   "리눅스·서버 운영",
    "AWS",
+   "리눅스·서버 운영",
    "Python"
   ],
   "greeting-hyperaccel-238214": [
@@ -41613,8 +41688,8 @@
   "greeting-oci-199651": [
    "가상화·오픈스택",
    "Azure·GCP",
-   "리눅스·서버 운영",
-   "AWS"
+   "AWS",
+   "리눅스·서버 운영"
   ],
   "greeting-rebellions-228169": [
    "CPU·아키텍처",
@@ -42016,7 +42091,7 @@
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 756,
+   "count": 757,
    "link": true
   },
   "LLM·생성형 AI": {
@@ -42028,7 +42103,7 @@
   "경영기획·전략": {
    "slug": "corporate-strategy",
    "cat": "업무 영역 — 인사·경영",
-   "count": 517,
+   "count": 520,
    "link": true
   },
   "AWS": {
@@ -42040,25 +42115,25 @@
   "리눅스·서버 운영": {
    "slug": "linux-server",
    "cat": "클라우드·인프라",
-   "count": 459,
+   "count": 460,
    "link": true
   },
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
-   "count": 444,
+   "count": 445,
    "link": true
   },
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 441,
+   "count": 443,
    "link": true
   },
   "C·C++": {
    "slug": "c-cpp",
    "cat": "백엔드·언어",
-   "count": 426,
+   "count": 427,
    "link": true
   },
   "Kubernetes·Docker": {
@@ -42076,7 +42151,7 @@
   "콘텐츠·SNS 운영": {
    "slug": "content-sns",
    "cat": "마케팅·커머스",
-   "count": 350,
+   "count": 351,
    "link": true
   },
   "CI/CD·IaC": {
@@ -42088,13 +42163,13 @@
   "장비 셋업·필드": {
    "slug": "equipment-field-service",
    "cat": "반도체 세부",
-   "count": 343,
+   "count": 344,
    "link": true
   },
   "구매·SCM": {
    "slug": "scm",
    "cat": "인사·구매·운영",
-   "count": 341,
+   "count": 343,
    "link": true
   },
   "Java·Spring": {
@@ -42106,19 +42181,19 @@
   "서비스 기획·PO": {
    "slug": "po",
    "cat": "업무 영역 — 제품·서비스",
-   "count": 302,
+   "count": 303,
+   "link": true
+  },
+  "생산·공정관리": {
+   "slug": "production-management",
+   "cat": "인사·구매·운영",
+   "count": 301,
    "link": true
   },
   "공공사업·제안": {
    "slug": "public-sector-bid",
    "cat": "교육·공공",
    "count": 301,
-   "link": true
-  },
-  "생산·공정관리": {
-   "slug": "production-management",
-   "cat": "인사·구매·운영",
-   "count": 300,
    "link": true
   },
   "제휴·사업개발": {
@@ -42136,7 +42211,7 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 278,
+   "count": 279,
    "link": true
   },
   "Git·형상관리": {
@@ -42196,7 +42271,7 @@
   "REST API 설계": {
    "slug": "rest-api",
    "cat": "웹·API",
-   "count": 221,
+   "count": 222,
    "link": true
   },
   "ADAS·자율주행": {
@@ -42220,7 +42295,7 @@
   "영업기획·영업관리": {
    "slug": "sales-planning",
    "cat": "업무 영역 — 영업·고객",
-   "count": 197,
+   "count": 198,
    "link": true
   },
   "NoSQL·캐시": {
@@ -42250,13 +42325,19 @@
   "PLC·산업제어": {
    "slug": "plc",
    "cat": "임베디드·제어",
-   "count": 177,
+   "count": 178,
    "link": true
   },
   "SoC·IP 설계": {
    "slug": "soc-design",
    "cat": "반도체 설계",
    "count": 173,
+   "link": true
+  },
+  "Figma·UI 툴": {
+   "slug": "figma-ui",
+   "cat": "디자인·툴",
+   "count": 171,
    "link": true
   },
   "GA·퍼포먼스 마케팅": {
@@ -42268,12 +42349,6 @@
   "NPU·AI 반도체": {
    "slug": "npu",
    "cat": "반도체 설계",
-   "count": 170,
-   "link": true
-  },
-  "Figma·UI 툴": {
-   "slug": "figma-ui",
-   "cat": "디자인·툴",
    "count": 170,
    "link": true
   },
@@ -42298,24 +42373,24 @@
   "Node.js·TypeScript": {
    "slug": "nodejs-typescript",
    "cat": "백엔드·언어",
-   "count": 164,
+   "count": 165,
    "link": true
   },
   "총무·사무환경": {
    "slug": "general-affairs",
    "cat": "업무 영역 — 운영·지원",
-   "count": 163,
-   "link": true
-  },
-  "유니티": {
-   "slug": "unity",
-   "cat": "게임",
-   "count": 160,
+   "count": 164,
    "link": true
   },
   "임상·인허가": {
    "slug": "clinical-regulatory",
    "cat": "바이오·제약·화학",
+   "count": 161,
+   "link": true
+  },
+  "유니티": {
+   "slug": "unity",
+   "cat": "게임",
    "count": 160,
    "link": true
   },
@@ -42334,18 +42409,18 @@
   "React·Next.js": {
    "slug": "react-nextjs",
    "cat": "프론트·모바일",
-   "count": 153,
-   "link": true
-  },
-  "투자·M&A": {
-   "slug": "m-a",
-   "cat": "업무 영역 — 인사·경영",
-   "count": 147,
+   "count": 154,
    "link": true
   },
   "채용·HR 운영": {
    "slug": "recruiting-hr",
    "cat": "인사·구매·운영",
+   "count": 148,
+   "link": true
+  },
+  "투자·M&A": {
+   "slug": "m-a",
+   "cat": "업무 영역 — 인사·경영",
    "count": 147,
    "link": true
   },
@@ -42400,7 +42475,7 @@
   "PMO·프로젝트관리": {
    "slug": "pmo",
    "cat": "인사·구매·운영",
-   "count": 129,
+   "count": 130,
    "link": true
   },
   "언리얼 엔진": {
@@ -42487,16 +42562,16 @@
    "count": 109,
    "link": true
   },
+  "ROS·로봇 SW": {
+   "slug": "ros",
+   "cat": "로봇·비전",
+   "count": 108,
+   "link": true
+  },
   "BI·대시보드": {
    "slug": "bi-dashboard",
    "cat": "데이터·AI",
    "count": 108,
-   "link": true
-  },
-  "ROS·로봇 SW": {
-   "slug": "ros",
-   "cat": "로봇·비전",
-   "count": 107,
    "link": true
   },
   "보안관제·SOC": {
@@ -42571,22 +42646,22 @@
    "count": 97,
    "link": true
   },
+  "사무보조·어시스턴트": {
+   "slug": "office-assistant",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 97,
+   "link": true
+  },
   "고속 인터페이스": {
    "slug": "high-speed-interface",
    "cat": "반도체 설계",
    "count": 97,
    "link": true
   },
-  "사무보조·어시스턴트": {
-   "slug": "office-assistant",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 96,
-   "link": true
-  },
   "CRM 마케팅": {
    "slug": "crm",
    "cat": "마케팅·커머스",
-   "count": 96,
+   "count": 97,
    "link": true
   },
   "프로덕트 디자인": {
@@ -42658,7 +42733,7 @@
   "디자인 시스템": {
    "slug": "design-system",
    "cat": "디자인·툴",
-   "count": 82,
+   "count": 83,
    "link": true
   },
   "IT 헬프데스크·자산": {
@@ -42769,10 +42844,22 @@
    "count": 68,
    "link": true
   },
+  "HTML·CSS": {
+   "slug": "html-css",
+   "cat": "웹·API",
+   "count": 68,
+   "link": true
+  },
   "회계사": {
    "slug": "cpa",
    "cat": "재무·회계·법무",
    "count": 68,
+   "link": true
+  },
+  "정밀가공·용접": {
+   "slug": "machining-welding",
+   "cat": "기구·해석",
+   "count": 67,
    "link": true
   },
   "클린룸·설비": {
@@ -42781,21 +42868,9 @@
    "count": 66,
    "link": true
   },
-  "정밀가공·용접": {
-   "slug": "machining-welding",
-   "cat": "기구·해석",
-   "count": 66,
-   "link": true
-  },
   "Go·Rust": {
    "slug": "go-rust",
    "cat": "백엔드·언어",
-   "count": 66,
-   "link": true
-  },
-  "HTML·CSS": {
-   "slug": "html-css",
-   "cat": "웹·API",
    "count": 66,
    "link": true
   },
@@ -42817,6 +42892,12 @@
    "count": 65,
    "link": true
   },
+  "품질경영 ISO": {
+   "slug": "iso-quality",
+   "cat": "품질·안전·인증",
+   "count": 65,
+   "link": true
+  },
   "FPGA": {
    "slug": "fpga",
    "cat": "반도체 설계",
@@ -42829,16 +42910,16 @@
    "count": 65,
    "link": true
   },
-  "품질경영 ISO": {
-   "slug": "iso-quality",
-   "cat": "품질·안전·인증",
-   "count": 64,
-   "link": true
-  },
   "의료기기 영업": {
    "slug": "medical-device-sales",
    "cat": "업무 영역 — 영업·고객",
    "count": 64,
+   "link": true
+  },
+  "급여·노무": {
+   "slug": "payroll-labor",
+   "cat": "인사·구매·운영",
+   "count": 63,
    "link": true
   },
   "심사·리스크 운영": {
@@ -42850,12 +42931,6 @@
   "품질검사·QC": {
    "slug": "quality-inspection",
    "cat": "업무 영역 — 생산·품질·설비",
-   "count": 62,
-   "link": true
-  },
-  "급여·노무": {
-   "slug": "payroll-labor",
-   "cat": "인사·구매·운영",
    "count": 62,
    "link": true
   },
@@ -42943,6 +43018,12 @@
    "count": 55,
    "link": true
   },
+  "매니퓰레이터·모션제어": {
+   "slug": "motion-control",
+   "cat": "로봇·비전",
+   "count": 55,
+   "link": true
+  },
   "가상화·오픈스택": {
    "slug": "virtualization",
    "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
@@ -42961,9 +43042,9 @@
    "count": 55,
    "link": true
   },
-  "매니퓰레이터·모션제어": {
-   "slug": "motion-control",
-   "cat": "로봇·비전",
+  "엑셀 고급": {
+   "slug": "advanced-excel",
+   "cat": "업무 시스템",
    "count": 54,
    "link": true
   },
@@ -42973,22 +43054,16 @@
    "count": 54,
    "link": true
   },
+  "디지털 헬스케어": {
+   "slug": "digital-health",
+   "cat": "의료기기·헬스케어",
+   "count": 54,
+   "link": true
+  },
   "금형·사출": {
    "slug": "mold-injection",
    "cat": "기구·해석",
    "count": 53,
-   "link": true
-  },
-  "디지털 헬스케어": {
-   "slug": "digital-health",
-   "cat": "의료기기·헬스케어",
-   "count": 53,
-   "link": true
-  },
-  "엑셀 고급": {
-   "slug": "advanced-excel",
-   "cat": "업무 시스템",
-   "count": 52,
    "link": true
   },
   "드론·UAV": {
@@ -43015,6 +43090,12 @@
    "count": 51,
    "link": true
   },
+  "AMR·AGV": {
+   "slug": "amr-agv",
+   "cat": "로봇·비전",
+   "count": 50,
+   "link": true
+  },
   "인지(Perception)": {
    "slug": "perception",
    "cat": "ADAS 세부",
@@ -43033,22 +43114,16 @@
    "count": 50,
    "link": true
   },
+  "PR·홍보": {
+   "slug": "pr-communications",
+   "cat": "마케팅·커머스",
+   "count": 49,
+   "link": true
+  },
   "iOS·Swift": {
    "slug": "ios-swift",
    "cat": "프론트·모바일",
    "count": 49,
-   "link": true
-  },
-  "PR·홍보": {
-   "slug": "pr-communications",
-   "cat": "마케팅·커머스",
-   "count": 48,
-   "link": true
-  },
-  "AMR·AGV": {
-   "slug": "amr-agv",
-   "cat": "로봇·비전",
-   "count": 48,
    "link": true
   },
   "아날로그·PMIC": {
@@ -43117,6 +43192,12 @@
    "count": 42,
    "link": true
   },
+  "웹소켓·실시간": {
+   "slug": "websocket-realtime",
+   "cat": "웹·API",
+   "count": 42,
+   "link": true
+  },
   "CPU·아키텍처": {
    "slug": "cpu",
    "cat": "운영체제·하드웨어",
@@ -43138,12 +43219,6 @@
   "신뢰성 평가": {
    "slug": "reliability-testing",
    "cat": "QA·테스트",
-   "count": 41,
-   "link": true
-  },
-  "웹소켓·실시간": {
-   "slug": "websocket-realtime",
-   "cat": "웹·API",
    "count": 41,
    "link": true
   },
@@ -43177,6 +43252,12 @@
    "count": 39,
    "link": true
   },
+  "고객 성공·온보딩": {
+   "slug": "customer-success",
+   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
+   "count": 38,
+   "link": true
+  },
   "EDA 툴": {
    "slug": "eda-tools",
    "cat": "반도체 설계",
@@ -43204,12 +43285,6 @@
   "자율주행 시뮬레이션": {
    "slug": "driving-simulation",
    "cat": "ADAS 세부",
-   "count": 37,
-   "link": true
-  },
-  "고객 성공·온보딩": {
-   "slug": "customer-success",
-   "cat": "업무 영역 — 서비스·운영 (2026-11-02 추가)",
    "count": 37,
    "link": true
   },
@@ -43279,27 +43354,27 @@
    "count": 32,
    "link": true
   },
-  "UX 리서치": {
-   "slug": "ux-research",
-   "cat": "디자인·툴",
-   "count": 30,
-   "link": true
-  },
   "Vue·Nuxt": {
    "slug": "vue-nuxt",
    "cat": "프론트·모바일",
+   "count": 31,
+   "link": true
+  },
+  "UX 리서치": {
+   "slug": "ux-research",
+   "cat": "디자인·툴",
+   "count": 31,
+   "link": true
+  },
+  "경로계획·판단": {
+   "slug": "path-planning",
+   "cat": "ADAS 세부",
    "count": 30,
    "link": true
   },
   "패키징·기판": {
    "slug": "packaging-substrate",
    "cat": "반도체 공정·장비",
-   "count": 29,
-   "link": true
-  },
-  "경로계획·판단": {
-   "slug": "path-planning",
-   "cat": "ADAS 세부",
    "count": 29,
    "link": true
   },
@@ -43357,16 +43432,16 @@
    "count": 24,
    "link": true
   },
+  "신재생·ESS": {
+   "slug": "renewable-ess",
+   "cat": "전력·배터리",
+   "count": 23,
+   "link": true
+  },
   "게임 서버": {
    "slug": "game-server",
    "cat": "게임",
    "count": 23,
-   "link": true
-  },
-  "신재생·ESS": {
-   "slug": "renewable-ess",
-   "cat": "전력·배터리",
-   "count": 22,
    "link": true
   },
   "모듈·팩 설계": {
@@ -43585,15 +43660,15 @@
    "count": 12,
    "link": true
   },
-  "스타일링·의상": {
-   "slug": "styling",
-   "cat": "식품·화장품·소비재",
-   "count": 11,
-   "link": true
-  },
   "이차전지 소재·공정": {
    "slug": "battery-materials",
    "cat": "전력·배터리",
+   "count": 12,
+   "link": true
+  },
+  "스타일링·의상": {
+   "slug": "styling",
+   "cat": "식품·화장품·소비재",
    "count": 11,
    "link": true
   },
