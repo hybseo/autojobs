@@ -106,12 +106,24 @@ const url = canonical ?? (site + Astro.url.pathname);
     구글 애널리틱스는 쿠키를 쓰므로 꼬리말에 한 줄로 알립니다.
     끄려면 이 블록 두 개의 script 를 지우고 꼬리말 문장도 지우세요.
   */}
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DGZ73M54LE"></script>
+  {/*
+    검색 로봇은 구글 애널리틱스에서 뺍니다 (2026-11-24 대표님 지시).
+    바이두 수집 로봇(Baiduspider-render)이 화면을 실제로 그려 보며 GA 에 「중국 방문자」로
+    하루 수십~백여 명씩 잡혀 숫자를 부풀렸습니다. 로봇이면 GA 코드를 아예 불러오지 않습니다.
+    검색엔진 수집 자체에는 아무 영향이 없습니다. gtag 함수는 그대로 두어 다른 코드가 오류 없이 돕니다.
+  */}
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DGZ73M54LE');
+    (function () {
+      var ua = navigator.userAgent || '';
+      if (/bot|spider|crawl|slurp|baidu|yandex|bytespider|petalbot|headless|lighthouse|facebookexternalhit|preview/i.test(ua) || navigator.webdriver) return;
+      var s = document.createElement('script');
+      s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-DGZ73M54LE';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'G-DGZ73M54LE');
+    })();
   </script>
 
   {/*

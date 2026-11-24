@@ -62,11 +62,43 @@ const desc = '기업 공식 채용페이지에 올라온 진행중 공고를 산
   };
 
   readUrl();
-  fetch('/v2/jobs.json').then((r) => r.json()).then((d) => {
-    D = d;
-    const dirty = S.q || S.sort !== 'dl' || S.tab !== '마감' || KEYS.some((k) => S.f[k]);
-    if (dirty) render(false);
-  });
+  /*
+   * 공고 목록 데이터(약 3MB) 받기 — 2026-11-24
+   * 연결이 불안정해 중간에 끊기면(오류 신고: 「Unexpected end of JSON input」) 예전에는
+   * 화면만 보이고 필터·탭이 아무 반응이 없었습니다. 한 번 더 받아 보고, 그래도 안 되면
+   * 목록 위에 「다시 시도」 안내를 띄웁니다.
+   */
+  const failBox = () => document.getElementById('jobs-loadfail');
+  const showFail = () => {
+    if (failBox()) return;
+    const box = document.createElement('div');
+    box.id = 'jobs-loadfail';
+    box.setAttribute('role', 'alert');
+    box.style.cssText = 'margin:0 0 14px;padding:12px 14px;border-radius:6px;background:#FFF4E5;border:1px solid #F1C48A;font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap';
+    box.innerHTML = '<span style="flex:1 1 220px">공고 목록을 다 불러오지 못했습니다. 연결 상태를 확인하고 다시 시도해 주세요.</span>';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = '다시 시도';
+    btn.style.cssText = 'padding:8px 14px;border-radius:4px;border:0;background:#2D5F7C;color:#fff;font-weight:600;cursor:pointer';
+    btn.addEventListener('click', () => { btn.disabled = true; btn.textContent = '불러오는 중…'; load(1); });
+    box.appendChild(btn);
+    app.prepend(box);
+  };
+  const load = (attempt) => fetch('/v2/jobs.json', attempt ? { cache: 'reload' } : {})
+    .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+    .then((d) => {
+      D = d;
+      const fb = failBox(); if (fb) fb.remove();
+      const dirty = S.q || S.sort !== 'dl' || S.tab !== '마감' || KEYS.some((k) => S.f[k]);
+      if (dirty) render(false);
+    })
+    .catch(() => {
+      if (attempt < 1) return new Promise((res) => setTimeout(res, 1500)).then(() => load(attempt + 1));
+      showFail();
+      const b = failBox() && failBox().querySelector('button');
+      if (b) { b.disabled = false; b.textContent = '다시 시도'; }
+    });
+  load(0);
 
   app.addEventListener('click', (e) => {
     const t = e.target.closest('[data-f],[data-q],[data-tab],[data-sort],[data-more],[data-side]');
