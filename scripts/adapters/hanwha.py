@@ -71,6 +71,7 @@ hwadm 이 admin 으로 읽히는 문제는 위에 적은 대로입니다. get-rc
 """
 import json
 import re
+from collections import Counter
 import time
 import urllib.request
 
@@ -213,6 +214,10 @@ def list_open(affiliates=()):
         print("      ! 한화: 공고 목록이 비어 있습니다. "
               f"{LIST_URL} 를 확인하세요.")
         return []
+
+    # 그룹 포털에 어떤 계열사가 올라와 있는지 매번 남깁니다 (2026-11-26).
+    _seen = Counter(str(x.get("sdNm") or "?") for x in rows)
+    print("      · 한화: 받은 회사 " + ", ".join(f"{k}({v})" for k, v in sorted(_seen.items())))
 
     if not affiliates:
         return rows

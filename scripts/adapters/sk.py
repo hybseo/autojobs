@@ -40,6 +40,7 @@ corpCode 를 알아내면 요청 단계에서 거르는 편이 더 깔끔합니�
 """
 import json
 import re
+from collections import Counter
 import time
 import html
 import urllib.parse
@@ -181,6 +182,10 @@ def list_open(affiliates=()):
     # 실제로 그런 상태를 만나 원인을 좁히지 못한 적이 있습니다.
     print(f"      · SK: 목록 {len(rows)}건 확보. "
           f"첫 항목 필드: {sorted(rows[0].keys())[:12]}")
+    # 그룹 포털에 어떤 계열사가 올라와 있는지 매번 남깁니다 (2026-11-26).
+    # 계열사를 넓힐지, 넣은 이름이 실제 표기와 맞는지 이 줄로 확인합니다.
+    _seen = Counter(str(_pick(x, "company") or "?") for x in rows)
+    print("      · SK: 받은 회사 " + ", ".join(f"{k}({v})" for k, v in sorted(_seen.items())))
 
     if affiliates:
         # 회사명이 영문으로 옵니다. 'SK on', 'SK ON', 'SK온' 이 모두 같은 회사입니다.

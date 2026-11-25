@@ -52,6 +52,7 @@ JSON 이 아니라 화면에 그대로 꽂을 <li> 조각을 돌려줍니다.
   여기서 안 잡히는 계열사가 있을 수 있습니다.
 """
 import re
+from collections import Counter
 import html as html_mod
 import urllib.parse
 import urllib.request
@@ -149,6 +150,10 @@ def list_open(affiliates=()):
               f"title {last.count('class=\"title\"')}회")
         print("        앞부분: " + last[:220].replace("\n", " "))
         return []
+
+    # 그룹 포털에 어떤 계열사가 올라와 있는지 매번 남깁니다 (2026-11-26).
+    _seen = Counter(str(x.get("company") or "?") for x in rows)
+    print("      · 삼성: 받은 회사 " + ", ".join(f"{k}({v})" for k, v in sorted(_seen.items())))
 
     if not affiliates:
         return rows
