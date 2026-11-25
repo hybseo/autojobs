@@ -715,11 +715,15 @@ async function viewRun(id){
   renderMail(); window.scrollTo(0,0);
 }
 /* 「진단 시작하기」: 로그인 → 사이트 약관 동의 → 레벨 진단 저장 동의 → 입력 화면(지난 입력 채움) */
+/* 단계별 숫자 (2026-11-25 대표님 지시) — 어디서 그만두는지 보려고 구글 애널리틱스에 단계만 남깁니다.
+   입력 내용·학교·회사 같은 값은 보내지 않습니다. 오류는 「어느 항목」인지만 보냅니다. */
+function lvTrack(name,params){try{if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({transport_type:'beacon'},params||{}))}catch(e){}}
 async function gateStart(){
   $('#startBtn').disabled=true;
   const r=await api('/api/level'); $('#startBtn').disabled=false;
-  if(!r.ok){showGate('fail');return}
+  if(!r.ok){showGate('fail');lvTrack('level_start',{member:'unknown'});return}
   ME=r.data;
+  lvTrack('level_start',{member:!ME.user?'no':(ME.levelConsent?'yes':'new'),resume:new URLSearchParams(location.search).get('go')==='1'?'yes':'no'});
   if(!ME.user){showGate('login');return}
   setFlag();
   if(!ME.consented){location.href='/my/?next='+encodeURIComponent(here());return}
@@ -733,7 +737,9 @@ function showGate(kind){
     g.innerHTML=`<section class="lv-card"><h2>SNS 간편로그인 후 바로 시작할 수 있어요</h2>
       <p>레벨 진단은 서치잡 회원 전용입니다. 카카오·네이버·구글 중 하나로 로그인하시면 이 화면으로 돌아와 바로 진단을 시작합니다.</p>
       <p class="small muted">로그인할 때는 회원번호와 별명만 받고, 성명·전화번호는 받지 않습니다. 진단 결과는 본인 계정에 저장되어 다음에 다시 진단할 때 지난 결과와 비교해 볼 수 있습니다.</p>
-      <div class="actions"><a class="lv-btn" href="/my/?next=${encodeURIComponent(here())}">SNS 간편로그인</a><button type="button" id="gateBack">안내로 돌아가기</button></div></section>`;
+      <div class="actions"><a class="lv-btn" id="lvGoLogin" href="/my/?next=${encodeURIComponent(here())}">SNS 간편로그인</a><button type="button" id="gateBack">안내로 돌아가기</button></div></section>`;
+    lvTrack('level_gate_login');
+    $('#lvGoLogin').addEventListener('click',()=>lvTrack('level_go_login'));
   }else if(kind==='norun'){
     g.innerHTML=`<section class="lv-card"><h2>이 진단 결과를 찾지 못했습니다</h2><p>기록이 지워졌거나 다른 계정으로 로그인하셨을 수 있습니다. 진단 기록은 마이페이지에서 볼 수 있습니다.</p><div class="actions"><a class="lv-btn" href="/level/?go=1">진단 시작하기</a><a class="lv-btn" href="/my/" style="background:#fff;color:inherit;border:1px solid var(--line,#DDE1DE)">마이페이지</a></div></section>`;
   }else if(kind==='consent'){
@@ -745,7 +751,7 @@ function showGate(kind){
       <div class="actions"><button type="button" class="primary" id="lvAgreeGo">동의하고 시작하기</button><button type="button" id="gateBack">안내로 돌아가기</button></div></section>`;
     $('#lvAgreeGo').onclick=async()=>{if(!$('#lvAgree').checked){$('#lvAgreeErr').hidden=false;return}
       const r=await api('/api/level/consent',{}); if(!r.ok){$('#lvAgreeErr').textContent='저장하지 못했습니다. 잠시 뒤 다시 시도해 주세요.';$('#lvAgreeErr').hidden=false;return}
-      ME.levelConsent=true; openForm();};
+      ME.levelConsent=true; lvTrack('level_consent'); openForm();};
   }else{
     g.innerHTML=`<section class="lv-card"><h2>지금은 진단을 시작할 수 없습니다</h2><p>로그인 정보를 확인하지 못했습니다. 잠시 뒤 다시 시도해 주세요. 계속 안 되면 화면 오른쪽 아래 「오류 신고」를 눌러 주세요.</p><div class="actions"><button type="button" id="gateBack">안내로 돌아가기</button></div></section>`;
   }
@@ -753,6 +759,7 @@ function showGate(kind){
   window.scrollTo(0,0);
 }
 function openForm(){
+  if(!openForm.tracked){openForm.tracked=true;lvTrack('level_form_open',{prefilled:ME&&ME.last&&ME.last.snap?'yes':'no'})}
   $('#lvGate').hidden=true;$('#intro').hidden=true;$('#result').hidden=true;$('#form').hidden=false;
   if(ME&&ME.last&&ME.last.snap&&!openForm.done){
     try{restore(ME.last.snap);$('#sampleNote span').textContent=`지난 진단(${fmtDate(ME.last.at)})에 입력하신 내용을 불러왔습니다. 바뀐 부분만 고쳐서 다시 진단해 보세요.`;$('#sampleNote').hidden=false}
@@ -790,6 +797,7 @@ function mailConcl(){
 }
 /* 진단 직후: 저장 → 지난 레벨 비교, 이름 줄, 이메일 칸 */
 async function afterResult(c,r){
+  lvTrack('level_result',{level:String(r.level||''),runs_before:String((ME&&ME.history&&ME.history.length)||0)});
   renderWho();
   if(r.gate&&r.gate.length) return; // 레벨 미산정(필수 자격증 미등록) — 저장하지 않음
   const res={duty:c.duty,sub:r.sub||'',rank:r.rank,level:r.level,raw:r.raw,items:r.items,
@@ -861,4 +869,12 @@ function renderMail(){
   document.getElementById('sampleStart').addEventListener('click',()=>{close();gateStart()});
   dlg.addEventListener('click',e=>{if(e.target===dlg)close()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)close()});
+})();
+/* 입력 오류 단계 기록 — 오류 문구가 뜰 때 어느 항목인지만 보냅니다(2026-11-25) */
+(function(){
+  const err=document.getElementById('formErr'); if(!err||!window.MutationObserver) return;
+  const kind=t=>/주력 직무/.test(t)?'duty':/경력의 직무/.test(t)?'career_job':/회사 유형/.test(t)?'career_type':/학교 이름/.test(t)?'school':/학력을 하나/.test(t)?'edu_none':/년월|연도|월로|입사|퇴사|졸업/.test(t)?'date':'other';
+  let last='';
+  new MutationObserver(()=>{ if(err.hidden){last='';return} const k=kind(err.textContent||''); const key=k+'|'+err.textContent; if(key===last) return; last=key; lvTrack('level_form_error',{field:k}); })
+    .observe(err,{attributes:true,attributeFilter:['hidden'],childList:true,characterData:true,subtree:true});
 })();

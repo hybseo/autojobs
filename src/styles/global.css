@@ -607,3 +607,10 @@ footer b{color:var(--ink-2);font-weight:500}
 .sj-inapp-row{display:flex;gap:8px;flex-wrap:wrap}
 .sj-inapp-btn{display:inline-block;padding:10px 14px;border-radius:4px;background:#2D5F7C;color:#fff;font-weight:600;font-size:14px;text-decoration:none}
 .sj-inapp-copy{padding:10px 14px;border-radius:4px;border:1px solid #C9CED2;background:#fff;font-size:14px;cursor:pointer}
+
+/* 공고 페이지 「○○ 새 공고 알림 받기」 (2026-11-25) — public/member.js followCta */
+.mem-cta{margin:12px 0 16px;padding:14px 16px;border:1px solid var(--line,#DDE1DE);border-radius:6px;background:#F3F7F9}
+.mem-cta-t{margin:0 0 4px;font-weight:700;font-size:15px;word-break:keep-all}
+.mem-cta-d{margin:0 0 10px;font-size:13px;line-height:1.5;color:var(--ink-2,#4B5158);word-break:keep-all}
+.mem-cta-b{width:100%;justify-content:center;background:#2D5F7C;color:#fff;border-color:#2D5F7C;font-weight:600}
+.mem-cta-b.on{background:#fff;color:#2D5F7C}

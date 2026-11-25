@@ -69,6 +69,22 @@
 
   function toLogin() { location.href = '/my/?next=' + encodeURIComponent(location.pathname + location.search); }
 
+  /* 로그인 후 하려던 일 이어서 하기 (2026-11-25)
+     로그인 안 한 사람이 「팔로우」「찜」을 누르면 무엇을 하려던 것인지 이 탭에 적어 두고 로그인으로 보냅니다.
+     로그인을 마치고 같은 페이지로 돌아오면 그 일을 자동으로 마칩니다(다시 누를 필요 없음). 30분 지나면 버립니다. */
+  var PEND = 'sj_pending';
+  function setPending(o) { try { o.path = path; o.at = Date.now(); sessionStorage.setItem(PEND, JSON.stringify(o)); } catch (e) { /* 무시 */ } }
+  function takePending() {
+    try {
+      var o = JSON.parse(sessionStorage.getItem(PEND) || 'null');
+      if (!o) return null;
+      if (o.path !== path || Date.now() - o.at > 30 * 60 * 1000) { if (o.path === path) sessionStorage.removeItem(PEND); return null; }
+      sessionStorage.removeItem(PEND);
+      return o;
+    } catch (e) { return null; }
+  }
+  var pending = takePending();
+
   function loadMe() {
     return api('/api/me').then(function (r) {
       state = r.ok ? r.data : null;
@@ -99,11 +115,12 @@
     h1.insertAdjacentElement('afterend', wrap);
     var on = false;
     function paint() { b.textContent = on ? '✓ 팔로우 중' : '＋ 팔로우'; b.classList.toggle('on', on); }
-    if (flagged()) loadMe().then(function (s) {
+    if (flagged() || pending) loadMe().then(function (s) {
       if (s && s.follows) { on = s.follows.some(function (x) { return x.slug === slug; }); paint(); }
+      if (pending && pending.t === 'follow' && pending.slug === slug && s && s.user && !on) { pending = null; b.click(); }
     });
     b.addEventListener('click', function () {
-      if (!flagged()) return toLogin();
+      if (!flagged()) { setPending({ t: 'follow', slug: slug }); return toLogin(); }
       api('/api/follow', { slug: slug, name: coName, on: !on }).then(function (r) {
         if (r.status === 401) return toLogin();
         if (!r.ok) return toast((r.data && r.data.error) || '저장하지 못했습니다.');
@@ -129,11 +146,18 @@
     h1.insertAdjacentElement('afterend', wrap);
     var on = false;
     function paint() { b.textContent = on ? '♥ 찜한 공고' : '♡ 찜'; b.classList.toggle('on', on); }
-    if (flagged()) loadMe().then(function (s) {
+    var cta = followCta(co);
+    if (flagged() || pending) loadMe().then(function (s) {
       if (s && s.bookmarks) { on = s.bookmarks.some(function (x) { return x.id === id; }); paint(); }
+      if (cta) cta.sync(s);
+      if (pending && s && s.user) {
+        var pd = pending; pending = null;
+        if (pd.t === 'bookmark' && pd.id === id && !on) b.click();
+        else if (pd.t === 'follow' && cta) cta.auto(pd.slug);
+      }
     });
     b.addEventListener('click', function () {
-      if (!flagged()) return toLogin();
+      if (!flagged()) { setPending({ t: 'bookmark', id: id }); return toLogin(); }
       api('/api/bookmark', { id: id, title: title, company: company, on: !on }).then(function (r) {
         if (r.status === 401) return toLogin();
         if (!r.ok) return toast((r.data && r.data.error) || '저장하지 못했습니다.');
@@ -141,6 +165,50 @@
         toast(on ? '찜했습니다. 마감이 가까워지면 알려 드립니다.' : '찜을 해제했습니다.');
       });
     });
+  }
+
+  /* ── 공고 페이지: 「○○ 새 공고 알림 받기」 (2026-11-25) ──
+     ChatGPT 등으로 공고 하나만 보러 온 사람에게 가입할 이유를 보여 줍니다. 「지원하기」 아래에 둡니다.
+     누르면 그 기업을 팔로우합니다(기업 페이지의 「팔로우」와 같은 기능). 로그인 전이면 로그인 후 자동으로 마칩니다. */
+  function followCta(coLink) {
+    if (!coLink) return null;
+    var mm = (coLink.getAttribute('href') || '').match(/^\/company\/([^/?#]+)/);
+    if (!mm) return null;
+    var slug = decodeURIComponent(mm[1]);
+    var name = (coLink.textContent || '').trim();
+    if (!name) return null;
+    var box = el('div', { class: 'mem-cta' });
+    var t = el('p', { class: 'mem-cta-t' }, name + ' 새 공고 알림 받기');
+    var d = el('p', { class: 'mem-cta-d' }, '이 회사 공식 채용페이지에 새 공고가 올라오면 알려 드립니다.' + (flagged() ? '' : ' · SNS 간편로그인 10초'));
+    var b = el('button', { type: 'button', class: 'mem-btn mem-cta-b' }, '＋ ' + name + ' 새 공고 알림 받기');
+    box.appendChild(t); box.appendChild(d); box.appendChild(b);
+    var anchor = document.querySelector('main .rail .dbox');
+    if (anchor) anchor.insertAdjacentElement('afterend', box);
+    else { var h = document.querySelector('main h1'); if (!h) return null; h.insertAdjacentElement('afterend', box); }
+    var on = false;
+    function paint() {
+      b.textContent = on ? '✓ ' + name + ' 새 공고 알림 받는 중' : '＋ ' + name + ' 새 공고 알림 받기';
+      b.classList.toggle('on', on);
+      d.textContent = on ? '새 공고가 올라오면 알려 드립니다. 누르면 알림을 끕니다.' : '이 회사 공식 채용페이지에 새 공고가 올라오면 알려 드립니다.' + (flagged() ? '' : ' · SNS 간편로그인 10초');
+    }
+    function go(auto) {
+      api('/api/follow', { slug: slug, name: name, on: !on }).then(function (r) {
+        if (r.status === 401) return toLogin();
+        if (!r.ok) return toast((r.data && r.data.error) || '저장하지 못했습니다.');
+        on = !on; paint();
+        if (auto) track('cta_follow_done', { company: slug, after_login: true });
+        toast(on ? name + ' 새 공고가 올라오면 알려 드립니다.' : name + ' 알림을 껐습니다.');
+      });
+    }
+    b.addEventListener('click', function () {
+      track('cta_follow_click', { company: slug, member: flagged() ? 'yes' : 'no' });
+      if (!flagged()) { setPending({ t: 'follow', slug: slug }); return toLogin(); }
+      go(false);
+    });
+    return {
+      sync: function (s) { if (s && s.follows) { on = s.follows.some(function (x) { return x.slug === slug; }); paint(); } },
+      auto: function (sl) { if (sl === slug && !on) go(true); },
+    };
   }
 
   /* ── 공고 목록: 이 검색 알림 ── */
