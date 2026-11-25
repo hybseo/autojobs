@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-25 · 진행중 7464건 중 요약 있는 6845건을 훑어",
-  "6786건에 태그가 붙었습니다 (99.1%)."
+  "만든 날 2026-11-25 · 진행중 7464건 중 요약 있는 6863건을 훑어",
+  "6804건에 태그가 붙었습니다 (99.1%)."
  ],
  "tags": {
   "mobis-134813": [
@@ -113,6 +113,10 @@
   "hankooktire-132209": [
    "MD·상품기획",
    "서비스 기획·PO"
+  ],
+  "hankooktire-134538": [
+   "생산직·제조 현장",
+   "설비보전·정비"
   ],
   "hankooktire-135165": [
    "프로덕트 디자인",
@@ -631,6 +635,14 @@
    "일본어",
    "어카운트·거래처 관리",
    "중국어",
+   "영어 업무 가능"
+  ],
+  "lg-1002444": [
+   "정밀가공·용접"
+  ],
+  "lg-1002443": [
+   "전기공사·전계장",
+   "기술영업",
    "영어 업무 가능"
   ],
   "lg-1002062": [
@@ -2293,8 +2305,8 @@
    "WMS·창고관리",
    "B2B 영업",
    "물류·창고 운영",
-   "기술영업",
    "ADAS·자율주행",
+   "기술영업",
    "제휴·사업개발"
   ],
   "breezy-bear-robotics-7621f0ace242": [
@@ -2312,8 +2324,8 @@
    "기능안전 ISO 26262",
    "회로설계·PCB",
    "PMO·프로젝트관리",
-   "기술영업",
    "ADAS·자율주행",
+   "기술영업",
    "임베디드·펌웨어",
    "생산·공정관리",
    "구매·SCM"
@@ -4171,8 +4183,8 @@
   "greeting-blue-dot-203487": [
    "SoC·IP 설계",
    "어카운트·거래처 관리",
-   "기술영업",
    "ADAS·자율주행",
+   "기술영업",
    "제휴·사업개발"
   ],
   "greeting-blue-dot-69927": [
@@ -5170,16 +5182,16 @@
    "신재생·ESS",
    "BMS·배터리",
    "AMR·AGV",
-   "설비보전·정비",
    "CATIA·3D CAD",
+   "설비보전·정비",
    "PLC·산업제어"
   ],
   "greeting-seojinsystem-236730": [
    "분말야금·절삭공구",
    "공차·GD&T",
    "치공구·자동화설비",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "생산·공정관리"
   ],
   "greeting-seojinsystem-234043": [
@@ -5210,8 +5222,8 @@
   "greeting-seojinsystem-234017": [
    "공차·GD&T",
    "와이어링 하네스",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "해외영업",
    "B2B 영업",
    "영업기획·영업관리",
@@ -5371,8 +5383,8 @@
   "greeting-seojinsystem-223132": [
    "공차·GD&T",
    "와이어링 하네스",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "해외영업",
    "B2B 영업",
    "영업기획·영업관리",
@@ -5385,8 +5397,8 @@
   "greeting-seojinsystem-223125": [
    "표면처리·도금",
    "금형·사출",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "CATIA·3D CAD"
   ],
   "greeting-seojinsystem-223123": [
@@ -5436,8 +5448,8 @@
    "정밀가공·용접"
   ],
   "greeting-seojinsystem-223084": [
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "생산직·제조 현장",
    "수율·불량분석",
    "PLC·산업제어",
@@ -5465,8 +5477,8 @@
   "greeting-seojinsystem-223075": [
    "치공구·자동화설비",
    "급여·노무",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "시공·현장관리",
    "PLC·산업제어",
    "생산·공정관리",
@@ -8043,8 +8055,8 @@
   "greeting-nearthlab-239618": [
    "PR·홍보",
    "드론·UAV",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "재무·자금",
    "공공사업·제안",
    "콘텐츠·SNS 운영",
@@ -9116,8 +9128,8 @@
   "nhn-4454459535198900761": [
    "안전·보건 관리",
    "기사 자격",
-   "설비보전·정비",
    "CATIA·3D CAD",
+   "설비보전·정비",
    "구매·SCM"
   ],
   "nhn-4453946731323009479": [
@@ -10602,8 +10614,8 @@
   ],
   "sf-lscable-4590150": [
    "표면처리·도금",
-   "기타 외국어",
    "정밀가공·용접",
+   "기타 외국어",
    "영어 점수",
    "제조품질·QC"
   ],
@@ -10669,6 +10681,22 @@
   ],
   "hanmi-131030": [
    "CATIA·3D CAD",
+   "영어 업무 가능"
+  ],
+  "daewoong-a8d277160e1f100bd09c675f59960000": [
+   "디지털 헬스케어",
+   "기타 외국어",
+   "계약·컴플라이언스",
+   "제휴·사업개발"
+  ],
+  "daewoong-87b44f6f405e100bd09b0ba034520000": [
+   "디지털 헬스케어",
+   "기타 외국어",
+   "계약·컴플라이언스",
+   "제휴·사업개발"
+  ],
+  "daewoong-87b44f6f405e100bd94ef0381ec30000": [
+   "생산·공정관리",
    "영어 업무 가능"
   ],
   "daewoong-a8d277160e1f100bc678c398ccd10000": [
@@ -10934,6 +10962,10 @@
   ],
   "dkpharm-95500": [
    "제약영업·MR"
+  ],
+  "greeting-pharmaresearch_hr-246162": [
+   "의학부·학술 MSL",
+   "브랜드 마케팅"
   ],
   "greeting-pharmaresearch_hr-245977": [
    "의료기기 영업",
@@ -12688,8 +12720,8 @@
    "콘텐츠·SNS 운영"
   ],
   "greeting-hyundaipharm-244072": [
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "영업기획·영업관리",
    "재무·자금",
    "MD·상품기획",
@@ -12868,6 +12900,14 @@
    "시설관리·FM",
    "총무·사무환경"
   ],
+  "eubiologics-135493": [
+   "연구기획·연구관리",
+   "영어 업무 가능"
+  ],
+  "eubiologics-135495": [
+   "연구기획·연구관리",
+   "영어 업무 가능"
+  ],
   "samjinpharm-132555": [
    "GMP·밸리데이션"
   ],
@@ -12901,6 +12941,12 @@
   "sf-gc-4581950": [
    "계약·컴플라이언스",
    "구매·SCM"
+  ],
+  "sf-gc-4677450": [
+   "수처리·환경설비",
+   "시설관리·FM",
+   "GMP·밸리데이션",
+   "설비보전·정비"
   ],
   "sf-gc-4674750": [
    "신약·후보물질",
@@ -13830,8 +13876,8 @@
   "greenhouse-toss-4700949003": [
    "추천·검색",
    "MSA·아키텍처",
-   "설비보전·정비",
    "모니터링·관측",
+   "설비보전·정비",
    "메시징·스트리밍",
    "NoSQL·캐시",
    "Java·Spring",
@@ -14928,8 +14974,8 @@
   ],
   "greenhouse-daangn-5811688003": [
    "MSA·아키텍처",
-   "설비보전·정비",
    "모니터링·관측",
+   "설비보전·정비",
    "AI 에이전트",
    "Kubernetes·Docker",
    "리눅스·서버 운영"
@@ -15625,8 +15671,8 @@
    "Python"
   ],
   "greeting-gccompany-176690": [
-   "설비보전·정비",
    "모니터링·관측",
+   "설비보전·정비",
    "ISMS·인증",
    "Azure·GCP",
    "계약·컴플라이언스",
@@ -16641,8 +16687,8 @@
   ],
   "greeting-musinsa-231092": [
    "애드테크·광고 플랫폼",
-   "브랜드 마케팅",
-   "광고 운영·세일즈"
+   "광고 운영·세일즈",
+   "브랜드 마케팅"
   ],
   "greeting-musinsa-239158": [
    "수요예측·재고최적화",
@@ -19853,6 +19899,10 @@
    "의료기기 영업",
    "어카운트·거래처 관리"
   ],
+  "greeting-nice-246094": [
+   "변리사",
+   "게임 기획·레벨"
+  ],
   "greeting-nice-245589": [
    "자산운용·트레이딩",
    "C·C++",
@@ -20100,8 +20150,8 @@
   ],
   "greeting-linkareer-235768": [
    "B2B 영업",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "MD·상품기획"
   ],
   "greeting-interxlab-242156": [
@@ -20287,8 +20337,8 @@
    "리눅스·서버 운영"
   ],
   "greeting-interxlab-230971": [
-   "설비보전·정비",
    "모니터링·관측",
+   "설비보전·정비",
    "React·Next.js",
    "PLC·산업제어",
    "RDBMS",
@@ -20653,6 +20703,25 @@
   ],
   "greeting-zeus-recruit-245764": [
    "안전·보건 관리"
+  ],
+  "greeting-zeus-recruit-244524": [
+   "네트워크",
+   "REST API 설계",
+   "Git·형상관리",
+   "C·C++",
+   "리눅스·서버 운영",
+   "영어 업무 가능",
+   "Python"
+  ],
+  "greeting-zeus-recruit-244516": [
+   "모터 설계·제어",
+   "임베디드·펌웨어"
+  ],
+  "greeting-zeus-recruit-244514": [
+   "매니퓰레이터·모션제어",
+   "일본어",
+   "영어 업무 가능",
+   "Python"
   ],
   "greeting-alsemy-241359": [
    "프롬프트 엔지니어링",
@@ -22391,8 +22460,8 @@
   "greeting-lululab-191131": [
    "영상·모션",
    "프로덕트 디자인",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영"
   ],
@@ -23435,14 +23504,14 @@
   ],
   "greeting-spaceadd-237144": [
    "문서 도구",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "공공사업·제안"
   ],
   "greeting-spaceadd-229085": [
    "문서 도구",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "어카운트·거래처 관리",
    "공공사업·제안"
   ],
@@ -23571,6 +23640,9 @@
    "신호처리·DSP",
    "딥러닝·비전모델",
    "머신러닝"
+  ],
+  "greeting-skylabs-246158": [
+   "고객상담·CS"
   ],
   "greeting-skylabs-243741": [
    "의학부·학술 MSL",
@@ -25039,8 +25111,8 @@
   "greeting-kakaopay-244356": [
    "운영 지원·오퍼레이션",
    "영상·모션",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "Figma·UI 툴",
    "콘텐츠·SNS 운영"
   ],
@@ -25843,8 +25915,8 @@
   "greeting-realworld-195936": [
    "정밀가공·용접",
    "회로설계·PCB",
-   "설비보전·정비",
    "CATIA·3D CAD",
+   "설비보전·정비",
    "임베디드·펌웨어",
    "구매·SCM",
    "C·C++",
@@ -26023,8 +26095,8 @@
   "greeting-realworld-212317": [
    "3D 프린팅",
    "정밀가공·용접",
-   "설비보전·정비",
    "CATIA·3D CAD",
+   "설비보전·정비",
    "구매·SCM"
   ],
   "greeting-realworld-228258": [
@@ -26272,8 +26344,8 @@
   "greeting-jnpmedi-241742": [
    "영상·모션",
    "회계사",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "GA·퍼포먼스 마케팅",
    "재무·자금",
    "콘텐츠·SNS 운영"
@@ -26437,6 +26509,9 @@
    "물리보안·출입통제",
    "보안관제·SOC"
   ],
+  "greeting-skshieldus-246039": [
+   "보안관제·SOC"
+  ],
   "greeting-skshieldus-246070": [
    "구매·SCM"
   ],
@@ -26460,6 +26535,9 @@
    "시설관리·FM",
    "안전·보건 관리",
    "구매·SCM"
+  ],
+  "greeting-skshieldus-246038": [
+   "보안 자격증"
   ],
   "greeting-skshieldus-117369": [
    "금융 규제·AML",
@@ -28184,8 +28262,8 @@
   ],
   "workday-dongwha-XMLNAME-------_R1456": [
    "이차전지 소재·공정",
-   "연구기획·연구관리",
    "화학합성·소재",
+   "연구기획·연구관리",
    "대외협력·대관",
    "정부과제·국책과제",
    "영어 업무 가능"
@@ -30639,6 +30717,12 @@
   ],
   "hmc-2026N5276": [
    "고객상담·CS"
+  ],
+  "hmc-2026N5279": [
+   "보훈·장애인 채용",
+   "급여·노무",
+   "사무보조·어시스턴트",
+   "결산·세무"
   ],
   "hmc-2026N5277": [
    "안전·보건 관리"
@@ -34264,8 +34348,8 @@
   ],
   "greeting-classyshr-239031": [
    "의학부·학술 MSL",
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "재무·자금",
    "콘텐츠·SNS 운영"
   ],
@@ -34600,8 +34684,8 @@
   ],
   "greeting-solusadvancedmaterials-243180": [
    "OLED·LCD 공정",
-   "연구기획·연구관리",
    "화학합성·소재",
+   "연구기획·연구관리",
    "특허·IP",
    "자산운용·트레이딩"
   ],
@@ -35289,8 +35373,8 @@
    "RF·안테나",
    "아날로그·PMIC",
    "HBM·메모리 설계",
-   "GMP·밸리데이션",
    "고속 인터페이스",
+   "GMP·밸리데이션",
    "SoC·IP 설계",
    "임베디드·펌웨어"
   ],
@@ -35446,8 +35530,8 @@
    "3D 프린팅",
    "금형·사출",
    "정밀가공·용접",
-   "설비보전·정비",
-   "CATIA·3D CAD"
+   "CATIA·3D CAD",
+   "설비보전·정비"
   ],
   "greeting-nice-217680": [
    "프롬프트 엔지니어링",
@@ -37679,8 +37763,8 @@
    "Adobe 그래픽"
   ],
   "greeting-supercent-217344": [
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "콘텐츠·SNS 운영",
    "경영기획·전략"
   ],
@@ -40172,8 +40256,8 @@
    "공공사업·제안"
   ],
   "greeting-featuring-223564": [
-   "브랜드 마케팅",
    "광고 운영·세일즈",
+   "브랜드 마케팅",
    "GA·퍼포먼스 마케팅",
    "Adobe 그래픽",
    "콘텐츠·SNS 운영"
@@ -40586,8 +40670,8 @@
   "greeting-aceworks-208365": [
    "SDV·차량 SW 플랫폼",
    "어카운트·거래처 관리",
-   "기술영업",
-   "ADAS·자율주행"
+   "ADAS·자율주행",
+   "기술영업"
   ],
   "greeting-vatechnetworks-216388": [
    "경영기획·전략"
@@ -40728,8 +40812,8 @@
    "공조·열관리",
    "시설관리·FM",
    "기사 자격",
-   "설비보전·정비",
-   "CATIA·3D CAD"
+   "CATIA·3D CAD",
+   "설비보전·정비"
   ],
   "greeting-estfamily-232823": [
    "노무사",
@@ -42739,13 +42823,13 @@
   "Python": {
    "slug": "python",
    "cat": "백엔드·언어",
-   "count": 845,
+   "count": 847,
    "link": true
   },
   "영어 업무 가능": {
    "slug": "english",
    "cat": "어학",
-   "count": 760,
+   "count": 766,
    "link": true
   },
   "LLM·생성형 AI": {
@@ -42763,7 +42847,7 @@
   "리눅스·서버 운영": {
    "slug": "linux-server",
    "cat": "클라우드·인프라",
-   "count": 470,
+   "count": 471,
    "link": true
   },
   "AWS": {
@@ -42787,7 +42871,7 @@
   "C·C++": {
    "slug": "c-cpp",
    "cat": "백엔드·언어",
-   "count": 431,
+   "count": 432,
    "link": true
   },
   "Kubernetes·Docker": {
@@ -42799,7 +42883,7 @@
   "고객상담·CS": {
    "slug": "cs",
    "cat": "업무 영역 — 영업·고객",
-   "count": 392,
+   "count": 393,
    "link": true
   },
   "콘텐츠·SNS 운영": {
@@ -42835,7 +42919,7 @@
   "생산·공정관리": {
    "slug": "production-management",
    "cat": "인사·구매·운영",
-   "count": 311,
+   "count": 312,
    "link": true
   },
   "서비스 기획·PO": {
@@ -42853,7 +42937,7 @@
   "제휴·사업개발": {
    "slug": "business-development",
    "cat": "영업·사업개발",
-   "count": 283,
+   "count": 285,
    "link": true
   },
   "MD·상품기획": {
@@ -42865,19 +42949,19 @@
   "결산·세무": {
    "slug": "accounting-closing",
    "cat": "재무·회계·법무",
-   "count": 280,
+   "count": 281,
    "link": true
   },
   "Git·형상관리": {
    "slug": "git",
    "cat": "형상·협업 도구",
-   "count": 273,
+   "count": 274,
    "link": true
   },
   "계약·컴플라이언스": {
    "slug": "contract-compliance",
    "cat": "재무·회계·법무",
-   "count": 267,
+   "count": 269,
    "link": true
   },
   "머신러닝": {
@@ -42889,7 +42973,7 @@
   "임베디드·펌웨어": {
    "slug": "embedded-firmware",
    "cat": "임베디드·제어",
-   "count": 259,
+   "count": 260,
    "link": true
   },
   "Azure·GCP": {
@@ -42925,7 +43009,7 @@
   "REST API 설계": {
    "slug": "rest-api",
    "cat": "웹·API",
-   "count": 226,
+   "count": 227,
    "link": true
   },
   "Adobe 그래픽": {
@@ -42943,7 +43027,7 @@
   "기술영업": {
    "slug": "technical-sales",
    "cat": "영업·사업개발",
-   "count": 206,
+   "count": 207,
    "link": true
   },
   "영업기획·영업관리": {
@@ -43006,15 +43090,15 @@
    "count": 172,
    "link": true
   },
-  "물류·창고 운영": {
-   "slug": "warehouse-logistics",
-   "cat": "업무 영역 — 생산·품질·설비",
-   "count": 171,
-   "link": true
-  },
   "일본어": {
    "slug": "japanese",
    "cat": "어학",
+   "count": 172,
+   "link": true
+  },
+  "물류·창고 운영": {
+   "slug": "warehouse-logistics",
+   "cat": "업무 영역 — 생산·품질·설비",
    "count": 171,
    "link": true
   },
@@ -43024,16 +43108,16 @@
    "count": 171,
    "link": true
   },
+  "브랜드 마케팅": {
+   "slug": "brand-marketing",
+   "cat": "마케팅·커머스",
+   "count": 166,
+   "link": true
+  },
   "광고 운영·세일즈": {
    "slug": "ad-operations",
    "cat": "업무 영역 — 영업·고객",
    "count": 166,
-   "link": true
-  },
-  "브랜드 마케팅": {
-   "slug": "brand-marketing",
-   "cat": "마케팅·커머스",
-   "count": 165,
    "link": true
   },
   "Node.js·TypeScript": {
@@ -43126,6 +43210,12 @@
    "count": 133,
    "link": true
   },
+  "설비보전·정비": {
+   "slug": "equipment-maintenance",
+   "cat": "업무 영역 — 생산·품질·설비",
+   "count": 132,
+   "link": true
+  },
   "CATIA·3D CAD": {
    "slug": "catia-3d-cad",
    "cat": "기구·해석",
@@ -43142,12 +43232,6 @@
    "slug": "unreal-engine",
    "cat": "게임",
    "count": 131,
-   "link": true
-  },
-  "설비보전·정비": {
-   "slug": "equipment-maintenance",
-   "cat": "업무 영역 — 생산·품질·설비",
-   "count": 130,
    "link": true
   },
   "네트워크 보안·접근통제": {
@@ -43204,22 +43288,22 @@
    "count": 114,
    "link": true
   },
+  "보안 자격증": {
+   "slug": "security-certification",
+   "cat": "보안",
+   "count": 113,
+   "link": true
+  },
   "3D 그래픽 툴": {
    "slug": "3d-graphics",
    "cat": "게임",
    "count": 113,
    "link": true
   },
-  "보안 자격증": {
-   "slug": "security-certification",
-   "cat": "보안",
-   "count": 112,
-   "link": true
-  },
   "보안관제·SOC": {
    "slug": "security-operations",
    "cat": "보안",
-   "count": 109,
+   "count": 110,
    "link": true
   },
   "ROS·로봇 SW": {
@@ -43285,7 +43369,7 @@
   "GMP·밸리데이션": {
    "slug": "gmp",
    "cat": "품질·안전·인증",
-   "count": 100,
+   "count": 101,
    "link": true
   },
   "고속 인터페이스": {
@@ -43321,13 +43405,13 @@
   "사무보조·어시스턴트": {
    "slug": "office-assistant",
    "cat": "업무 영역 — 운영·지원",
-   "count": 96,
+   "count": 97,
    "link": true
   },
   "게임 기획·레벨": {
    "slug": "game-design",
    "cat": "게임",
-   "count": 95,
+   "count": 96,
    "link": true
   },
   "인사기획·보상": {
@@ -43351,7 +43435,7 @@
   "네트워크": {
    "slug": "networking",
    "cat": "클라우드·인프라",
-   "count": 89,
+   "count": 90,
    "link": true
   },
   "이커머스 운영": {
@@ -43402,6 +43486,18 @@
    "count": 83,
    "link": true
   },
+  "생산직·제조 현장": {
+   "slug": "production-operator",
+   "cat": "업무 영역 — 생산·품질·설비",
+   "count": 80,
+   "link": true
+  },
+  "시설관리·FM": {
+   "slug": "facility-management",
+   "cat": "업무 영역 — 운영·지원",
+   "count": 80,
+   "link": true
+  },
   "제조품질·QC": {
    "slug": "manufacturing-quality",
    "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
@@ -43418,18 +43514,6 @@
    "slug": "webtoon-editing",
    "cat": "업무 영역 — 콘텐츠·언어",
    "count": 80,
-   "link": true
-  },
-  "시설관리·FM": {
-   "slug": "facility-management",
-   "cat": "업무 영역 — 운영·지원",
-   "count": 79,
-   "link": true
-  },
-  "생산직·제조 현장": {
-   "slug": "production-operator",
-   "cat": "업무 영역 — 생산·품질·설비",
-   "count": 79,
    "link": true
   },
   "게임 이펙트·애니메이션": {
@@ -43474,22 +43558,22 @@
    "count": 72,
    "link": true
   },
-  "조직문화·사내소통": {
-   "slug": "organizational-culture",
-   "cat": "업무 영역 — 인사·경영",
-   "count": 71,
+  "기타 외국어": {
+   "slug": "other-languages",
+   "cat": "어학",
+   "count": 72,
    "link": true
   },
   "정밀가공·용접": {
    "slug": "machining-welding",
    "cat": "기구·해석",
-   "count": 70,
+   "count": 71,
    "link": true
   },
-  "기타 외국어": {
-   "slug": "other-languages",
-   "cat": "어학",
-   "count": 70,
+  "조직문화·사내소통": {
+   "slug": "organizational-culture",
+   "cat": "업무 영역 — 인사·경영",
+   "count": 71,
    "link": true
   },
   "대용량 트래픽·서버": {
@@ -43546,6 +43630,12 @@
    "count": 66,
    "link": true
   },
+  "급여·노무": {
+   "slug": "payroll-labor",
+   "cat": "인사·구매·운영",
+   "count": 65,
+   "link": true
+  },
   "GraphQL·gRPC": {
    "slug": "graphql-grpc",
    "cat": "웹·API",
@@ -43561,12 +43651,6 @@
   "클린룸·설비": {
    "slug": "cleanroom-facility",
    "cat": "반도체 공정·장비",
-   "count": 64,
-   "link": true
-  },
-  "급여·노무": {
-   "slug": "payroll-labor",
-   "cat": "인사·구매·운영",
    "count": 64,
    "link": true
   },
@@ -43642,6 +43726,12 @@
    "count": 59,
    "link": true
   },
+  "의학부·학술 MSL": {
+   "slug": "msl",
+   "cat": "업무 영역 — 의료·바이오",
+   "count": 59,
+   "link": true
+  },
   "엑셀 고급": {
    "slug": "advanced-excel",
    "cat": "업무 시스템",
@@ -43657,12 +43747,6 @@
   "가상화·오픈스택": {
    "slug": "virtualization",
    "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
-   "count": 58,
-   "link": true
-  },
-  "의학부·학술 MSL": {
-   "slug": "msl",
-   "cat": "업무 영역 — 의료·바이오",
    "count": 58,
    "link": true
   },
@@ -43702,27 +43786,27 @@
    "count": 55,
    "link": true
   },
+  "매니퓰레이터·모션제어": {
+   "slug": "motion-control",
+   "cat": "로봇·비전",
+   "count": 55,
+   "link": true
+  },
+  "디지털 헬스케어": {
+   "slug": "digital-health",
+   "cat": "의료기기·헬스케어",
+   "count": 55,
+   "link": true
+  },
   "금형·사출": {
    "slug": "mold-injection",
    "cat": "기구·해석",
    "count": 54,
    "link": true
   },
-  "매니퓰레이터·모션제어": {
-   "slug": "motion-control",
-   "cat": "로봇·비전",
-   "count": 54,
-   "link": true
-  },
   "문서 도구": {
    "slug": "documentation-tools",
    "cat": "형상·협업 도구",
-   "count": 53,
-   "link": true
-  },
-  "디지털 헬스케어": {
-   "slug": "digital-health",
-   "cat": "의료기기·헬스케어",
    "count": 53,
    "link": true
   },
@@ -43972,16 +44056,16 @@
    "count": 36,
    "link": true
   },
+  "모터 설계·제어": {
+   "slug": "motor-control",
+   "cat": "전력·배터리",
+   "count": 35,
+   "link": true
+  },
   "블록체인·가상자산": {
    "slug": "blockchain",
    "cat": "금융·핀테크",
    "count": 35,
-   "link": true
-  },
-  "모터 설계·제어": {
-   "slug": "motor-control",
-   "cat": "전력·배터리",
-   "count": 34,
    "link": true
   },
   "소비자보호·민원": {
@@ -43990,16 +44074,16 @@
    "count": 34,
    "link": true
   },
+  "보훈·장애인 채용": {
+   "slug": "veterans-disability-hiring",
+   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
+   "count": 33,
+   "link": true
+  },
   "교육과정 개발": {
    "slug": "curriculum-development",
    "cat": "교육·공공",
    "count": 33,
-   "link": true
-  },
-  "보훈·장애인 채용": {
-   "slug": "veterans-disability-hiring",
-   "cat": "업무 영역 — 채용 구분 (2026-11-02 추가)",
-   "count": 32,
    "link": true
   },
   "금융 오퍼레이션": {
@@ -44134,6 +44218,12 @@
    "count": 20,
    "link": true
   },
+  "연구기획·연구관리": {
+   "slug": "research-planning",
+   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
+   "count": 20,
+   "link": true
+  },
   "실시간 처리": {
    "slug": "stream-processing",
    "cat": "데이터 엔지니어링 세부",
@@ -44176,12 +44266,6 @@
    "count": 18,
    "link": true
   },
-  "연구기획·연구관리": {
-   "slug": "research-planning",
-   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
-   "count": 18,
-   "link": true
-  },
   "부트로더·BSP": {
    "slug": "bsp",
    "cat": "임베디드 세부",
@@ -44218,6 +44302,12 @@
    "count": 17,
    "link": true
   },
+  "전기공사·전계장": {
+   "slug": "electrical-construction",
+   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
+   "count": 17,
+   "link": true
+  },
   "공차·GD&T": {
    "slug": "gdt",
    "cat": "기구·해석",
@@ -44228,12 +44318,6 @@
    "slug": "thermal-fluid-analysis",
    "cat": "기구·해석",
    "count": 17,
-   "link": true
-  },
-  "전기공사·전계장": {
-   "slug": "electrical-construction",
-   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
-   "count": 16,
    "link": true
   },
   "레이더": {
@@ -44320,6 +44404,12 @@
    "count": 12,
    "link": true
   },
+  "변리사": {
+   "slug": "patent-attorney",
+   "cat": "재무·회계·법무",
+   "count": 11,
+   "link": true
+  },
   "원자력": {
    "slug": "nuclear",
    "cat": "항공·방산·조선",
@@ -44341,12 +44431,6 @@
   "측정·검교정": {
    "slug": "measurement-calibration",
    "cat": "기구·생산 세부",
-   "count": 10,
-   "link": true
-  },
-  "변리사": {
-   "slug": "patent-attorney",
-   "cat": "재무·회계·법무",
    "count": 10,
    "link": true
   },
@@ -44446,6 +44530,12 @@
    "count": 6,
    "link": true
   },
+  "수처리·환경설비": {
+   "slug": "water-treatment",
+   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
+   "count": 5,
+   "link": true
+  },
   "기판·PCB 제조": {
    "slug": "pcb-manufacturing",
    "cat": "반도체 후공정",
@@ -44480,12 +44570,6 @@
    "slug": "thin-film-analysis",
    "cat": "반도체 세부",
    "count": 5,
-   "link": true
-  },
-  "수처리·환경설비": {
-   "slug": "water-treatment",
-   "cat": "업무 영역 — 생산·품질 (2026-11-02 추가)",
-   "count": 4,
    "link": true
   },
   "건축·토목 설계": {
