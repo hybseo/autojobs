@@ -44,7 +44,7 @@ def dump(spec):
             enc = r.headers.get_content_charset() or "utf-8"
             txt = raw.decode(enc, "replace")
             print(f"status {r.status} · {len(raw)} bytes · {r.headers.get('content-type')}")
-            print(txt[:20000])
+            print(txt[:400000])
     except Exception as e:
         print(f"오류 {type(e).__name__}: {str(e)[:300]}")
 
