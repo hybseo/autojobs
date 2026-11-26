@@ -3741,13 +3741,14 @@
   {
    "name": "GS칼텍스",
    "slug": "gscaltex",
-   "ats": "none",
-   "code": "gscaltex",
+   "ats": "ehr_rem",
+   "code": "recruit.gscaltex.com",
    "industry": [
-    "중공업·화학·소재"
+    "중공업·화학·소재",
+    "건설·운송·에너지"
    ],
    "enabled": false,
-   "note": "정유. 자체 채용 시스템(recruit.gscaltex.com). 2026-10-01 확인 0건. 공고가 올라오면 어댑터를 만들어 되살리세요"
+   "note": "정유. 자체 채용 시스템(recruit.gscaltex.com). 2026-10-01 확인 0건. 공고가 올라오면 어댑터를 만들어 되살리세요 / 2026-11-27 재시도: GS칼텍스·대우건설은 같은 채용 시스템(/rem/apply, 목록은 POST /Application.do)입니다. 화면의 서명값(__viewState, SHA-256 3회)까지 똑같이 만들어 ehr_rem 수집기를 붙였지만, 깃허브 서버에서는 실제 브라우저로 열어도 목록 요청이 HTTP 500 으로 막힙니다(해외 서버 차단으로 보임). 국내에서 도는 수집 환경이 생기면 enabled 만 켜면 됩니다."
   },
   {
    "name": "대한유화",
@@ -6946,13 +6947,13 @@
   {
    "name": "아모레퍼시픽",
    "slug": "amorepacific",
-   "ats": "none",
-   "code": "amorepacific",
+   "ats": "successfactors",
+   "code": "careers.apgroup.com",
    "industry": [
     "소비재·식품"
    ],
-   "enabled": false,
-   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). apgroup.com 채용 소개 페이지만 있고 공고 목록 주소를 확인하지 못했습니다(국문 하위 페이지는 깃허브 러너에 403). 비활성."
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). apgroup.com 채용 소개 페이지만 있고 공고 목록 주소를 확인하지 못했습니다(국문 하위 페이지는 깃허브 러너에 403). 비활성. / 2026-11-27 되살림: 채용 공지의 지원 링크가 careers.apgroup.com(SAP SuccessFactors)으로 가는 것을 확인. 시험 수집 14건(아모레퍼시픽 12, 에뛰드 2)."
   },
   {
    "name": "삼양식품",
@@ -6968,13 +6969,13 @@
   {
    "name": "대우건설",
    "slug": "daewoo-enc",
-   "ats": "none",
-   "code": "daewoo-enc",
+   "ats": "ehr_rem",
+   "code": "erecruit.daewooenc.com",
    "industry": [
     "건설·운송·에너지"
    ],
    "enabled": false,
-   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 자체 채용 사이트 erecruit.daewooenc.com. 목록 요청(Application.do)에 화면이 만든 서명값(__viewState hash)이 필요해 아직 못 붙였습니다. 비활성."
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 자체 채용 사이트 erecruit.daewooenc.com. 목록 요청(Application.do)에 화면이 만든 서명값(__viewState hash)이 필요해 아직 못 붙였습니다. 비활성. / 2026-11-27 재시도: GS칼텍스·대우건설은 같은 채용 시스템(/rem/apply, 목록은 POST /Application.do)입니다. 화면의 서명값(__viewState, SHA-256 3회)까지 똑같이 만들어 ehr_rem 수집기를 붙였지만, 깃허브 서버에서는 실제 브라우저로 열어도 목록 요청이 HTTP 500 으로 막힙니다(해외 서버 차단으로 보임). 국내에서 도는 수집 환경이 생기면 enabled 만 켜면 됩니다."
   },
   {
    "name": "한국전력",
