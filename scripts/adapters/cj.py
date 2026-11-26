@@ -147,7 +147,9 @@ def fetch(company):
             "unit": "공고",
             "company": str(x.get("compnm") or "").strip() or name,
             "companySlug": slug,
-            "title": re.sub(r"\s+", " ", str(x.get("zz_title") or "")).strip(),
+            # 제목에 <BR> 같은 줄바꿈 태그가 섞여 옵니다(CJ대한통운 건설부문 등).
+            # 태그를 빈칸으로 바꾸고 엔티티(&amp; 등)도 풀어 둡니다. (2026-11-26)
+            "title": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", str(x.get("zz_title") or "")))).strip(),
             "location": str(x.get("location_cd_nm") or "").strip(),
             "career": CAREER.get(str(x.get("zz_target_1") or ""), "무관"),
             "postedAt": _date(x.get("zz_str_dt_str")),

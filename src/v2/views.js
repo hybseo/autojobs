@@ -297,7 +297,8 @@ export function scanStrip(D) {
 }
 
 /* ── 공고 목록 (/jobs/) ─────────────────────────────── */
-export const CLEAR = () => ({ ind: null, tag: null, car: null, reg: null, co: null, role: null, day: null, recent: null });
+/* af = 계열사 이름(공고의 회사명). 그룹 통합 채용(CJ그룹·LG그룹 등)에서 계열사 하나만 볼 때 co 와 함께 씁니다. (2026-11-26) */
+export const CLEAR = () => ({ ind: null, tag: null, car: null, reg: null, co: null, af: null, role: null, day: null, recent: null });
 export const newState = () => ({ q: '', sort: 'dl', tab: '마감', f: CLEAR(), n: 40, sidedown: false });
 
 export function filtered(D, S) {
@@ -310,6 +311,7 @@ export function filtered(D, S) {
     if (f.car && (j.k || '미기재') !== f.car) return false;
     if (f.role && j.r.indexOf(f.role) < 0) return false;
     if (f.co && j.c !== f.co) return false;
+    if (f.af && j.n !== f.af) return false;
     if (f.reg && regionOf(j.l) !== f.reg) return false;
     if (f.day && j.cl !== f.day) return false;
     if (f.recent && j.f < f.recent) return false;
@@ -355,7 +357,7 @@ export function viewJobs(D, S) {
     + '</div>';
 
   const chosen = [];
-  ['ind', 'tag', 'car', 'reg', 'role', 'co', 'day', 'recent'].forEach((k) => {
+  ['ind', 'tag', 'car', 'reg', 'role', 'co', 'af', 'day', 'recent'].forEach((k) => {
     if (!f[k]) return;
     const label = k === 'co' ? coOf(D, f[k]).n : k === 'role' ? roleName(D, f[k])
       : k === 'day' ? `${ymd(f[k])} 마감` : k === 'recent' ? '최근 7일 신규' : k === 'ind' ? indLabel(f[k]) : f[k];
@@ -423,9 +425,16 @@ export function viewJob(D, j, opt = {}) {
     : j.cl ? `${j.cl.replace(/-/g, '. ')} 마감` : '마감일 없음 · 상시 채용';
 
   /* 여기서 갈 수 있는 곳 — 건수 적은 것부터 (좁은 문이 더 쓸모 있습니다). */
-  const sameCo = D.jobs.filter((x) => x.c === j.c && x.id !== j.id).length;
+  /* 그룹 통합 채용은 「CJ그룹의 다른 공고」가 푸드빌·대한통운까지 다 묶여서
+     계열사 단위로 보냅니다 (2026-11-26 대표님 지적). */
   const doors = [];
-  if (sameCo) doors.push([coHref(j.c), `${co.n}의 다른 공고`, sameCo]);
+  if (co.g && j.n) {
+    const sameAf = D.jobs.filter((x) => x.c === j.c && x.n === j.n && x.id !== j.id).length;
+    if (sameAf) doors.push([jobsHref({ co: j.c, af: j.n }), `${j.n}의 다른 공고`, sameAf]);
+  } else {
+    const sameCo = D.jobs.filter((x) => x.c === j.c && x.id !== j.id).length;
+    if (sameCo) doors.push([coHref(j.c), `${co.n}의 다른 공고`, sameCo]);
+  }
   if (j.i[0] && j.r[0]) {
     const n1 = D.jobs.filter((x) => x.i.indexOf(j.i[0]) >= 0 && x.r.indexOf(j.r[0]) >= 0).length;
     if (n1) doors.push([jobsHref({ ind: j.i[0], role: j.r[0] }), `${indLabel(j.i[0])} × ${roleName(D, j.r[0])}`, n1]);
@@ -562,6 +571,8 @@ export function viewCompany(D, slug) {
   const c = coOf(D, slug);
   const mine = D.jobs.filter((j) => j.c === c.s);
   const rs = counts(mine, (j) => j.r);
+  const afs = counts(mine, (j) => j.n || '');
+  delete afs[''];
   const firsts = mine.map((j) => j.f).filter(Boolean).sort();
   const fresh = mine.filter((j) => j.f === D.meta.at);
   const sorted = mine.slice().sort(byDl);
@@ -577,6 +588,10 @@ export function viewCompany(D, slug) {
     + `<div><span class="n">${num(c.w)}</span><span class="l">오늘 신규</span></div>`
     + `<div><span class="n">${num(c.x)}</span><span class="l">최근 마감 (60일 보관)</span></div>`
     + '</div>'
+    /* 그룹 통합 채용은 계열사별로 바로 좁혀 볼 수 있게 합니다 (2026-11-26). */
+    + (c.g && Object.keys(afs).length > 1 ? '<section class="sect"><div class="sect-h"><h2>계열사별로 보기</h2></div>'
+      + `<div class="chips">${topKeys(afs, 40).map((n) => `<a class="chip" href="${jobsHref({ co: c.s, af: n })}">${esc(n)}`
+        + `<span class="n">${afs[n]}</span></a>`).join('')}</div></section>` : '')
     + (Object.keys(rs).length ? '<section class="sect"><div class="sect-h"><h2>많이 뽑는 직무</h2></div>'
       + `<div class="chips">${topKeys(rs, 10).map((r) => `<a class="chip" href="${roleHref(r)}">${esc(roleName(D, r))}`
         + `<span class="n">${rs[r]}</span></a>`).join('')}</div></section>` : '')
@@ -611,7 +626,18 @@ export function viewRoles(D) {
 }
 function scopeView(D, title, sub, arr, extra) {
   const cTag = counts(arr, (j) => j.g);
-  const cCo = counts(arr, (j) => j.c);
+  /* 「이 분야 기업」 칩. 그룹 통합 채용은 계열사마다 산업이 달라서, 그룹 이름 하나로
+     묶으면 게임·엔터 페이지의 「CJ그룹」을 눌렀을 때 푸드빌·대한통운까지 나왔습니다
+     (2026-11-26 대표님 지적). 그룹은 계열사 이름으로 세고, 누르면 그 계열사 공고만
+     보이는 목록으로 보냅니다. 열쇠는 「회사slug\u0001계열사명」입니다. */
+  const SEP = '\u0001';
+  const cCo = counts(arr, (j) => (coOf(D, j.c).g && j.n ? `${j.c}${SEP}${j.n}` : j.c));
+  const coChip = (k) => {
+    const [s, af] = k.split(SEP);
+    return af
+      ? `<a class="chip" href="${jobsHref({ co: s, af })}">${esc(af)}<span class="n">${cCo[k]}</span></a>`
+      : `<a class="chip" href="${coHref(s)}">${esc(coOf(D, s).n)}<span class="n">${cCo[k]}</span></a>`;
+  };
   const fresh = arr.filter((j) => j.f === D.meta.at).length;
   const soon = arr.filter((j) => !j.al && j.d <= 3).length;
   const sorted = arr.slice().sort(byDl);
@@ -627,7 +653,7 @@ function scopeView(D, title, sub, arr, extra) {
     + topKeys(cTag, 14).map((t) => `<a class="chip" href="${tagHref(D, t)}">${esc(t)}<span class="n">${cTag[t]}</span></a>`).join('')
     + '</div></section>'
     + '<section class="sect"><div class="sect-h"><h2>이 분야 기업</h2></div><div class="chips">'
-    + topKeys(cCo, 12).map((s) => `<a class="chip" href="${coHref(s)}">${esc(coOf(D, s).n)}<span class="n">${cCo[s]}</span></a>`).join('')
+    + topKeys(cCo, 12).map(coChip).join('')
     + '</div></section>'
     + `<section class="sect"><div class="sect-h"><h2>공고</h2></div>${listOf(D, sorted, 40, 'reveal')}</section>`;
 }
