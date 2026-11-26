@@ -146,7 +146,11 @@ def list_raw(domain, debug=False):
     if debug or st != 200:
         print(f"      · ehr_rem({domain}): 보낸 칸 {list(form)}")
         print(f"      · __viewState {form['__viewState']}")
-        print(f"      · HTTP {st} · 응답 앞부분: " + re.sub(r"\s+", " ", txt[:1200]))
+        body = re.sub(r"<script.*?</script>|<style.*?</style>", " ", txt, flags=re.S)
+        body = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", body)))
+        print(f"      · HTTP {st} · 응답 글자: {body[:1500]}")
+        for m in re.finditer(r"(?i)(exception|error|오류|에러|msg|message)[^<]{0,200}", txt):
+            print("        ~ " + re.sub(r"\s+", " ", m.group(0))[:240])
     return txt, form
 
 
