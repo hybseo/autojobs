@@ -4,520 +4,92 @@
  ],
  "companies": [
   {
-   "name": "하나은행",
-   "slug": "hana-bank",
-   "ats": "recruiter",
-   "code": "hanabank",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "KB손해보험",
-   "slug": "kb-insurance",
-   "ats": "recruiter",
-   "code": "kbinsure",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "신한은행",
-   "slug": "shinhan-bank",
-   "ats": "recruiter",
-   "code": "shinhan",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "NH투자증권",
-   "slug": "nh-securities",
-   "ats": "recruiter",
-   "code": "nhqv",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "전북은행",
-   "slug": "jeonbuk-bank",
-   "ats": "recruiter",
-   "code": "jbbank",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "부산은행",
-   "slug": "busan-bank",
-   "ats": "recruiter",
-   "code": "busanbank",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "경남은행",
-   "slug": "kyongnam-bank",
-   "ats": "recruiter",
-   "code": "knbank",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "메리츠증권",
-   "slug": "meritz-securities",
-   "ats": "recruiter_v1",
-   "code": "meritz",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "KB증권",
-   "slug": "kb-securities",
-   "ats": "greeting",
-   "code": "kbsec",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "KB국민은행",
-   "slug": "kb-kookmin-bank",
-   "ats": "inhr",
-   "code": "CO202507252710,kbstar",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "KT&G",
-   "slug": "ktng",
-   "ats": "recruiter",
-   "code": "ktng",
+   "name": "아모레퍼시픽",
+   "slug": "amorepacific",
+   "ats": "successfactors",
+   "code": "careers.apgroup.com",
    "industry": [
     "소비재·식품"
    ],
    "enabled": true
   },
   {
-   "name": "오리온",
-   "slug": "orion",
-   "ats": "recruiter",
-   "code": "orion",
-   "industry": [
-    "소비재·식품"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "코스맥스",
-   "slug": "cosmax",
-   "ats": "recruiter",
-   "code": "cosmax",
-   "industry": [
-    "소비재·식품"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "에이피알",
-   "slug": "apr",
-   "ats": "ninehire",
-   "code": "apr-careers,9109db60-8b45-11ed-b8d6-653bf053ec74",
-   "industry": [
-    "소비재·식품"
-   ],
-   "enabled": true,
-   "domain": "apr-careers.com"
-  },
-  {
-   "name": "대한항공",
-   "slug": "korean-air",
-   "ats": "recruiter",
-   "code": "koreanair",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "하이브",
-   "slug": "hybe",
-   "ats": "greeting",
-   "code": "hybe",
+   "name": "포스코(새 계열사 확인)",
+   "slug": "posco-new-check",
+   "ats": "posco",
+   "code": "posco",
    "industry": [
     "건설·운송·에너지"
    ],
    "enabled": true,
-   "domain": "careers.hybecorp.com"
+   "affiliates": [
+    "포스코이앤씨",
+    "포스코플로우"
+   ]
   },
   {
-   "name": "DB그룹",
-   "slug": "dbgroup",
-   "ats": "recruiter",
-   "code": "dbgroup",
+   "name": "한화(새 계열사 확인)",
+   "slug": "hanwha-new-check",
+   "ats": "hanwha",
+   "code": "hanwhain",
    "industry": [
-    "반도체",
-    "금융"
+    "건설·운송·에너지"
    ],
    "enabled": true,
-   "splitByTitle": true,
-   "affiliateIndustry": {
-    "DB하이텍": [
-     "반도체"
-    ],
-    "DB글로벌칩": [
-     "반도체"
-    ],
-    "DB손해보험": [
-     "금융"
-    ],
-    "DB생명": [
-     "금융"
-    ],
-    "DB증권": [
-     "금융"
-    ],
-    "DB자산운용": [
-     "금융"
-    ],
-    "DB캐피탈": [
-     "금융"
-    ],
-    "DB저축은행": [
-     "금융"
-    ]
-   }
+   "affiliates": [
+    "건설부문",
+    "호텔앤드리조트",
+    "아워홈",
+    "갤러리아"
+   ]
   },
   {
-   "name": "우리금융그룹",
-   "slug": "woori-fg",
-   "ats": "woorifg",
-   "code": "woorifg",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "현대건설",
-   "slug": "hyundai-enc",
-   "ats": "hdec",
-   "code": "hdec",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "LG생활건강",
-   "slug": "lg-hnh-test",
-   "ats": "lg",
-   "code": "LGHH",
-   "industry": [
-    "소비재·식품"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "HMM",
-   "slug": "hmm-v1",
-   "ats": "recruiter_v1",
-   "code": "hmm21",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "HMM",
-   "slug": "hmm-v2",
-   "ats": "recruiter",
-   "code": "hmm21",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "에스엠",
-   "slug": "sm-ent",
-   "ats": "greeting",
-   "code": "sment",
-   "domain": "recruit.smentertainment.com",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "JYP Ent.",
-   "slug": "jyp-ent",
-   "ats": "greeting",
-   "code": "jype1",
-   "domain": "recruit-apply.jype.com",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "SM C&C",
-   "slug": "sm-cnc",
-   "ats": "greeting",
-   "code": "smcultureandcontents",
-   "domain": "careers.smcultureandcontents.com",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "SAMG엔터",
-   "slug": "samg-ent",
-   "ats": "greeting",
-   "code": "samgent",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "더핑크퐁컴퍼니",
-   "slug": "pinkfong",
-   "ats": "greeting",
-   "code": "thepinkfongcompany",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "와이랩",
-   "slug": "ylab",
-   "ats": "greeting",
-   "code": "ylab",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "매드업",
-   "slug": "madup",
-   "ats": "greeting",
-   "code": "maduprecruiting",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "와이즈버즈",
-   "slug": "wisebirds",
-   "ats": "greeting",
-   "code": "recruit-wisebirds",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "레뷰코퍼레이션",
-   "slug": "revu",
-   "ats": "greeting",
-   "code": "revu",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "차이커뮤니케이션(확인용)",
-   "slug": "chai-check",
-   "ats": "greeting",
-   "code": "chai",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "와이지엔터테인먼트",
-   "slug": "yg-ent",
-   "ats": "recruiter",
-   "code": "yg-entertainment",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "NEW",
-   "slug": "next-ent-world",
-   "ats": "recruiter",
-   "code": "its-new",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "자이언트스텝",
-   "slug": "giantstep",
-   "ats": "recruiter",
-   "code": "giantstepcorp",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "이노션",
-   "slug": "innocean",
-   "ats": "recruiter",
-   "code": "innocean",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "KT그룹",
-   "slug": "kt-group",
-   "ats": "recruiter",
-   "code": "kt",
-   "industry": [
-    "IT"
-   ],
-   "enabled": true,
-   "splitByTitle": true
-  },
-  {
-   "name": "삼성(제일기획 확인용)",
-   "slug": "samsung-cheil-check",
+   "name": "삼성(새 계열사 확인)",
+   "slug": "samsung-new-check",
    "ats": "samsung",
    "code": "samsungcareers",
-   "affiliates": [
-    "제일기획"
-   ],
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "LG그룹(HS애드 확인용)",
-   "slug": "lg-hsad-check",
-   "ats": "lg",
-   "code": "GIIR",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "대원미디어",
-   "slug": "daewonmedia",
-   "ats": "ninehire",
-   "code": "daewonmedia,ec4abbd0-8c6d-11f0-8815-d9c0c4c32872",
-   "industry": [
-    "게임·엔터·미디어"
-   ],
-   "enabled": true
-  },
-  {
-   "name": "CJ그룹",
-   "slug": "cj-group",
-   "ats": "cj",
-   "code": "recruit.cj.net",
    "industry": [
     "소비재·식품"
    ],
    "enabled": true,
-   "affiliateIndustry": {
-    "CJ ENM": [
-     "게임·엔터·미디어"
-    ],
-    "TVING": [
-     "게임·엔터·미디어",
-     "IT"
-    ],
-    "스튜디오드래곤": [
-     "게임·엔터·미디어"
-    ],
-    "CJ CGV": [
-     "게임·엔터·미디어"
-    ],
-    "CJ 4DPLEX": [
-     "게임·엔터·미디어"
-    ],
-    "CJ메조미디어": [
-     "게임·엔터·미디어"
-    ],
-    "CJ제일제당": [
-     "소비재·식품"
-    ],
-    "CJ푸드빌": [
-     "소비재·식품"
-    ],
-    "CJ프레시웨이": [
-     "소비재·식품"
-    ],
-    "CJ올리브영": [
-     "소비재·식품"
-    ],
-    "CJ Wellcare": [
-     "소비재·식품"
-    ],
-    "CJ씨푸드": [
-     "소비재·식품"
-    ],
-    "프레시원": [
-     "소비재·식품"
-    ],
-    "삼해상사": [
-     "소비재·식품"
-    ],
-    "원지": [
-     "소비재·식품"
-    ],
-    "CJ RetailOne": [
-     "소비재·식품"
-    ],
-    "CJ대한통운": [
-     "건설·운송·에너지"
-    ],
-    "한국복합물류": [
-     "건설·운송·에너지"
-    ],
-    "CJ LiveCity": [
-     "건설·운송·에너지"
-    ],
-    "CJ올리브네트웍스": [
-     "IT"
-    ],
-    "CJ텔레닉스": [
-     "IT"
-    ],
-    "CJ바이오사이언스": [
-     "제약바이오"
-    ]
-   }
+   "affiliates": [
+    "웰스토리",
+    "호텔신라",
+    "삼성물산"
+   ]
+  },
+  {
+   "name": "두산(새 계열사 확인)",
+   "slug": "doosan-new-check",
+   "ats": "doosan",
+   "code": "career.doosan.com",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "두산로지스틱스솔루션"
+   ]
+  },
+  {
+   "name": "SK(새 계열사 확인)",
+   "slug": "sk-new-check",
+   "ats": "sk",
+   "code": "skcareers",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "affiliates": [
+    "SK ecoplant",
+    "SK에코플랜트",
+    "SK gas",
+    "SK가스",
+    "SK D&D",
+    "SK디앤디",
+    "SK oceanplant",
+    "SK오션플랜트"
+   ]
   }
  ]
 }
