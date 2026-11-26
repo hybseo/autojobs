@@ -18,6 +18,18 @@
                              우리은행은 인크루트 채용 페이지로 엽니다. 슬래시가 네 개라 고칩니다.
 - 서버가 예전 방식 TLS 재협상을 요구해서 그냥 접속하면 SSL 오류가 납니다
   (UNSAFE_LEGACY_RENEGOTIATION_DISABLED). 이 사이트에만 OP_LEGACY_SERVER_CONNECT 를 켭니다.
+
+본문 (2026-11-26 추가, 대표님 「2번해」)
+----------------------------------------
+목록에는 본문이 없어서 공고마다 원문을 한 번 더 엽니다.
+- view.do?seq=N    <div class="cont"> 부터 첨부파일 칸 <div class="file-box"> 앞까지가 본문(HTML).
+                   마감일 칸은 없고 본문의 「제출기간 : 2026.11.13(금) ~ 2026.11.30(월)」 같은
+                   줄에 있습니다. 그 줄이 있을 때만 끝 날짜를 마감일로 씁니다.
+- 인크루트 우리은행 recruit.incruit.com/wooribank/job/{id}
+                   euc-kr 페이지입니다. 본문은 숨은 <textarea id="jobnoticeContents"> 안의 HTML
+                   (화면의 iframe 이 같은 내용을 보여 줍니다).
+                   「접수시간 2026. 11. 02. 09:00 ~ 2026. 11. 30. 23:59」에서 시작일·마감일을 씁니다.
+원문을 못 열면 예전처럼 본문 없이 원문 링크만 둡니다.
 """
 import html
 import re
@@ -45,17 +57,51 @@ def _ctx():
     return c
 
 
-def _get(url):
+def _get(url, enc="utf-8", legacy=True):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     last = None
     for i in range(3):
         try:
-            with urllib.request.urlopen(req, timeout=25, context=_ctx()) as r:
-                return r.read().decode("utf-8", "replace")
+            kw = {"context": _ctx()} if legacy else {}
+            with urllib.request.urlopen(req, timeout=25, **kw) as r:
+                return r.read().decode(enc, "replace")
         except Exception as e:
             last = e
             time.sleep(2 + i * 2)
     raise last
+
+
+DAY = r"(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})"
+INCRUIT_BODY = re.compile(r'<textarea id="jobnoticeContents"[^>]*>(.*?)</textarea>', re.S)
+INCRUIT_DAYS = re.compile(r"접수시간\s*</strong>\s*<em>\s*" + DAY + r"[^~<]*~\s*" + DAY, re.S)
+OWN_BODY = re.compile(r'<div class="cont">(.*?)(?:<div class="file-box">|<div class="section shift">)', re.S)
+OWN_CLOSE = re.compile(r"(?:제출|접수|지원)\s*기간[^~\n<]{0,60}~\s*" + DAY)
+
+
+def _ymd(y, m, d):
+    return f"{y}-{int(m):02d}-{int(d):02d}"
+
+
+def detail(url):
+    """원문에서 (본문 HTML, 시작일, 마감일)을 꺼냅니다. 못 꺼내면 빈 값."""
+    try:
+        if "recruit.incruit.com" in url:
+            raw = _get(url, enc="cp949", legacy=False)
+            m = INCRUIT_BODY.search(raw)
+            body = m.group(1).strip() if m else ""
+            d = INCRUIT_DAYS.search(raw)
+            if d:
+                return body, _ymd(*d.groups()[:3]), _ymd(*d.groups()[3:])
+            return body, "", ""
+        if "view.do?seq=" in url:
+            raw = _get(url)
+            m = OWN_BODY.search(raw)
+            body = m.group(1).strip() if m else ""
+            c = OWN_CLOSE.search(_text(body))
+            return body, "", (_ymd(*c.groups()) if c else "")
+    except Exception as e:
+        print(f"      ! 우리금융그룹 원문을 못 열었습니다 {type(e).__name__}: {str(e)[:120]} · {url}")
+    return "", "", ""
 
 
 def _text(s):
@@ -104,6 +150,9 @@ def fetch(company):
     name, slug = company["name"], company["slug"]
     jobs = []
     for x in list_open():
+        body, start, close = detail(x["url"]) if x["url"] else ("", "", "")
+        # 본문이 이미지 한 장뿐이면 세부 내용을 읽을 수 없으니 원문으로 보냅니다.
+        image_only = len(_text(body)) < 50 and "<img" in body.lower()
         jobs.append({
             "id": f"woorifg-{x['seq']}",
             "unit": "공고",
@@ -112,14 +161,14 @@ def fetch(company):
             "title": x["title"],
             "location": "",
             "career": CAREER.get(x["kind"], "무관"),
-            "postedAt": x["posted"],
-            # 목록에 마감일이 없습니다. 지어내지 않습니다.
-            "closesAt": "",
+            "postedAt": start or x["posted"],
+            # 원문에 적힌 마감일만 씁니다. 없으면 지어내지 않고 비워 둡니다.
+            "closesAt": close,
             "dday": None,
-            "multiRole": False,
+            "multiRole": image_only,
             "sourceTitle": "",
             "sourceUrl": x["url"] or LIST.format(1),
-            # 목록에 본문이 없습니다. 원문으로 보냅니다.
-            "description": "",
+            "description": "" if image_only else body,
         })
+        time.sleep(0.3)
     return jobs

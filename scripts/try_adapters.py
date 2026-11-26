@@ -95,6 +95,10 @@ def main():
         total += len(got)
         cnt = collections.Counter(str(j.get("company")) for j in got)
         print(f"  → {len(got)}건 · 회사 {dict(cnt.most_common(12))}")
+        if "--full" in args or only:
+            # 요약용: --only 로 몇 곳만 돌릴 때는 공고 하나를 한 줄 JSON 으로 모두 찍습니다.
+            for j in got:
+                print("JOBJSON " + json.dumps({k: j.get(k) for k in ("id", "company", "title", "closesAt", "multiRole", "location", "description")}, ensure_ascii=False))
         for j in got[:4]:
             print(f"    - {str(j.get('title'))[:60]} | {j.get('closesAt')} | {j.get('career')} | {str(j.get('sourceUrl'))[:110]} | 본문 {len(str(j.get('description') or ''))}자")
     print(f"=== 합계 {total}건")

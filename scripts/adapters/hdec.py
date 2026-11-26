@@ -21,6 +21,15 @@
   (M4_RecruitCard 의 onGetLink: https://recruit.hdec.co.kr/#/Recruit/${RE_NO}).
 - 화면 JOBS 숫자(25개)와 API 건수(20건)가 다른 것은 화면이 상시 채용을 따로 더하기
   때문으로 보입니다(?mode=always). 상시 쪽은 확인 전이라 넣지 않았습니다.
+
+본문 (2026-11-26 추가, 대표님 「2번해」)
+----------------------------------------
+  상세  POST https://recruit.hdec.co.kr/v1/apply_view/search01?isPrivate=false
+        {"RE_NO":"3065","NOTI_SEQ_NO":1}
+- 응답의 NOTI_TXT 가 본문입니다. 확인한 3065·2766 둘 다 <img> 한 장뿐이었습니다
+  (현대건설은 공고문을 그림으로 올립니다). 글자가 거의 없고 그림만 있으면
+  다른 수집기와 같이 multiRole=True(이미지 공고)로 두고 본문은 비웁니다.
+- 글자로 된 본문이 오면 그대로 씁니다.
 """
 import html
 import json
@@ -29,6 +38,7 @@ import time
 import urllib.request
 
 API = "https://recruit.hdec.co.kr/v1/apply_list/search01?reClass=&reDtlClass="
+DETAIL = "https://recruit.hdec.co.kr/v1/apply_view/search01?isPrivate=false"
 VIEW = "https://recruit.hdec.co.kr/#/Recruit/{}"
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 "
@@ -51,6 +61,29 @@ def _get():
     raise last
 
 
+def _text(s):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s or ""))).strip()
+
+
+def detail(re_no):
+    """공고 본문 HTML. 못 가져오면 빈 문자열."""
+    body = json.dumps({"RE_NO": str(re_no), "NOTI_SEQ_NO": 1}).encode()
+    req = urllib.request.Request(DETAIL, data=body, method="POST", headers={
+        "User-Agent": UA, "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json", "api_key": "Bearer"})
+    for i in range(2):
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                d = json.load(r)
+            rows = d.get("response") or []
+            return str((rows[0] if rows else {}).get("NOTI_TXT") or "")
+        except Exception as e:
+            last = e
+            time.sleep(2)
+    print(f"      ! 현대건설 {re_no} 본문을 못 가져왔습니다 {type(last).__name__}")
+    return ""
+
+
 def _date(s):
     m = re.search(r"(\d{4})\.(\d{2})\.(\d{2})", str(s or ""))
     return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
@@ -68,6 +101,9 @@ def fetch(company):
     name, slug = company["name"], company["slug"]
     jobs = []
     for x in list_open():
+        raw = detail(x.get("RE_NO"))
+        # 본문이 그림 한 장뿐이면 세부 내용을 읽을 수 없으니 원문으로 보냅니다.
+        image_only = len(_text(raw)) < 50 and "<img" in raw.lower()
         loc = " ".join(t.strip() for t in html.unescape(str(x.get("LOC_SRC_KEYWORD") or "")).split("#") if t.strip())
         jobs.append({
             "id": f"hdec-{x.get('RE_NO')}",
@@ -80,10 +116,10 @@ def fetch(company):
             "postedAt": _date(x.get("RCP_STA_YMD")),
             "closesAt": _date(x.get("RCP_END_YMD")),
             "dday": None,
-            "multiRole": False,
+            "multiRole": image_only,
             "sourceTitle": "",
             "sourceUrl": VIEW.format(x.get("RE_NO")),
-            # 목록에 본문이 없습니다. 원문으로 보냅니다.
-            "description": "",
+            "description": "" if image_only or not _text(raw) else raw,
         })
+        time.sleep(0.3)
     return jobs
