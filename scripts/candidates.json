@@ -202,6 +202,56 @@
      "금융"
     ]
    }
+  },
+  {
+   "name": "우리금융그룹",
+   "slug": "woori-fg",
+   "ats": "woorifg",
+   "code": "woorifg",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "현대건설",
+   "slug": "hyundai-enc",
+   "ats": "hdec",
+   "code": "hdec",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "LG생활건강",
+   "slug": "lg-hnh-test",
+   "ats": "lg",
+   "code": "LGHH",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "HMM",
+   "slug": "hmm-v1",
+   "ats": "recruiter_v1",
+   "code": "hmm21",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "HMM",
+   "slug": "hmm-v2",
+   "ats": "recruiter",
+   "code": "hmm21",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
   }
  ]
 }
