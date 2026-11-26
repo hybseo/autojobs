@@ -34,6 +34,7 @@ import http.cookiejar
 import json
 import re
 import ssl
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -60,10 +61,6 @@ def _page_values(page):
             continue
         v = re.search(r"value=[\"']([^\"']*)[\"']", tag)
         vals[n.group(1)] = html.unescape(v.group(1)) if v else ""
-    for k in ("S_PGM_OPEN_TIME", "S_ENC_OTP_KEY", "S_CSRF_SALT"):
-        m = re.search(r"var\s+%s\s*=\s*\"([^\"]*)\"" % k, page)
-        vals[k] = m.group(1) if m else ""
-    vals["S_POP_URL"] = ""
     return vals
 
 
@@ -111,30 +108,52 @@ def _rows(xml):
     return rows
 
 
-def list_raw(domain):
-    op = _opener()
-    base = f"https://{domain}"
-    head = {"User-Agent": UA}
-    with op.open(urllib.request.Request(base + LIST, headers=head), timeout=30) as r:
-        page = r.read().decode("utf-8", "replace")
-    params = _page_values(page)
-    params.update({"S_PAGE_NO": "1", "S_DSCLASS": "biz.rem.apply.recruit.Apply_list",
-                   "S_DSMETHOD": "search01", "S_FORWARD": "xsheetResultXML"})
-    params["__viewState"] = view_state(params)
+def _form_f1(page):
+    """화면의 f1 폼 안쪽만 (serializeForm("f1") 과 같게)."""
+    m = re.search(r'<form[^>]*name="f1"[^>]*>(.*?)</form>', page, re.S)
+    return m.group(1) if m else page
+
+
+def _post(op, base, params):
     body = urllib.parse.urlencode(params).encode("utf-8")
     req = urllib.request.Request(base + "/Application.do", data=body, method="POST", headers={
         "User-Agent": UA, "ajax": "true", "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/plain, */*; q=0.01",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         "Referer": base + LIST, "Origin": base})
-    with op.open(req, timeout=30) as r:
-        return r.read().decode("utf-8", "replace"), params
+    try:
+        with op.open(req, timeout=40) as r:
+            return r.status, r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8", "replace")
+
+
+def list_raw(domain, debug=False):
+    op = _opener()
+    base = f"https://{domain}"
+    with op.open(urllib.request.Request(base + LIST, headers={"User-Agent": UA}), timeout=40) as r:
+        page = r.read().decode("utf-8", "replace")
+    form = _page_values(_form_f1(page))
+    for k in ("S_PGM_OPEN_TIME", "S_ENC_OTP_KEY", "S_CSRF_SALT"):
+        m = re.search(r"var\s+%s\s*=\s*\"([^\"]*)\"" % k, page)
+        form[k] = m.group(1) if m else ""
+    form["S_POP_URL"] = ""
+    form.setdefault("__viewState", "")
+    form.update({"S_PAGE_NO": "1", "S_DSCLASS": "biz.rem.apply.recruit.Apply_list",
+                 "S_DSMETHOD": "search01", "S_FORWARD": "xsheetResultXML"})
+    form["__viewState"] = view_state(form)
+    st, txt = _post(op, base, form)
+    if debug or st != 200:
+        print(f"      · ehr_rem({domain}): 보낸 칸 {list(form)}")
+        print(f"      · __viewState {form['__viewState']}")
+        print(f"      · HTTP {st} · 응답 앞부분: " + re.sub(r"\s+", " ", txt[:1200]))
+    return txt, form
 
 
 def fetch(company):
     domain = company["code"]
-    xml, params = list_raw(domain)
+    xml, params = list_raw(domain, debug=True)
     rows = _rows(xml)
-    print(f"      · ehr_rem({domain}): 보낸 칸 {sorted(params)}")
     print(f"      · ehr_rem({domain}): 응답 {len(xml)}자, 줄 {len(rows)}개")
     if not rows:
         print("      · 응답 앞부분: " + re.sub(r"\s+", " ", xml[:1500]))
