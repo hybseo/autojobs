@@ -20,6 +20,8 @@
   <번호>.html     화면이 다 그려진 뒤의 HTML (앞 300,000자)
   <번호>.net.txt  페이지가 보낸 요청 중 문서·XHR·fetch (주소·방식·보낸 값·응답 앞부분)
   summary.txt     주소별 최종 주소·제목·글자 수·요청 수
+  links.txt       각 페이지에서 찾은 채용 링크(글자·주소). 홈페이지를 넣으면
+                  채용 링크 두 개까지 따라가서 같은 방식으로 남깁니다.
 """
 import json
 import os
@@ -33,12 +35,42 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
 
+CAREER = ("채용", "인재", "recruit", "career", "job", "입사")
+FOLLOW = 2
+
+
+def career_links(page):
+    try:
+        items = page.eval_on_selector_all(
+            "a[href]", "els => els.map(e => [(e.innerText||e.title||'').trim().slice(0,40), e.href])")
+    except Exception:
+        return []
+    out, seen = [], set()
+    for txt, href in items:
+        low = (txt + " " + href).lower()
+        if not href.startswith("http") or href in seen:
+            continue
+        if any(w in low for w in CAREER):
+            seen.add(href)
+            out.append((txt.replace("\n", " "), href))
+    return out
+
+
 def main(urls):
     os.makedirs(OUT, exist_ok=True)
     summary = []
     with sync_playwright() as p:
         br = p.chromium.launch()
-        for i, url in enumerate(urls, 1):
+        queue = [(u, 0) for u in urls]
+        visited = set()
+        links_log = []
+        i = 0
+        while queue:
+            url, depth = queue.pop(0)
+            if url in visited:
+                continue
+            visited.add(url)
+            i += 1
             ctx = br.new_context(user_agent=UA, locale="ko-KR", viewport={"width": 1280, "height": 900})
             page = ctx.new_page()
             reqs = []
@@ -66,15 +98,22 @@ def main(urls):
             page.on("response", on_resp)
             final, title, text, html, err = url, "", "", "", ""
             try:
-                page.goto(url, wait_until="domcontentloaded", timeout=45000)
+                page.goto(url, wait_until="domcontentloaded", timeout=30000)
                 try:
-                    page.wait_for_load_state("networkidle", timeout=20000)
+                    page.wait_for_load_state("networkidle", timeout=12000)
                 except Exception:
                     pass
                 time.sleep(2)
                 final, title = page.url, page.title()
                 text = page.inner_text("body")[:6000]
                 html = page.content()[:300000]
+                found = career_links(page)
+                links_log.append(f"## {i:02d} {url}")
+                links_log += [f"   {a} | {h}" for a, h in found[:25]]
+                if depth == 0:
+                    for _, h in found[:FOLLOW]:
+                        if h not in visited:
+                            queue.insert(0, (h, 1))
             except Exception as e:
                 err = f"{type(e).__name__}: {str(e)[:300]}"
             with open(f"{OUT}/{i:02d}.txt", "w", encoding="utf-8") as f:
@@ -91,6 +130,8 @@ def main(urls):
         br.close()
     with open(f"{OUT}/summary.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(summary) + "\n")
+    with open(f"{OUT}/links.txt", "w", encoding="utf-8") as f:
+        f.write("\n".join(links_log) + "\n")
 
 
 if __name__ == "__main__":
