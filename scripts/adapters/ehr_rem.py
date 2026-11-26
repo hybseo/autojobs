@@ -18,11 +18,17 @@ GS칼텍스(recruit.gscaltex.com)와 대우건설(erecruit.daewooenc.com)이 같
                  __viewState = 위 값들을 JSON 으로 묶은 문자열 (AjaxUtil.makeParameters)
     응답  XML(xsheet). 줄마다 C_CD · REM_NO · REM_TYPE_CD(10 신입 / 20 경력 / 30 인턴·계약) …
 
-예전(2026-11-26) 대우건설 메모에는 __viewState 를 「화면이 만든 서명값」이라고
-적었는데, 화면 코드를 보니 서명이 아니라 요청 값을 JSON 으로 묶은 것입니다.
+__viewState (common.js 의 toJsonString · calcHash 를 그대로 옮김)
+    칸 이름에 RE_NO · SEQ_NO · C_CD · APPL_NO · USER_ID 가 들어간 칸만 골라
+      order = 그 칸 이름들을 순서대로 「이름,」 로 이은 것
+      test  = 그 칸 값마다 공백·쉼표를 지우고 encodeURIComponent 한 뒤 영문·숫자·_ 만 남겨 이은 것
+      hash  = test 를 SHA-256 으로 3번 거듭 돌린 16진수 (jsSHA numRounds=3)
+    '{"order":"…", "hash":"…", "test":"…"}' 문자열입니다. 서버가 이 값으로 요청이
+    화면에서 온 것인지 봅니다. 빼거나 틀리면 HTTP 500 이 납니다(2026-11-27 확인).
 
 companies.json 의 code 에는 도메인만 적습니다. 예: "recruit.gscaltex.com"
 """
+import hashlib
 import html
 import http.cookiejar
 import json
@@ -61,6 +67,29 @@ def _page_values(page):
     return vals
 
 
+def _check(name):
+    return any(k in name for k in ("RE_NO", "SEQ_NO", "C_CD", "APPL_NO", "USER_ID"))
+
+
+def _enc(v):
+    """자바스크립트 encodeURIComponent 와 같게."""
+    return urllib.parse.quote(v, safe="-_.!~*'()")
+
+
+def view_state(params):
+    order, test = "", ""
+    for k, v in params.items():
+        if k == "__viewState" or not _check(k):
+            continue
+        order += k + ","
+        t = re.sub(r"[ ,\s]", "", "" if v is None else str(v))
+        test += re.sub(r"\W", "", _enc(t))
+    h = test.encode("utf-8")
+    for _ in range(3):
+        h = hashlib.sha256(h).digest()
+    return '{"order":"%s", "hash":"%s", "test":"%s"}' % (order, h.hex(), test)
+
+
 def _rows(xml):
     """xsheet XML 을 줄(dict) 목록으로. 모양을 모르는 동안은 넓게 잡습니다."""
     rows = []
@@ -91,7 +120,7 @@ def list_raw(domain):
     params = _page_values(page)
     params.update({"S_PAGE_NO": "1", "S_DSCLASS": "biz.rem.apply.recruit.Apply_list",
                    "S_DSMETHOD": "search01", "S_FORWARD": "xsheetResultXML"})
-    params["__viewState"] = json.dumps(params, ensure_ascii=False, separators=(",", ":"))
+    params["__viewState"] = view_state(params)
     body = urllib.parse.urlencode(params).encode("utf-8")
     req = urllib.request.Request(base + "/Application.do", data=body, method="POST", headers={
         "User-Agent": UA, "ajax": "true", "X-Requested-With": "XMLHttpRequest",
