@@ -30,7 +30,12 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 
 def dump(spec):
-    parts = spec.split(" ", 2)
+    # 「GET 주소 ~~ 정규식」 이면 응답 전체 대신 맞는 곳 앞뒤 200자만 보여 줍니다.
+    # 깃허브 로그는 아주 긴 한 줄을 잘라 버려서, 압축된 자바스크립트는 통째로 못 봅니다.
+    pat = None
+    if " ~~ " in spec:
+        spec, pat = spec.split(" ~~ ", 1)
+    parts = spec.strip().split(" ", 2)
     method, url = parts[0].upper(), parts[1]
     body = parts[2].encode("utf-8") if len(parts) > 2 else None
     head = {"User-Agent": UA, "Accept": "application/json, text/html, */*"}
@@ -44,7 +49,15 @@ def dump(spec):
             enc = r.headers.get_content_charset() or "utf-8"
             txt = raw.decode(enc, "replace")
             print(f"status {r.status} · {len(raw)} bytes · {r.headers.get('content-type')}")
-            print(txt[:3000000])
+            if pat:
+                import re
+                for k, m in enumerate(re.finditer(pat, txt)):
+                    if k >= 60:
+                        break
+                    print("  ~ " + txt[max(0, m.start() - 200):m.end() + 200].replace("\n", " "))
+            else:
+                for i in range(0, min(len(txt), 3000000), 3000):
+                    print(txt[i:i + 3000])
     except Exception as e:
         print(f"오류 {type(e).__name__}: {str(e)[:300]}")
 
