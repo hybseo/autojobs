@@ -1,76 +1,72 @@
 ﻿name,status,ats,code,home,found_at,how,note
-DB증권,발견,recruiter,dbgroup,https://dbsec.co.kr,https://dbsec.co.kr,링크,
-교보증권,발견,recruiter,iprovest,https://iprovest.com,https://recruit.iprovest.com,주소추정,채용링크 0개
-디와이,발견,recruiter,dy,https://www.dy.co.kr,https://www.dy.co.kr,링크,
-샘표,발견,recruiter,sempio,https://www.sempio.com,https://www.sempio.com,링크,
-카카오페이,발견,greeting,kakaopay,https://kakaopay.com,https://kakaopay.career.greetinghr.com/ko,주소추정,채용링크 0개
-한양증권,발견,greeting,hygood,https://hygood.co.kr,https://hygood.career.greetinghr.com/ko,주소추정,채용링크 3개
-한패스,발견,ninehire,recruithanpass,https://hanpass.com,https://hanpass.com,링크,
-흥국화재,발견,recruiter,taekwang,https://www.insurance.co.kr,https://www.insurance.co.kr,링크,
-APS,채용링크없음,,,https://apsholdings.co.kr,,,채용링크 0개
-DB손해보험,채용링크없음,,,https://idbins.com,,,채용링크 0개
-DSC인베스트먼트,채용링크없음,,,https://dscinvestment.com,,,채용링크 0개
-GMI벤처,접속실패,,,https://geminivc.co.kr,,,https://geminivc.co.kr gaierror:[Errno -2] Name or servi | http://geminivc.co.kr gaierror:[Errno -2] Name or servi | https://www.geminivc.co.kr gaierror:[Errno -2] Name or servi | http://www.geminivc.co.kr gaierror:[Errno -2] Name or servi
-HB인베스트먼트,채용링크없음,,,https://hbvc.co.kr,,,채용링크 0개
-KB금융,채용링크없음,,,https://kbfg.com,,,채용페이지 추정: https://careers.kbfg.com
-LB인베스트먼트,접속실패,,,https://lbinvestment.com,,,https://lbinvestment.com HTTP503 | http://lbinvestment.com HTTP503 | https://www.lbinvestment.com HTTP503 | http://www.lbinvestment.com HTTP503
-LS증권,채용링크없음,,,https://ls-sec.co.kr,,,채용링크 0개
-NH투자증권,채용링크없음,,,https://nhqv.com,,,채용링크 0개
-SBI인베스트먼트,채용링크없음,,,https://sbik.co.kr,,,채용링크 0개
-SK증권,채용링크없음,,,http://sks.co.kr,,,채용링크 0개
-SV인베스트먼트,채용링크없음,,,https://svinvest.com,,,채용링크 0개
-TS인베스트먼트,채용링크없음,,,https://tsinvestment.co.kr,,,채용페이지 추정: https://job.tsinvestment.co.kr
-경동인베스트,채용링크없음,,,https://www.kdinvest.co.kr,,,채용링크 0개
-글로벌에스엠,채용링크없음,,,http://globalsmtech.com,,,채용링크 0개
-기업은행,채용링크없음,,,https://ibk.co.kr,,,채용링크 0개
-다올투자증권,채용링크없음,,,https://daolsecurities.com,,,채용링크 0개
-대성창투,채용링크없음,,,http://daesungpe.com,,,채용링크 0개
-대신밸류리츠,채용링크없음,,,https://daishinvaluereit.com,,,채용링크 0개
-대신증권,채용링크없음,,,https://daishin.com,,,채용링크 0개
-딥커머스,채용링크없음,,,https://qiuzhi.com,,,채용링크 0개
-롯데손해보험,채용링크없음,,,https://lotteins.co.kr,,,채용링크 0개
-린드먼아시아,채용링크없음,,,http://laic.kr,,,채용페이지 추정: https://job.laic.kr
-메이슨캐피탈,ATS없음,,,http://mason-capital.co.kr,,,채용링크 1개
-미래에셋벤처투자,채용링크없음,,,http://venture.miraeasset.co.kr,,,채용링크 0개
-미래에셋생명,채용링크없음,,,https://life.miraeasset.com,,,채용링크 0개
-미래에셋증권,채용링크없음,,,https://securities.miraeasset.com,,,채용링크 0개
-부국증권,채용링크없음,,,https://bookook.co.kr,,,채용링크 0개
-삼성생명,채용링크없음,,,https://samsunglife.com,,,채용링크 0개
-삼성증권,채용링크없음,,,https://samsungpop.com,,,채용링크 0개
-삼성카드,채용링크없음,,,https://samsungcard.co.kr,,,채용링크 0개
-삼성화재,채용링크없음,,,https://samsungfire.com,,,채용링크 0개
-상상인증권,채용링크없음,,,https://sangsanginib.com,,,채용링크 0개
-서울보증보험,채용링크없음,,,https://sgic.co.kr,,,채용링크 0개
-스톤브릿지벤처스,채용링크없음,,,https://stonebridgeventures.vc,,,채용링크 0개
-스틱인베스트먼트,채용링크없음,,,https://stic.co.kr,,,채용링크 0개
-신영증권,채용링크없음,,,https://shinyoung.com,,,채용링크 0개
-신한글로벌액티브리츠,채용링크없음,,,https://shglobalreit.com,,,채용링크 0개
-아주IB투자,채용링크없음,,,https://ajuib.co.kr,,,채용링크 0개
-에이티넘인베스트,접속실패,,,https://hanmivc.co.kr,,,https://hanmivc.co.kr gaierror:[Errno -2] Name or servi | http://hanmivc.co.kr gaierror:[Errno -2] Name or servi | https://www.hanmivc.co.kr gaierror:[Errno -2] Name or servi | http://www.hanmivc.co.kr gaierror:[Errno -2] Name or servi
-우리기술투자,채용링크없음,,,https://wooricapital.co.kr,,,채용링크 0개
-윙입푸드,채용링크없음,,,https://wingyip-food.com,,,채용링크 0개
-유안타증권,ATS없음,,,https://www.yuantakorea.com,,,채용링크 6개
-유진투자증권,채용링크없음,,,https://eugenefn.com,,,채용링크 0개
-유화증권,채용링크없음,,,https://www.yhs.co.kr,,,채용링크 0개
-인카금융서비스,접속실패,,,https://incar.co.kr,,,https://incar.co.kr TimeoutError:timed out | http://incar.co.kr TimeoutError:timed out | https://www.incar.co.kr TimeoutError:timed out | http://www.incar.co.kr TimeoutError:timed out
-제주은행,접속실패,,,https://e-jejubank.com,,,https://e-jejubank.com TimeoutError:timed out | http://e-jejubank.com TimeoutError:timed out | https://www.e-jejubank.com TimeoutError:timed out | http://www.e-jejubank.com TimeoutError:timed out
-캡스톤파트너스,채용링크없음,,,https://cspartners.co.kr,,,채용링크 0개
-컬러레이,채용링크없음,,,https://coloray.co.kr,,,채용링크 0개
-컴퍼니케이,채용링크없음,,,https://kpartners.co.kr,,,채용링크 0개
-케이뱅크,ATS없음,,,https://kbanknow.com,,,채용페이지 추정: https://recruit.kbanknow.com
-코리아에셋투자증권,ATS없음,,,https://kasset.co.kr,,,채용링크 2개
-코리안리,접속실패,,,https://koreanre.co.kr,,,https://koreanre.co.kr HTTP403 | http://koreanre.co.kr TimeoutError:timed out | https://www.koreanre.co.kr RemoteDisconnected | http://www.koreanre.co.kr HTTP403
-큐캐피탈,채용링크없음,,,https://qcapital.co.kr,,,채용링크 0개
-크리스탈신소재,채용링크없음,,,http://crystalnewmaterial.com,,,채용페이지 추정: https://job.crystalnewmaterial.com
-키움증권,채용링크없음,,,https://kiwoom.com,,,채용링크 0개
-테라뷰,ATS없음,,,https://teraview.com,,,채용링크 1개
-푸른저축은행,채용링크없음,,,https://www.prsb.co.kr,,,채용링크 0개
-한국자산신탁,ATS없음,,,https://kait.com,,,채용링크 6개
-한국캐피탈,채용링크없음,,,https://www.hkcapital.co.kr,,,채용링크 0개
-한화생명,접속실패,,,https://hanwhalife.com,,,https://hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | http://hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | https://www.hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE | http://www.hanwhalife.com SSLError:[SSL: UNSAFE_LEGACY_RENE
-한화손해보험,접속실패,,,https://hwgeneralins.com,,,https://hwgeneralins.com gaierror:[Errno -5] No address as | http://hwgeneralins.com gaierror:[Errno -5] No address as | https://www.hwgeneralins.com TimeoutError:timed out | http://www.hwgeneralins.com TimeoutError:timed out
-한화투자증권,채용링크없음,,,https://koreastock.co.kr,,,채용링크 0개
-헝셩그룹,채용링크없음,,,https://hengsheng.co.kr,,,채용페이지 추정: https://job.hengsheng.co.kr
-헥토파이낸셜,채용링크없음,,,https://hectofinancial.co.kr,,,채용링크 0개
-현대차증권,채용링크없음,,,https://hmsec.com,,,채용링크 0개
-현대해상,채용링크없음,,,http://hi.co.kr,,,채용링크 0개
+NEW,발견,recruiter,its-new,https://www.its-new.co.kr,https://www.its-new.co.kr,링크,
+SAMG엔터,발견,greeting,samgent,https://www.samg.net,https://www.samg.net,링크,
+SM C&C,발견,greeting,careers.smcultureandcontents.com,https://www.smcultureandcontents.com,https://careers.smcultureandcontents.com/,자체도메인,채용링크 1개
+대원미디어,발견,ninehire,daewonmedia,https://daewonmedia.com,https://daewonmedia.com/daewon-media/employment,링크,채용링크 1개
+드림어스컴퍼니,발견,greeting,dreamuscompany,https://dreamuscompany.com,https://recruit.dreamuscompany.com/pages/careers_view.jsp?id=69581,주소추정→링크,채용페이지 추정: https://recruit.dreamuscompany.com
+매드업,발견,greeting,maduprecruiting,https://madup.com/,https://madup.com/careers,링크,채용링크 1개
+에스엠,발견,greeting,recruit.smentertainment.com,https://smentertainment.com,https://recruit.smentertainment.com/,자체도메인,채용링크 1개
+와이랩,발견,greeting,ylab,https://ylabcomics.com,https://ylabcomics.com,링크,
+와이즈버즈,발견,greeting,recruit-wisebirds,https://www.wisebirds.co,https://www.wisebirds.co,링크,
+와이지엔터테인먼트,발견,recruiter,yg-entertainment,https://www.ygfamily.com,https://www.ygfamily.com,링크,
+자이언트스텝,발견,recruiter,giantstepcorp,https://www.giantstep.co.kr,https://www.giantstep.co.kr,링크,
+차이커뮤니케이션,발견,greeting,chai,https://www.artistchai.co.kr,https://www.artistchai.co.kr,링크,
+플레이디,발견,recruiter,kt,https://www.playd.com,https://www.playd.com,링크,
+CJ CGV,접속실패,,,http://www.cgv.co.kr,,,https://www.cgv.co.kr HTTP403 | http://www.cgv.co.kr HTTP403 | https://cgv.co.kr HTTP403 | http://cgv.co.kr HTTP403
+CJ ENM,ATS없음,,,https://www.cjenm.com/ko/,,,채용페이지 추정: https://recruit.cjenm.com
+HS애드,ATS없음,,,https://www.hsad.co.kr/kor/main,,,채용링크 1개
+JYP Ent.,ATS없음,,,https://www.jype.com,,,채용링크 1개
+KNN,ATS없음,,,https://www.knn.co.kr,,,채용페이지 추정: https://recruit.knn.co.kr
+KT나스미디어,ATS없음,,,https://www.nasmedia.co.kr,,,채용링크 3개
+KT지니뮤직,ATS없음,,,https://www.geniemusic.co.kr,,,채용링크 1개
+KX,ATS없음,,,https://www.kxgroup.co.kr,,,채용링크 2개
+LG헬로비전,채용링크없음,,,https://www.lghellovision.net,,,채용링크 0개
+M83,ATS없음,,,https://m83.co.kr,,,채용링크 1개
+NHN벅스,채용링크없음,,,https://www.bugs.co.kr,,,채용링크 0개
+SBS,채용링크없음,,,https://www.sbs.co.kr,,,채용링크 0개
+SM Life Design,채용링크없음,,,https://smlifedesign.com,,,채용링크 0개
+YG PLUS,ATS없음,,,https://www.ygplus.com,,,채용링크 1개
+YTN,ATS없음,,,https://www.ytn.co.kr,,,채용페이지 추정: https://recruit.ytn.co.kr
+iMBC,채용링크없음,,,https://corp.imbc.com,,,채용링크 0개
+갤럭시아에스엠,채용링크없음,,,http://galaxiasme.com,,,채용페이지 추정: https://job.galaxiasme.com
+노머스,채용링크없음,,,https://knowmerce.com,,,채용링크 0개
+덱스터,채용링크없음,,,https://www.dexterstudios.com,,,채용링크 0개
+드림인사이트,채용링크없음,,,https://bydream.co.kr/,,,채용페이지 추정: https://job.bydream.co.kr
+디앤씨미디어,ATS없음,,,https://www.dncmedia.co.kr,,,채용링크 1개
+디어유,채용링크없음,,,https://www.dear-u.co,,,채용링크 0개
+레뷰코퍼레이션,채용링크없음,,,https://corp.revu.net,,,채용링크 0개
+미스터블루,ATS없음,,,https://www.mrbluecorp.com/,,,채용링크 1개
+바른손이앤에이,ATS없음,,,https://www.barunsonena.com/,,,채용링크 2개
+블리츠웨이엔터테인먼트,채용링크없음,,,https://blitzwayentertainment.com,,,채용링크 0개
+비케이홀딩스,접속실패,,,http://bkholdings.kr,,,https://bkholdings.kr TimeoutError:timed out | http://bkholdings.kr TimeoutError:timed out | https://www.bkholdings.kr TimeoutError:timed out | http://www.bkholdings.kr TimeoutError:timed out
+빅텐츠,채용링크없음,,,https://victents.com,,,채용링크 0개
+삼화네트웍스,채용링크없음,,,https://www.shnetworks.co.kr,,,채용링크 0개
+쇼박스,채용링크없음,,,https://www.showbox.co.kr,,,채용링크 0개
+스튜디오미르,채용링크없음,,,https://www.studiomir.co.kr/,,,채용링크 0개
+스튜디오쏠쏠,채용링크없음,,,https://www.artiststudio.co.kr,,,채용링크 0개
+씨씨에스,접속실패,,,http://www.ccstv.co.kr,,,https://www.ccstv.co.kr HTTP403 | http://www.ccstv.co.kr HTTP403 | https://ccstv.co.kr HTTP403 | http://ccstv.co.kr HTTP403
+아이오케이이엔엠,접속실패,,,http://www.iok.co.kr,,,https://www.iok.co.kr gaierror:[Errno -2] Name or servi | http://www.iok.co.kr gaierror:[Errno -2] Name or servi | https://iok.co.kr gaierror:[Errno -5] No address as | http://iok.co.kr gaierror:[Errno -5] No address as
+아티스트컴퍼니,ATS없음,,,https://www.widerplanet.com,,,채용페이지 추정: http://widerplanet.com/about/careers
+알비더블유,ATS없음,,,http://www.rbbridge.com,,,채용링크 1개
+애니플러스,채용링크없음,,,https://www.aniplustv.com,,,채용페이지 추정: https://recruit.aniplustv.com
+애드포러스,채용링크없음,,,https://www.adforus.co.kr,,,채용링크 0개
+에이스토리,채용링크없음,,,https://www.astory.co.kr,,,채용페이지 추정: https://job.astory.co.kr
+에프엔씨엔터,채용링크없음,,,https://www.fncent.com,,,채용페이지 추정: https://job.fncent.com
+에피소드컴퍼니,채용링크없음,,,http://www.carriesoft.com,,,채용페이지 추정: https://job.carriesoft.com
+엔비티,채용링크없음,,,https://nbt.com/,,,채용링크 0개
+오리콤,채용링크없음,,,http://www.oricom.co.kr,,,채용링크 0개
+이노션,채용링크없음,,,https://www.innocean.com,,,채용링크 0개
+이엠넷,ATS없음,,,https://www.emnet.co.kr,,,채용링크 1개
+인크로스,채용링크없음,,,https://www.incross.com,,,채용링크 0개
+제일기획,ATS없음,,,https://www.cheil.co.kr,,,채용링크 1개
+초록뱀미디어,채용링크없음,,,https://www.chorokbaem.com,,,채용링크 0개
+케이티스카이라이프,채용링크없음,,,https://www.ktskylife.co.kr,,,채용링크 0개
+케이티알파,접속실패,,,http://www.ktalpha.com,,,https://www.ktalpha.com TimeoutError:timed out | http://www.ktalpha.com TimeoutError:timed out | https://ktalpha.com TimeoutError:timed out | http://ktalpha.com TimeoutError:timed out
+콘텐트리중앙,채용링크없음,,,https://www.jcontentree.com/,,,채용링크 0개
+큐브엔터,채용링크없음,,,https://www.cubeent.co.kr,,,채용링크 0개
+키이스트,채용링크없음,,,https://www.keyeast.co.kr,,,채용링크 0개
+티비씨,채용링크없음,,,https://www.tbc.co.kr,,,채용링크 0개
+티엔엔터테인먼트,채용링크없음,,,http://chorokbaemenm.com,,,채용페이지 추정: https://job.chorokbaemenm.com
+팬엔터테인먼트,채용링크없음,,,https://www.thepan.co.kr,,,채용링크 0개
+포바이포,채용링크없음,,,https://4by4inc.com,,,채용링크 0개
+한국경제TV,채용링크없음,,,https://www.wownet.co.kr,,,채용링크 0개
