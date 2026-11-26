@@ -206,6 +206,46 @@ const url = canonical ?? (site + Astro.url.pathname);
       else b.remove();
     });
   </script>
+  <script is:inline>
+    /* 칩 묶음 두 줄 접기 (2026-11-27) — 직무·기술·기업 칩이 두 줄을 넘으면 거기서 자르고
+       「+ 더보기 (N)」 버튼을 붙입니다. 누르면 전부 펴고 「접기」로 바뀝니다.
+       화면 폭이 바뀌면 다시 잽니다. 자바스크립트가 꺼져 있으면 전부 보입니다. */
+    (function () {
+      function fit(box) {
+        var b = box.nextElementSibling;
+        if (!b || !b.hasAttribute('data-fold-btn')) {
+          b = document.createElement('button');
+          b.type = 'button'; b.className = 'fold-more'; b.setAttribute('data-fold-btn', '');
+          box.parentNode.insertBefore(b, box.nextSibling);
+        }
+        box.style.maxHeight = ''; box.style.overflow = '';
+        var kids = box.children, tops = [], cut = 0, lastBottom = 0, top0 = box.getBoundingClientRect().top;
+        for (var i = 0; i < kids.length; i += 1) {
+          var r = kids[i].getBoundingClientRect();
+          if (tops.indexOf(Math.round(r.top)) < 0) tops.push(Math.round(r.top));
+          if (tops.length > 2) { cut = kids.length - i; break; }
+          lastBottom = Math.max(lastBottom, r.bottom);
+        }
+        if (!cut) { b.hidden = true; return; }
+        b.hidden = false;
+        if (box.getAttribute('data-open') === '1') { b.textContent = '접기'; return; }
+        box.style.maxHeight = Math.ceil(lastBottom - top0) + 'px';
+        box.style.overflow = 'hidden';
+        b.textContent = '+ 더보기 (' + cut + ')';
+      }
+      function all() { document.querySelectorAll('[data-fold]').forEach(fit); }
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-fold-btn]');
+        if (!b) return;
+        var box = b.previousElementSibling;
+        box.setAttribute('data-open', box.getAttribute('data-open') === '1' ? '0' : '1');
+        fit(box);
+      });
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', all); else all();
+      var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(all, 150); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+    })();
+  </script>
   {/* 폰 아래 고정 메뉴(앱처럼). 넓은 화면에서는 CSS 로 숨깁니다. 「마이페이지」는 로그인 전에는 로그인 화면으로 갑니다. */}
   <nav class="tabbar" aria-label="하단 메뉴">
     <a href="/" aria-current={nav === 'home' ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>홈</span></a>

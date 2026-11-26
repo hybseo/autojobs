@@ -91,6 +91,10 @@ const tagHref = (D, name) => {
   return t && t.k ? `/tech/${t.s}/` : jobsHref({ tag: name });
 };
 const jobHref = (j) => (j.h ? `/job/${j.id}/` : j.u);
+/* 칩 묶음을 두 줄까지만 보이고 「+ 더보기」로 전부 펴게 합니다 (2026-11-27 대표님 지시).
+   서버는 칩을 전부 그려 둡니다(검색엔진·자바스크립트 꺼진 화면은 전부 보임).
+   두 줄로 자르고 버튼을 붙이는 건 Base.astro 의 작은 스크립트(data-fold)가 합니다. */
+const foldChips = (inner) => `<div class="chips" data-fold>${inner}</div>`;
 
 /* ── 공고 카드 ─────────────────────────────────────── */
 export function card(D, j, hidden = false) {
@@ -590,11 +594,11 @@ export function viewCompany(D, slug) {
     + '</div>'
     /* 그룹 통합 채용은 계열사별로 바로 좁혀 볼 수 있게 합니다 (2026-11-26). */
     + (c.g && Object.keys(afs).length > 1 ? '<section class="sect"><div class="sect-h"><h2>계열사별로 보기</h2></div>'
-      + `<div class="chips">${topKeys(afs, 40).map((n) => `<a class="chip" href="${jobsHref({ co: c.s, af: n })}">${esc(n)}`
-        + `<span class="n">${afs[n]}</span></a>`).join('')}</div></section>` : '')
+      + foldChips(topKeys(afs, 9999).map((n) => `<a class="chip" href="${jobsHref({ co: c.s, af: n })}">${esc(n)}`
+        + `<span class="n">${afs[n]}</span></a>`).join('')) + '</section>' : '')
     + (Object.keys(rs).length ? '<section class="sect"><div class="sect-h"><h2>많이 뽑는 직무</h2></div>'
-      + `<div class="chips">${topKeys(rs, 10).map((r) => `<a class="chip" href="${roleHref(r)}">${esc(roleName(D, r))}`
-        + `<span class="n">${rs[r]}</span></a>`).join('')}</div></section>` : '')
+      + foldChips(topKeys(rs, 9999).map((r) => `<a class="chip" href="${roleHref(r)}">${esc(roleName(D, r))}`
+        + `<span class="n">${rs[r]}</span></a>`).join('')) + '</section>' : '')
     + `<section class="sect"><div class="sect-h"><h2>진행중 공고 ${num(mine.length)}건</h2></div>`
     + (mine.length ? listOf(D, sorted, 40, 'reveal') : '<div class="empty">지금은 진행중인 공고가 없습니다. 공고가 올라오면 이 자리에 나옵니다.</div>')
     + '</section>'
@@ -613,8 +617,8 @@ export function viewIndustries(D) {
     + `<div class="rows" style="margin-top:16px">${rows}</div>`
     + '<section class="sect"><div class="sect-h"><h2>직무</h2>'
     + '<a class="more" href="/role/">직무 전체 →</a></div>'
-    + `<div class="chips">${D.roles.slice().sort((a, b) => b.c - a.c).slice(0, 14)
-      .map((r) => `<a class="chip" href="${roleHref(r.code)}">${esc(r.n)}<span class="n">${r.c}</span></a>`).join('')}</div></section>`;
+    + foldChips(D.roles.slice().sort((a, b) => b.c - a.c)
+      .map((r) => `<a class="chip" href="${roleHref(r.code)}">${esc(r.n)}<span class="n">${r.c}</span></a>`).join('')) + '</section>';
 }
 export function viewRoles(D) {
   const rows = D.roles.slice().sort((a, b) => b.c - a.c).map((r) => `<a class="row" href="${roleHref(r.code)}">`
@@ -649,20 +653,20 @@ function scopeView(D, title, sub, arr, extra) {
     + `<div><span class="n">${num(soon)}</span><span class="l">3일 내 마감</span></div>`
     + '</div>'
     + (extra || '')
-    + '<section class="sect"><div class="sect-h"><h2>기술로 좁히기</h2></div><div class="chips">'
-    + topKeys(cTag, 14).map((t) => `<a class="chip" href="${tagHref(D, t)}">${esc(t)}<span class="n">${cTag[t]}</span></a>`).join('')
-    + '</div></section>'
-    + '<section class="sect"><div class="sect-h"><h2>이 분야 기업</h2></div><div class="chips">'
-    + topKeys(cCo, 12).map(coChip).join('')
-    + '</div></section>'
+    + '<section class="sect"><div class="sect-h"><h2>기술로 좁히기</h2></div>'
+    + foldChips(topKeys(cTag, 9999).map((t) => `<a class="chip" href="${tagHref(D, t)}">${esc(t)}<span class="n">${cTag[t]}</span></a>`).join(''))
+    + '</section>'
+    + '<section class="sect"><div class="sect-h"><h2>이 분야 기업</h2></div>'
+    + foldChips(topKeys(cCo, 9999).map(coChip).join(''))
+    + '</section>'
     + `<section class="sect"><div class="sect-h"><h2>공고</h2></div>${listOf(D, sorted, 40, 'reveal')}</section>`;
 }
 export function viewIndustry(D, name) {
   const arr = D.jobs.filter((j) => j.i.indexOf(name) >= 0);
   const cRole = counts(arr, (j) => j.r);
   const extra = '<section class="sect"><div class="sect-h"><h2>이 분야 직무로 좁히기</h2></div>'
-    + `<div class="chips">${topKeys(cRole, 12).map((r) => `<a class="chip" href="${jobsHref({ ind: name, role: r })}">${esc(roleName(D, r))}`
-      + `<span class="n">${cRole[r]}</span></a>`).join('')}</div></section>`;
+    + foldChips(topKeys(cRole, 9999).map((r) => `<a class="chip" href="${jobsHref({ ind: name, role: r })}">${esc(roleName(D, r))}`
+      + `<span class="n">${cRole[r]}</span></a>`).join('')) + '</section>';
   return '<div class="crumb"><a href="/industry/">← 산업</a></div>'
     + scopeView(D, `${indLabel(name)} 채용`, `진행중 공고 · ${esc(D.meta.at)} 기준`, arr, extra);
 }
@@ -681,10 +685,10 @@ export function viewTechs(D) {
     (cats[c] = cats[c] || []).push(t);
   });
   const html = Object.keys(cats).sort((a, b) => cats[b].length - cats[a].length).map((c) =>
-    `<div class="taggroup"><h4>${esc(c)}</h4><div class="chips">`
-    + cats[c].sort((a, b) => D.tagIndex[b].n - D.tagIndex[a].n).map((t) =>
-      `<a class="chip" href="${tagHref(D, t)}">${esc(t)}<span class="n">${D.tagIndex[t].n}</span></a>`).join('')
-    + '</div></div>').join('');
+    `<div class="taggroup"><h4>${esc(c)}</h4>`
+    + foldChips(cats[c].sort((a, b) => D.tagIndex[b].n - D.tagIndex[a].n).map((t) =>
+      `<a class="chip" href="${tagHref(D, t)}">${esc(t)}<span class="n">${D.tagIndex[t].n}</span></a>`).join(''))
+    + '</div>').join('');
   return `<h1 class="h1">기술 · 역량 ${Object.keys(D.tagIndex).length}개</h1>`
     + `<p class="sub">공고 요약에서 뽑았습니다 · 괄호 안은 진행중 공고 수</p>${html}`;
 }
