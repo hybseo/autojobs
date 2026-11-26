@@ -131,6 +131,13 @@ jobs:
         if: steps.gate.outputs.skip != 'true'
         with: { node-version: '22' }
 
+      # 롯데그룹 채용 사이트는 봇 차단(Incapsula)이 있어 진짜 브라우저로만 열립니다
+      # (2026-11-27). 크로미엄을 깔아 둡니다. 설치가 실패해도 다른 회사 수집은
+      # 계속되게 실패를 무시합니다 — 그 경우 롯데만 0건이 됩니다.
+      - if: steps.gate.outputs.skip != 'true'
+        run: |
+          pip install --quiet playwright && python -m playwright install --with-deps chromium || echo "브라우저 설치 실패 — 롯데그룹은 0건이 됩니다"
+
       # python -u 를 반드시 붙여야 합니다 (2026-10-08)
       # ------------------------------------------------
       # tee 로 넘기면 파이썬 출력이 한 줄씩 나오지 않고 버퍼(4~8KB)에

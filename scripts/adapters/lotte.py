@@ -38,6 +38,15 @@
 cmp-name 칸에도 따로 옵니다. 회사명은 cmp-name 을 쓰고 제목은 그대로
 둡니다. 제목에서 떼어내면 "2026년 9월 ... 채용" 만 남아 어느 회사인지
 알 수 없게 됩니다.
+
+봇 차단(Incapsula) — 2026-11-27 브라우저로 되살림
+-------------------------------------------------
+2026-10-02 부터 사이트에 Incapsula 봇 차단이 걸려, 그냥 요청하면 검사 화면만
+옵니다(공고 링크 0개). 깃허브 서버에서 진짜 브라우저(Playwright·크로미엄)로
+열면 검사를 통과하고 공고 목록이 그대로 보이는 것을 확인했습니다(11건).
+그래서 그냥 요청으로 링크가 하나도 안 잡히면 브라우저로 다시 엽니다.
+브라우저가 깔려 있지 않으면(개발 컨테이너 등) 예전처럼 0건으로 끝납니다.
+공고갱신(daily.yml)에서 크로미엄을 설치합니다.
 """
 import html
 import re
@@ -124,9 +133,37 @@ def _norm(s):
     return re.sub(r"[\s()（）㈜.,·-]|주식회사", "", str(s or "")).lower()
 
 
+def _browser_html(url):
+    """진짜 브라우저로 열어 공고 링크가 그려진 뒤의 HTML 을 돌려줍니다."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        print("      · 롯데그룹: 브라우저(playwright)가 없어 봇 차단을 넘지 못합니다.")
+        return ""
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        try:
+            pg = b.new_page(locale="ko-KR")
+            pg.goto(url, wait_until="domcontentloaded", timeout=60000)
+            try:
+                pg.wait_for_selector('a[href*="/apply/announcement/detail/"]', timeout=45000)
+            except Exception:
+                pass
+            return pg.content()
+        finally:
+            b.close()
+
+
 def list_open(code=""):
     """공고 목록. probe 용으로 밖에서도 씁니다."""
-    page = _get(LIST)
+    try:
+        page = _get(LIST)
+    except Exception as e:
+        print(f"      · 롯데그룹: 그냥 요청 실패 {type(e).__name__}")
+        page = ""
+    if not LINK.search(page):
+        print(f"      · 롯데그룹: 그냥 요청으로는 공고 링크 0개(받은 HTML {len(page)}자, 봇 차단). 브라우저로 엽니다.")
+        page = _browser_html(LIST) or page
 
     # 공고 하나의 범위를 링크와 링크 사이로 끊습니다.
     #
