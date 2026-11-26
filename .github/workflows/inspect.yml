@@ -29,6 +29,26 @@ jobs:
         env:
           URLS: ${{ inputs.urls }}
         run: python scripts/inspect_pages.py $URLS
+      # 첨부파일을 못 받는 환경이 있어 로그에도 남깁니다.
+      - name: 결과 로그로 보기
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, json, os
+          d = "inspect_out"
+          if not os.path.isdir(d): raise SystemExit
+          print("=== SUMMARY"); print(open(f"{d}/summary.txt", encoding="utf-8").read())
+          print("=== LINKS"); print(open(f"{d}/links.txt", encoding="utf-8").read())
+          for f in sorted(glob.glob(f"{d}/[0-9][0-9].txt")):
+              n = f[-6:-4]
+              print(f"=== PAGE {n}"); print(open(f, encoding="utf-8").read()[:2500])
+              print(f"=== NET {n}")
+              for line in open(f"{d}/{n}.net.txt", encoding="utf-8"):
+                  r = json.loads(line)
+                  if r["type"] == "document" or any(k in r["ctype"] for k in ("json", "xml", "text")):
+                      print(f'{r["method"]} {r["status"]} {r["type"]} {r["url"][:300]} | post={r["post"][:300]} | {r["body"][:400]!r}')
+          PY
+
       - name: 결과 첨부
         if: always()
         uses: actions/upload-artifact@v4
