@@ -1,0 +1,38 @@
+name: 채용 페이지 조사
+
+# 자동 실행하지 않습니다. 새 기업을 붙일 때 채용 사이트가 공고 목록을
+# 어디서 받아오는지 보려고 돌립니다 (2026-11-26, scripts/inspect_pages.py 참고).
+# 공고 데이터를 건드리지 않고 저장소에 아무것도 커밋하지 않습니다.
+# 결과는 「inspect」 첨부파일로 받습니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: '열어 볼 주소 (여러 개는 공백으로 구분)'
+        type: string
+        required: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 브라우저 준비
+        run: |
+          pip install --quiet playwright
+          playwright install --with-deps chromium
+      - name: 조사 실행
+        env:
+          URLS: ${{ inputs.urls }}
+        run: python scripts/inspect_pages.py $URLS
+      - name: 결과 첨부
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inspect
+          path: inspect_out/
+          if-no-files-found: ignore
