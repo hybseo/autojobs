@@ -43,8 +43,16 @@ def dump(spec):
         head["Content-Type"] = "application/json" if body[:1] in (b"{", b"[") else "application/x-www-form-urlencoded"
     print(f"=== DUMP {method} {url}")
     try:
+        import http.cookiejar, ssl
+        # 오래된 은행 서버는 예전 방식 TLS 재협상을 요구합니다(우리금융그룹 등).
+        # 쿠키를 받아야 넘어가는 곳도 있습니다(IBK 채용 페이지의 302 반복).
+        ctx = ssl.create_default_context()
+        ctx.options |= getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0x4)
+        opener = urllib.request.build_opener(
+            urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()),
+            urllib.request.HTTPSHandler(context=ctx))
         req = urllib.request.Request(url, data=body, headers=head, method=method)
-        with urllib.request.urlopen(req, timeout=30) as r:
+        with opener.open(req, timeout=30) as r:
             raw = r.read()
             enc = r.headers.get_content_charset() or "utf-8"
             txt = raw.decode(enc, "replace")
