@@ -396,7 +396,7 @@
    "name": "LG그룹",
    "slug": "lg-careers",
    "ats": "lg",
-   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD,LGC,LGU,BIZ,HIM,LGEB,LGHH",
+   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD,LGC,LGU,BIZ,HIM,LGEB,LGHH,GIIR",
    "affiliateIndustry": {
     "LG전자": [
      "자동차부품",
@@ -442,6 +442,12 @@
     ],
     "LG생활건강": [
      "소비재·식품"
+    ],
+    "HSAD": [
+     "게임·엔터·미디어"
+    ],
+    "HS애드": [
+     "게임·엔터·미디어"
     ]
    },
    "industry": [
@@ -453,7 +459,7 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것 / 2026-09-22: 그룹 전체 게시중 80건인데 코드 7개만 받아 47건을 놓치고 있었습니다. 사이트 산업에 맞는 다섯 곳을 더했습니다(LGC 화학, LGU 유플러스, BIZ 비즈테크아이, HIM 하이엠솔루텍, LGEB LG-Eni BioRefining) / 2026-11-26: LG생활건강 추가(코드 LGHH — careers.lg.com 회사 필터 목록 retrieveJobNotices 에서 확인). 산업 소비재·식품. 시험 수집 당일 게시중 0건."
+   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것 / 2026-09-22: 그룹 전체 게시중 80건인데 코드 7개만 받아 47건을 놓치고 있었습니다. 사이트 산업에 맞는 다섯 곳을 더했습니다(LGC 화학, LGU 유플러스, BIZ 비즈테크아이, HIM 하이엠솔루텍, LGEB LG-Eni BioRefining) / 2026-11-26: LG생활건강 추가(코드 LGHH — careers.lg.com 회사 필터 목록 retrieveJobNotices 에서 확인). 산업 소비재·식품. 시험 수집 당일 게시중 0건. / 2026-11-26: HS애드(코드 GIIR, 2026-08-28 확인한 계열사 코드표) 추가 → 게임·엔터·미디어. 그날 공고 0건."
   },
   {
    "name": "스트라드비전",
@@ -1347,7 +1353,8 @@
     "삼성생명",
     "삼성화재",
     "삼성증권",
-    "삼성카드"
+    "삼성카드",
+    "제일기획"
    ],
    "industry": [
     "IT",
@@ -1403,9 +1410,12 @@
     ],
     "삼성카드": [
      "금융"
+    ],
+    "제일기획": [
+     "게임·엔터·미디어"
     ]
    },
-   "note": "삼성 통합 채용. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공. HTML 파싱이라 화면 개편 시 깨질 수 있음 / 2026-10-01: 그날 삼성중공업·삼성글로벌리서치 공고만 올라왔는데 affiliates 에 없어 0건이 났습니다. 그룹 통합 채용은 어느 계열사가 올리느냐에 따라 0건이 될 수 있으니 목록을 넉넉히 적어 둡니다 / 2026-11-26: 대표님 지시로 에스원(보안·IT, 산업 IT)을 넣었습니다. samsungcareers.com/subsid/detail/E80 에 '삼성채용홈페이지를 통해서만 접수' 라고 적혀 있는 것을 확인했습니다 / 2026-11-26: 금융 계열사 추가 — 삼성생명·삼성화재·삼성증권·삼성카드. 2026 하반기 공채 발표(news.samsung.com)에 넷 다 삼성커리어스 접수로 나옵니다. 산업 금융."
+   "note": "삼성 통합 채용. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공. HTML 파싱이라 화면 개편 시 깨질 수 있음 / 2026-10-01: 그날 삼성중공업·삼성글로벌리서치 공고만 올라왔는데 affiliates 에 없어 0건이 났습니다. 그룹 통합 채용은 어느 계열사가 올리느냐에 따라 0건이 될 수 있으니 목록을 넉넉히 적어 둡니다 / 2026-11-26: 대표님 지시로 에스원(보안·IT, 산업 IT)을 넣었습니다. samsungcareers.com/subsid/detail/E80 에 '삼성채용홈페이지를 통해서만 접수' 라고 적혀 있는 것을 확인했습니다 / 2026-11-26: 금융 계열사 추가 — 삼성생명·삼성화재·삼성증권·삼성카드. 2026 하반기 공채 발표(news.samsung.com)에 넷 다 삼성커리어스 접수로 나옵니다. 산업 금융. / 2026-11-26: 제일기획 추가(게임·엔터·미디어). 그날 포털에 제일기획 공고는 없었습니다. 올라오면 들어옵니다."
   },
   {
    "name": "DN오토모티브",
@@ -6944,6 +6954,196 @@
     ]
    },
    "note": "2026-11-26 대표님 지시로 추가. CJ그룹 통합 채용(recruit.cj.net). 그리팅·리크루터가 아닌 그룹 자체 사이트라 채용 서비스 탐지로는 안 잡혀서 빠져 있었습니다. 목록 API 와 원문 주소는 cj.py 참고. 회사명은 계열사명(compnm). 계열사별 산업은 affiliateIndustry, 표에 없는 계열사(CJ주식회사·BND·다다엠앤씨 등)는 기본값 소비재·식품. robots.txt Allow: / (2026-11-26 확인). 시험 수집 134건(본문 121 · 그림 공고 13)."
+  },
+  {
+   "name": "에스엠",
+   "slug": "sm-ent",
+   "ats": "greeting",
+   "code": "sment",
+   "domain": "recruit.smentertainment.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅 자체 도메인(recruit.smentertainment.com). 시험 수집 4건."
+  },
+  {
+   "name": "JYP Ent.",
+   "slug": "jyp-ent",
+   "ats": "greeting",
+   "code": "jype1",
+   "domain": "recruit-apply.jype.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅 자체 도메인(recruit-apply.jype.com, 그리팅 코드 jype1). recruit.jype.com 의 Apply Here 가 이 주소로 연결. 시험 수집 37건."
+  },
+  {
+   "name": "SM C&C",
+   "slug": "sm-cnc",
+   "ats": "greeting",
+   "code": "smcultureandcontents",
+   "domain": "careers.smcultureandcontents.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅 자체 도메인(careers.smcultureandcontents.com). 시험 수집 8건."
+  },
+  {
+   "name": "SAMG엔터",
+   "slug": "samg-ent",
+   "ats": "greeting",
+   "code": "samgent",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(samgent). 홈페이지 samg.net 채용 링크로 확인. 시험 수집 15건."
+  },
+  {
+   "name": "더핑크퐁컴퍼니",
+   "slug": "pinkfong",
+   "ats": "greeting",
+   "code": "thepinkfongcompany",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(thepinkfongcompany). 페이지 제목 더핑크퐁컴퍼니 채용으로 확인. 시험 수집 1건."
+  },
+  {
+   "name": "와이랩",
+   "slug": "ylab",
+   "ats": "greeting",
+   "code": "ylab",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(ylab). 홈페이지 ylabcomics.com 채용 링크·페이지 제목 와이랩 채용으로 확인. 시험 수집 당일 0건(접수중 공고 없음)."
+  },
+  {
+   "name": "와이즈버즈",
+   "slug": "wisebirds",
+   "ats": "greeting",
+   "code": "recruit-wisebirds",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(recruit-wisebirds). 홈페이지 wisebirds.co 채용 링크로 확인. 광고. 시험 수집 8건."
+  },
+  {
+   "name": "레뷰코퍼레이션",
+   "slug": "revu",
+   "ats": "greeting",
+   "code": "revu",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(revu). 페이지 제목 레뷰코퍼레이션 채용으로 확인. 광고·콘텐츠마케팅. 시험 수집 5건."
+  },
+  {
+   "name": "와이지엔터테인먼트",
+   "slug": "yg-ent",
+   "ats": "recruiter",
+   "code": "yg-entertainment",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 리크루터(yg-entertainment). ygfamily.com RECRUIT 링크로 확인. 시험 수집 3건."
+  },
+  {
+   "name": "자이언트스텝",
+   "slug": "giantstep",
+   "ats": "recruiter",
+   "code": "giantstepcorp",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 리크루터(giantstepcorp). 홈페이지 giantstep.co.kr 채용 링크로 확인. VFX. 시험 수집 1건."
+  },
+  {
+   "name": "이노션",
+   "slug": "innocean",
+   "ats": "recruiter",
+   "code": "innocean",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 리크루터(innocean). innocean.com 인재채용 링크로 확인. 광고. 시험 수집 10건."
+  },
+  {
+   "name": "대원미디어",
+   "slug": "daewonmedia",
+   "ats": "ninehire",
+   "code": "daewonmedia,ec4abbd0-8c6d-11f0-8815-d9c0c4c32872",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 나인하이어(daewonmedia). companyId 는 daewonmedia.ninehire.site 페이지의 homepageProps.companyId 값. 시험 수집 14건."
+  },
+  {
+   "name": "차이커뮤니케이션",
+   "slug": "chai-comm",
+   "ats": "greeting",
+   "code": "chai",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). 그리팅(chai). 홈페이지 artistchai.co.kr 채용 링크·페이지 제목 차이커뮤니케이션 채용으로 확인(핀테크 차이코퍼레이션과 다른 회사). 광고. 시험 수집 17건."
+  },
+  {
+   "name": "KT그룹",
+   "slug": "kt-group",
+   "ats": "recruiter",
+   "code": "kt",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "splitByTitle": true,
+   "affiliateIndustry": {
+    "kt STUDIO GENIE": [
+     "게임·엔터·미디어"
+    ],
+    "kt nasmedia": [
+     "게임·엔터·미디어"
+    ],
+    "kt alpha": [
+     "게임·엔터·미디어"
+    ],
+    "kt skylife": [
+     "게임·엔터·미디어"
+    ],
+    "kt ENA": [
+     "게임·엔터·미디어"
+    ],
+    "kt genie": [
+     "게임·엔터·미디어"
+    ],
+    "지니뮤직": [
+     "게임·엔터·미디어"
+    ],
+    "kt sports": [
+     "게임·엔터·미디어"
+    ],
+    "BC카드": [
+     "금융"
+    ],
+    "kt estate": [
+     "건설·운송·에너지"
+    ]
+   },
+   "note": "2026-11-26 대표님 지시로 추가(게임·엔터·미디어 상장사 탐지). KT그룹 통합 채용. recruit.kt.com 화면의 공고가 kt.recruiter.co.kr(리크루터)에서 옵니다(지원서 수정 링크로 확인). 제목 앞 대괄호에서 계열사를 꺼냅니다(splitByTitle). 기본 산업 IT, 스튜디오지니·나스미디어·알파·스카이라이프·ENA 등 미디어 계열은 게임·엔터·미디어. 시험 수집 23건(kt cloud 6, kt STUDIO GENIE 4, kt service남부 4, KT 3 등). 플레이디 홈페이지 채용 링크도 kt 리크루터로 연결됩니다."
   }
  ]
 }
