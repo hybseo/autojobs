@@ -96,13 +96,45 @@ CAREER = {"경력": "경력", "신입": "신입", "무관": "무관",
           "신입/경력": "신입/경력", "경력무관": "무관", "인턴": "무관"}
 
 
-def _post(body, url=None):
+# 접속 대기표 (2026-11-26, KB국민은행 kbstar.careerlink.kr 에서 확인)
+#
+# 일부 회사는 목록을 부르면 {"code":"V001","message":"티켓을 발급해주세요"} 가 옵니다.
+# 브라우저도 처음엔 똑같이 V001 을 받고, 바로 아래 순서를 밟습니다.
+#   1) POST /v1/vwr/enter        헤더 x-vwr-target: 회사번호
+#      → {"data":{"status":"enter","ticket":"...","waitingCnt":0}}
+#   2) 목록을 다시 부름          헤더 x-vwr-ticket: 받은 표, x-vwr-target: 회사번호
+# 방문자가 거치는 정상 순서 그대로입니다. 대기열을 건너뛰지 않습니다.
+# 대기 중(status 가 enter 가 아님)이면 서버가 알려준 시간만큼 기다렸다 다시 묻고,
+# 세 번 안에 차례가 안 오면 이번 회차는 넘깁니다.
+VWR_ENTER = "https://api.inhr.co.kr/v1/vwr/enter"
+
+
+def _ticket(co):
+    for _ in range(3):
+        req = urllib.request.Request(
+            VWR_ENTER, method="POST", data=b"",
+            headers={"Content-Type": "application/x-www-form-urlencoded",
+                     "Accept": "application/json", "User-Agent": UA,
+                     "x-vwr-target": co})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            d = (json.load(r) or {}).get("data") or {}
+        if d.get("status") == "enter" and d.get("ticket"):
+            return d["ticket"]
+        wait = min(max(int(d.get("nextPollMs") or 3000), 1000), 15000) / 1000
+        print(f"      · inhr({co}): 접속 대기 {d.get('waitingCnt')}명, {wait:.0f}초 뒤 다시 확인")
+        time.sleep(wait)
+    raise RuntimeError(f"inhr({co}): 접속 대기표를 받지 못했습니다(대기 중). 다음 회차에 다시 시도합니다.")
+
+
+def _post(body, url=None, extra=None):
     """일시적 실패만 몇 초 쉬었다 다시 시도합니다."""
+    head = {"Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": UA}
+    head.update(extra or {})
     req = urllib.request.Request(
         url or API, method="POST", data=json.dumps(body).encode(),
-        headers={"Content-Type": "application/json",
-                 "Accept": "application/json",
-                 "User-Agent": UA})
+        headers=head)
     last = None
     for i in range(3):
         try:
@@ -172,6 +204,11 @@ def list_open(code):
 
     co, _ = _split_code(code)
     j = _post({"coNo": co, "pageNo": 1, "pageSize": 200})
+    if str(j.get("code")) == "V001":
+        # 대기표가 필요한 회사입니다. 위 _ticket() 설명 참고.
+        tk = _ticket(co)
+        j = _post({"coNo": co, "pageNo": 1, "pageSize": 200},
+                  extra={"x-vwr-ticket": tk, "x-vwr-target": co})
 
     if str(j.get("code")) != "0000":
         print(f"  ! inhr({co}): 응답이 성공이 아닙니다. {j.get('message')}")

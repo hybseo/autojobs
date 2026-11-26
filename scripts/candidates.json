@@ -1,0 +1,207 @@
+{
+ "_readme": [
+  "새 기업 시험 후보 (scripts/try_adapters.py). 확인되면 companies.json 으로 옮깁니다."
+ ],
+ "companies": [
+  {
+   "name": "하나은행",
+   "slug": "hana-bank",
+   "ats": "recruiter",
+   "code": "hanabank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KB손해보험",
+   "slug": "kb-insurance",
+   "ats": "recruiter",
+   "code": "kbinsure",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "신한은행",
+   "slug": "shinhan-bank",
+   "ats": "recruiter",
+   "code": "shinhan",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "NH투자증권",
+   "slug": "nh-securities",
+   "ats": "recruiter",
+   "code": "nhqv",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "전북은행",
+   "slug": "jeonbuk-bank",
+   "ats": "recruiter",
+   "code": "jbbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "부산은행",
+   "slug": "busan-bank",
+   "ats": "recruiter",
+   "code": "busanbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "경남은행",
+   "slug": "kyongnam-bank",
+   "ats": "recruiter",
+   "code": "knbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "메리츠증권",
+   "slug": "meritz-securities",
+   "ats": "recruiter_v1",
+   "code": "meritz",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KB증권",
+   "slug": "kb-securities",
+   "ats": "greeting",
+   "code": "kbsec",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KB국민은행",
+   "slug": "kb-kookmin-bank",
+   "ats": "inhr",
+   "code": "CO202507252710,kbstar",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KT&G",
+   "slug": "ktng",
+   "ats": "recruiter",
+   "code": "ktng",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "오리온",
+   "slug": "orion",
+   "ats": "recruiter",
+   "code": "orion",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "코스맥스",
+   "slug": "cosmax",
+   "ats": "recruiter",
+   "code": "cosmax",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "에이피알",
+   "slug": "apr",
+   "ats": "ninehire",
+   "code": "apr-careers,9109db60-8b45-11ed-b8d6-653bf053ec74",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true,
+   "domain": "apr-careers.com"
+  },
+  {
+   "name": "대한항공",
+   "slug": "korean-air",
+   "ats": "recruiter",
+   "code": "koreanair",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "하이브",
+   "slug": "hybe",
+   "ats": "greeting",
+   "code": "hybe",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "domain": "careers.hybecorp.com"
+  },
+  {
+   "name": "DB그룹",
+   "slug": "dbgroup",
+   "ats": "recruiter",
+   "code": "dbgroup",
+   "industry": [
+    "반도체",
+    "금융"
+   ],
+   "enabled": true,
+   "splitByTitle": true,
+   "affiliateIndustry": {
+    "DB하이텍": [
+     "반도체"
+    ],
+    "DB글로벌칩": [
+     "반도체"
+    ],
+    "DB손해보험": [
+     "금융"
+    ],
+    "DB생명": [
+     "금융"
+    ],
+    "DB증권": [
+     "금융"
+    ],
+    "DB자산운용": [
+     "금융"
+    ],
+    "DB캐피탈": [
+     "금융"
+    ],
+    "DB저축은행": [
+     "금융"
+    ]
+   }
+  }
+ ]
+}

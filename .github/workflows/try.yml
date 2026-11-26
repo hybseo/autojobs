@@ -1,0 +1,43 @@
+name: 새 기업 시험 수집
+
+# 자동 실행하지 않습니다. 새 기업을 companies.json 에 넣기 전에
+# scripts/candidates.json 의 후보를 실제로 돌려 봅니다 (scripts/try_adapters.py 참고).
+# 공고 데이터를 건드리지 않고 저장소에 아무것도 커밋하지 않습니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: '시험할 slug (쉼표로 구분, 비우면 후보 전체)'
+        type: string
+        required: false
+        default: ''
+      dumps:
+        description: '원본 응답을 볼 주소 (「GET 주소」, 「POST 주소 본문」을 ;; 로 구분)'
+        type: string
+        required: false
+        default: ''
+
+jobs:
+  try:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 시험 실행
+        env:
+          ONLY: ${{ inputs.only }}
+          DUMPS: ${{ inputs.dumps }}
+        run: |
+          python3 - <<'PY'
+          import os, subprocess, sys
+          args = ["python", "-u", "scripts/try_adapters.py"]
+          for d in [x.strip() for x in os.environ.get("DUMPS", "").split(";;") if x.strip()]:
+              args += ["--dump", d]
+          only = os.environ.get("ONLY", "").strip()
+          if only:
+              args += ["--only", only]
+          sys.exit(subprocess.call(args))
+          PY
