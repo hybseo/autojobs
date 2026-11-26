@@ -4,121 +4,594 @@
  ],
  "companies": [
   {
-   "name": "롯데그룹",
-   "slug": "lotte",
-   "ats": "lotte",
-   "code": "lotte",
+   "name": "와이즈플래닛컴퍼니",
+   "slug": "wplanet",
+   "ats": "ninehire",
+   "code": "wplanet,19c976f0-332a-11ed-a449-b9d6598f1a12",
    "industry": [
-    "중공업·화학·소재",
-    "소비재·식품",
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "딜리셔스",
+   "slug": "dealicious",
+   "ats": "recruiter_v1",
+   "code": "dealicious",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "아로마티카",
+   "slug": "aromatica",
+   "ats": "greeting",
+   "code": "aromatica",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "마녀공장",
+   "slug": "manyo",
+   "ats": "ninehire",
+   "code": "manyo,bf298490-46a6-11f0-a431-4b6b35d72aea",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "F&F",
+   "slug": "fnf",
+   "ats": "recruiter",
+   "code": "fnf",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "씨앤씨인터내셔널",
+   "slug": "cnccosmetic",
+   "ats": "greeting",
+   "code": "cnccosmetic",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "푸드나무",
+   "slug": "foodnamoohr",
+   "ats": "recruiter_v1",
+   "code": "foodnamoohr",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "매일유업",
+   "slug": "maeil",
+   "ats": "recruiter",
+   "code": "maeil",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "클리오",
+   "slug": "clio",
+   "ats": "recruiter_v1",
+   "code": "clio",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "코스메카코리아",
+   "slug": "cosmecca",
+   "ats": "recruiter_v1",
+   "code": "cosmecca",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "샘표식품",
+   "slug": "sempio",
+   "ats": "recruiter",
+   "code": "sempio",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "제로투세븐",
+   "slug": "0to7",
+   "ats": "recruiter_v1",
+   "code": "0to7",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "GS리테일",
+   "slug": "gsretail",
+   "ats": "recruiter",
+   "code": "gsretail",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "하이트진로",
+   "slug": "hitejinro",
+   "ats": "recruiter_v1",
+   "code": "hitejinro",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "LF",
+   "slug": "lfcorp",
+   "ats": "recruiter_v1",
+   "code": "lfcorp",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "한샘",
+   "slug": "hanssem",
+   "ats": "recruiter_v1",
+   "code": "hanssem",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "팜스코",
+   "slug": "farmsco",
+   "ats": "recruiter",
+   "code": "farmsco",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "그래디언트",
+   "slug": "gradiant",
+   "ats": "ninehire",
+   "code": "gradiant,8ab75ca0-6078-11f0-a3ce-951c44841b94",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "좋은사람들",
+   "slug": "goodpeople",
+   "ats": "recruiter_v1",
+   "code": "goodpeople",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "풀무원",
+   "slug": "pulmuone",
+   "ats": "greeting",
+   "code": "pulmuone",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "신원",
+   "slug": "shinwon",
+   "ats": "greeting",
+   "code": "shinwon",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "빙그레",
+   "slug": "bing",
+   "ats": "recruiter_v1",
+   "code": "bing",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "대한제분",
+   "slug": "dhflour",
+   "ats": "recruiter_v1",
+   "code": "dhflour",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "대상",
+   "slug": "daesang",
+   "ats": "recruiter_v1",
+   "code": "daesang",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "대한제당",
+   "slug": "ts",
+   "ats": "recruiter_v1",
+   "code": "ts",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "SPC그룹",
+   "slug": "spc",
+   "ats": "recruiter_v1",
+   "code": "spc",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "hy",
+   "slug": "hyrecruit",
+   "ats": "recruiter_v1",
+   "code": "hyrecruit",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "정관장(KGC)",
+   "slug": "kgc",
+   "ats": "recruiter_v1",
+   "code": "kgc",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "신세계푸드",
+   "slug": "shinsegaefood",
+   "ats": "recruiter_v1",
+   "code": "shinsegaefood",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "아성다이소",
+   "slug": "daiso",
+   "ats": "recruiter",
+   "code": "daiso",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "CJ올리브영",
+   "slug": "oliveyoung",
+   "ats": "greeting",
+   "code": "oliveyoung",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "에어부산",
+   "slug": "airbusan",
+   "ats": "recruiter_v1",
+   "code": "airbusan",
+   "industry": [
     "건설·운송·에너지"
    ],
-   "enabled": true,
-   "note": "롯데그룹 통합 채용(recruit.lotte.co.kr). 2026-10-02 비활성: 사이트에 봇 차단(Incapsula)이 걸려 있습니다. 사람이 브라우저로 열면 공고가 보이지만 수집기에는 검사 화면만 내려와 공고 링크가 하나도 없습니다(받은 HTML 18만 자). 화학 계열사 9곳이 걸려 있어 아깝지만 지금 방법으로는 받을 수 없습니다 / 2026-11-27 대표님 지시로 되살림: 깃허브 서버에서 진짜 브라우저(Playwright)로 열면 봇 차단을 통과해 공고가 보입니다(11건 확인). 어댑터가 그냥 요청으로 0건이면 브라우저로 다시 엽니다. 식품·유통·호텔(롯데웰푸드·칠성음료·쇼핑·GRS·하이마트·홈쇼핑·코리아세븐·월드·호텔·상사), 건설·물류(롯데건설·글로벌로지스·렌탈), IT(이노베이트·멤버스), 영화(컬처웍스)를 더했습니다. 계열사 이름은 화면 표기(롯데웰푸드·롯데월드·롯데상사·롯데이노베이트 확인)와 정식 사명입니다. 롯데바이오로직스는 따로 등록돼 있어 넣지 않습니다.",
-   "affiliates": [
-    "롯데케미칼",
-    "롯데정밀화학",
-    "롯데이네오스화학",
-    "롯데엠시시",
-    "롯데GS화학",
-    "롯데에너지머티리얼즈",
-    "롯데알미늄",
-    "롯데인프라셀",
-    "롯데패키징솔루션즈",
-    "롯데웰푸드",
-    "롯데칠성음료",
-    "롯데쇼핑",
-    "롯데GRS",
-    "롯데하이마트",
-    "롯데홈쇼핑",
-    "코리아세븐",
-    "롯데월드",
-    "롯데호텔",
-    "롯데상사",
-    "롯데멤버스",
-    "롯데이노베이트",
-    "롯데건설",
-    "롯데글로벌로지스",
-    "롯데렌탈",
-    "롯데컬처웍스"
+   "enabled": true
+  },
+  {
+   "name": "트리니티항공",
+   "slug": "trinityairways",
+   "ats": "recruiter",
+   "code": "trinityairways",
+   "industry": [
+    "건설·운송·에너지"
    ],
-   "affiliateIndustry": {
-    "롯데케미칼": [
-     "중공업·화학·소재"
-    ],
-    "롯데정밀화학": [
-     "중공업·화학·소재"
-    ],
-    "롯데이네오스화학": [
-     "중공업·화학·소재"
-    ],
-    "롯데엠시시": [
-     "중공업·화학·소재"
-    ],
-    "롯데GS화학": [
-     "중공업·화학·소재"
-    ],
-    "롯데에너지머티리얼즈": [
-     "중공업·화학·소재"
-    ],
-    "롯데알미늄": [
-     "중공업·화학·소재"
-    ],
-    "롯데인프라셀": [
-     "중공업·화학·소재"
-    ],
-    "롯데패키징솔루션즈": [
-     "중공업·화학·소재"
-    ],
-    "롯데웰푸드": [
-     "소비재·식품"
-    ],
-    "롯데칠성음료": [
-     "소비재·식품"
-    ],
-    "롯데쇼핑": [
-     "소비재·식품"
-    ],
-    "롯데GRS": [
-     "소비재·식품"
-    ],
-    "롯데하이마트": [
-     "소비재·식품"
-    ],
-    "롯데홈쇼핑": [
-     "소비재·식품"
-    ],
-    "코리아세븐": [
-     "소비재·식품"
-    ],
-    "롯데월드": [
-     "소비재·식품"
-    ],
-    "롯데호텔": [
-     "소비재·식품"
-    ],
-    "롯데상사": [
-     "소비재·식품"
-    ],
-    "롯데멤버스": [
-     "IT"
-    ],
-    "롯데이노베이트": [
-     "IT"
-    ],
-    "롯데건설": [
-     "건설·운송·에너지"
-    ],
-    "롯데글로벌로지스": [
-     "건설·운송·에너지"
-    ],
-    "롯데렌탈": [
-     "건설·운송·에너지"
-    ],
-    "롯데컬처웍스": [
-     "게임·엔터·미디어"
-    ]
-   }
+   "enabled": true
+  },
+  {
+   "name": "진에어",
+   "slug": "jinair",
+   "ats": "recruiter_v1",
+   "code": "jinair",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "경동도시가스",
+   "slug": "kdgas",
+   "ats": "recruiter_v1",
+   "code": "kdgas",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "제주항공",
+   "slug": "jejuair",
+   "ats": "recruiter",
+   "code": "jejuair",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "도화엔지니어링",
+   "slug": "dohwa",
+   "ats": "recruiter",
+   "code": "dohwa",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "유신",
+   "slug": "yooshin",
+   "ats": "recruiter",
+   "code": "yooshin",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "지에스이",
+   "slug": "yesgse",
+   "ats": "recruiter",
+   "code": "yesgse",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KCC건설",
+   "slug": "kccworld",
+   "ats": "recruiter_v1",
+   "code": "kccworld",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "희림",
+   "slug": "heerim",
+   "ats": "recruiter",
+   "code": "heerim",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "서희건설",
+   "slug": "seohee",
+   "ats": "recruiter",
+   "code": "seohee",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "계룡건설산업",
+   "slug": "krcon",
+   "ats": "recruiter_v1",
+   "code": "krcon",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "서한",
+   "slug": "seohan",
+   "ats": "recruiter",
+   "code": "seohan",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "태영건설",
+   "slug": "taeyoung",
+   "ats": "recruiter_v1",
+   "code": "taeyoung",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "HS화성",
+   "slug": "hwasung",
+   "ats": "recruiter",
+   "code": "hwasung",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "GS건설",
+   "slug": "gsenc",
+   "ats": "recruiter",
+   "code": "gsenc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "코오롱글로벌",
+   "slug": "kolonglobal",
+   "ats": "recruiter_v1",
+   "code": "kolonglobal",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "한국공항",
+   "slug": "kas",
+   "ats": "recruiter",
+   "code": "kas",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "금호건설",
+   "slug": "kumhoenc",
+   "ats": "recruiter",
+   "code": "kumhoenc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "한진",
+   "slug": "hanjin",
+   "ats": "recruiter_v1",
+   "code": "hanjin",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "현대엔지니어링",
+   "slug": "hec",
+   "ats": "recruiter",
+   "code": "hec",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "에어프레미아",
+   "slug": "airpremia",
+   "ats": "greeting",
+   "code": "airpremia",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "E1",
+   "slug": "e1",
+   "ats": "recruiter",
+   "code": "e1",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "두산건설",
+   "slug": "doosanenc",
+   "ats": "recruiter",
+   "code": "doosanenc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "호반건설",
+   "slug": "hoban-b",
+   "ats": "recruiter_v1",
+   "code": "hoban",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "반도건설",
+   "slug": "bando",
+   "ats": "recruiter",
+   "code": "bando",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "우미건설",
+   "slug": "woomi",
+   "ats": "recruiter",
+   "code": "woomi",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "서울도시가스",
+   "slug": "scg",
+   "ats": "recruiter",
+   "code": "scg",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
   }
  ]
 }
