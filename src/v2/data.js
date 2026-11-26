@@ -16,7 +16,7 @@
 import {
   COLLECTED_AT, STALE_DAYS, JOBS, openJobs, closedJobs, isRecentlyClosed, isAlways, daysLeft,
   industriesOf, industrySlug, industries, rolesOf, roles, roleName,
-  companyPages, scanRuns, scanStreak, jobTags, summaryOf, noticeReason, hasDetail,
+  companyPages, scanRuns, scanStreak, jobTags, summaryOf, noticeReason, hasDetail, searchAlias,
 } from '../lib.js';
 import registry from '../data/companies.json';
 import introDoc from '../data/company-intro.json';
@@ -58,6 +58,10 @@ export const toRow = (j, full = true) => {
     r: rolesOf(j),
     g: jobTags(j),
   };
+  // 검색용 다른 표기 (화면엔 안 보임). SK telecom → SK텔레콤 처럼 영문 회사명을 한글로도
+  // 찾게 합니다(2026-11-26). 별칭이 있는 회사에만 붙여 데이터가 커지지 않게 합니다.
+  const alias = searchAlias(j.company);
+  if (alias) row.a = alias;
   if (isAlways(j)) row.al = 1;
   else row.d = daysLeft(j);
   if (s) {

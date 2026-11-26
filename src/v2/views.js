@@ -315,7 +315,7 @@ export function filtered(D, S) {
     if (f.recent && j.f < f.recent) return false;
     if (q) {
       const co = X.co[j.c];
-      const hay = `${j.t} ${co ? co.n : j.n} ${j.n} ${j.g.join(' ')} ${j.l || ''} ${j.r.map((r) => X.role[r] || r).join(' ')}`.toLowerCase();
+      const hay = `${j.t} ${co ? co.n : j.n} ${j.n} ${j.a || ''} ${j.g.join(' ')} ${j.l || ''} ${j.r.map((r) => X.role[r] || r).join(' ')}`.toLowerCase();
       if (hay.indexOf(q) < 0) return false;
     }
     return true;
