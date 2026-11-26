@@ -28,6 +28,8 @@ on:
           - 'ATS직접탐지: 제약바이오 60개사 (약 25분)'
           - 'ATS직접탐지: 전기전자 51개사 (약 22분)'
           - 'ATS직접탐지: 로봇 33개사 (약 14분)'
+          - '게임·엔터·미디어 상장사 72개사 (약 25분)'
+          - 'ATS직접탐지: 게임·엔터·미디어 78개사 (약 30분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -56,6 +58,8 @@ jobs:
             ATS직접탐지*제약바이오*) SCRIPT=probe_ats2.py; ARGS="--names scripts/names_pharma.txt" ;;
             ATS직접탐지*전기전자*)   SCRIPT=probe_ats2.py; ARGS="--names scripts/names_electronics.txt" ;;
             ATS직접탐지*로봇*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_robot.txt" ;;
+            ATS직접탐지*게임*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_media.txt" ;;
+            게임*)     ARGS="--urls scripts/targets_media.txt" ;;
             PCB*)     ARGS="--urls scripts/targets_pcb.txt" ;;
             모빌리티*) ARGS="--urls scripts/targets_startup.txt" ;;
             로봇*)     ARGS="--urls scripts/targets_robot.txt" ;;

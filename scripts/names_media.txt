@@ -1,0 +1,87 @@
+# 게임·엔터·미디어 상장사 — ATS 하위도메인 직접 탐지용 (2026-11-26)
+#
+# targets_media.txt 와 같은 회사입니다. 홈페이지에 채용 링크가 없거나
+# 홈페이지가 KIND 에 없는 곳까지 찾으려고 이름으로 한 번 더 두드립니다.
+# 영문 이름·별칭은 회사 홈페이지 주소와 영문 사명에서 땄습니다. 맞는지는 탐지가
+# 확인합니다(틀린 후보는 그냥 못 찾을 뿐 등록되지 않습니다).
+#
+# 형식: 회사명,영문이름[,별칭...]
+
+에스엠,smentertainment,smtown,sment
+JYP Ent.,jype,jypentertainment,jyp
+와이지엔터테인먼트,ygfamily,ygentertainment,yg
+YG PLUS,ygplus
+큐브엔터,cubeent,cubeentertainment
+에프엔씨엔터,fncent,fncentertainment
+판타지오,fantagio
+키이스트,keyeast
+아이오케이이엔엠,iok,iokcompany
+티엔엔터테인먼트,tnentertainment,tnent
+알비더블유,rbw,rbbridge
+노머스,knowmerce,nomus
+디어유,dearu
+블리츠웨이엔터테인먼트,blitzway,blitzwayentertainment
+갤럭시아에스엠,galaxiasm
+SM C&C,smcnc,smcultureandcontents
+SM Life Design,smlifedesign
+드림어스컴퍼니,dreamus,dreamuscompany
+KT지니뮤직,geniemusic,genie
+NHN벅스,bugs,nhnbugs
+CJ ENM,cjenm
+스튜디오드래곤,studiodragon
+CJ CGV,cgv,cjcgv
+SBS,sbs
+케이티스카이라이프,ktskylife,skylife
+LG헬로비전,lghellovision,hellovision
+한국경제TV,wownet,wowtv
+KNN,knn
+티비씨,tbc
+YTN,ytn
+씨씨에스,ccstv,ccs
+KX,kxgroup,kx
+iMBC,imbc
+콘텐트리중앙,jcontentree,contentree
+NEW,itsnew,newent
+쇼박스,showbox
+바른손이앤에이,barunsonena,barunson
+초록뱀미디어,chorokbaem
+삼화네트웍스,shnetworks,samhwanetworks
+에이스토리,astory
+팬엔터테인먼트,thepan,panent
+스튜디오쏠쏠,studiossolsol,artiststudio
+빅텐츠,victents
+코퍼스코리아,copuskorea,corpuskorea
+에피소드컴퍼니,episodecompany,carriesoft
+애니플러스,aniplus,aniplustv
+케이티알파,ktalpha
+더핑크퐁컴퍼니,pinkfong,thepinkfongcompany
+SAMG엔터,samg,samgent
+스튜디오미르,studiomir
+대원미디어,daewonmedia
+덱스터,dexter,dexterstudios
+자이언트스텝,giantstep
+포바이포,4by4,fourbyfour
+M83,m83
+닷밀,dotmill
+와이랩,ylab,ylabcomics
+디앤씨미디어,dncmedia
+미스터블루,mrblue
+KT밀리의서재,millie,milliebook
+제일기획,cheil
+이노션,innocean
+HS애드,hsad
+KT나스미디어,nasmedia
+인크로스,incross
+플레이디,playd
+오리콤,oricom
+이엠넷,emnet
+매드업,madup
+애드포러스,adforus
+차이커뮤니케이션,chaicommunication,artistchai
+드림인사이트,dreaminsight,bydream
+레뷰코퍼레이션,revu,revucorp
+엔비티,nbt
+와이즈버즈,wisebirds
+아티스트컴퍼니,widerplanet,artistcompany
+모비데이즈,mobidays
+비케이홀딩스,bkholdings

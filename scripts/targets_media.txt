@@ -1,0 +1,92 @@
+# 게임·엔터·미디어 상장사 (한국거래소 KIND 상장법인목록)
+#
+# 2026-11-26 대표님 지시 — 게임 칸을 게임·엔터·미디어로 넓히면서 모을 회사를 찾습니다.
+# 출처: KIND 상장법인목록(2026-11-26 내려받음)의 업종
+#   영화·비디오물·방송프로그램 제작 및 배급 / 텔레비전 방송 / 오디오물 출판 및 원판 녹음 /
+#   창작 및 예술관련 서비스 / 영상·오디오물 제공 / 광고업 / 서적·잡지 출판(웹툰·웹소설·전자책만)
+# 에 엔터·영상콘텐츠 테마에 드는 회사(디어유·YG PLUS·대원미디어 등)를 더했습니다.
+#
+# 걸러낸 것
+#   교육 출판(비상교육·메가스터디·NE능률 등), 카지노·리조트(강원랜드·파라다이스·GKL),
+#   업종만 엔터로 잡힌 다른 업종 회사(아센디오 석탄·빌리언스 고무장갑·한주에이알티 부품),
+#   코넥스(타조이엔터·더콘텐츠온·레드우즈), 헬스케어 플랫폼(케어랩스)
+#   이미 모으는 곳(하이브·키다리스튜디오·에코마케팅)
+#
+# 홈페이지는 KIND 에 적힌 값만 씁니다. 비어 있는 곳(더핑크퐁컴퍼니·스튜디오드래곤·
+# 닷밀·코퍼스코리아·판타지오·모비데이즈)은 이 파일에서 빼고 names_media.txt 로만 찾습니다.
+#
+# 형식: 회사명,홈페이지
+# 사용법: python scripts/probe_ats1.py --urls scripts/targets_media.txt
+
+에스엠,http://smentertainment.com
+JYP Ent.,http://www.jype.com
+와이지엔터테인먼트,http://www.ygfamily.com
+YG PLUS,http://www.ygplus.com
+큐브엔터,http://www.cubeent.co.kr
+에프엔씨엔터,http://www.fncent.com
+키이스트,http://www.keyeast.co.kr
+아이오케이이엔엠,http://www.iok.co.kr
+티엔엔터테인먼트,http://chorokbaemenm.com
+알비더블유,http://www.rbbridge.com
+노머스,http://knowmerce.com
+디어유,http://www.dear-u.co
+블리츠웨이엔터테인먼트,http://blitzwayentertainment.com
+갤럭시아에스엠,http://galaxiasme.com
+SM C&C,http://www.smcultureandcontents.com
+SM Life Design,http://smlifedesign.com
+드림어스컴퍼니,http://dreamuscompany.com
+KT지니뮤직,http://www.geniemusic.co.kr
+NHN벅스,http://www.bugs.co.kr
+CJ ENM,http://www.cjenm.com/ko/
+CJ CGV,http://www.cgv.co.kr
+SBS,http://www.sbs.co.kr
+케이티스카이라이프,http://www.ktskylife.co.kr
+LG헬로비전,http://www.lghellovision.net
+한국경제TV,http://www.wownet.co.kr
+KNN,http://www.knn.co.kr
+티비씨,http://www.tbc.co.kr
+YTN,http://www.ytn.co.kr
+씨씨에스,http://www.ccstv.co.kr
+KX,http://www.kxgroup.co.kr
+iMBC,http://corp.imbc.com
+콘텐트리중앙,http://www.jcontentree.com/
+NEW,http://www.its-new.co.kr
+쇼박스,http://www.showbox.co.kr
+바른손이앤에이,http://www.barunsonena.com/
+초록뱀미디어,http://www.chorokbaem.com
+삼화네트웍스,http://www.shnetworks.co.kr
+에이스토리,http://www.astory.co.kr
+팬엔터테인먼트,http://www.thepan.co.kr
+스튜디오쏠쏠,http://www.artiststudio.co.kr
+빅텐츠,http://victents.com
+에피소드컴퍼니,http://www.carriesoft.com
+애니플러스,http://www.aniplustv.com
+케이티알파,http://www.ktalpha.com
+SAMG엔터,http://www.samg.net
+스튜디오미르,http://www.studiomir.co.kr/
+대원미디어,http://daewonmedia.com
+덱스터,http://www.dexterstudios.com
+자이언트스텝,http://www.giantstep.co.kr
+포바이포,http://4by4inc.com
+M83,http://m83.co.kr
+와이랩,http://ylabcomics.com
+디앤씨미디어,http://www.dncmedia.co.kr
+미스터블루,http://www.mrbluecorp.com/
+KT밀리의서재,http://www.millie.town
+제일기획,http://www.cheil.co.kr
+이노션,http://www.innocean.com
+HS애드,http://www.hsad.co.kr/kor/main
+KT나스미디어,http://www.nasmedia.co.kr
+인크로스,http://www.incross.com
+플레이디,http://www.playd.com
+오리콤,http://www.oricom.co.kr
+이엠넷,http://www.emnet.co.kr
+매드업,http://madup.com/
+애드포러스,http://www.adforus.co.kr
+차이커뮤니케이션,http://www.artistchai.co.kr
+드림인사이트,http://bydream.co.kr/
+레뷰코퍼레이션,http://corp.revu.net
+엔비티,http://nbt.com/
+와이즈버즈,http://www.wisebirds.co
+아티스트컴퍼니,http://www.widerplanet.com
+비케이홀딩스,http://bkholdings.kr
