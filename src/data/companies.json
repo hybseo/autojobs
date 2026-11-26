@@ -396,7 +396,7 @@
    "name": "LG그룹",
    "slug": "lg-careers",
    "ats": "lg",
-   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD,LGC,LGU,BIZ,HIM,LGEB",
+   "code": "LGE,LGIT,MAGNA,LGES,RBO,CNS,LGD,LGC,LGU,BIZ,HIM,LGEB,LGHH",
    "affiliateIndustry": {
     "LG전자": [
      "자동차부품",
@@ -439,6 +439,9 @@
     ],
     "LG-Eni BioRefining": [
      "중공업·화학·소재"
+    ],
+    "LG생활건강": [
+     "소비재·식품"
     ]
    },
    "industry": [
@@ -450,7 +453,7 @@
     "중공업·화학·소재"
    ],
    "enabled": true,
-   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것 / 2026-09-22: 그룹 전체 게시중 80건인데 코드 7개만 받아 47건을 놓치고 있었습니다. 사이트 산업에 맞는 다섯 곳을 더했습니다(LGC 화학, LGU 유플러스, BIZ 비즈테크아이, HIM 하이엠솔루텍, LGEB LG-Eni BioRefining)"
+   "note": "LG 그룹 통합 채용. code 는 계열사 코드를 쉼표로. 코드는 careers.lg.com 에서 회사 필터를 걸 때 나가는 companyCodeList 값입니다. LGCNS 가 아니라 CNS, LGDISPLAY 가 아니라 LGD 입니다. 추측하지 말고 확인할 것 / 2026-09-22: 그룹 전체 게시중 80건인데 코드 7개만 받아 47건을 놓치고 있었습니다. 사이트 산업에 맞는 다섯 곳을 더했습니다(LGC 화학, LGU 유플러스, BIZ 비즈테크아이, HIM 하이엠솔루텍, LGEB LG-Eni BioRefining) / 2026-11-26: LG생활건강 추가(코드 LGHH — careers.lg.com 회사 필터 목록 retrieveJobNotices 에서 확인). 산업 소비재·식품. 시험 수집 당일 게시중 0건."
   },
   {
    "name": "스트라드비전",
@@ -841,7 +844,10 @@
     "한화에어로스페이스",
     "한화오션",
     "한화토탈에너지스",
-    "한화솔루션"
+    "한화솔루션",
+    "한화생명",
+    "한화투자증권",
+    "한화자산운용"
    ],
    "affiliateIndustry": {
     "한화로보틱스": [
@@ -890,6 +896,15 @@
     ],
     "한화토탈에너지스": [
      "중공업·화학·소재"
+    ],
+    "한화생명": [
+     "금융"
+    ],
+    "한화투자증권": [
+     "금융"
+    ],
+    "한화자산운용": [
+     "금융"
     ]
    },
    "industry": [
@@ -901,7 +916,7 @@
     "IT"
    ],
    "enabled": true,
-   "note": "한화인 통합 채용. 계열사명을 끝까지 적을 것. 한화시스템은 방산(전기전자)과 ICT(IT)를 따로 담습니다. 금융 계열(생명·손보·투자증권·자산운용) 24건은 금융 산업을 열 때 추가하세요. 에어로스페이스는 항공엔진·우주라 지금 산업에 맞는 곳이 없어 보류 / 2026-10-01: 한화토탈이 '한화토탈에너지스' 로도 표기돼 두 이름을 모두 넣었습니다 / 2026-11-26: 한화솔루션이 affiliateIndustry 에는 있는데 affiliates 에 없어 공고가 걸러지고 있었습니다. 대표님 지시로 넣었습니다(이름 앞부분으로 견주므로 '한화솔루션/케미칼' 처럼 부문이 붙어 와도 잡힙니다. 실제 표기는 수집 기록의 「받은 회사」 줄로 확인합니다)"
+   "note": "한화인 통합 채용. 계열사명을 끝까지 적을 것. 한화시스템은 방산(전기전자)과 ICT(IT)를 따로 담습니다. 금융 계열(생명·손보·투자증권·자산운용) 24건은 금융 산업을 열 때 추가하세요. 에어로스페이스는 항공엔진·우주라 지금 산업에 맞는 곳이 없어 보류 / 2026-10-01: 한화토탈이 '한화토탈에너지스' 로도 표기돼 두 이름을 모두 넣었습니다 / 2026-11-26: 한화솔루션이 affiliateIndustry 에는 있는데 affiliates 에 없어 공고가 걸러지고 있었습니다. 대표님 지시로 넣었습니다(이름 앞부분으로 견주므로 '한화솔루션/케미칼' 처럼 부문이 붙어 와도 잡힙니다. 실제 표기는 수집 기록의 「받은 회사」 줄로 확인합니다) / 2026-11-26: 금융 계열사 추가 — 한화생명·한화투자증권·한화자산운용(그날 한화 채용에 7·8·4건, 수집 기록 「받은 회사」로 확인). 산업 금융. 한화손해보험은 그날 목록에 없어 안 넣음."
   },
   {
    "name": "두산",
@@ -971,15 +986,43 @@
    "note": "반도체 소재"
   },
   {
-   "name": "DB하이텍",
+   "name": "DB그룹",
    "slug": "dbgroup",
    "ats": "recruiter",
    "code": "dbgroup",
    "industry": [
-    "반도체"
+    "반도체",
+    "금융"
    ],
    "enabled": true,
-   "note": "파운드리"
+   "note": "파운드리 / 2026-11-26: dbgroup.recruiter.co.kr 은 DB하이텍만이 아니라 DB그룹 통합 채용입니다. DB손해보험·DB생명·DB증권 공고가 전부 'DB하이텍(반도체)' 으로 들어가고 있었습니다. 이름을 DB그룹으로 바꾸고 제목 대괄호에서 계열사를 꺼냅니다(splitByTitle). 금융 계열사는 금융으로 분류. slug 는 그대로.",
+   "splitByTitle": true,
+   "affiliateIndustry": {
+    "DB하이텍": [
+     "반도체"
+    ],
+    "DB글로벌칩": [
+     "반도체"
+    ],
+    "DB손해보험": [
+     "금융"
+    ],
+    "DB생명": [
+     "금융"
+    ],
+    "DB증권": [
+     "금융"
+    ],
+    "DB자산운용": [
+     "금융"
+    ],
+    "DB캐피탈": [
+     "금융"
+    ],
+    "DB저축은행": [
+     "금융"
+    ]
+   }
   },
   {
    "name": "가온칩스",
@@ -1300,7 +1343,11 @@
     "삼성글로벌리서치",
     "삼성E&A",
     "삼성물산",
-    "에스원"
+    "에스원",
+    "삼성생명",
+    "삼성화재",
+    "삼성증권",
+    "삼성카드"
    ],
    "industry": [
     "IT",
@@ -1344,9 +1391,21 @@
     ],
     "에스원": [
      "IT"
+    ],
+    "삼성생명": [
+     "금융"
+    ],
+    "삼성화재": [
+     "금융"
+    ],
+    "삼성증권": [
+     "금융"
+    ],
+    "삼성카드": [
+     "금융"
     ]
    },
-   "note": "삼성 통합 채용. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공. HTML 파싱이라 화면 개편 시 깨질 수 있음 / 2026-10-01: 그날 삼성중공업·삼성글로벌리서치 공고만 올라왔는데 affiliates 에 없어 0건이 났습니다. 그룹 통합 채용은 어느 계열사가 올리느냐에 따라 0건이 될 수 있으니 목록을 넉넉히 적어 둡니다 / 2026-11-26: 대표님 지시로 에스원(보안·IT, 산업 IT)을 넣었습니다. samsungcareers.com/subsid/detail/E80 에 '삼성채용홈페이지를 통해서만 접수' 라고 적혀 있는 것을 확인했습니다"
+   "note": "삼성 통합 채용. 계열사명을 끝까지 적을 것. 목록에 본문이 없어 원문 링크만 제공. HTML 파싱이라 화면 개편 시 깨질 수 있음 / 2026-10-01: 그날 삼성중공업·삼성글로벌리서치 공고만 올라왔는데 affiliates 에 없어 0건이 났습니다. 그룹 통합 채용은 어느 계열사가 올리느냐에 따라 0건이 될 수 있으니 목록을 넉넉히 적어 둡니다 / 2026-11-26: 대표님 지시로 에스원(보안·IT, 산업 IT)을 넣었습니다. samsungcareers.com/subsid/detail/E80 에 '삼성채용홈페이지를 통해서만 접수' 라고 적혀 있는 것을 확인했습니다 / 2026-11-26: 금융 계열사 추가 — 삼성생명·삼성화재·삼성증권·삼성카드. 2026 하반기 공채 발표(news.samsung.com)에 넷 다 삼성커리어스 접수로 나옵니다. 산업 금융."
   },
   {
    "name": "DN오토모티브",
@@ -6416,6 +6475,393 @@
    ],
    "enabled": false,
    "note": "2026-11-13 완성차 추가 조사. 공식 사이트 kg-mobility.com 첫 화면에 채용 메뉴·링크가 없고, 검색으로도 자체 채용 사이트를 찾지 못했습니다. 공고는 사람인·링커리어 같은 채용 플랫폼에만 보입니다. 같은 그룹 KG스틸과 같은 이유(플랫폼 데이터는 수집하지 않음)로 비활성입니다. 자체 채용 사이트가 확인되면 그때 붙이세요."
+  },
+  {
+   "name": "KB국민은행",
+   "slug": "kb-kookmin-bank",
+   "ats": "inhr",
+   "code": "CO202507252710,kbstar",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 채용 사이트 kbstar.careerlink.kr. 목록 요청 전에 접속 대기표(vwr/enter)를 받아야 합니다(inhr.py 참고). 회사번호는 화면이 보내는 jd/list 요청의 coNo 에서 확인. 시험 수집 당일 7건 모두 9월 마감 공고."
+  },
+  {
+   "name": "신한은행",
+   "slug": "shinhan-bank",
+   "ats": "recruiter",
+   "code": "shinhan",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). shinhan.recruiter.co.kr. 깃허브 러너에서 채용 사이트를 열어 확인(scripts/inspect_pages.py), 시험 수집(scripts/try_adapters.py)으로 공고가 잡히는 것을 봄. 시험 수집 1건."
+  },
+  {
+   "name": "하나은행",
+   "slug": "hana-bank",
+   "ats": "recruiter",
+   "code": "hanabank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). kebhana.com 채용안내 링크가 hanabank.recruiter.co.kr. 시험 수집 당일 진행 중 공고 0건(9~10월 채용 마감)."
+  },
+  {
+   "name": "KB증권",
+   "slug": "kb-securities",
+   "ats": "greeting",
+   "code": "kbsec",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). kbsec.com 채용 링크가 kbsec.career.greetinghr.com. 시험 수집 4건."
+  },
+  {
+   "name": "KB손해보험",
+   "slug": "kb-insurance",
+   "ats": "recruiter",
+   "code": "kbinsure",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). kbinsure.co.kr 채용안내 링크가 kbinsure.recruiter.co.kr. 시험 수집 당일 0건."
+  },
+  {
+   "name": "NH투자증권",
+   "slug": "nh-securities",
+   "ats": "recruiter",
+   "code": "nhqv",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). nhqv.recruiter.co.kr. 시험 수집 11건."
+  },
+  {
+   "name": "메리츠증권",
+   "slug": "meritz-securities",
+   "ats": "recruiter_v1",
+   "code": "meritz",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). meritz.recruiter.co.kr 구버전 화면(제목 '채용안내 | 채용정보 | 메리츠증권'). 시험 수집 당일 접수중 0건."
+  },
+  {
+   "name": "부산은행",
+   "slug": "busan-bank",
+   "ats": "recruiter",
+   "code": "busanbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). BNK부산은행. busanbank.recruiter.co.kr. 시험 수집 3건."
+  },
+  {
+   "name": "경남은행",
+   "slug": "kyongnam-bank",
+   "ats": "recruiter",
+   "code": "knbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). BNK경남은행. knbank.recruiter.co.kr. 시험 수집 7건."
+  },
+  {
+   "name": "전북은행",
+   "slug": "jeonbuk-bank",
+   "ats": "recruiter",
+   "code": "jbbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). JB금융. jbbank.recruiter.co.kr. 시험 수집 당일 0건."
+  },
+  {
+   "name": "우리금융그룹",
+   "slug": "woori-fg",
+   "ats": "woorifg",
+   "code": "woorifg",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 그룹 통합 채용공고 목록(woorifg.com). 우리은행·우리카드·우리금융에프앤아이 등 그룹사가 한 목록에 올립니다. 회사명은 목록의 그룹사명 칸을 씁니다(woorifg.py). 시험 수집 18건(우리은행 17)."
+  },
+  {
+   "name": "KT&G",
+   "slug": "ktng",
+   "ats": "recruiter",
+   "code": "ktng",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). ktng.recruiter.co.kr(케이티앤지 채용). 시험 수집 당일 접수중 0건(전부 접수마감)."
+  },
+  {
+   "name": "오리온",
+   "slug": "orion",
+   "ats": "recruiter",
+   "code": "orion",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). orionworld.com 채용 링크가 orion.recruiter.co.kr. 영업사원 채용(recruitsales.orionworld.com)은 따로 있어 아직 안 넣음. 시험 수집 3건."
+  },
+  {
+   "name": "코스맥스",
+   "slug": "cosmax",
+   "ats": "recruiter",
+   "code": "cosmax",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 화장품 ODM. cosmax.com Careers 의 Recruitment portal 이 cosmax.recruiter.co.kr(그룹 공고 함께). 시험 수집 5건."
+  },
+  {
+   "name": "에이피알",
+   "slug": "apr",
+   "ats": "ninehire",
+   "code": "apr-careers,9109db60-8b45-11ed-b8d6-653bf053ec74",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 메디큐브 등. 채용 사이트 apr-careers.com(나인하이어). companyId 는 화면 요청(_backend/...?companyId=)에서 확인. 자체 도메인을 쓰므로 code 앞부분(하위도메인)은 쓰이지 않습니다. 시험 수집 49건.",
+   "domain": "apr-careers.com"
+  },
+  {
+   "name": "대한항공",
+   "slug": "korean-air",
+   "ats": "recruiter",
+   "code": "koreanair",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). recruit.koreanair.co.kr 이 koreanair.recruiter.co.kr 로 넘어갑니다. 시험 수집 1건."
+  },
+  {
+   "name": "HMM",
+   "slug": "hmm",
+   "ats": "recruiter_v1",
+   "code": "hmm21",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 해운. recruit.hmm21.com 이 hmm21.recruiter.co.kr 로 넘어갑니다. 신버전 API 는 400, 구버전은 정상 응답(접수중 0건)."
+  },
+  {
+   "name": "현대건설",
+   "slug": "hyundai-enc",
+   "ats": "hdec",
+   "code": "hdec",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 자체 채용 사이트 recruit.hdec.co.kr. 목록 API 와 공고 주소는 hdec.py 참고. 시험 수집 25건."
+  },
+  {
+   "name": "하이브",
+   "slug": "hybe",
+   "ats": "greeting",
+   "code": "hybe",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 엔터. hybe.career.greetinghr.com 이 careers.hybecorp.com 으로 넘어갑니다(자체 도메인 그리팅). 위버스·빅히트뮤직 등 계열사 공고가 제목 대괄호로 함께 옵니다. 시험 수집 179건. 엔터라 건설·운송·에너지 칸에 둔 것은 대표님 결정(2026-11-26).",
+   "domain": "careers.hybecorp.com"
+  },
+  {
+   "name": "IBK기업은행",
+   "slug": "ibk",
+   "ats": "none",
+   "code": "ibk",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 채용 사이트 ibk.incruit.com 은 채용 회차마다 페이지가 따로이고(viewhire.asp?projectid=), 접수기간이 본문 글로만 있어 진행중 여부를 가릴 수 없습니다. 비활성."
+  },
+  {
+   "name": "메리츠화재",
+   "slug": "meritz-fire",
+   "ats": "none",
+   "code": "meritz-fire",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 채용 사이트 recruit.meritzfire.com 이 깃허브 러너 접속을 웹방화벽으로 막습니다('Web firewall security policies have been blocked'). 비활성."
+  },
+  {
+   "name": "미래에셋증권",
+   "slug": "mirae-asset-securities",
+   "ats": "none",
+   "code": "mirae-asset-securities",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). recruit.miraeasset.com 접속이 깃허브 러너에서 시간 초과. 다른 공식 채용 주소를 찾지 못했습니다. 비활성."
+  },
+  {
+   "name": "한국투자증권",
+   "slug": "korea-investment-securities",
+   "ats": "none",
+   "code": "korea-investment-securities",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다(recruit.truefriend.com 접속 끊김). 비활성."
+  },
+  {
+   "name": "키움증권",
+   "slug": "kiwoom-securities",
+   "ats": "none",
+   "code": "kiwoom-securities",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다. 비활성."
+  },
+  {
+   "name": "신한투자증권",
+   "slug": "shinhan-securities",
+   "ats": "none",
+   "code": "shinhan-securities",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다. 비활성."
+  },
+  {
+   "name": "신한라이프",
+   "slug": "shinhan-life",
+   "ats": "none",
+   "code": "shinhan-life",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다. 비활성."
+  },
+  {
+   "name": "신한카드",
+   "slug": "shinhan-card",
+   "ats": "none",
+   "code": "shinhan-card",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). shinhancard.com 자체 채용공고 게시판(MOBFMCOM01)에 공채 때만 1~2건 올라오고, 접수는 인크루트 대행 페이지(shcard.incruit.com)로 갑니다. 아직 수집기 없음. 비활성."
+  },
+  {
+   "name": "하나증권",
+   "slug": "hana-securities",
+   "ats": "none",
+   "code": "hana-securities",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다. 비활성."
+  },
+  {
+   "name": "하나카드",
+   "slug": "hana-card",
+   "ats": "none",
+   "code": "hana-card",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다. 비활성."
+  },
+  {
+   "name": "KB국민카드",
+   "slug": "kb-card",
+   "ats": "none",
+   "code": "kb-card",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). card.kbcard.com 자체 채용안내 게시판에 신입 공채 1건(2025)만 있습니다. 비활성."
+  },
+  {
+   "name": "광주은행",
+   "slug": "kwangju-bank",
+   "ats": "none",
+   "code": "kwangju-bank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다(JB금융 채용 페이지 jbfg.com/ko/career/job-openings/recruit.do 는 화면에서 목록을 그려 아직 못 읽음). 비활성."
+  },
+  {
+   "name": "아모레퍼시픽",
+   "slug": "amorepacific",
+   "ats": "none",
+   "code": "amorepacific",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). apgroup.com 채용 소개 페이지만 있고 공고 목록 주소를 확인하지 못했습니다(국문 하위 페이지는 깃허브 러너에 403). 비활성."
+  },
+  {
+   "name": "삼양식품",
+   "slug": "samyang-foods",
+   "ats": "none",
+   "code": "samyang-foods",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공식 채용 사이트 주소를 확인하지 못했습니다(samyangfoods.com 에 채용 링크 없음). 비활성."
+  },
+  {
+   "name": "대우건설",
+   "slug": "daewoo-enc",
+   "ats": "none",
+   "code": "daewoo-enc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 자체 채용 사이트 erecruit.daewooenc.com. 목록 요청(Application.do)에 화면이 만든 서명값(__viewState hash)이 필요해 아직 못 붙였습니다. 비활성."
+  },
+  {
+   "name": "한국전력",
+   "slug": "kepco",
+   "ats": "none",
+   "code": "kepco",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": false,
+   "note": "2026-11-26 대표님 지시로 추가(코스피 시총 상위 100곳 중 빠진 곳). 공기업. recruit.kepco.co.kr·home.kepco.co.kr 이 깃허브 러너에서 시간 초과. 비활성."
   }
  ]
 }

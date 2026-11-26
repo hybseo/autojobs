@@ -393,6 +393,7 @@ def check_pages():
     # 산업·직무 페이지가 실제로 만들어졌는지.
     for path, label in [("/industry/pharma-bio/", "제약바이오 산업"),
                         ("/industry/it/", "IT 산업"),
+                        ("/industry/finance/", "금융 산업"),
                         ("/role/ai/", "AI 직무")]:
         try:
             status, html = _get(SITE + path)
