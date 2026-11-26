@@ -252,6 +252,183 @@
     "건설·운송·에너지"
    ],
    "enabled": true
+  },
+  {
+   "name": "에스엠",
+   "slug": "sm-ent",
+   "ats": "greeting",
+   "code": "sment",
+   "domain": "recruit.smentertainment.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "JYP Ent.",
+   "slug": "jyp-ent",
+   "ats": "greeting",
+   "code": "jype1",
+   "domain": "recruit-apply.jype.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "SM C&C",
+   "slug": "sm-cnc",
+   "ats": "greeting",
+   "code": "smcultureandcontents",
+   "domain": "careers.smcultureandcontents.com",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "SAMG엔터",
+   "slug": "samg-ent",
+   "ats": "greeting",
+   "code": "samgent",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "더핑크퐁컴퍼니",
+   "slug": "pinkfong",
+   "ats": "greeting",
+   "code": "thepinkfongcompany",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "와이랩",
+   "slug": "ylab",
+   "ats": "greeting",
+   "code": "ylab",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "매드업",
+   "slug": "madup",
+   "ats": "greeting",
+   "code": "maduprecruiting",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "와이즈버즈",
+   "slug": "wisebirds",
+   "ats": "greeting",
+   "code": "recruit-wisebirds",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "레뷰코퍼레이션",
+   "slug": "revu",
+   "ats": "greeting",
+   "code": "revu",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "차이커뮤니케이션(확인용)",
+   "slug": "chai-check",
+   "ats": "greeting",
+   "code": "chai",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "와이지엔터테인먼트",
+   "slug": "yg-ent",
+   "ats": "recruiter",
+   "code": "yg-entertainment",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "NEW",
+   "slug": "next-ent-world",
+   "ats": "recruiter",
+   "code": "its-new",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "자이언트스텝",
+   "slug": "giantstep",
+   "ats": "recruiter",
+   "code": "giantstepcorp",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "이노션",
+   "slug": "innocean",
+   "ats": "recruiter",
+   "code": "innocean",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "KT그룹",
+   "slug": "kt-group",
+   "ats": "recruiter",
+   "code": "kt",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "splitByTitle": true
+  },
+  {
+   "name": "삼성(제일기획 확인용)",
+   "slug": "samsung-cheil-check",
+   "ats": "samsung",
+   "code": "samsungcareers",
+   "affiliates": [
+    "제일기획"
+   ],
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "LG그룹(HS애드 확인용)",
+   "slug": "lg-hsad-check",
+   "ats": "lg",
+   "code": "GIIR",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
   }
  ]
 }
