@@ -429,6 +429,16 @@
     "게임·엔터·미디어"
    ],
    "enabled": true
+  },
+  {
+   "name": "대원미디어",
+   "slug": "daewonmedia",
+   "ats": "ninehire",
+   "code": "daewonmedia,ec4abbd0-8c6d-11f0-8815-d9c0c4c32872",
+   "industry": [
+    "게임·엔터·미디어"
+   ],
+   "enabled": true
   }
  ]
 }
