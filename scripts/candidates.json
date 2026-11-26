@@ -90,6 +90,27 @@
     "SK oceanplant",
     "SK오션플랜트"
    ]
+  },
+  {
+   "name": "GS칼텍스",
+   "slug": "gscaltex",
+   "ats": "ehr_rem",
+   "code": "recruit.gscaltex.com",
+   "industry": [
+    "중공업·화학·소재",
+    "건설·운송·에너지"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "대우건설",
+   "slug": "daewoo-enc",
+   "ats": "ehr_rem",
+   "code": "erecruit.daewooenc.com",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true
   }
  ]
 }
