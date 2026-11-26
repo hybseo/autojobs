@@ -30,6 +30,10 @@ on:
           - 'ATS직접탐지: 로봇 33개사 (약 14분)'
           - '게임·엔터·미디어 상장사 72개사 (약 25분)'
           - 'ATS직접탐지: 게임·엔터·미디어 78개사 (약 30분)'
+          - '소비재·식품 상장사 189개사 (약 1시간)'
+          - '건설·운송·에너지 상장사 90개사 (약 30분)'
+          - 'ATS직접탐지: 소비재·식품 206개사 (약 1시간 20분)'
+          - 'ATS직접탐지: 건설·운송·에너지 110개사 (약 45분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -59,6 +63,10 @@ jobs:
             ATS직접탐지*전기전자*)   SCRIPT=probe_ats2.py; ARGS="--names scripts/names_electronics.txt" ;;
             ATS직접탐지*로봇*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_robot.txt" ;;
             ATS직접탐지*게임*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_media.txt" ;;
+            ATS직접탐지*소비재*)    SCRIPT=probe_ats2.py; ARGS="--names scripts/names_consumer.txt" ;;
+            ATS직접탐지*건설*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_infra.txt" ;;
+            소비재*)   ARGS="--urls scripts/targets_consumer.txt" ;;
+            건설*)     ARGS="--urls scripts/targets_infra.txt" ;;
             게임*)     ARGS="--urls scripts/targets_media.txt" ;;
             PCB*)     ARGS="--urls scripts/targets_pcb.txt" ;;
             모빌리티*) ARGS="--urls scripts/targets_startup.txt" ;;
