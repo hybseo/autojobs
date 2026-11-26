@@ -95,12 +95,23 @@ def main():
         total += len(got)
         cnt = collections.Counter(str(j.get("company")) for j in got)
         print(f"  → {len(got)}건 · 회사 {dict(cnt.most_common(12))}")
-        if "--full" in args or only:
-            # 요약용: --only 로 몇 곳만 돌릴 때는 공고 하나를 한 줄 JSON 으로 모두 찍습니다.
-            for j in got:
-                print("JOBJSON " + json.dumps({k: j.get(k) for k in ("id", "company", "title", "closesAt", "multiRole", "location", "description")}, ensure_ascii=False))
+        img = sum(1 for j in got if j.get("multiRole"))
+        body = sum(1 for j in got if j.get("description"))
+        print(f"  본문 있음 {body} · 그림 공고 {img} · 둘 다 없음 {len(got) - body - img}")
         for j in got[:4]:
             print(f"    - {str(j.get('title'))[:60]} | {j.get('closesAt')} | {j.get('career')} | {str(j.get('sourceUrl'))[:110]} | 본문 {len(str(j.get('description') or ''))}자")
+        if "--full" in args or only:
+            # 요약용: --only 로 몇 곳만 돌릴 때는 공고 하나를 한 줄 JSON 으로 모두 찍습니다.
+            # 본문은 글자만 남기고 8천 자에서 자릅니다. 깃허브 로그가 너무 길면 뒤가 잘려 나갑니다.
+            import html as _h, re as _re
+            for j in got:
+                t = _re.sub(r"(?is)<(style|script)[^>]*>.*?</\1>", "", str(j.get("description") or ""))
+                t = _re.sub(r"(?i)<br\s*/?>|</p>|</li>|</h\d>|</div>|</tr>", "\n", t)
+                t = _re.sub(r"[ \t\xa0]+", " ", _h.unescape(_re.sub(r"<[^>]+>", " ", t)))
+                t = _re.sub(r"\n\s*\n+", "\n", t).strip()[:8000]
+                print("JOBJSON " + json.dumps({"id": j.get("id"), "company": j.get("company"), "title": j.get("title"),
+                                               "closesAt": j.get("closesAt"), "multiRole": j.get("multiRole"),
+                                               "location": j.get("location"), "text": t}, ensure_ascii=False))
     print(f"=== 합계 {total}건")
 
 
