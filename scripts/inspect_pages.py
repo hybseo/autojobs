@@ -36,7 +36,7 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 
 
 CAREER = ("채용", "인재", "recruit", "career", "job", "입사")
-FOLLOW = 2
+FOLLOW = 3
 
 
 def career_links(page):
@@ -91,6 +91,8 @@ def main(urls):
                         "type": rq.resource_type, "method": rq.method, "url": rq.url,
                         "status": resp.status, "post": (rq.post_data or "")[:800],
                         "ctype": (resp.headers or {}).get("content-type", ""), "body": body,
+                        "reqh": {k: v for k, v in (rq.headers or {}).items()
+                                 if rq.resource_type in ("xhr", "fetch") and k.lower() not in ("cookie", "user-agent", "accept-language", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "referer")},
                     })
                 except Exception:
                     pass

@@ -46,7 +46,7 @@ jobs:
               for line in open(f"{d}/{n}.net.txt", encoding="utf-8"):
                   r = json.loads(line)
                   if r["type"] == "document" or any(k in r["ctype"] for k in ("json", "xml", "text")):
-                      print(f'{r["method"]} {r["status"]} {r["type"]} {r["url"][:300]} | post={r["post"][:300]} | {r["body"][:400]!r}')
+                      print(f'{r["method"]} {r["status"]} {r["type"]} {r["url"][:300]} | post={r["post"][:300]} | {r["body"][:400]!r} | h={r.get("reqh") or ""}')
           PY
 
       - name: 결과 첨부
