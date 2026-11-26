@@ -2,5 +2,56 @@
  "_readme": [
   "새 기업 시험 후보 (scripts/try_adapters.py). 확인되면 companies.json 으로 옮깁니다."
  ],
- "companies": []
+ "companies": [
+  {
+   "name": "달바글로벌",
+   "slug": "dalba",
+   "ats": "greeting",
+   "code": "dalba",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "노브랜드",
+   "slug": "nobland",
+   "ats": "greeting",
+   "code": "nobland",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "아이패밀리에스씨",
+   "slug": "ifamilysc",
+   "ats": "greeting",
+   "code": "ifamilysc",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "BGF리테일",
+   "slug": "bgf",
+   "ats": "recruiter",
+   "code": "bgf",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  },
+  {
+   "name": "대상그룹",
+   "slug": "daesanggroup",
+   "ats": "greeting",
+   "code": "daesanggroup",
+   "industry": [
+    "소비재·식품"
+   ],
+   "enabled": true
+  }
+ ]
 }
