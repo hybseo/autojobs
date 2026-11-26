@@ -678,6 +678,25 @@ const NAME_ALIAS = {
   'SK on': '에스케이온 SK온',
   'SK ons': '에스케이온 SK온',
   'SK siltron': '에스케이실트론 SK실트론',
+  /*
+   * 2026-11-26 대표님이 「SK텔레콤」으로 검색했는데 안 나온다고 하셔서 추가.
+   * SK 통합 채용은 회사명을 영문으로 줍니다(SK telecom). 한글로 치면 걸리지 않았습니다.
+   * SK하이닉스도 같은 문제였습니다. SK 계열사 영문 표기를 모두 넣습니다.
+   */
+  'SK telecom': '에스케이텔레콤 SK텔레콤 SKT 텔레콤',
+  'SK broadband': '에스케이브로드밴드 SK브로드밴드 브로드밴드',
+  'SK hynix': '에스케이하이닉스 SK하이닉스 하이닉스',
+  'SK chemicals(GC)': '에스케이케미칼 SK케미칼',
+  'SK chemicals(LS)': '에스케이케미칼 SK케미칼',
+  'SK energy': '에스케이에너지 SK에너지',
+  'SK innovation': '에스케이이노베이션 SK이노베이션',
+  'SK materials': '에스케이머티리얼즈 SK머티리얼즈',
+  'SK specialty': '에스케이스페셜티 SK스페셜티',
+  'SK magic': '에스케이매직 SK매직',
+  'SK geo centric': '에스케이지오센트릭 SK지오센트릭',
+  'SK enmove': '에스케이엔무브 SK엔무브',
+  'SK earthon': '에스케이어스온 SK어스온',
+  'SK IE Technology': '에스케이아이이테크놀로지 SK아이이테크놀로지 SKIET',
   'LG Magna': '엘지마그나 LG마그나',
   'HL Klemove': '에이치엘클레무브 HL클레무브 만도',
   '42dot': '포티투닷',
