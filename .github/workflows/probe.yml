@@ -34,6 +34,7 @@ on:
           - '건설·운송·에너지 상장사 90개사 (약 30분)'
           - 'ATS직접탐지: 소비재·식품 206개사 (약 1시간 20분)'
           - 'ATS직접탐지: 건설·운송·에너지 110개사 (약 45분)'
+          - 'ATS직접탐지: 금융·건설·운송·에너지 2차 106개사 (약 40분)'
       new_only:
         description: '이미 등록된 기업은 건너뛰기'
         type: boolean
@@ -59,6 +60,7 @@ jobs:
           case "${{ inputs.scope }}" in
             30개사*)  ARGS="--limit 30" ;;
             100개사*) ARGS="--limit 100" ;;
+            ATS직접탐지*2차*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_fininfra2.txt" ;;
             ATS직접탐지*제약바이오*) SCRIPT=probe_ats2.py; ARGS="--names scripts/names_pharma.txt" ;;
             ATS직접탐지*전기전자*)   SCRIPT=probe_ats2.py; ARGS="--names scripts/names_electronics.txt" ;;
             ATS직접탐지*로봇*)      SCRIPT=probe_ats2.py; ARGS="--names scripts/names_robot.txt" ;;

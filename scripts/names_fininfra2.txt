@@ -1,0 +1,115 @@
+# 금융·건설·운송·에너지 2차 — ATS 하위도메인 직접 탐지용 (2026-11-27)
+#
+# 대표님 지시 "금융, 건설, 운송, 에너지 부분 더 추가할 회사 없는지 확인해봐".
+# targets_finance.txt·names_infra.txt 는 상장사 위주였습니다. 여기는 비상장이지만
+# 채용을 크게 하는 보험·카드·캐피탈·저축은행·인터넷은행·핀테크·공기업·
+# 건설·해운·항공·물류·에너지 회사입니다. 이미 등록된 회사(그룹 계열사 포함)는 뺐습니다.
+# 영문 이름은 회사 홈페이지 주소에서 땄습니다. 맞는지는 탐지가 회사 이름과
+# 사이트 제목을 비교해 거릅니다. 이 목록만으로는 아무것도 등록하지 않습니다.
+#
+# 형식: 회사명,영문1,영문2...
+
+# 금융 — 보험
+교보생명,kyobo,kyobolife
+교보증권,kyobosec,iprovest
+현대해상,hi,hicareer,hihr
+한화손해보험,hwgeneralins,hanwhageneral
+롯데손해보험,lotteins
+흥국생명,heungkuklife
+흥국화재,heungkukfire
+동양생명,myangel,tongyanglife
+ABL생명,abllife
+미래에셋생명,miraeassetlife
+KB라이프,kblife
+하나손해보험,hanainsure
+신한EZ손해보험,shinhanez
+코리안리,koreanre
+서울보증보험,sgic
+# 금융 — 카드·캐피탈
+현대카드,hyundaicard
+현대캐피탈,hyundaicapital
+롯데카드,lottecard
+BC카드,bccard
+우리카드,wooricard
+KB캐피탈,kbcapital
+신한캐피탈,shinhancap
+BNK캐피탈,bnkcapital
+JB우리캐피탈,jbwooricapital
+# 금융 — 은행·증권·저축은행
+케이뱅크,kbank
+토스뱅크,tossbank
+토스증권,tosssecurities,tossinvest
+토스페이먼츠,tosspayments
+비바리퍼블리카,toss,vivarepublica
+iM뱅크,imbank,dgb
+NH농협은행,nhbank
+대신증권,daishin
+유안타증권,yuanta,myasset
+다올투자증권,daol,daolsecurities
+OK저축은행,oksavingsbank,okfg
+SBI저축은행,sbisb
+웰컴저축은행,welcomebank
+# 금융 — 핀테크·인프라
+뱅크샐러드,banksalad,rainist
+빗썸,bithumb
+코빗,korbit
+8퍼센트,8percent
+피플펀드,peoplefund
+핀크,finnq
+NICE평가정보,niceinfo,nice
+코리아크레딧뷰로,koreacb,kcb
+크래프트테크놀로지스,qraft
+한국거래소,krx
+코스콤,koscom
+한국예탁결제원,ksd
+
+# 건설
+DL이앤씨,dlenc,dlcareers
+DL건설,dlconst
+HDC현대산업개발,hdc,hdcdvp
+대방건설,daebang
+중흥건설,joonghng
+부영,booyoung
+한신공영,hanshinc
+쌍용건설,ssyenc
+동부건설,dongbuenc
+아이에스동서,isdongseo
+신세계건설,shinsegaeenc
+대보건설,daebo
+# 운송·물류
+아시아나항공,flyasiana,asiana
+에어서울,flyairseoul
+이스타항공,eastarjet
+에어로케이,aerok
+팬오션,panocean
+대한해운,korealines
+SK해운,skshipping
+장금상선,sinokor
+고려해운,kmtc
+LX판토스,lxpantos,pantos
+쿠팡,coupang
+쿠팡풀필먼트서비스,cfs
+한익스프레스,hanex
+인천국제공항공사,airport
+한국철도공사,korail
+에스알,srail
+서울교통공사,seoulmetro
+# 에너지
+GS에너지,gsenergy
+GS파워,gspower
+GSEPS,gseps
+한화에너지,hanwhaenergy
+삼천리,samchully
+대성에너지,daesungenergy
+씨에스윈드,cswind
+대한전선,taihan
+한국가스공사,kogas
+한국수력원자력,khnp
+한국남동발전,koen
+한국중부발전,komipo
+한국서부발전,kowepo
+한국남부발전,kospo
+한국동서발전,ewp
+한국지역난방공사,kdhc
+한국석유공사,knoc
+한전KPS,kps
