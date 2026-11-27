@@ -2,5 +2,39 @@
  "_readme": [
   "새 기업 시험 후보 (scripts/try_adapters.py). 확인되면 companies.json 으로 옮깁니다."
  ],
- "companies": []
+ "companies": [
+  {
+   "name": "쿠팡",
+   "slug": "coupang",
+   "ats": "greenhouse",
+   "code": "coupang",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "케이뱅크",
+   "slug": "kbank",
+   "ats": "recruiter",
+   "code": "kbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "씨에스윈드",
+   "slug": "cswind",
+   "ats": "greeting",
+   "code": "cswind",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  }
+ ]
 }
