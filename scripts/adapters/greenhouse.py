@@ -330,6 +330,24 @@ def fetch(company):
     if wrapped:
         _fill_content(str(code)[len(URL_PREFIX):].strip(), rows)
 
+    # 계열사가 한 보드를 같이 쓰는 경우 공고마다 소속을 적어 두기도 합니다.
+    # 토스는 metadata 에 "포지션의 소속 자회사를 선택해 주세요." 칸이 있고
+    # 값이 토스·토스뱅크·토스증권·토스플레이스 등입니다 (2026-11-27 확인).
+    # companies.json 에 "affiliateMeta": "소속 자회사" 처럼 칸 이름의 일부를
+    # 적으면 그 값을 회사명으로 씁니다. 값이 없으면 등록한 이름을 씁니다.
+    # 산업은 affiliateIndustry 로 나눕니다 (토스뱅크·토스증권 → 금융).
+    meta_key = str(company.get("affiliateMeta") or "").strip()
+
+    def _company(x):
+        if not meta_key:
+            return name
+        for m in (x.get("metadata") or []):
+            if isinstance(m, dict) and meta_key in str(m.get("name") or ""):
+                v = m.get("value")
+                if isinstance(v, str) and v.strip():
+                    return v.strip()
+        return name
+
     jobs = []
     for x in rows:
         if not isinstance(x, dict):
@@ -345,7 +363,7 @@ def fetch(company):
         jobs.append({
             "id": f"greenhouse-{tag}-{jid}",
             "unit": "공고",
-            "company": name, "companySlug": slug,
+            "company": _company(x), "companySlug": slug,
             "title": x.get("title") or "",
             "location": _location(x),
             # Greenhouse 는 신입/경력을 구분해 주지 않습니다.

@@ -4,389 +4,129 @@
  ],
  "companies": [
   {
-   "name": "케이뱅크",
-   "slug": "kbank",
-   "ats": "recruiter",
-   "code": "kbank",
+   "name": "토스",
+   "slug": "toss",
+   "ats": "greenhouse",
+   "code": "url:https://api-public.toss.im/api/v3/ipd-eggnog/career",
    "industry": [
-    "금융"
+    "IT"
    ],
    "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "현대해상",
-   "slug": "hi",
-   "ats": "recruiter",
-   "code": "hi",
-   "industry": [
-    "금융"
+   "note": "비바리퍼블리카. Greenhouse 를 자체 서버로 감싸 씁니다. boards-api.greenhouse.io 로는 열리지 않아 code 에 url: 로 주소를 적습니다. /jobs 는 근무지별로 갈려 467건이라 묶음 주소(job-groups)를 씁니다. 본문을 주지 않아 원문으로 보냅니다. 토스뱅크·토스증권 공고가 제목에 섞여 옵니다. 2026-09-22 확인 275건 2026-11-27 대표님 지시로 계열사별로 나눕니다. 공고 metadata 의 '포지션의 소속 자회사' 값을 회사명으로 쓰고 토스뱅크·토스증권·토스페이먼츠·토스인슈어런스는 금융으로 분류합니다.",
+   "affiliateMeta": "소속 자회사",
+   "affiliates": [
+    "토스뱅크",
+    "토스증권",
+    "토스페이먼츠",
+    "토스인슈어런스",
+    "토스플레이스",
+    "토스씨엑스",
+    "토스인컴"
    ],
-   "enabled": true,
-   "note": "시험"
+   "affiliateIndustry": {
+    "토스뱅크": [
+     "금융"
+    ],
+    "토스증권": [
+     "금융"
+    ],
+    "토스페이먼츠": [
+     "금융"
+    ],
+    "토스인슈어런스": [
+     "금융"
+    ]
+   }
   },
   {
-   "name": "교보증권",
-   "slug": "kyobosec",
-   "ats": "recruiter",
-   "code": "iprovest",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "롯데손해보험",
-   "slug": "lotteins",
-   "ats": "recruiter",
-   "code": "lotteins",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "코리안리",
-   "slug": "koreanre",
-   "ats": "recruiter",
-   "code": "koreanre",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "서울보증보험",
-   "slug": "sgic",
-   "ats": "recruiter",
-   "code": "sgic",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "BNK캐피탈",
-   "slug": "bnkcapital",
-   "ats": "recruiter",
-   "code": "bnkcapital",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "현대카드",
-   "slug": "hyundaicard",
-   "ats": "recruiter",
-   "code": "careerhyundai",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "KB라이프",
-   "slug": "kblife",
-   "ats": "recruiter_v1",
-   "code": "kblife",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "하나손해보험",
-   "slug": "hanainsure",
-   "ats": "recruiter_v1",
-   "code": "hanainsure",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "현대캐피탈",
-   "slug": "hyundaicapital",
-   "ats": "recruiter_v1",
-   "code": "hyundaicapital",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "BC카드",
-   "slug": "bccard",
-   "ats": "recruiter_v1",
-   "code": "bccard",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "NH농협은행",
-   "slug": "nhbank",
-   "ats": "recruiter_v1",
-   "code": "nhbank",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "대신증권",
-   "slug": "daishin",
-   "ats": "recruiter_v1",
-   "code": "daishin",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "SBI저축은행",
-   "slug": "sbisb",
-   "ats": "recruiter_v1",
-   "code": "sbisb",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "핀크",
-   "slug": "finnq",
-   "ats": "recruiter_v1",
-   "code": "finnq",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "코리아크레딧뷰로",
-   "slug": "kcb",
-   "ats": "recruiter_v1",
-   "code": "kcb",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "코스콤",
-   "slug": "koscom",
-   "ats": "recruiter_v1",
-   "code": "koscom",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "우리카드",
-   "slug": "wooricard",
-   "ats": "greeting",
-   "code": "wooricard",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "NICE그룹",
-   "slug": "nice",
-   "ats": "greeting",
-   "code": "nice",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "미래에셋생명",
-   "slug": "miraeassetlife",
-   "ats": "ninehire",
-   "code": "miraeassetlife,b17db0b0-3129-11f0-8751-47347271bc78",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "다올투자증권",
-   "slug": "daol",
-   "ats": "ninehire",
-   "code": "daol,a9597c60-35b9-11ee-8d4e-d346630ab3ca",
-   "industry": [
-    "금융"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "DL이앤씨",
-   "slug": "dlenc",
-   "ats": "recruiter",
-   "code": "dlenc",
+   "name": "공공기관 (에너지·교통·건설)",
+   "slug": "alio-infra",
+   "ats": "alio",
+   "code": "C0247,C0220,C0042,C0043,C0066,C0082,C0259,C0305,C0248,C0306,C1352,C0236,C0246,C0244,C0147,C0125,C0148,C0261,C0214,C0215,C0097,C1364,C0057,C0371,C0105,C0157,C1399,C0268,C1044,C0270,C0140,C0387,C0183,C1294,C0019,C0087,C0072,C0107,C0281,C0365,C1119,C0331,C0396,C0221,C0225,C0062,C0124,C0150",
    "industry": [
     "건설·운송·에너지"
    ],
    "enabled": true,
-   "note": "시험"
+   "affiliates": [
+    "한국전력공사",
+    "한국수력원자력",
+    "한국남동발전",
+    "한국남부발전",
+    "한국동서발전",
+    "한국서부발전",
+    "한국중부발전",
+    "한전KPS",
+    "한국전력기술",
+    "한전KDN",
+    "한전MCS",
+    "한전원자력연료",
+    "한국전력거래소",
+    "한국전기안전공사",
+    "한국가스공사",
+    "한국가스기술공사",
+    "한국가스안전공사",
+    "한국지역난방공사",
+    "한국석유공사",
+    "한국석유관리원",
+    "한국에너지공단",
+    "한국광해광업공단",
+    "대한석탄공사",
+    "한국원자력환경공단",
+    "인천국제공항공사",
+    "한국공항공사",
+    "가덕도신공항건설공단",
+    "한국철도공사",
+    "에스알",
+    "국가철도공단",
+    "코레일로지스",
+    "코레일테크",
+    "한국도로공사",
+    "한국도로공사서비스",
+    "한국교통안전공단",
+    "한국해양교통안전공단",
+    "부산항만공사",
+    "인천항만공사",
+    "여수광양항만공사",
+    "울산항만공사",
+    "한국해양진흥공사",
+    "우체국물류지원단",
+    "한국토지주택공사",
+    "한국수자원공사",
+    "국토안전관리원",
+    "한국국토정보공사",
+    "주택관리공단",
+    "한국부동산원"
+   ],
+   "note": "2026-11-27 대표님 지시로 등록. 잡알리오(job.alio.go.kr, 기획재정부 공공기관 채용정보시스템)에서 아래 기관의 진행중 공고를 모읍니다. code 는 잡알리오 기관 코드입니다(목록 화면 기관명 선택 상자의 값, 2026-11-27 확인). 병원·대학·연구원은 넣지 않았습니다. 공고마다 기관명을 회사명으로 씁니다. 한전·한수원·발전 5사·가스공사·공항공사·코레일·에스알·도로공사·항만공사·LH·수자원공사 등 48곳"
   },
   {
-   "name": "쌍용건설",
-   "slug": "ssyenc",
-   "ats": "recruiter",
-   "code": "ssyenc",
+   "name": "공공기관 (금융)",
+   "slug": "alio-finance",
+   "ats": "alio",
+   "code": "C0127,C0210,C0223,C0101,C0240,C0258,C0091,C0038,C0222,C0061,C1046,C0112,C0199,C0284,C0542,C0352",
    "industry": [
-    "건설·운송·에너지"
+    "금융"
    ],
    "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "GS에너지",
-   "slug": "gsenergy",
-   "ats": "recruiter",
-   "code": "gsenergy",
-   "industry": [
-    "건설·운송·에너지"
+   "affiliates": [
+    "중소기업은행",
+    "한국산업은행",
+    "한국수출입은행",
+    "예금보험공사",
+    "한국자산관리공사",
+    "한국주택금융공사",
+    "신용보증기금",
+    "기술보증기금",
+    "한국무역보험공사",
+    "주택도시보증공사",
+    "서민금융진흥원",
+    "신용보증재단중앙회",
+    "한국벤처투자",
+    "한국투자공사",
+    "농업정책보험금융원",
+    "우체국금융개발원"
    ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "HDC현대산업개발",
-   "slug": "hdc",
-   "ats": "recruiter_v1",
-   "code": "hdc",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "대방건설",
-   "slug": "daebang",
-   "ats": "recruiter_v1",
-   "code": "daebang",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "에어로케이",
-   "slug": "aerok",
-   "ats": "recruiter_v1",
-   "code": "aerok",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "고려해운",
-   "slug": "kmtc",
-   "ats": "recruiter_v1",
-   "code": "kmtc",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "GS파워",
-   "slug": "gspower",
-   "ats": "recruiter_v1",
-   "code": "gspower",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "GSEPS",
-   "slug": "gseps",
-   "ats": "recruiter_v1",
-   "code": "gseps",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "한국수력원자력",
-   "slug": "khnp",
-   "ats": "recruiter_v1",
-   "code": "khnp",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "한국중부발전",
-   "slug": "komipo",
-   "ats": "recruiter_v1",
-   "code": "komipo",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "아이에스동서",
-   "slug": "isdongseo",
-   "ats": "greeting",
-   "code": "isdongseo",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
-   "name": "씨에스윈드",
-   "slug": "cswind",
-   "ats": "greeting",
-   "code": "cswind",
-   "industry": [
-    "건설·운송·에너지"
-   ],
-   "enabled": true,
-   "note": "시험"
+   "note": "2026-11-27 대표님 지시로 등록. 잡알리오(job.alio.go.kr, 기획재정부 공공기관 채용정보시스템)에서 아래 기관의 진행중 공고를 모읍니다. code 는 잡알리오 기관 코드입니다(목록 화면 기관명 선택 상자의 값, 2026-11-27 확인). 병원·대학·연구원은 넣지 않았습니다. 공고마다 기관명을 회사명으로 씁니다. 기업은행·산업은행·수출입은행·예금보험공사·캠코·주택금융공사·신용보증기금·기술보증기금 등 16곳"
   }
  ]
 }
