@@ -342,6 +342,7 @@ def keep_recently_closed(fresh):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import adapters  # noqa: E402
 from loc_normalize import normalize_location, UNSET
+import slim_body  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "src" / "data" / "companies.json"
@@ -784,6 +785,18 @@ def main():
             from_summary += 1
     if from_summary:
         print(f"  · 근무지를 요약 본문에서 받아 채움 {from_summary}건")
+
+    # 본문 껍데기 덜어내기 (2026-11-27). jobs.json 이 95MB 로 깃허브 한도
+    # (100MiB)에 닿기 직전이었습니다. 글자는 그대로 두고 스크립트·base64
+    # 그림·style 속성·공백만 지웁니다. 자세한 규칙은 slim_body.py 에 있습니다.
+    # 보관 중인(사라진) 공고에도 똑같이 적용되어 한 번에 줄어듭니다.
+    before = sum(len(j.get("description") or "") for j in jobs)
+    for j in jobs:
+        if j.get("description"):
+            j["description"] = slim_body.slim(j["description"])
+    after = sum(len(j.get("description") or "") for j in jobs)
+    if before - after > 0:
+        print(f"  · 본문 정리: {before/1e6:.1f}M자 → {after/1e6:.1f}M자")
 
     OUT.write_text(json.dumps(
         {"collectedAt": today_kst(), "jobs": jobs},
