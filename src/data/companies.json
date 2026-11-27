@@ -8016,6 +8016,17 @@
    ],
    "enabled": true,
    "note": "2026-11-27 대표님 지시(소비재·식품 보강)로 등록. 회사 홈페이지의 채용 링크에서 찾음. 시험 수집 0건(사이트 확인)"
+  },
+  {
+   "name": "쿠팡",
+   "slug": "coupang",
+   "ats": "greenhouse",
+   "code": "coupang",
+   "industry": [
+    "IT"
+   ],
+   "enabled": true,
+   "note": "2026-11-27 대표님 지시(금융·건설·운송·에너지 추가 조사 중 발견, 산업은 IT로 지정)로 등록. Greenhouse 공개 Job Board(boards-api.greenhouse.io/v1/boards/coupang) 확인. 공고 원문이 coupang.jobs 로 연결됩니다. 국내 공고만 담음. 2026-11-27 시험 수집 348건"
   }
  ]
 }

@@ -4,17 +4,6 @@
  ],
  "companies": [
   {
-   "name": "쿠팡",
-   "slug": "coupang",
-   "ats": "greenhouse",
-   "code": "coupang",
-   "industry": [
-    "IT"
-   ],
-   "enabled": true,
-   "note": "시험"
-  },
-  {
    "name": "케이뱅크",
    "slug": "kbank",
    "ats": "recruiter",
