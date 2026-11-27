@@ -238,7 +238,7 @@
    "name": "미래에셋생명",
    "slug": "miraeassetlife",
    "ats": "ninehire",
-   "code": "miraeassetlife",
+   "code": "miraeassetlife,b17db0b0-3129-11f0-8751-47347271bc78",
    "industry": [
     "금융"
    ],
@@ -249,7 +249,7 @@
    "name": "다올투자증권",
    "slug": "daol",
    "ats": "ninehire",
-   "code": "daol",
+   "code": "daol,a9597c60-35b9-11ee-8d4e-d346630ab3ca",
    "industry": [
     "금융"
    ],
