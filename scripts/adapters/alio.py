@@ -33,7 +33,8 @@ code 는 무엇인가
 - 정규직 공고만 담습니다 (2026-11-27 대표님 지시). 기간제·대체인력·
   무기계약직·청년인턴은 뺍니다. 목록의 고용형태 칸이 "정규직, 비정규직"
   처럼 여럿이면 정규직이 들어 있으니 담습니다. 검색 조건(work_type=R1010)
-  으로 먼저 거르고, 받은 뒤 고용형태 칸을 한 번 더 확인합니다.
+  으로 먼저 거르고, 받은 뒤 고용형태를 한 번 더 확인합니다. 목록 칸은
+  "비정규직 외 1" 처럼 줄여 보여 주므로 그때는 상세 페이지 값으로 봅니다.
 - 본문은 상세 페이지의 응시자격·우대내용·전형절차와 첨부 공고문
   링크로 만듭니다. 공고문 자체는 한글(hwp) 파일이라 열지 않습니다.
 """
@@ -204,7 +205,9 @@ def fetch(company):
         rows.extend(got)
         time.sleep(0.3)
     total = len(rows)
-    rows = [x for x in rows if _is_regular(x["type"])]
+    # 목록 칸은 여러 형태면 "비정규직 외 1" 처럼 줄여 보여 줍니다.
+    # 그런 줄은 남겨 두고 상세 페이지의 고용형태(전부 적혀 있음)로 다시 봅니다.
+    rows = [x for x in rows if _is_regular(x["type"]) or "외" in x["type"]]
     print(f"  · alio: 기관 {len(orgs)}곳에서 진행중 정규직 {len(rows)}건 "
           f"(받은 {total}건 중 정규직 아닌 {total - len(rows)}건 제외)"
           + (f" · 실패 {', '.join(failed)}" if failed else ""))
@@ -215,6 +218,8 @@ def fetch(company):
             fields, body = _detail(x["idx"])
         except Exception:
             fields, body = {}, ""
+        if fields.get("고용형태") and not _is_regular(fields["고용형태"]):
+            continue
         period = fields.get("채용기간", "")
         closes = _ymd(period.split("~")[-1]) if "~" in period else _ymd(x["closes"])
         dday = None
