@@ -30,6 +30,10 @@ code 는 무엇인가
 - 목록은 10건씩 나옵니다. 넘치면 다음 쪽을 봅니다.
 - 등록일 검색 기본값이 최근 두 달이라, 오래 열려 있는 공고가 빠지지
   않게 1년 전부터 찾습니다. ing=2 는 "진행중"입니다.
+- 정규직 공고만 담습니다 (2026-11-27 대표님 지시). 기간제·대체인력·
+  무기계약직·청년인턴은 뺍니다. 목록의 고용형태 칸이 "정규직, 비정규직"
+  처럼 여럿이면 정규직이 들어 있으니 담습니다. 검색 조건(work_type=R1010)
+  으로 먼저 거르고, 받은 뒤 고용형태 칸을 한 번 더 확인합니다.
 - 본문은 상세 페이지의 응시자격·우대내용·전형절차와 첨부 공고문
   링크로 만듭니다. 공고문 자체는 한글(hwp) 파일이라 열지 않습니다.
 """
@@ -97,6 +101,7 @@ def _list_org(org, today):
     for p in range(1, MAX_PAGES + 1):
         q = urllib.parse.urlencode({
             "org_name": org, "ing": "2", "pageNo": str(p),
+            "work_type": "R1010",   # 정규직
             "s_date": s_date, "e_date": e_date})
         page = _get(f"{BASE}/recruit.do?{q}")
         # 목록 표만 봅니다. 검색 상자에도 <tr> 이 많습니다.
@@ -121,6 +126,11 @@ def _list_org(org, today):
             break
         time.sleep(0.3)
     return out
+
+
+def _is_regular(kind):
+    """고용형태 칸에 '정규직'이 따로 들어 있는지. '비정규직'은 아닙니다."""
+    return "정규직" in [t.strip() for t in re.split(r"[,/·\s]+", kind or "")]
 
 
 def _ymd(s, short=False):
@@ -193,7 +203,10 @@ def fetch(company):
             continue
         rows.extend(got)
         time.sleep(0.3)
-    print(f"  · alio: 기관 {len(orgs)}곳에서 진행중 {len(rows)}건"
+    total = len(rows)
+    rows = [x for x in rows if _is_regular(x["type"])]
+    print(f"  · alio: 기관 {len(orgs)}곳에서 진행중 정규직 {len(rows)}건 "
+          f"(받은 {total}건 중 정규직 아닌 {total - len(rows)}건 제외)"
           + (f" · 실패 {', '.join(failed)}" if failed else ""))
 
     jobs = []
