@@ -26,6 +26,369 @@
    "note": "시험"
   },
   {
+   "name": "현대해상",
+   "slug": "hi",
+   "ats": "recruiter",
+   "code": "hi",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "교보증권",
+   "slug": "kyobosec",
+   "ats": "recruiter",
+   "code": "iprovest",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "롯데손해보험",
+   "slug": "lotteins",
+   "ats": "recruiter",
+   "code": "lotteins",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "코리안리",
+   "slug": "koreanre",
+   "ats": "recruiter",
+   "code": "koreanre",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "서울보증보험",
+   "slug": "sgic",
+   "ats": "recruiter",
+   "code": "sgic",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "BNK캐피탈",
+   "slug": "bnkcapital",
+   "ats": "recruiter",
+   "code": "bnkcapital",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "현대카드",
+   "slug": "hyundaicard",
+   "ats": "recruiter",
+   "code": "careerhyundai",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "KB라이프",
+   "slug": "kblife",
+   "ats": "recruiter_v1",
+   "code": "kblife",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "하나손해보험",
+   "slug": "hanainsure",
+   "ats": "recruiter_v1",
+   "code": "hanainsure",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "현대캐피탈",
+   "slug": "hyundaicapital",
+   "ats": "recruiter_v1",
+   "code": "hyundaicapital",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "BC카드",
+   "slug": "bccard",
+   "ats": "recruiter_v1",
+   "code": "bccard",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "NH농협은행",
+   "slug": "nhbank",
+   "ats": "recruiter_v1",
+   "code": "nhbank",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "대신증권",
+   "slug": "daishin",
+   "ats": "recruiter_v1",
+   "code": "daishin",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "SBI저축은행",
+   "slug": "sbisb",
+   "ats": "recruiter_v1",
+   "code": "sbisb",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "핀크",
+   "slug": "finnq",
+   "ats": "recruiter_v1",
+   "code": "finnq",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "코리아크레딧뷰로",
+   "slug": "kcb",
+   "ats": "recruiter_v1",
+   "code": "kcb",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "코스콤",
+   "slug": "koscom",
+   "ats": "recruiter_v1",
+   "code": "koscom",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "우리카드",
+   "slug": "wooricard",
+   "ats": "greeting",
+   "code": "wooricard",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "NICE그룹",
+   "slug": "nice",
+   "ats": "greeting",
+   "code": "nice",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "미래에셋생명",
+   "slug": "miraeassetlife",
+   "ats": "ninehire",
+   "code": "miraeassetlife",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "다올투자증권",
+   "slug": "daol",
+   "ats": "ninehire",
+   "code": "daol",
+   "industry": [
+    "금융"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "DL이앤씨",
+   "slug": "dlenc",
+   "ats": "recruiter",
+   "code": "dlenc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "쌍용건설",
+   "slug": "ssyenc",
+   "ats": "recruiter",
+   "code": "ssyenc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "GS에너지",
+   "slug": "gsenergy",
+   "ats": "recruiter",
+   "code": "gsenergy",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "HDC현대산업개발",
+   "slug": "hdc",
+   "ats": "recruiter_v1",
+   "code": "hdc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "대방건설",
+   "slug": "daebang",
+   "ats": "recruiter_v1",
+   "code": "daebang",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "에어로케이",
+   "slug": "aerok",
+   "ats": "recruiter_v1",
+   "code": "aerok",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "고려해운",
+   "slug": "kmtc",
+   "ats": "recruiter_v1",
+   "code": "kmtc",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "GS파워",
+   "slug": "gspower",
+   "ats": "recruiter_v1",
+   "code": "gspower",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "GSEPS",
+   "slug": "gseps",
+   "ats": "recruiter_v1",
+   "code": "gseps",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "한국수력원자력",
+   "slug": "khnp",
+   "ats": "recruiter_v1",
+   "code": "khnp",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "한국중부발전",
+   "slug": "komipo",
+   "ats": "recruiter_v1",
+   "code": "komipo",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
+   "name": "아이에스동서",
+   "slug": "isdongseo",
+   "ats": "greeting",
+   "code": "isdongseo",
+   "industry": [
+    "건설·운송·에너지"
+   ],
+   "enabled": true,
+   "note": "시험"
+  },
+  {
    "name": "씨에스윈드",
    "slug": "cswind",
    "ats": "greeting",
