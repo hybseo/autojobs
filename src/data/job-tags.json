@@ -50872,7 +50872,7 @@
   },
   "회계사": {
    "slug": "cpa",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 95,
    "link": true
   },
@@ -50902,7 +50902,7 @@
   },
   "변호사": {
    "slug": "lawyer",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 89,
    "link": true
   },
@@ -51484,7 +51484,7 @@
   },
   "간호사": {
    "slug": "nurse",
-   "cat": "전문 자격 — 의료",
+   "cat": "전문 자격",
    "count": 35,
    "link": true
   },
@@ -51580,7 +51580,7 @@
   },
   "노무사": {
    "slug": "labor-attorney",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 24,
    "link": true
   },
@@ -51796,7 +51796,7 @@
   },
   "변리사": {
    "slug": "patent-attorney",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 13,
    "link": true
   },
@@ -51826,7 +51826,7 @@
   },
   "세무사": {
    "slug": "tax-accountant",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 11,
    "link": true
   },
@@ -51850,7 +51850,7 @@
   },
   "의사": {
    "slug": "physician",
-   "cat": "전문 자격 — 의료",
+   "cat": "전문 자격",
    "count": 10,
    "link": true
   },
@@ -52054,13 +52054,13 @@
   },
   "법무사": {
    "slug": "legal-scrivener",
-   "cat": "재무·회계·법무",
+   "cat": "전문 자격",
    "count": 2,
    "link": true
   },
   "한의사": {
    "slug": "korean-medicine-doctor",
-   "cat": "전문 자격 — 의료",
+   "cat": "전문 자격",
    "count": 2,
    "link": true
   },
