@@ -13,8 +13,8 @@
   "본문이 이미지뿐이라 요약이 없는 공고는 여기에 없습니다.",
   "요약이 들어오면 scripts/build_tags.mjs 를 다시 돌리면 됩니다.",
   "",
-  "만든 날 2026-11-28 · 진행중 9075건 중 요약 있는 8168건을 훑어",
-  "8073건에 태그가 붙었습니다 (98.8%)."
+  "만든 날 2026-11-28 · 진행중 9075건 중 요약 있는 8171건을 훑어",
+  "8076건에 태그가 붙었습니다 (98.8%)."
  ],
  "tags": {
   "mobis-134813": [
@@ -4906,8 +4906,8 @@
   ],
   "greeting-hyperaccel-196287": [
    "NPU·AI 반도체",
-   "결산·세무",
    "공공사업·제안",
+   "결산·세무",
    "구매·SCM",
    "SAP·ERP",
    "경영기획·전략"
@@ -8041,8 +8041,8 @@
   ],
   "greeting-nearthlab-234527": [
    "드론·UAV",
-   "결산·세무",
-   "공공사업·제안"
+   "공공사업·제안",
+   "결산·세무"
   ],
   "greeting-nearthlab-239618": [
    "드론·UAV",
@@ -8057,8 +8057,8 @@
   "greeting-nearthlab-220725": [
    "드론·UAV",
    "PMO·프로젝트관리",
-   "결산·세무",
-   "공공사업·제안"
+   "공공사업·제안",
+   "결산·세무"
   ],
   "greeting-nearthlab-220572": [
    "MATLAB·Simulink",
@@ -21369,8 +21369,8 @@
   "greeting-deepauto-ai-209180": [
    "IR·공시",
    "정부과제·국책과제",
-   "결산·세무",
    "공공사업·제안",
+   "결산·세무",
    "경영기획·전략",
    "영어 업무 가능"
   ],
@@ -21387,8 +21387,8 @@
   ],
   "greeting-deepauto-ai-233084": [
    "문서 도구",
-   "결산·세무",
    "공공사업·제안",
+   "결산·세무",
    "서비스 기획·PO",
    "구매·SCM",
    "SQL·데이터 추출",
@@ -21943,8 +21943,8 @@
    "수출입·통관",
    "중국어",
    "일본어",
-   "결산·세무",
    "공공사업·제안",
+   "결산·세무",
    "계약·컴플라이언스",
    "구매·SCM",
    "MD·상품기획",
@@ -23540,6 +23540,11 @@
    "정부과제·국책과제",
    "재무·자금"
   ],
+  "greeting-enki-235313": [
+   "재무·자금",
+   "결산·세무",
+   "SAP·ERP"
+  ],
   "greeting-enki-236065": [
    "MATLAB·Simulink",
    "신뢰성 평가",
@@ -25071,6 +25076,14 @@
    "머신러닝",
    "LLM·생성형 AI",
    "Python"
+  ],
+  "greeting-linqalpha-246594": [
+   "M365·협업 환경",
+   "IR·공시",
+   "일본어",
+   "계약·컴플라이언스",
+   "SQL·데이터 추출",
+   "LLM·생성형 AI"
   ],
   "greeting-linqalpha-242466": [
    "Figma·UI 툴"
@@ -27544,6 +27557,12 @@
   "workday-iljini-----_R-422": [
    "SAP·ERP",
    "경영기획·전략"
+  ],
+  "workday-iljini---_R-472": [
+   "엑셀 고급",
+   "재무·자금",
+   "결산·세무",
+   "SAP·ERP"
   ],
   "workday-iljini---_R-441": [
    "분말야금·절삭공구",
@@ -38722,8 +38741,8 @@
    "수출입·통관",
    "PMO·프로젝트관리",
    "임상·인허가",
-   "결산·세무",
-   "공공사업·제안"
+   "공공사업·제안",
+   "결산·세무"
   ],
   "nexon-10640": [
    "테크니컬 아티스트",
@@ -50145,7 +50164,7 @@
   "LLM·생성형 AI": {
    "slug": "llm-ai",
    "cat": "데이터·AI",
-   "count": 839,
+   "count": 840,
    "link": true
   },
   "경영기획·전략": {
@@ -50157,7 +50176,7 @@
   "SQL·데이터 추출": {
    "slug": "sql",
    "cat": "데이터·AI",
-   "count": 591,
+   "count": 592,
    "link": true
   },
   "MD·상품기획": {
@@ -50175,7 +50194,7 @@
   "SAP·ERP": {
    "slug": "sap-erp",
    "cat": "업무 시스템",
-   "count": 510,
+   "count": 512,
    "link": true
   },
   "콘텐츠·SNS 운영": {
@@ -50241,7 +50260,7 @@
   "계약·컴플라이언스": {
    "slug": "contract-compliance",
    "cat": "재무·회계·법무",
-   "count": 363,
+   "count": 364,
    "link": true
   },
   "생산·공정관리": {
@@ -50256,22 +50275,22 @@
    "count": 328,
    "link": true
   },
+  "결산·세무": {
+   "slug": "accounting-closing",
+   "cat": "재무·회계·법무",
+   "count": 324,
+   "link": true
+  },
   "공공사업·제안": {
    "slug": "public-sector-bid",
    "cat": "교육·공공",
    "count": 323,
    "link": true
   },
-  "결산·세무": {
-   "slug": "accounting-closing",
-   "cat": "재무·회계·법무",
-   "count": 322,
-   "link": true
-  },
   "재무·자금": {
    "slug": "corporate-finance",
    "cat": "업무 영역 — 인사·경영",
-   "count": 316,
+   "count": 318,
    "link": true
   },
   "Azure·GCP": {
@@ -50295,7 +50314,7 @@
   "일본어": {
    "slug": "japanese",
    "cat": "어학",
-   "count": 273,
+   "count": 274,
    "link": true
   },
   "데이터 파이프라인": {
@@ -50820,16 +50839,16 @@
    "count": 94,
    "link": true
   },
+  "IR·공시": {
+   "slug": "ir-disclosure",
+   "cat": "재무·회계·법무",
+   "count": 91,
+   "link": true
+  },
   "기타 외국어": {
    "slug": "other-languages",
    "cat": "어학",
    "count": 91,
-   "link": true
-  },
-  "IR·공시": {
-   "slug": "ir-disclosure",
-   "cat": "재무·회계·법무",
-   "count": 90,
    "link": true
   },
   "변호사": {
@@ -50922,6 +50941,12 @@
    "count": 75,
    "link": true
   },
+  "엑셀 고급": {
+   "slug": "advanced-excel",
+   "cat": "업무 시스템",
+   "count": 75,
+   "link": true
+  },
   "자산운용·트레이딩": {
    "slug": "asset-management",
    "cat": "금융·핀테크",
@@ -50932,12 +50957,6 @@
    "slug": "high-traffic-server",
    "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
    "count": 75,
-   "link": true
-  },
-  "엑셀 고급": {
-   "slug": "advanced-excel",
-   "cat": "업무 시스템",
-   "count": 74,
    "link": true
   },
   "RTL·Verilog": {
@@ -51426,6 +51445,12 @@
    "count": 35,
    "link": true
   },
+  "M365·협업 환경": {
+   "slug": "m365",
+   "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
+   "count": 34,
+   "link": true
+  },
   "UX 리서치": {
    "slug": "ux-research",
    "cat": "디자인·툴",
@@ -51435,12 +51460,6 @@
   "패키징·기판": {
    "slug": "packaging-substrate",
    "cat": "반도체 공정·장비",
-   "count": 33,
-   "link": true
-  },
-  "M365·협업 환경": {
-   "slug": "m365",
-   "cat": "업무 영역 — IT 운영·보안 (2026-11-02 추가)",
    "count": 33,
    "link": true
   },
