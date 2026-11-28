@@ -39902,8 +39902,6 @@
    "장비 셋업·필드"
   ],
   "workday-bdx-Sales-Account-Manager_R-555918-1": [
-   "의사",
-   "간호사",
    "산업보건·간호",
    "어카운트·거래처 관리"
   ],
@@ -51466,12 +51464,6 @@
    "count": 37,
    "link": true
   },
-  "간호사": {
-   "slug": "nurse",
-   "cat": "전문 자격 — 의료",
-   "count": 36,
-   "link": true
-  },
   "교육과정 개발": {
    "slug": "curriculum-development",
    "cat": "교육·공공",
@@ -51487,6 +51479,12 @@
   "Vue·Nuxt": {
    "slug": "vue-nuxt",
    "cat": "프론트·모바일",
+   "count": 35,
+   "link": true
+  },
+  "간호사": {
+   "slug": "nurse",
+   "cat": "전문 자격 — 의료",
    "count": 35,
    "link": true
   },
@@ -51826,12 +51824,6 @@
    "count": 11,
    "link": true
   },
-  "의사": {
-   "slug": "physician",
-   "cat": "전문 자격 — 의료",
-   "count": 11,
-   "link": true
-  },
   "세무사": {
    "slug": "tax-accountant",
    "cat": "재무·회계·법무",
@@ -51853,6 +51845,12 @@
   "측정·검교정": {
    "slug": "measurement-calibration",
    "cat": "기구·생산 세부",
+   "count": 10,
+   "link": true
+  },
+  "의사": {
+   "slug": "physician",
+   "cat": "전문 자격 — 의료",
    "count": 10,
    "link": true
   },
